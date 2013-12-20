@@ -6,8 +6,10 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
 Legends of Dota is partly done, I have most of it written in JS, needs to be ported to LUA. I have some classes setup for the GUI side of things.
 
 ###Current Status##
- - There is a bare basic pick your skills GUI, which seems to fully work
- - Depending on how you load the server, the hud might never show, after hero selection, try: send_shit in the console, and it should load the hud up (this will of course, be fixed)
+ - There is a basic voting system now, when you connect you will get to vote, you can't cast a vote until you've joined a team
+ - There is a bare basic pick your skills GUI, which seems to fully workshould load the hud up (this will of course, be fixed)
+ - Voting system needs some work, the vote will never end
 
-###What's next?###
- - Next is some sort of a voting UI and a game mode loader for different game modes
+ ###Up next###
+  - Making votes end
+  - Game mode system
