@@ -281,7 +281,8 @@ function FrotaGameMode:CreateVote(args)
         options = {},
         endTime = Time()+args.duration,
         sort = args.sort,
-        duration = args.duration
+        duration = args.duration,
+        onFinish = args.onFinish
     }
 
     -- Store vote choices, register handles
@@ -355,12 +356,32 @@ function FrotaGameMode:BuildVoteData()
 end
 
 function FrotaGameMode:SendVoteStatus()
-    if not self.currentVote then return end
+    local cv = self.currentVote
+    if not cv then return end
 
     local str = ""
 
-    for k,v in pairs(self.currentVote.options) do
-        str = str..k.."::"..v.count..":::"
+    if cv.sort == VOTE_SORT_SINGLE then
+        -- Workout how many people voted
+        local totalVotes = 0
+        for k,v in pairs(cv.options) do
+            totalVotes = totalVotes + v.count
+        end
+
+        -- Fix divide by 0 error
+        if totalVotes == 0 then
+            totalVotes = 1
+        end
+
+        -- Print percentages
+        for k,v in pairs(cv.options) do
+            str = str..k.."::"..math.floor(v.count/totalVotes*100).."%:::"
+        end
+    else
+        -- This needs fixing
+        for k,v in pairs(cv.options) do
+            str = str..k.."::"..v.count.."%:::"
+        end
     end
 
     -- Remove ending :::
@@ -371,14 +392,57 @@ function FrotaGameMode:SendVoteStatus()
     })
 end
 
+local startedInitialVote = false
 function FrotaGameMode:_thinkState_Voting(dt)
     if GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME then
         -- Waiting on the game to start...
         return
     end
 
+    -- Check if there is a vote active
+    local cv = self.currentVote
+    if cv then
+        -- Check if the vote should finish
+        if Time() > cv.endTime then
+            -- Table to store which option(s) won
+            local winners = {}
+
+            if cv.sort == VOTE_SORT_SINGLE then
+                local highestVotes = 0
+
+                for k,v in pairs(cv.options) do
+                    if v.count > highestVotes then
+                        -- New leader, reset list of winners
+                        highestVotes = v.count
+                        winners = {k}
+                    elseif v.count == highestVotes then
+                        -- A draw, add to list of winners
+                        table.insert(winners, k)
+                    end
+                end
+            else
+
+            end
+
+            -- Remove the active vote
+            self.currentVote = nil
+
+            -- Call the callback for vote ending
+            cv.onFinish(winners)
+        end
+    end
+
     -- Change to picking phase if it isn't already active
-    if self.currentState ~= STATE_VOTING then
+    if (not startedInitialVote) and self.currentState ~= STATE_VOTING then
+        -- This only ever runs once
+        startedInitialVote = true
+
+        -- Begin gamemode voting
+        self:VoteForGamemode()
+    end
+end
+
+function FrotaGameMode:VoteForGamemode()
         -- Create a vote for the game mode
         self:CreateVote({
             sort = VOTE_SORT_SINGLE,
@@ -386,9 +450,23 @@ function FrotaGameMode:_thinkState_Voting(dt)
                 ["Legends of Dota"] = "Pick your skills / hero",
                 ["Random OMG x5"] = "Choose between 5 random builds"
             },
-            duration = 120
+            duration = 30,
+            onFinish = function(winners)
+                self:CreateVote({
+                    sort = VOTE_SORT_SINGLE,
+                    options = {
+                        ["King of the Shop"] = "Defend the shop, yo"
+                    },
+                    duration = 30,
+                    onFinish = function(winners)
+                        print("Made it!")
+
+                        -- Load up LoD
+                        self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
+                    end
+                })
+            end
         })
-    end
 end
 
 function FrotaGameMode:BuildAbilityListData()
