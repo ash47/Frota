@@ -5,34 +5,25 @@
 
     import ValveLib.Globals;
 
-	public class Skill extends MovieClip {
-        public var skillNameText;
-
+	public class SkillMini extends MovieClip {
         public var skillName:String;
-        public var skillSort:String;
-        public var skillHero:String;
 
         private var imageHolder:MovieClip;
 
-        public function Skill(skillName:String, skillSort:String, skillHero:String) {
+        public function SkillMini(skillName:String) {
             // Store the info
             this.skillName = skillName;
-            this.skillSort = skillSort;
-            this.skillHero = skillHero;
 
             // Create somewhere to place the image
             imageHolder = new MovieClip();
-            imageHolder.scaleX = 0.5;
-            imageHolder.scaleY = 0.5;
+            imageHolder.scaleX = 0.125;
+            imageHolder.scaleY = 0.125;
             this.addChild(imageHolder);
 
             // Make sure a skill name was parsed
             if(skillName != '') {
                 // Load the image
                 Globals.instance.LoadAbilityImage(this.skillName, imageHolder);
-
-                // Adjust text
-                skillNameText.text = "#DOTA_Tooltip_ability_"+this.skillName;
             }
         }
 
@@ -42,9 +33,6 @@
 
             // Load the image
             Globals.instance.LoadAbilityImage(this.skillName, imageHolder);
-
-            // Adjust text
-            skillNameText.text = "#DOTA_Tooltip_ability_"+this.skillName;
         }
 	}
 }

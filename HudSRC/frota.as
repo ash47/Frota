@@ -29,6 +29,7 @@ package {
         public var iconWidth:Number = 64;
         public var iconHeight:Number = 80;
         public var voteHeight:Number = 31;
+        public var iconMiniSize:Number = 16;
 
         // Limits
         public var maxSkills = 4;
@@ -380,7 +381,7 @@ package {
         }
 
         public function updateBuildData(data:String) {
-            var skill;
+            var skill, i:Number, j:Number, skillName:String;
 
             // Clear out current builds
             pickingData.builds = [];
@@ -395,7 +396,7 @@ package {
                 var skillList = [];
 
                 // Store all skills in this build
-                for(var i=1; i<buildInfo.length; i++) {
+                for(i=1; i<buildInfo.length; i++) {
                     skillList.push(buildInfo[i]);
                 }
 
@@ -419,15 +420,33 @@ package {
 
             // Update icons for your local hero
             for(i=0; i<maxSkills; i++) {
-                // Grab name of this skill
-                var skillName = localSkills[i];
-                if(!skillName) skillName = 'doom_bringer_empty1';
-
                 // Attempt to grab this skill
                 skill = getSpecial('skill_'+i);
                 if(skill) {
+                    // Grab name of this skill
+                    skillName = localSkills[i];
+                    if(!skillName) skillName = 'doom_bringer_empty1';
+
                     // Found it, update it
                     skill.UpdateSkill(skillName);
+                }
+            }
+
+            // Side icons
+            for(i=0; i<10; i++) {
+                var build = pickingData.builds[i];
+                if(build) {
+                    for(j=0; j<maxSkills; j++) {
+                        skill = getSpecial('skill_'+i+'_'+j);
+                        if(skill) {
+                            // Grab name of this skill
+                            skillName = build.skills[j];
+                            if(!skillName) skillName = 'doom_bringer_empty1';
+
+                            // Found it, update it
+                            skill.UpdateSkill(skillName);
+                        }
+                    }
                 }
             }
         }
@@ -561,11 +580,10 @@ package {
         }
 
         public function BuildPickingScreen() {
+            var skill:MovieClip, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, sx:Number;
+
             // Create a new panel for the skills
             newPanel();
-
-            var skill:MovieClip;
-            var i:Number;
 
             // Setting for skill picking panel
             var padding:Number = 4;
@@ -610,15 +628,15 @@ package {
 
             // Put icons for your local hero
 
-            var xpadding = 16;
-            var totalWidth = (iconWidth+xpadding) * maxSkills - xpadding;
+            xpadding = 16;
+            totalWidth = (iconWidth+xpadding) * maxSkills - xpadding;
 
             xx = (maxStageWidth - totalWidth) / 2;
             yy = maxStageHeight - iconHeight - 32;
 
             for(i=0; i<maxSkills; i++) {
                 // Grab name of this skill
-                var skillName = localSkills[i];
+                skillName = localSkills[i];
                 if(!skillName) skillName = 'doom_bringer_empty1';
 
                 // Create a skill
@@ -634,12 +652,55 @@ package {
                 dragMakeValidTarget(skill)
 
                 // Hook the skill
-                //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
                 skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
                 skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
 
                 // Move it into position
                 xx += iconWidth + xpadding;
+            }
+
+            // Side icons (Other people's builds)
+
+            // Settings
+            xpadding = 4;
+            ypadding = 4;
+            totalWidth = (iconMiniSize+xpadding) * maxSkills;
+
+            // Workout where to place them
+            sx = maxStageWidth - totalWidth;
+            xx = sx;
+            yy = 64;
+
+            // Loop over all 10 builds
+            for(i=0; i<10; i++) {
+                // Grab and validate the build
+                var build = pickingData.builds[i];
+                if(build) {
+                    // Loop over all the skills in the build
+                    for(j=0; j<maxSkills; j++) {
+                        // Grab name of this skill
+                        skillName = build.skills[j];
+                        if(!skillName) skillName = 'doom_bringer_empty1';
+
+                        // Create a mini skill icon for it
+                        skill = new SkillMini(skillName);
+                        autoCleanupSpecial(skill, 'skill_'+i+'_'+j);
+                        skill.x = xx;
+                        skill.y = yy;
+
+                        // Allow dragging from this
+                        dragMakeValidFrom(skill);
+
+                        // Make it display info
+                        skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
+                        skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
+
+                        xx += iconMiniSize + xpadding;
+                    }
+                }
+
+                xx = sx;
+                yy += iconMiniSize + ypadding;
             }
         }
 
