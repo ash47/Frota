@@ -16,8 +16,8 @@
 
             // Create somewhere to place the image
             imageHolder = new MovieClip();
-            imageHolder.scaleX = 0.125;
-            imageHolder.scaleY = 0.125;
+            imageHolder.scaleX = 1/8;
+            imageHolder.scaleY = 1/8;
             this.addChild(imageHolder);
 
             // Make sure a skill name was parsed

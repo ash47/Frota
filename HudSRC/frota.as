@@ -436,6 +436,10 @@ package {
             for(i=0; i<10; i++) {
                 var build = pickingData.builds[i];
                 if(build) {
+                    // Update Hero Image
+                    skill = getSpecial('hero_'+i);
+                    if(skill) skill.UpdateHero(build.hero);
+
                     for(j=0; j<maxSkills; j++) {
                         skill = getSpecial('skill_'+i+'_'+j);
                         if(skill) {
@@ -484,7 +488,7 @@ package {
 
             // Build Skill Picking panel
             contentPanelHolder = new ScrollPane();
-            contentPanelHolder.setSize(maxStageWidth-384, maxStageHeight-128-iconHeight-16);
+            contentPanelHolder.setSize(maxStageWidth-336, maxStageHeight-128-iconHeight-16);
             addChild(contentPanelHolder)
             contentPanelHolder.x = 192;
             contentPanelHolder.y = 64;
@@ -676,6 +680,12 @@ package {
                 // Grab and validate the build
                 var build = pickingData.builds[i];
                 if(build) {
+                    // Create hero image thingo
+                    skill = new HeroDisplayMini(build.hero);
+                    autoCleanupSpecial(skill, 'hero_'+i);
+                    skill.x = xx-xpadding-skill.width;
+                    skill.y = yy;
+
                     // Loop over all the skills in the build
                     for(j=0; j<maxSkills; j++) {
                         // Grab name of this skill
