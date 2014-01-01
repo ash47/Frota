@@ -3,7 +3,7 @@
 	"1"
 	{
 		"File"		"frota"
-		"Depth"		"55"
+		"Depth"		"18"
 	}
 }
 
@@ -13,9 +13,9 @@
 // hud_chat: 8,
 
 // error_msg: 10,
-	
+
 // voicechat: 11,
-// shop: 12,	
+// shop: 12,
 // tutorial: 13,
 // herodisplay: 14,
 // actionpanel: 15,
@@ -24,7 +24,7 @@
 
 // gameend: 19,
 // chat_wheel: 20,
-// survey: 21,	
+// survey: 21,
 // quests: 22,
 // questlog: 23,
 
@@ -34,7 +34,7 @@
 // waitingforplayers: 36,
 // highlight_reel: 37,
 // stats_dropdown: 38,
-// halloween: 39,	
+// halloween: 39,
 // killcam: 40,		// and inspect
 // scoreboard: 41,
 // quickstats: 42,

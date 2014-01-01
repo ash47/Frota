@@ -25,9 +25,13 @@ package {
         public var maxStageWidth:Number = 1366;
         public var maxStageHeight:Number = 768;
 
+        // Sizing
         public var iconWidth:Number = 64;
         public var iconHeight:Number = 80;
         public var voteHeight:Number = 31;
+
+        // Limits
+        public var maxSkills = 4;
 
         // Main panel stuff
         private var contentPanelHolder:ScrollPane;
@@ -39,8 +43,14 @@ package {
         // This is the red mask thingo (for lining stuff up)
         public var hudMask:MovieClip;
 
+        // Hides the game
+        public var hideGame:MovieClip;
+
         // This holds vote panels (so we can update them)
         private var voteHolder:Object;
+
+        // Contains picking data
+        private var pickingData:Object = {};
 
         // State control
         private var currentState:Number = 0;
@@ -55,132 +65,62 @@ package {
         private var bGotInput = false;
 
         // This will contain movieclips and stuff that needs to be cleaned up
-        private var stateCleanup = new Array();
+        private var stateCleanup = new Array(); // Generic stuff that can be removed
+        private var stateCleanupSpecial = {};   // Specific things that can be removed
 
         // Shortcut functions
         public var Translate;  // Translates a #tag into something readable
 
-        public function frota() {
-            var a = new DefaultTextInput();
-            addChild(a);
-            a.x = 4;
-            a.y = 537;
-
-            //onLoaded();
-
-            /*newPanel();
-
-            var padding:Number = 8;
-
-            var btn = new VoteButton();
-            addPanelChild(btn);
-            btn.x = padding;
-            btn.y = padding;*/
-
-
-
-            /*var skill = new Skill("asd", "", "", "", "");
-            addChild(skill);
-            skill.x = 480;
-            skill.y = 554;*/
-
-            /*var vote = new VoteButton("test vote", "some desc", 5);
-            addChild(vote);
-            vote.x = 0;
-            vote.y = 0;
-
-            vote.Button.addEventListener(MouseEvent.CLICK, this.votePressed);*/
-
-            /*newPanel();
-
-            var padding:Number = 8;
-
-            var btn = new VoteButton("aaa", "", "");
-            autoCleanup(btn);
-            btn.x = padding;
-            btn.y = padding;
-
-            //cleanHud();
-
-            //removeChild(btn);*/
-        }
+        public function frota() {}
 
         public function onLoaded() : void {
             // Store shortcut functions
             Translate = Globals.instance.GameInterface.Translate;
 
-            printToServer("Hud init");
-            trace("\n\n-- HELLO JOEa! --\n\n");
+            trace("\n\n-- Frota hud starting to load! --\n\n");
 
-            this.gameAPI.SubscribeToGameEvent("hero_picker_hidden", this.onHeroPickerHidden);
+            this.gameAPI.SubscribeToGameEvent("hero_picker_hidden", this.requestCurrentState);
             this.gameAPI.SubscribeToGameEvent("afs_initial_state", this.receiveInitialState);
             this.gameAPI.SubscribeToGameEvent("afs_update_state", this.processState);
             this.gameAPI.SubscribeToGameEvent("afs_vote_status", this.updateVoteStatus);
-            //this.gameAPI.SubscribeToGameEvent("afs_herolist", this.heroListTest);
-
-            // Register Buttons
-            //this.Button1.addEventListener(MouseEvent.CLICK, this.testClick);
-            //this.Button2.addEventListener(MouseEvent.CLICK, this.testClick2);
-
-            // Register Select Buttons
-            //this.SelectSlot1.addEventListener(MouseEvent.CLICK, this.skillIntoSlot);
-            //this.SelectSlot2.addEventListener(MouseEvent.CLICK, this.skillIntoSlot);
-            //this.SelectSlot3.addEventListener(MouseEvent.CLICK, this.skillIntoSlot);
-            //this.SelectSlot4.addEventListener(MouseEvent.CLICK, this.skillIntoSlot);
+            this.gameAPI.SubscribeToGameEvent("afs_update_builds", this.updateBuildDataHook);
 
             // Hide the Hud Mask
             hudMask.visible = false;
 
-            // Always visible
+            // Make the hud visible
             visible = true
 
-            // Request the current game state (after a delay)
-            var timer:Timer = new Timer(1000, 1);
-            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
-                printToServer("Timer fired")
-                gameAPI.SendServerCommand("afs_request_state");
-            });
-            timer.start();
-
-            // Text input
-            var a = new DefaultTextInput();
-            addChild(a);
-            a.x = 4;
-            a.y = 537;
-
-            a.text = "#npc_dota_hero_abyssal_underlord";
-
-            a.addEventListener(FocusHandlerEvent.FOCUS_IN, inputBoxGainFocus);
-            a.addEventListener(FocusHandlerEvent.FOCUS_OUT, inputBoxLoseFocus);
+            // Request the current state
+            requestCurrentState();
 
             // Hook stuff
             Globals.instance.resizeManager.AddListener(this);
             this.gameAPI.OnReady();
             Globals.instance.GameInterface.AddMouseInputConsumer();
 
-            trace("translation test");
-            trace(Translate("#npc_dota_hero_abyssal_underlord"));
+            // Text input
+            /*var a = new DefaultTextInput();
+            addChild(a);
+            a.x = 4;
+            a.y = 537;
 
-            //printToServer("Game API:")
-            //PrintTable(this.gameAPI, 1);
+            a.text = "";
 
-            /*trace("\nGlobals")
-            PrintTable(Globals.instance.GameInterface, 1);
+            a.addEventListener(FocusHandlerEvent.FOCUS_IN, inputBoxGainFocus);
+            a.addEventListener(FocusHandlerEvent.FOCUS_OUT, inputBoxLoseFocus);*/
+        }
 
-            var playerID = globals.Players.GetLocalPlayer();
-            printToServer("PlayerID: "+playerID);
-            var heroID = globals.Players.GetPlayerHeroEntityIndex(playerID);
-            printToServer("HeroID: "+heroID);
-            var count = globals.Entities.GetAbilityCount(heroID);
-            printToServer("Count: "+count);
+        public function requestCurrentState() {
+            // Reset initial state received
+            this.gottenInitialState = false;
 
-            for(var i=0; i<count; i++) {
-                var ab = globals.Entities.GetAbility(heroID, i);
-                if(ab != -1) {
-                    var abName = globals.Abilities.GetAbilityName(ab);
-                    printToServer("Found "+abName);
-                }
-            }*/
+            // Request the current game state (after a delay)
+            var timer:Timer = new Timer(1000, 1);
+            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
+                gameAPI.SendServerCommand("afs_request_state");
+            });
+            timer.start();
         }
 
         public function inputBoxGainFocus() {
@@ -198,13 +138,20 @@ package {
         }
 
         public function cleanHud() {
+            var key;
+
             // Remove all items from the hud
-            for(var key in stateCleanup) {
+            for(key in stateCleanup) {
                 removeChild(stateCleanup[key]);
+            }
+
+            for(key in stateCleanupSpecial) {
+                removeChild(stateCleanupSpecial[key]);
             }
 
             // Create new store
             stateCleanup = new Array();
+            stateCleanupSpecial = {};
 
             // Cleanup content panel
             if(contentPanelHolder != null) {
@@ -219,6 +166,18 @@ package {
 
             // Set it for cleanup
             stateCleanup.push(mc);
+        }
+
+        public function autoCleanupSpecial(mc, name) {
+            // Add to the main area
+            addChild(mc);
+
+            // Set it for cleanup
+            stateCleanupSpecial[name] = mc;
+        }
+
+        public function getSpecial(name) {
+            return stateCleanupSpecial[name];
         }
 
         public function makeTextField(txtSize:Number):TextField {
@@ -236,8 +195,6 @@ package {
         }
 
         public function receiveInitialState(args:Object) {
-            printToServer("Got an Initial State")
-
             // If we already have the initial state, ignore
             if(this.gottenInitialState) return;
             this.gottenInitialState = true;
@@ -247,8 +204,6 @@ package {
         }
 
         public function processState(args:Object) {
-            printToServer("Got a state commands: "+args.nState);
-
             // Cleanup anything from old states
             cleanHud();
 
@@ -259,7 +214,8 @@ package {
                 break;
 
                 case STATE_PICKING:
-                    this.BuildPickingScreen(args.d);
+                    this.ProcessPickingData(args.d);
+                    this.BuildPickingScreen();
                 break;
 
                 case STATE_VOTING:
@@ -267,14 +223,144 @@ package {
                 break;
 
                 default:
-                    printToServer("Dont know how to process: "+args.nState);
+                    trace("Dont know how to process: "+args.nState);
                 break;
             }
         }
 
-        public function updateVoteStatus(args:Object) {
-            printToServer("Got an updated vote status");
+        public function ProcessPickingData(data:String) {
+            var s:String;
 
+            // Reset the picking data
+            pickingData = {};
+            pickingData.skills = [];
+            pickingData.builds = [];
+            //pickingData.bans = {};
+
+            // Split the data into fields
+            // 0 - List of abilities you can pick
+            // 1 - List of player's current builds
+            // 2 - Bans
+            var fields = data.split("|||");
+
+            // Grab skill data
+            var skillData = fields[0].split("||");
+
+            // Sort it
+            skillData.sort(function(a, b) {
+                // Grab skill data
+                var sa = a.split("::");
+                var sb = b.split("::");
+
+                // Grab translated heroes
+                var ha = Translate("#"+sa[2]);
+                var hb = Translate("#"+sb[2]);
+
+                // Sort by hero, then type, then skill name
+                if(ha < hb) {
+                    return -1;
+                } else if(ha > hb) {
+                    return 1;
+                } else {
+                    // Grab ability types
+                    var ta = sa[1];
+                    var tb = sb[1];
+
+                    if(ta < tb) {
+                        return -1;
+                    } else if(ta > tb) {
+                        return 1;
+                    } else {
+                        // Grab translated skill names
+                        var na = Translate("#DOTA_Tooltip_ability_"+sa[0]);
+                        var nb = Translate("#DOTA_Tooltip_ability_"+sb[0]);
+
+                        if(na < nb) {
+                            return -1;
+                        } else if(na > nb) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                }
+            });
+
+            // Build list of skills
+            for each (s in skillData) {
+                // Grab the skill data
+                var skillInfo = s.split("::");
+
+                // Store the skill data
+                pickingData.skills.push({
+                    skillName: skillInfo[0],
+                    skillSort: skillInfo[1],
+                    skillHero: skillInfo[2]
+                });
+            }
+
+            // Store hero builds
+            this.updateBuildData(fields[1]);
+        }
+
+        public function updateBuildData(data:String) {
+            var skill;
+
+            // Clear out current builds
+            pickingData.builds = [];
+
+            // Update current builds
+            var buildData = data.split("||");
+            for each (var s:String in buildData) {
+                // Grab the build data
+                var buildInfo = s.split("::");
+
+                // A list of skills in this build
+                var skillList = [];
+
+                // Store all skills in this build
+                for(var i=1; i<buildInfo.length; i++) {
+                    skillList.push(buildInfo[i]);
+                }
+
+                // Store the skill data
+                pickingData.builds.push({
+                    hero: buildInfo[0],
+                    skills: skillList
+                });
+            }
+
+            // Find icons for local hero
+            var localSkills = [];
+
+            // Grab playerID to build skill list
+            var playerID = globals.Players.GetLocalPlayer();
+
+            if(playerID >= 0 && playerID <= 9) {
+                // Update our local skill list
+                localSkills = pickingData.builds[playerID].skills;
+            }
+
+            // Update icons for your local hero
+            for(i=0; i<maxSkills; i++) {
+                // Grab name of this skill
+                var skillName = localSkills[i];
+                if(!skillName) skillName = 'doom_bringer_empty1';
+
+                // Attempt to grab this skill
+                skill = getSpecial('skill_'+i);
+                if(skill) {
+                    // Found it, update it
+                    skill.UpdateSkill(skillName);
+                }
+            }
+        }
+
+        public function updateBuildDataHook(args:Object) {
+            this.updateBuildData(args.d);
+        }
+
+        public function updateVoteStatus(args:Object) {
             // Make sure we have the vote info
             if(voteHolder == null) return;
 
@@ -288,10 +374,8 @@ package {
                 if(vote != null) {
                     // Update the count
                     vote.updateCount(voteInfo[1]);
-
-                    printToServer("Updated "+voteInfo[0]);
                 } else {
-                    printToServer("Failed to find "+voteInfo[0]);
+                    trace("Failed to find "+voteInfo[0]);
                 }
             }
         }
@@ -305,9 +389,9 @@ package {
 
             // Build Skill Picking panel
             contentPanelHolder = new ScrollPane();
-            contentPanelHolder.setSize(maxStageWidth-128, 448);
+            contentPanelHolder.setSize(maxStageWidth-384, maxStageHeight-128-iconHeight-16);
             addChild(contentPanelHolder)
-            contentPanelHolder.x = 64;
+            contentPanelHolder.x = 192;
             contentPanelHolder.y = 64;
 
             // Setup the panel where the icons will go
@@ -381,28 +465,10 @@ package {
         public function onScreenSizeChanged() : void {
             x = 0;
             y = 0;
-            printToServer("Screen size changed: "+stage.stageWidth+" "+stage.stageHeight+" "+this.globals.resizeManager.ScreenWidth+" "+this.globals.resizeManager.ScreenHeight);
+            trace("Screen size changed: "+stage.stageWidth+" "+stage.stageHeight+" "+this.globals.resizeManager.ScreenWidth+" "+this.globals.resizeManager.ScreenHeight);
 
             // Lets assume the height never changes:
             maxStageWidth = stage.stageWidth / stage.stageHeight * 768;
-        }
-
-        public function skillClick(e:Event) : void {
-            trace("clicked! "+e.currentTarget.icon);
-        }
-
-        public function testClick(e:Event) {
-            visible = false;
-            printToServer("Clicked button 1")
-        }
-
-        public function testClick2(e:Event){
-            printToServer("Clicked button 2");
-        }
-
-        public function onHeroPickerHidden(args:Object) {
-            printToServer("Hero Picked Event fired")
-            visible = true;
         }
 
         // Displays the skill info thing about a given skill (requires rollOver event)
@@ -422,9 +488,12 @@ package {
             globals.Loader_heroselection.gameAPI.OnSkillRollOut();
         }
 
-        public function BuildPickingScreen(data:String) {
+        public function BuildPickingScreen() {
             // Create a new panel for the skills
             newPanel();
+
+            var skill:MovieClip;
+            var i:Number;
 
             // Setting for skill picking panel
             var padding:Number = 4;
@@ -432,57 +501,14 @@ package {
             var xx:Number = xo;
             var yy:Number = 0;
 
-            var skillData = data.split("||");
-
-            skillData.sort(function(a, b) {
-                // Grab skill data
-                var sa = a.split("::");
-                var sb = b.split("::");
-
-                // Grab translated heroes
-                var ha = Translate("#"+sa[2]);
-                var hb = Translate("#"+sb[2]);
-
-                // Sort by hero, then type, then skill name
-                if(ha < hb) {
-                    return -1;
-                } else if(ha > hb) {
-                    return 1;
-                } else {
-                    // Grab ability types
-                    var ta = sa[1];
-                    var tb = sb[1];
-
-                    if(ta < tb) {
-                        return -1;
-                    } else if(ta > tb) {
-                        return 1;
-                    } else {
-                        // Grab translated skill names
-                        var na = Translate("#DOTA_Tooltip_ability_"+sa[0]);
-                        var nb = Translate("#DOTA_Tooltip_ability_"+sb[0]);
-
-                        if(na < nb) {
-                            return -1;
-                        } else if(na > nb) {
-                            return 1;
-                        } else {
-                            return 0;
-                        }
-                    }
-                }
-            })
-
             // Put all the icons in
-            for each (var s:String in skillData) {
-                var skillInfo = s.split("::");
-
-                var skill = new Skill(skillInfo[0], skillInfo[1], skillInfo[2]);
+            for each (var skillInfo in pickingData.skills) {
+                skill = new Skill(skillInfo.skillName, skillInfo.skillSort, skillInfo.skillHero);
                 addPanelChild(skill);
                 skill.x = xx;
                 skill.y = yy;
 
-                skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
+                //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
                 skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
                 skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
 
@@ -495,11 +521,48 @@ package {
 
             // Update the scrollbar
             updatePanel();
+
+            // Find icons for local hero
+            var localSkills = [];
+
+            // Grab playerID to build skill list
+            var playerID = globals.Players.GetLocalPlayer();
+
+            if(playerID >= 0 && playerID <= 9) {
+                // Update our local skill list
+                localSkills = pickingData.builds[playerID].skills;
+            }
+
+            // Put icons for your local hero
+
+            var xpadding = 16;
+            var totalWidth = (iconWidth+xpadding) * maxSkills - xpadding;
+
+            xx = (maxStageWidth - totalWidth) / 2;
+            yy = maxStageHeight - iconHeight - 32;
+
+            for(i=0; i<maxSkills; i++) {
+                // Grab name of this skill
+                var skillName = localSkills[i];
+                if(!skillName) skillName = 'doom_bringer_empty1';
+
+                // Create a skill
+                skill = new Skill(skillName, '', '');
+                autoCleanupSpecial(skill, 'skill_'+i);
+                skill.x = xx;
+                skill.y = yy;
+
+                // Hook the skill
+                //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
+                skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
+                skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
+
+                // Move it into position
+                xx += iconWidth + xpadding;
+            }
         }
 
         public function BuildVoteScreen(data:String) {
-            printToServer("Building Voting Screen");
-
             // Create a new panel for the skills
             newPanel();
 
@@ -574,10 +637,6 @@ package {
 
             // Update the scrollbar
             updatePanel();
-        }
-
-        public function printToServer(msg:String) {
-            this.gameAPI.SendServerCommand("afs_print \""+msg+"\"");
         }
     }
 }

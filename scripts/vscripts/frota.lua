@@ -47,6 +47,20 @@ function FrotaGameMode:_SetInitialValues()
     -- The state of the gane
     self.currentState = STATE_INIT;
     self.currentStateData = "";
+
+    -- Store the default axe build for each player
+    self.selectedBuilds = {}
+    for i = 0, 9 do
+        self.selectedBuilds[i] = {
+            hero = 'npc_dota_hero_axe',
+            skills = {
+                [1] = 'axe_berserkers_call',
+                [2] = 'axe_battle_hunger',
+                [3] = 'axe_counter_helix',
+                [4] = 'axe_culling_blade'
+            }
+        }
+    end
 end
 
 function FrotaGameMode:InitGameMode()
@@ -72,11 +86,6 @@ function FrotaGameMode:InitGameMode()
 end
 
 function FrotaGameMode:RegisterCommands()
-    -- For debugging only
-    Convars:RegisterCommand( "afs_print", function(name, msg)
-        print("Client Message: "..msg)
-    end, "Print a message to the server console", 0 )
-
     -- When a user tries to put a skill into a slot
     Convars:RegisterCommand( "afs_skill", function(name, skillName, slotNumber)
         local cmdPlayer = Convars:GetCommandClient()
@@ -169,11 +178,16 @@ end
 function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
     -- Validate Data here (never trust client)
 
+    -- Grab playerID
+    local playerID = hero:GetPlayerID()
+    if(playerID < 0 or playerID > 9) then
+        return
+    end
+
     -- Check if we've touched this hero before
     if not self.currentSkillList[hero] then
         -- Grab the name of this hero
         local heroClass = hero:GetUnitName()
-        print(heroClass)
 
         local skills = {}
 
@@ -200,14 +214,25 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
         end
     end
 
-    -- Change required ability
-    self.currentSkillList[hero][skillSlot] = skillName
+    -- Update build
+    self.selectedBuilds[playerID].skills[skillSlot] = skillName
 
-    -- Regive all abilities
+    -- Change the skills on this hero
+    self.currentSkillList[hero] = self.selectedBuilds[playerID].skills
+
+    -- Re-give all abilities
     for k,v in ipairs(self.currentSkillList[hero]) do
         hero:AddAbility(v)
         print("Added: "..v)
     end
+
+    -- Send out the updated builds
+    FireGameEvent("afs_update_builds", {
+        d = self:BuildBuildsData()
+    })
+
+    -- Update the state data
+    self.currentStateData = self:BuildAbilityListData()
 end
 
 function FrotaGameMode:ChangeState(newState, newData)
@@ -440,30 +465,51 @@ function FrotaGameMode:_thinkState_Voting(dt)
 end
 
 function FrotaGameMode:VoteForGamemode()
-        -- Create a vote for the game mode
-        self:CreateVote({
-            sort = VOTE_SORT_SINGLE,
-            options = {
-                ["Legends of Dota"] = "Pick your skills / hero",
-                ["Random OMG x5"] = "Choose between 5 random builds"
-            },
-            duration = 30,
-            onFinish = function(winners)
-                self:CreateVote({
-                    sort = VOTE_SORT_SINGLE,
-                    options = {
-                        ["King of the Shop"] = "Defend the shop, yo"
-                    },
-                    duration = 5,
-                    onFinish = function(winners)
-                        print("Made it!")
+    -- Create a vote for the game mode
+    self:CreateVote({
+        sort = VOTE_SORT_SINGLE,
+        options = {
+            ["Legends of Dota"] = "Pick your skills / hero",
+            ["Random OMG x5"] = "Choose between 5 random builds"
+        },
+        duration = 30,
+        onFinish = function(winners)
+            self:CreateVote({
+                sort = VOTE_SORT_SINGLE,
+                options = {
+                    ["King of the Shop"] = "Defend the shop, yo"
+                },
+                duration = 5,
+                onFinish = function(winners)
+                    print("Made it!")
 
-                        -- Load up LoD
-                        self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
-                    end
-                })
-            end
-        })
+                    -- Load up LoD
+                    self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
+                end
+            })
+        end
+    })
+end
+
+function FrotaGameMode:BuildBuildsData()
+    -- Build list of builds
+    local sBuildList = '';
+    for i = 0,9 do
+        local v = self.selectedBuilds[i]
+
+        local sBuild = v.hero
+
+        for kk, vv in pairs(v.skills) do
+            sBuild = sBuild..'::'..vv
+        end
+
+        sBuildList = sBuildList..sBuild..'||'
+    end
+
+    -- Remove the last ||
+    sBuildList = string.sub(sBuildList, 1, -3)
+
+    return sBuildList
 end
 
 function FrotaGameMode:BuildAbilityListData()
@@ -478,7 +524,7 @@ function FrotaGameMode:BuildAbilityListData()
     sSkillList = string.sub(sSkillList, 1, -3)
 
     -- Return the data
-    return sSkillList;
+    return sSkillList..'|||'..self:BuildBuildsData()..'|||'..'Bans will go here';
 end
 
 EntityFramework:RegisterScriptClass( FrotaGameMode )

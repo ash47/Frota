@@ -32,5 +32,16 @@
             // Adjust text
             skillNameText.text = "#DOTA_Tooltip_ability_"+this.skillName;
         }
+
+        public function UpdateSkill(skillName:String) {
+            // Store the info
+            this.skillName = skillName;
+
+            // Load the image
+            Globals.instance.LoadAbilityImage(this.skillName, imageHolder);
+
+            // Adjust text
+            skillNameText.text = "#DOTA_Tooltip_ability_"+this.skillName;
+        }
 	}
 }

@@ -20,28 +20,28 @@
 
 "CustomEvents"
 {
-	"afs_herolist"
-	{
-		"skills"				"string"
-	}
-
 	// This is fired when a client asks for the state (once they have joined)
 	// The data is encoded differently depending on the state
 	"afs_initial_state"
 	{
-		"nState"				"short"
+		"nState"			"short"
 		"d"					"string"
 	}
 	// Same as above, but will force a state change, and can't be requested by clients
 	"afs_update_state"
 	{
-		"nState"				"short"
+		"nState"			"short"
 		"d"					"string"
 	}
 	// Sending the status of a vote
 	"afs_vote_status"
 	{
-		"nState"				"short"
+		"nState"			"short"
+		"d"					"string"
+	}
+	// Sending an updated list of the currect builds
+	"afs_update_builds"
+	{
 		"d"					"string"
 	}
 }
