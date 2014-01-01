@@ -71,7 +71,79 @@ package {
         // Shortcut functions
         public var Translate;  // Translates a #tag into something readable
 
+        // Contains the movieclip we are dragging
+        public var dragClip;
+        public var dragClickedClip;
+        public var dragTarget;
+
         public function frota() {}
+
+        // Makes this movieclip draggable
+        public function dragMakeValidFrom(mc) {
+            mc.addEventListener(MouseEvent.MOUSE_DOWN, dragMousePressed);
+            mc.addEventListener(MouseEvent.ROLL_OUT, dragValidFrom);
+        }
+        // Makes this movieclip into a valid target
+        public function dragMakeValidTarget(mc) {
+            mc.addEventListener(MouseEvent.ROLL_OVER, dragValidTarget);
+            mc.addEventListener(MouseEvent.ROLL_OUT, dragTargetRollOut);
+        }
+        public function dragListener(e:MouseEvent) {
+            dragClip.x = mouseX;
+            dragClip.y = mouseY;
+        }
+        public function dragValidTarget(e:MouseEvent) {
+            dragTarget = e.target;
+        }
+        public function dragMouseUp(e:MouseEvent) {
+            dragClickedClip = null;
+
+            if(dragClip) {
+                if(dragTarget) {
+                    skillIntoSlot(dragClip.name, dragTarget.name);
+                }
+
+                // Remove drag object
+                removeChild(dragClip);
+                dragClip = null;
+
+                // Remove move event
+                stage.removeEventListener(MouseEvent.MOUSE_MOVE, dragListener);
+            }
+
+            stage.removeEventListener(MouseEvent.MOUSE_UP, dragMouseUp)
+        }
+        public function dragMousePressed(e:MouseEvent) {
+            dragClickedClip = e.currentTarget;
+            dragTarget = null;
+        }
+        public function dragValidFrom(e:MouseEvent) {
+            // Check if this is the clip we tried to drag
+            if(dragClickedClip == e.target) {
+                dragClip = new MovieClip();
+                addChild(dragClip);
+
+                // Make it look nice / give it a name
+                dragClip.name = dragClickedClip.skillName;
+                Globals.instance.LoadAbilityImage(dragClickedClip.skillName, dragClip);
+                dragClip.scaleX = 0.5;
+                dragClip.scaleY = 0.5;
+
+                // Add listeners
+                stage.addEventListener(MouseEvent.MOUSE_MOVE, dragListener);
+                stage.addEventListener(MouseEvent.MOUSE_UP, dragMouseUp);
+
+                // Stop it from procing again
+                dragClickedClip = null;
+            }
+        }
+        public function dragTargetRollOut(e:MouseEvent) {
+            // Check if this was the current drag target
+            if(dragTarget == e.target) {
+                // Remove drag target
+                dragTarget = null;
+            }
+        }
 
         public function onLoaded() : void {
             // Store shortcut functions
@@ -415,12 +487,8 @@ package {
             return contentPanelHolder.height;
         }
 
-        public function skillIntoSlot(e:Event) {
-            var slotNumber:Number = Number(e.currentTarget.name.replace("SelectSlot", ""));
-
-            if(selectedSkill != null) {
-                this.gameAPI.SendServerCommand("afs_skill \""+selectedSkill.skillName+"\" "+slotNumber);
-            }
+        public function skillIntoSlot(skillName, slotNumber) {
+            this.gameAPI.SendServerCommand("afs_skill \""+skillName+"\" "+slotNumber);
         }
 
         public function votePressed(e:Event) {
@@ -508,6 +576,9 @@ package {
                 skill.x = xx;
                 skill.y = yy;
 
+                // Allow dragging from this
+                dragMakeValidFrom(skill);
+
                 //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
                 skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
                 skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
@@ -551,6 +622,12 @@ package {
                 autoCleanupSpecial(skill, 'skill_'+i);
                 skill.x = xx;
                 skill.y = yy;
+
+                // Store slot number as name
+                skill.name = String(i+1);
+
+                // Allow dragging to this slot
+                dragMakeValidTarget(skill)
 
                 // Hook the skill
                 //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);

@@ -223,7 +223,6 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
     -- Re-give all abilities
     for k,v in ipairs(self.currentSkillList[hero]) do
         hero:AddAbility(v)
-        print("Added: "..v)
     end
 
     -- Send out the updated builds

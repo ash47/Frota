@@ -26,11 +26,14 @@
             imageHolder.scaleY = 0.5;
             this.addChild(imageHolder);
 
-            // Load the image
-            Globals.instance.LoadAbilityImage(this.skillName, imageHolder);
+            // Make sure a skill name was parsed
+            if(skillName != '') {
+                // Load the image
+                Globals.instance.LoadAbilityImage(this.skillName, imageHolder);
 
-            // Adjust text
-            skillNameText.text = "#DOTA_Tooltip_ability_"+this.skillName;
+                // Adjust text
+                skillNameText.text = "#DOTA_Tooltip_ability_"+this.skillName;
+            }
         }
 
         public function UpdateSkill(skillName:String) {
