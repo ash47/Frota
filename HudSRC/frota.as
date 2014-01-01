@@ -81,23 +81,23 @@ package {
         // Makes this movieclip draggable
         public function dragMakeValidFrom(mc) {
             mc.addEventListener(MouseEvent.MOUSE_DOWN, dragMousePressed);
-            mc.addEventListener(MouseEvent.ROLL_OUT, dragValidFrom);
+            mc.addEventListener(MouseEvent.MOUSE_UP, dragMouseReleased);
+            mc.addEventListener(MouseEvent.ROLL_OUT, dragFromRollOut);
         }
         // Makes this movieclip into a valid target
         public function dragMakeValidTarget(mc) {
-            mc.addEventListener(MouseEvent.ROLL_OVER, dragValidTarget);
+            mc.addEventListener(MouseEvent.ROLL_OVER, dragTargetRollOver);
             mc.addEventListener(MouseEvent.ROLL_OUT, dragTargetRollOut);
         }
         public function dragListener(e:MouseEvent) {
             dragClip.x = mouseX;
             dragClip.y = mouseY;
         }
-        public function dragValidTarget(e:MouseEvent) {
+        public function dragTargetRollOver(e:MouseEvent) {
             dragTarget = e.target;
         }
         public function dragMouseUp(e:MouseEvent) {
             dragClickedClip = null;
-
             if(dragClip) {
                 if(dragTarget) {
                     skillIntoSlot(dragClip.name, dragTarget.name);
@@ -117,10 +117,14 @@ package {
             dragClickedClip = e.currentTarget;
             dragTarget = null;
         }
-        public function dragValidFrom(e:MouseEvent) {
+        public function dragMouseReleased(e:MouseEvent) {
+            dragClickedClip = null;
+        }
+        public function dragFromRollOut(e:MouseEvent) {
             // Check if this is the clip we tried to drag
             if(dragClickedClip == e.target) {
                 dragClip = new MovieClip();
+                dragClip.mouseEnabled = false;
                 addChild(dragClip);
 
                 // Make it look nice / give it a name
@@ -138,8 +142,8 @@ package {
             }
         }
         public function dragTargetRollOut(e:MouseEvent) {
-            // Check if this was the current drag target
-            if(dragTarget == e.target) {
+            // Validate target
+            if(e.target == dragTarget) {
                 // Remove drag target
                 dragTarget = null;
             }
