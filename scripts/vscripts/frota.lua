@@ -70,7 +70,7 @@ function FrotaGameMode:InitGameMode()
     -- Setup rules
     GameRules:SetHeroRespawnEnabled( false )
     GameRules:SetUseUniversalShopMode( true )
-    GameRules:SetSameHeroSelectionEnabled(true)
+    GameRules:SetSameHeroSelectionEnabled( true )
     GameRules:SetHeroSelectionTime( 5.0 )
     GameRules:SetPreGameTime( 60.0 )
     GameRules:SetPostGameTime( 60.0 )
