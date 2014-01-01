@@ -7,6 +7,7 @@ package {
     import flash.text.TextField;
     import flash.text.TextFormat;
     import flash.text.TextFormatAlign;
+    import flash.geom.Point;
 
     import scaleform.clik.controls.TextInput;
     import scaleform.clik.events.FocusHandlerEvent;
@@ -56,6 +57,9 @@ package {
         // This will contain movieclips and stuff that needs to be cleaned up
         private var stateCleanup = new Array();
 
+        // Shortcut functions
+        public var Translate;  // Translates a #tag into something readable
+
         public function frota() {
             var a = new DefaultTextInput();
             addChild(a);
@@ -102,6 +106,9 @@ package {
         }
 
         public function onLoaded() : void {
+            // Store shortcut functions
+            Translate = Globals.instance.GameInterface.Translate;
+
             printToServer("Hud init");
             trace("\n\n-- HELLO JOEa! --\n\n");
 
@@ -150,6 +157,9 @@ package {
             Globals.instance.resizeManager.AddListener(this);
             this.gameAPI.OnReady();
             Globals.instance.GameInterface.AddMouseInputConsumer();
+
+            trace("translation test");
+            trace(Translate("#npc_dota_hero_abyssal_underlord"));
 
             //printToServer("Game API:")
             //PrintTable(this.gameAPI, 1);
@@ -395,6 +405,23 @@ package {
             visible = true;
         }
 
+        // Displays the skill info thing about a given skill (requires rollOver event)
+        public function onSkillRollOver(e:MouseEvent) {
+            // Grab what we rolled over
+            var s = e.target;
+
+            // Workout where to put it
+            var lp = s.localToGlobal(new Point(0, 0));
+
+            // Display the info
+            globals.Loader_heroselection.gameAPI.OnSkillRollOver(lp.x, lp.y, s.skillName);
+        }
+
+        // Hides the skill info thing (Requires rollOut event)
+        public function onSkillRollOut(e:MouseEvent) {
+            globals.Loader_heroselection.gameAPI.OnSkillRollOut();
+        }
+
         public function BuildPickingScreen(data:String) {
             // Create a new panel for the skills
             newPanel();
@@ -405,9 +432,50 @@ package {
             var xx:Number = xo;
             var yy:Number = 0;
 
+            var skillData = data.split("||");
+
+            skillData.sort(function(a, b) {
+                // Grab skill data
+                var sa = a.split("::");
+                var sb = b.split("::");
+
+                // Grab translated heroes
+                var ha = Translate("#"+sa[2]);
+                var hb = Translate("#"+sb[2]);
+
+                // Sort by hero, then type, then skill name
+                if(ha < hb) {
+                    return -1;
+                } else if(ha > hb) {
+                    return 1;
+                } else {
+                    // Grab ability types
+                    var ta = sa[1];
+                    var tb = sb[1];
+
+                    if(ta < tb) {
+                        return -1;
+                    } else if(ta > tb) {
+                        return 1;
+                    } else {
+                        // Grab translated skill names
+                        var na = Translate("#DOTA_Tooltip_ability_"+sa[0]);
+                        var nb = Translate("#DOTA_Tooltip_ability_"+sb[0]);
+
+                        if(na < nb) {
+                            return -1;
+                        } else if(na > nb) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                }
+            })
+
             // Put all the icons in
-            for each (var s:String in data.split("||")) {
-                var skillInfo = s.split("::")
+            for each (var s:String in skillData) {
+                var skillInfo = s.split("::");
 
                 var skill = new Skill(skillInfo[0], skillInfo[1], skillInfo[2]);
                 addPanelChild(skill);
@@ -415,6 +483,8 @@ package {
                 skill.y = yy;
 
                 skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
+                skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
+                skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
 
                 xx = xx + iconWidth + padding;
                 if(xx+iconWidth > getContentWidth()) {

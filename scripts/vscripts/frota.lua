@@ -454,7 +454,7 @@ function FrotaGameMode:VoteForGamemode()
                     options = {
                         ["King of the Shop"] = "Defend the shop, yo"
                     },
-                    duration = 30,
+                    duration = 5,
                     onFinish = function(winners)
                         print("Made it!")
 
