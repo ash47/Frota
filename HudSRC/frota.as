@@ -14,18 +14,13 @@ package {
     import ValveLib.Globals;
 
     public class frota extends MovieClip {
+        // Game API related stuff
         public var gameAPI:Object;
         public var globals:Object;
         public var elementName:String;
 
-        //public var Button1;
-        //public var Button2;
-
-        //public var SelectSlot1;
-        //public var SelectSlot2;
-        //public var SelectSlot3;
-        //public var SelectSlot4;
-
+        // These vars determain how much of the stage we can use
+        // They are updated as the stage size changes
         public var maxStageWidth:Number = 1366;
         public var maxStageHeight:Number = 768;
 
@@ -34,28 +29,32 @@ package {
         public var voteHeight:Number = 31;
 
         // Main panel stuff
-        public var contentPanelHolder:ScrollPane;
-        public var contentPanel:MovieClip;
+        private var contentPanelHolder:ScrollPane;
+        private var contentPanel:MovieClip;
 
-        public var selectedSkill:MovieClip;
+        // This contains the currently selected skill (will probably be removed)
+        private var selectedSkill:MovieClip;
 
+        // This is the red mask thingo (for lining stuff up)
         public var hudMask:MovieClip;
 
-        public var voteHolder:Object;
+        // This holds vote panels (so we can update them)
+        private var voteHolder:Object;
 
         // State control
-        public var currentState:Number = 0;
-        public var gottenInitialState = false;
-        public var STATE_INIT = 0;
-        public var STATE_VOTING = 1;
-        public var STATE_PICKING = 2;
-        public var STATE_BANNING = 3;
-        public var STATE_PLAYING = 4;
+        private var currentState:Number = 0;
+        private var gottenInitialState = false;
+        private var STATE_INIT = 0;
+        private var STATE_VOTING = 1;
+        private var STATE_PICKING = 2;
+        private var STATE_BANNING = 3;
+        private var STATE_PLAYING = 4;
 
+        // This is for toggling input on text fields
         private var bGotInput = false;
 
         // This will contain movieclips and stuff that needs to be cleaned up
-        public var stateCleanup = new Array();
+        private var stateCleanup = new Array();
 
         public function frota() {
             var a = new DefaultTextInput();
@@ -144,16 +143,6 @@ package {
 
             a.text = "#npc_dota_hero_abyssal_underlord";
 
-            /*a.actAsButton = false;
-            a.displayAsPassword = false;
-            a.editable = true;
-            a.enabled = true;
-            a.focusable = true;
-            a.maxChars = 32;
-            a.text = "";
-            a.visible = true;
-            a.constraintsDisabled = true;*/
-
             a.addEventListener(FocusHandlerEvent.FOCUS_IN, inputBoxGainFocus);
             a.addEventListener(FocusHandlerEvent.FOCUS_OUT, inputBoxLoseFocus);
 
@@ -181,12 +170,7 @@ package {
                     var abName = globals.Abilities.GetAbilityName(ab);
                     printToServer("Found "+abName);
                 }
-            }
-
-
-
-            printToServer(globals.Entities.IsHero(heroID));
-            printToServer("Done debugging!");*/
+            }*/
         }
 
         public function inputBoxGainFocus() {
@@ -356,7 +340,7 @@ package {
             }
 
             var s = e.currentTarget;
-            selectedSkill = new Skill(s.skillName, s.skillSort, s.skillHero, s.skillNiceName, s.skillDes);
+            selectedSkill = new Skill(s.skillName, s.skillSort, s.skillHero);
             addChild(selectedSkill);
             selectedSkill.x = 480;
             selectedSkill.y = 554;
@@ -425,7 +409,7 @@ package {
             for each (var s:String in data.split("||")) {
                 var skillInfo = s.split("::")
 
-                var skill = new Skill(skillInfo[0], skillInfo[1], skillInfo[2], skillInfo[3], skillInfo[4]);
+                var skill = new Skill(skillInfo[0], skillInfo[1], skillInfo[2]);
                 addPanelChild(skill);
                 skill.x = xx;
                 skill.y = yy;

@@ -3,33 +3,31 @@
     import flash.events.*;
     import flash.net.URLRequest;
 
+    import ValveLib.Globals;
+
 	public class Skill extends MovieClip {
         public var skillNameText;
 
         public var skillName:String;
         public var skillSort:String
         public var skillHero:String
-        public var skillNiceName:String
-        public var skillDes:String
 
+        private var imageHolder:MovieClip;
 
-        public function Skill(skillName:String, skillSort:String, skillHero:String, skillNiceName:String, skillDes:String) {
+        public function Skill(skillName:String, skillSort:String, skillHero:String) {
             // Store the info
             this.skillName = skillName;
             this.skillSort = skillSort;
             this.skillHero = skillHero;
-            this.skillNiceName = skillNiceName;
-            this.skillDes = skillDes;
+
+            // Create somewhere to place the image
+            imageHolder = new MovieClip();
+            imageHolder.scaleX = 0.5;
+            imageHolder.scaleY = 0.5;
+            this.addChild(imageHolder);
 
             // Load the image
-            var myImageLoader:Loader = new Loader();
-            var myImageLocation:URLRequest = new URLRequest("images/spellicons/"+this.skillName+".png");
-            myImageLoader.load(myImageLocation);
-            addChild(myImageLoader);
-
-            // Scale it correctly
-            myImageLoader.scaleX = 0.5;
-            myImageLoader.scaleY = 0.5;
+            Globals.instance.LoadAbilityImage(this.skillName, imageHolder);
 
             // Adjust text
             skillNameText.text = "#DOTA_Tooltip_ability_"+this.skillName;

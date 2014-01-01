@@ -26,7 +26,6 @@ package ValveLib.Controls
       protected var _autoCompleteList:ScrollingList;
 
       override public function handleInput(param1:InputEvent) : void {
-         trace("Got some input!");
          var _loc6_:IDataProvider = null;
          var _loc7_:ButtonEvent = null;
          var _loc8_:ButtonEvent = null;

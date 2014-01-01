@@ -111,6 +111,18 @@ function FrotaGameMode:RegisterCommands()
             d = self.currentStateData
         })
     end, "Client requested the current state", 0 )
+
+    -- Swap heroes
+    Convars:RegisterCommand( "afs_swap_hero", function(name, msg)
+        local cmdPlayer = Convars:GetCommandClient()
+        if cmdPlayer then
+            local playerID = cmdPlayer:GetPlayerID()
+            if playerID ~= nil and playerID ~= -1 then
+                cmdPlayer:ReplaceHeroWith('npc_dota_hero_bane', 0, 0)
+                return
+            end
+        end
+    end, "Swaps a given players hero to bane.", 0 )
 end
 
 function FrotaGameMode:LoadAbilityList()
@@ -141,26 +153,11 @@ function FrotaGameMode:LoadAbilityList()
 
                 ::foundHeroName::
 
-                -- Find the nice name of this ability
-                local niceName = ""
-                local des = ""
-                --[[for textField, value in pairs(englishPack.Tokens) do
-                    if textField == "DOTA_Tooltip_ability_"..kk then
-                        niceName = value
-                    end
-
-                    if textField == "DOTA_Tooltip_ability_"..kk.._Description then
-                        des = value
-                    end
-                end]]
-
                 -- Store this skill
                 table.insert(self.vAbList, {
                     name = kk,
                     sort = k,
-                    hero = heroOwner,
-                    niceName = niceName,
-                    des = des
+                    hero = heroOwner
                 })
             end
         end
@@ -472,7 +469,7 @@ end
 function FrotaGameMode:BuildAbilityListData()
     local sSkillList = ""
     for k,v in pairs(self.vAbList) do
-        local sSkill = v.name.."::"..v.sort.."::"..v.hero.."::"..v.niceName.."::"..v.des
+        local sSkill = v.name.."::"..v.sort.."::"..v.hero
 
         sSkillList = sSkillList..sSkill.."||"
     end
