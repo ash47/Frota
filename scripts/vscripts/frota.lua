@@ -151,6 +151,23 @@ function FrotaGameMode:RegisterCommands()
     end, "Swaps a given players hero to bane.", 0 )
 end
 
+function FrotaGameMode:FindHeroOwner(skillName)
+    local heroOwner = ""
+    for heroName, values in pairs(self.heroList) do
+        if type(values) == "table" then
+            for i = 1, 16 do
+                if values["Ability"..i] == skillName then
+                    heroOwner = heroName
+                    goto foundHeroName
+                end
+            end
+        end
+    end
+
+    ::foundHeroName::
+    return heroOwner
+end
+
 function FrotaGameMode:LoadAbilityList()
     local abs = LoadKeyValues( "scripts/kv/abilities.kv" )
     self.heroList = LoadKeyValues( "scripts/npc/npc_heroes.txt" )
@@ -179,6 +196,14 @@ function FrotaGameMode:LoadAbilityList()
 
                 ::foundHeroName::
 
+                -- Check if the owner was found
+                if heroOwner ~= '' then
+                    --print('precache: '..heroOwner)
+                    --local heroOwner = FindHeroOwner()
+                    --local unit = CreateUnitByName(heroOwner, Vec3(0,0,0), true, nil, nil, DOTA_TEAM_BADGUYS)
+                    --UTIL_RemoveImmediate(unit)
+                end
+
                 -- Store this skill
                 table.insert(self.vAbList, {
                     name = kk,
@@ -202,7 +227,7 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
     end
 
     -- Preache the new skill
-    PrecacheSkill(skillName)
+    self:PrecacheSkill(skillName)
 
     -- Check if we've touched this hero before
     if not self.currentSkillList[hero] then
@@ -275,6 +300,8 @@ function FrotaGameMode:ToggleReadyState(playerID)
     if allReady then
         -- Change to game time
         print('GAME START NOW!')
+
+
 
         -- Begin gameplay
         self:ChangeState(STATE_PLAYING, '')
@@ -586,10 +613,21 @@ function FrotaGameMode:BuildAbilityListData()
     return sSkillList..'|||'..self:BuildBuildsData()..'|||'..'Bans will go here';
 end
 
-function PrecacheSkill(skillName)
-    PrecacheEntityFromTable({
-        Ability1 = skillName
-    })
+function FrotaGameMode:PrecacheSkill(skillName)
+    --[[PrecacheEntityFromTable({
+        classname = skillName
+    })]]
+
+    local heroOwner = self:FindHeroOwner(skillName)
+    --local unit = CreateUnitByName(heroOwner, Vec3(0,0,0), true, nil, nil, DOTA_TEAM_BADGUYS)
+    --UTIL_RemoveImmediate(unit)
+    --print("created a "..heroOwner)
+    if heroOwner then
+        PrecacheUnit(heroOwner)
+        print('precached '..skillName)
+    else
+        print('FAILED TO PRECACHE '..skillName)
+    end
 end
 
 EntityFramework:RegisterScriptClass( FrotaGameMode )
