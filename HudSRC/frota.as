@@ -3,6 +3,7 @@ package {
     import flash.events.*;
     import fl.containers.ScrollPane;
     import fl.controls.ScrollPolicy;
+    import fl.controls.Button;
     import flash.utils.Timer;
     import flash.text.TextField;
     import flash.text.TextFormat;
@@ -24,6 +25,9 @@ package {
         // They are updated as the stage size changes
         public var maxStageWidth:Number = 1366;
         public var maxStageHeight:Number = 768;
+
+        // Amount of space to leave under the bottom
+        public var bottomMargin:Number = 90;
 
         // Sizing
         public var iconWidth:Number = 64;
@@ -79,82 +83,14 @@ package {
 
         public function frota() {}
 
-        // Makes this movieclip draggable
-        public function dragMakeValidFrom(mc) {
-            mc.addEventListener(MouseEvent.MOUSE_DOWN, dragMousePressed);
-            mc.addEventListener(MouseEvent.MOUSE_UP, dragMouseReleased);
-            mc.addEventListener(MouseEvent.ROLL_OUT, dragFromRollOut);
-        }
-        // Makes this movieclip into a valid target
-        public function dragMakeValidTarget(mc) {
-            mc.addEventListener(MouseEvent.ROLL_OVER, dragTargetRollOver);
-            mc.addEventListener(MouseEvent.ROLL_OUT, dragTargetRollOut);
-        }
-        public function dragListener(e:MouseEvent) {
-            dragClip.x = mouseX;
-            dragClip.y = mouseY;
-        }
-        public function dragTargetRollOver(e:MouseEvent) {
-            dragTarget = e.target;
-        }
-        public function dragMouseUp(e:MouseEvent) {
-            dragClickedClip = null;
-            if(dragClip) {
-                if(dragTarget) {
-                    skillIntoSlot(dragClip.name, dragTarget.name);
-                }
-
-                // Remove drag object
-                removeChild(dragClip);
-                dragClip = null;
-
-                // Remove move event
-                stage.removeEventListener(MouseEvent.MOUSE_MOVE, dragListener);
-            }
-
-            stage.removeEventListener(MouseEvent.MOUSE_UP, dragMouseUp)
-        }
-        public function dragMousePressed(e:MouseEvent) {
-            dragClickedClip = e.currentTarget;
-            dragTarget = null;
-        }
-        public function dragMouseReleased(e:MouseEvent) {
-            dragClickedClip = null;
-        }
-        public function dragFromRollOut(e:MouseEvent) {
-            // Check if this is the clip we tried to drag
-            if(dragClickedClip == e.target) {
-                dragClip = new MovieClip();
-                dragClip.mouseEnabled = false;
-                addChild(dragClip);
-
-                // Make it look nice / give it a name
-                dragClip.name = dragClickedClip.skillName;
-                Globals.instance.LoadAbilityImage(dragClickedClip.skillName, dragClip);
-                dragClip.scaleX = 0.5;
-                dragClip.scaleY = 0.5;
-
-                // Add listeners
-                stage.addEventListener(MouseEvent.MOUSE_MOVE, dragListener);
-                stage.addEventListener(MouseEvent.MOUSE_UP, dragMouseUp);
-
-                // Stop it from procing again
-                dragClickedClip = null;
-            }
-        }
-        public function dragTargetRollOut(e:MouseEvent) {
-            // Validate target
-            if(e.target == dragTarget) {
-                // Remove drag target
-                dragTarget = null;
-            }
-        }
-
         public function onLoaded() : void {
             // Store shortcut functions
             Translate = Globals.instance.GameInterface.Translate;
 
             trace("\n\n-- Frota hud starting to load! --\n\n");
+
+            //trace('globals:');
+            //PrintTable(globals, 1);
 
             this.gameAPI.SubscribeToGameEvent("hero_picker_hidden", this.requestCurrentState);
             this.gameAPI.SubscribeToGameEvent("afs_initial_state", this.receiveInitialState);
@@ -293,10 +229,16 @@ package {
                 case STATE_PICKING:
                     this.ProcessPickingData(args.d);
                     this.BuildPickingScreen();
+                    hideGame.visible = true;
                 break;
 
                 case STATE_VOTING:
                     this.BuildVoteScreen(args.d);
+                    hideGame.visible = true;
+                break;
+
+                case STATE_PLAYING:
+                    hideGame.visible = false;
                 break;
 
                 default:
@@ -396,14 +338,15 @@ package {
                 var skillList = [];
 
                 // Store all skills in this build
-                for(i=1; i<buildInfo.length; i++) {
+                for(i=2; i<buildInfo.length; i++) {
                     skillList.push(buildInfo[i]);
                 }
 
                 // Store the skill data
                 pickingData.builds.push({
                     hero: buildInfo[0],
-                    skills: skillList
+                    skills: skillList,
+                    ready: (Number(buildInfo[1]) == 1)
                 });
             }
 
@@ -432,13 +375,27 @@ package {
                 }
             }
 
+            // The last set that is visible
+            var lastVisible = 0;
+
             // Side icons
             for(i=0; i<10; i++) {
                 var build = pickingData.builds[i];
                 if(build) {
+                    var shouldDisplay = (globals.Players.GetPlayerHeroEntityIndex(i) != -1);
+
+                    if(shouldDisplay) lastVisible = i;
+
                     // Update Hero Image
                     skill = getSpecial('hero_'+i);
-                    if(skill) skill.UpdateHero(build.hero);
+                    if(skill) {
+                        skill.UpdateHero(build.hero);
+                        skill.visible = shouldDisplay;
+                    }
+
+                    // Update ready state
+                    skill = getSpecial('ready_'+i);
+                    if(skill) skill.visible = shouldDisplay && build.ready;
 
                     for(j=0; j<maxSkills; j++) {
                         skill = getSpecial('skill_'+i+'_'+j);
@@ -449,6 +406,7 @@ package {
 
                             // Found it, update it
                             skill.UpdateSkill(skillName);
+                            skill.visible = shouldDisplay;
                         }
                     }
                 }
@@ -488,9 +446,9 @@ package {
 
             // Build Skill Picking panel
             contentPanelHolder = new ScrollPane();
-            contentPanelHolder.setSize(maxStageWidth-336, maxStageHeight-128-iconHeight-16);
+            contentPanelHolder.setSize(maxStageWidth-368, maxStageHeight - iconHeight - bottomMargin - 120);
             addChild(contentPanelHolder)
-            contentPanelHolder.x = 192;
+            contentPanelHolder.x = 208;
             contentPanelHolder.y = 64;
 
             // Setup the panel where the icons will go
@@ -551,6 +509,11 @@ package {
                 if(typeof(v) == "object") {
                     trace(strRep("\t", indent)+key+":")
                     PrintTable(v, indent+1);
+
+                    if(v.gameAPI) {
+                        trace(strRep("\t", indent+1)+"gameAPI:")
+                        PrintTable(v.gameAPI, indent+2);
+                    }
                 } else {
                     trace(strRep("\t", indent)+key.toString()+": "+v.toString());
                 }
@@ -584,14 +547,14 @@ package {
         }
 
         public function BuildPickingScreen() {
-            var skill:MovieClip, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, sx:Number;
+            var skill:MovieClip, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, sx:Number, sy:Number;
 
             // Create a new panel for the skills
             newPanel();
 
             // Setting for skill picking panel
             var padding:Number = 4;
-            var xo = (getContentWidth() - Math.floor(getContentWidth()/(iconWidth+padding))*iconWidth)/2;
+            var xo = 16;//(getContentWidth() - Math.floor(getContentWidth()/(iconWidth+padding))*iconWidth)/4;
             var xx:Number = xo;
             var yy:Number = 0;
 
@@ -636,7 +599,7 @@ package {
             totalWidth = (iconWidth+xpadding) * maxSkills - xpadding;
 
             xx = (maxStageWidth - totalWidth) / 2;
-            yy = maxStageHeight - iconHeight - 32;
+            yy = maxStageHeight - iconHeight - bottomMargin - 32;
 
             for(i=0; i<maxSkills; i++) {
                 // Grab name of this skill
@@ -668,23 +631,50 @@ package {
             // Settings
             xpadding = 4;
             ypadding = 4;
-            totalWidth = (iconMiniSize+xpadding) * maxSkills;
+            totalWidth = (iconMiniSize+xpadding) * (maxSkills+1) + 128/4.5 + xpadding;
 
             // Workout where to place them
             sx = maxStageWidth - totalWidth;
+            sy = 64;
             xx = sx;
-            yy = 64;
+            yy = sy;
+
+            // Grab total players
+            var totalPlayers = globals.Players.GetMaxPlayers();
+
+            var lastVisible = 0;
 
             // Loop over all 10 builds
             for(i=0; i<10; i++) {
                 // Grab and validate the build
                 var build = pickingData.builds[i];
                 if(build) {
-                    // Create hero image thingo
-                    skill = new HeroDisplayMini(build.hero);
-                    autoCleanupSpecial(skill, 'hero_'+i);
-                    skill.x = xx-xpadding-skill.width;
+                    // Check if we should show these stats
+                    var shouldDisplay = (globals.Players.GetPlayerHeroEntityIndex(i) != -1);
+
+                    // If so, store this as the last visible
+                    if(shouldDisplay) lastVisible = i;
+
+                    // Ready state
+                    skill = new MovieClip();
+                    autoCleanupSpecial(skill, 'ready_'+i);
+                    skill.x = xx;
                     skill.y = yy;
+                    skill.visible = shouldDisplay && build.ready;
+                    Globals.instance.LoadImage('images/hud/tick.png', skill, false);
+                    skill.scaleX = 0.5;
+                    skill.scaleY = 0.5;
+
+                    xx += iconMiniSize + xpadding;
+
+                    // Create hero image thingo
+                    var heroIcon = new HeroDisplayMini(build.hero);
+                    autoCleanupSpecial(heroIcon, 'hero_'+i);
+                    heroIcon.x = xx;
+                    heroIcon.y = yy;
+                    heroIcon.visible = shouldDisplay;
+
+                    xx += 128/4.5 + xpadding;
 
                     // Loop over all the skills in the build
                     for(j=0; j<maxSkills; j++) {
@@ -697,6 +687,7 @@ package {
                         autoCleanupSpecial(skill, 'skill_'+i+'_'+j);
                         skill.x = xx;
                         skill.y = yy;
+                        skill.visible = shouldDisplay;
 
                         // Allow dragging from this
                         dragMakeValidFrom(skill);
@@ -712,6 +703,18 @@ package {
                 xx = sx;
                 yy += iconMiniSize + ypadding;
             }
+
+            // Add ready button
+            var readyButton = new Button();
+            readyButton.x = sx + (totalWidth-readyButton.width)/2;
+            readyButton.y = sy + getContentHeight();
+            readyButton.label = "#afs_toggle_ready";
+            readyButton.addEventListener(MouseEvent.CLICK, this.readyPressed);
+            autoCleanup(readyButton);
+        }
+
+        public function readyPressed() {
+            gameAPI.SendServerCommand("afs_ready_pressed");
         }
 
         public function BuildVoteScreen(data:String) {
@@ -789,6 +792,77 @@ package {
 
             // Update the scrollbar
             updatePanel();
+        }
+
+        // Makes this movieclip draggable
+        public function dragMakeValidFrom(mc) {
+            mc.addEventListener(MouseEvent.MOUSE_DOWN, dragMousePressed);
+            mc.addEventListener(MouseEvent.MOUSE_UP, dragMouseReleased);
+            mc.addEventListener(MouseEvent.ROLL_OUT, dragFromRollOut);
+        }
+        // Makes this movieclip into a valid target
+        public function dragMakeValidTarget(mc) {
+            mc.addEventListener(MouseEvent.ROLL_OVER, dragTargetRollOver);
+            mc.addEventListener(MouseEvent.ROLL_OUT, dragTargetRollOut);
+        }
+        public function dragListener(e:MouseEvent) {
+            dragClip.x = mouseX;
+            dragClip.y = mouseY;
+        }
+        public function dragTargetRollOver(e:MouseEvent) {
+            dragTarget = e.target;
+        }
+        public function dragMouseUp(e:MouseEvent) {
+            dragClickedClip = null;
+            if(dragClip) {
+                if(dragTarget) {
+                    skillIntoSlot(dragClip.name, dragTarget.name);
+                }
+
+                // Remove drag object
+                removeChild(dragClip);
+                dragClip = null;
+
+                // Remove move event
+                stage.removeEventListener(MouseEvent.MOUSE_MOVE, dragListener);
+            }
+
+            stage.removeEventListener(MouseEvent.MOUSE_UP, dragMouseUp)
+        }
+        public function dragMousePressed(e:MouseEvent) {
+            dragClickedClip = e.currentTarget;
+            dragTarget = null;
+        }
+        public function dragMouseReleased(e:MouseEvent) {
+            dragClickedClip = null;
+        }
+        public function dragFromRollOut(e:MouseEvent) {
+            // Check if this is the clip we tried to drag
+            if(dragClickedClip == e.target) {
+                dragClip = new MovieClip();
+                dragClip.mouseEnabled = false;
+                addChild(dragClip);
+
+                // Make it look nice / give it a name
+                dragClip.name = dragClickedClip.skillName;
+                Globals.instance.LoadAbilityImage(dragClickedClip.skillName, dragClip);
+                dragClip.scaleX = 0.5;
+                dragClip.scaleY = 0.5;
+
+                // Add listeners
+                stage.addEventListener(MouseEvent.MOUSE_MOVE, dragListener);
+                stage.addEventListener(MouseEvent.MOUSE_UP, dragMouseUp);
+
+                // Stop it from procing again
+                dragClickedClip = null;
+            }
+        }
+        public function dragTargetRollOut(e:MouseEvent) {
+            // Validate target
+            if(e.target == dragTarget) {
+                // Remove drag target
+                dragTarget = null;
+            }
         }
     }
 }

@@ -58,7 +58,8 @@ function FrotaGameMode:_SetInitialValues()
                 [2] = 'axe_battle_hunger',
                 [3] = 'axe_counter_helix',
                 [4] = 'axe_culling_blade'
-            }
+            },
+            ready = false
         }
     end
 end
@@ -88,6 +89,9 @@ end
 function FrotaGameMode:RegisterCommands()
     -- When a user tries to put a skill into a slot
     Convars:RegisterCommand( "afs_skill", function(name, skillName, slotNumber)
+        -- Verify we are in picking mode
+
+
         local cmdPlayer = Convars:GetCommandClient()
         if cmdPlayer then
             local hero = cmdPlayer:GetAssignedHero()
@@ -96,7 +100,22 @@ function FrotaGameMode:RegisterCommands()
                 return
             end
         end
-    end, "Print a message to the server console", 0 )
+    end, "A user tried to put a skill into a slot", 0 )
+
+    -- When a user toggles ready state
+    Convars:RegisterCommand( "afs_ready_pressed", function(name, skillName, slotNumber)
+        -- Verify we are in a state that needs ready
+
+
+        local cmdPlayer = Convars:GetCommandClient()
+        if cmdPlayer then
+            local playerID = cmdPlayer:GetPlayerID()
+            if playerID >= 0 and playerID <= 9 then
+                self:ToggleReadyState(playerID)
+                return
+            end
+        end
+    end, "Used tried to toggle their ready state", 0 )
 
     -- When a user tries to vote on something
     Convars:RegisterCommand( "afs_vote", function(name, vote, multi)
@@ -112,8 +131,6 @@ function FrotaGameMode:RegisterCommands()
 
     -- State handeling
     Convars:RegisterCommand( "afs_request_state", function(name, args)
-        print("\nState Was Requested\n")
-
         -- Send out state info
         FireGameEvent("afs_initial_state", {
             nState = self.currentState,
@@ -184,6 +201,9 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
         return
     end
 
+    -- Preache the new skill
+    PrecacheSkill(skillName)
+
     -- Check if we've touched this hero before
     if not self.currentSkillList[hero] then
         -- Grab the name of this hero
@@ -234,9 +254,42 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
     self.currentStateData = self:BuildAbilityListData()
 end
 
-function FrotaGameMode:ChangeState(newState, newData)
-    print("\nState Was Updated\n")
+function FrotaGameMode:ToggleReadyState(playerID)
+    -- Validate playerID
+    if(playerID < 0 or playerID > 9) then
+        return
+    end
 
+    -- Toggle ready state
+    self.selectedBuilds[playerID].ready = not self.selectedBuilds[playerID].ready
+
+    -- Check if everyone is ready
+    local allReady = true
+    for i=0,9 do
+        if Players:IsValidPlayer(i) and (not self.selectedBuilds[i].ready) then
+            allReady = false
+            break
+        end
+    end
+
+    if allReady then
+        -- Change to game time
+        print('GAME START NOW!')
+
+        -- Begin gameplay
+        self:ChangeState(STATE_PLAYING, '')
+    else
+        -- Send out the updated data
+        FireGameEvent("afs_update_builds", {
+            d = self:BuildBuildsData()
+        })
+
+        -- Update the state data
+        self.currentStateData = self:BuildAbilityListData()
+    end
+end
+
+function FrotaGameMode:ChangeState(newState, newData)
     -- Update local state
     self.currentState = newState;
     self.currentStateData = newData;
@@ -480,8 +533,6 @@ function FrotaGameMode:VoteForGamemode()
                 },
                 duration = 5,
                 onFinish = function(winners)
-                    print("Made it!")
-
                     -- Load up LoD
                     self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
                 end
@@ -496,12 +547,21 @@ function FrotaGameMode:BuildBuildsData()
     for i = 0,9 do
         local v = self.selectedBuilds[i]
 
-        local sBuild = v.hero
+        -- Convert ready bool into a number
+        local ready = 0
+        if v.ready then
+            ready = 1
+        end
 
+        -- Add hero and ready state
+        local sBuild = v.hero..'::'..ready
+
+        -- Add all skills
         for kk, vv in pairs(v.skills) do
             sBuild = sBuild..'::'..vv
         end
 
+        -- Add to the master list
         sBuildList = sBuildList..sBuild..'||'
     end
 
@@ -524,6 +584,12 @@ function FrotaGameMode:BuildAbilityListData()
 
     -- Return the data
     return sSkillList..'|||'..self:BuildBuildsData()..'|||'..'Bans will go here';
+end
+
+function PrecacheSkill(skillName)
+    PrecacheEntityFromTable({
+        Ability1 = skillName
+    })
 end
 
 EntityFramework:RegisterScriptClass( FrotaGameMode )
