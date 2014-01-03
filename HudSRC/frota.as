@@ -730,9 +730,9 @@ package {
 
                     // Update timer, with a nice display
                     if(timeLeft > 0 && timeLeft != 1) {
-                        txt.text = timeLeft+" #afs_seconds_remaining";
+                        txt.text = timeLeft+" "+Translate("#afs_seconds_remaining");
                     } else if(timeLeft == 1) {
-                        txt.text = "1 #afs_second_remaining";
+                        txt.text = 1+Translate("#afs_second_remaining");
                     } else {
                         txt.text = "#afs_vote_waiting_to_end";
                     }

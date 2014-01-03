@@ -79,7 +79,7 @@ function FrotaGameMode:InitGameMode()
     GameRules:SetHeroRespawnEnabled( false )
     GameRules:SetUseUniversalShopMode( true )
     GameRules:SetSameHeroSelectionEnabled( true )
-    GameRules:SetHeroSelectionTime( 5.0 )
+    GameRules:SetHeroSelectionTime( 0.0 )
     GameRules:SetPreGameTime( 60.0 )
     GameRules:SetPostGameTime( 60.0 )
     GameRules:SetTreeRegrowTime( 60.0 )
@@ -88,6 +88,37 @@ function FrotaGameMode:InitGameMode()
     GameRules:SetRuneMinimapIconScale( 0.7 )
 
     -- Hooks
+    ListenToGameEvent('player_connect_full', function(self, keys)
+        -- Grab the entity index of this player
+        local entIndex = keys.index+1
+        local ply = EntIndexToHScript(entIndex)
+
+        -- Find the team with the least players
+        local teamSize = {
+            [DOTA_TEAM_GOODGUYS] = 0,
+            [DOTA_TEAM_BADGUYS] = 0
+        }
+
+        for i=0, 9 do
+            if Players:IsValidPlayer(i) then
+                print('valid player '..i)
+                local ply = Players:GetPlayer(i)
+                if ply then
+                    -- Grab the players team
+                    local team = ply:GetTeam()
+
+                    -- Increase the number of players on this players team
+                    teamSize[team] = (teamSize[team] or 0) + 1
+                end
+            end
+        end
+
+        if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then
+            ply:SetTeam(DOTA_TEAM_BADGUYS)
+        else
+            ply:SetTeam(DOTA_TEAM_GOODGUYS)
+        end
+    end, self)
 
     -- Load initital Values
     self:_SetInitialValues()
@@ -386,8 +417,18 @@ function FrotaGameMode:Think()
     if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
         for i=0, 9 do
             if Players:IsValidPlayer(i) and not Players:GetSelectedHeroEntity(i) then
+                -- Grab the player and create them a default hero
                 local ply = Players:GetPlayer(i)
                 CreateHeroForPlayer('npc_dota_hero_axe', ply)
+
+                -- Check if we are in a game
+                if self.currentState == STATE_PLAYING then
+                    -- Check if we need to assign a hero
+                    local assignHero = self:GetAssignHero()
+                    if assignHero then
+                        assignHero(ply)
+                    end
+                end
             end
         end
     end
@@ -401,6 +442,11 @@ function FrotaGameMode:Think()
     self.t0 = now
 
     self:thinkState( dt )
+end
+
+-- Finds a function that assigns heroes
+function FrotaGameMode:GetAssignHero()
+    return (self.pickMode and self.pickMode.assignHero) or (self.playMode and self.playMode.assignHero)
 end
 
 function FrotaGameMode:CreateVote(args)
@@ -437,7 +483,7 @@ function FrotaGameMode:CastVote(playerID, vote, mutli)
     if self.currentVote.sort == VOTE_SORT_SINGLE then
         -- Single vote, remove their old vote
         for k, v in pairs(self.currentVote.options) do
-            if v.votes[playerID] then
+            if v.votes[playerID] == 1 then
                 v.votes[playerID] = 0
                 v.count = v.count - 1
             end
@@ -449,12 +495,12 @@ function FrotaGameMode:CastVote(playerID, vote, mutli)
     else
         -- Adjust this user's vote
         if mutli then
-            if not usersChoice.votes[playerID] then
+            if usersChoice.votes[playerID] == 0 then
                 usersChoice.votes[playerID] = 1
                 usersChoice.count = usersChoice.count + 1
             end
         else
-            if usersChoice.votes[playerID] then
+            if usersChoice.votes[playerID] == 1 then
                 usersChoice.votes[playerID] = 0
                 usersChoice.count = usersChoice.count - 1
             end
@@ -641,6 +687,11 @@ function FrotaGameMode:VoteForGamemode()
 end
 
 function FrotaGameMode:LoadGamemode(pickMode, playMode)
+    -- Store the modes
+    self.pickMode = pickMode
+    self.playMode = playMode
+
+    -- Depending on the type, it will be loaded differently
     if pickMode.sort == GAMEMODE_PICK then
         -- Load picking stuff
 
