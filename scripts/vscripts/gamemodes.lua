@@ -9,6 +9,7 @@ local function RegisterGamemode(name, args)
     gamemodes.g[name] = args
 end
 
+-- Gets all the gamemodes that have a picking state
 function GetPickingGamemodes()
     local modes = {}
 
@@ -22,6 +23,7 @@ function GetPickingGamemodes()
     return modes
 end
 
+-- Gets all the gamemodes that have a playing state (unless they also have a picking state)
 function GetPlayingGamemodes()
     local modes = {}
 
@@ -35,6 +37,11 @@ function GetPlayingGamemodes()
     return modes
 end
 
+-- Gets the table with info on a gamemode
+function GetGamemode(name)
+    return gamemodes.g[name]
+end
+
 -- Legends of Dota
 RegisterGamemode('lod', {
     -- This gamemode is only for picking
@@ -45,8 +52,28 @@ RegisterGamemode('lod', {
     pickSkills = true
 })
 
---
+-- Standard Arena PvP
 RegisterGamemode('arena', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_PLAY
+})
+
+-- A Pudge Wars Base Gamemode
+RegisterGamemode('pudgewars', {
+    -- Gamemode only has a gameplay component
+    sort = GAMEMODE_BOTH,
+
+    -- Function to give out heroes
+    assignHero = function(ply)
+        ply:ReplaceHeroWith('npc_dota_hero_pudge', 0, 0)
+    end,
+
+    -- A list of options for fast gameplay stuff
+    options = {
+        -- Kills give team points
+        killsScore = true,
+
+        -- Score Limit
+        killLimit = 10
+    }
 })

@@ -592,8 +592,26 @@ function FrotaGameMode:VoteForGamemode()
         options = options,
         duration = 30,
         onFinish = function(winners)
-            -- Just change to LoD
-            self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
+            -- Grab the winning option, we need to remove the #afs_name_ from the start
+            local mode = string.sub(winners[math.random(1, #winners)], 11)
+
+            print(mode)
+
+            -- Grab the mode
+            local gamemode = GetGamemode(mode)
+
+            -- Check if it was a picking gamemode
+            if gamemode.sort == GAMEMODE_PICK then
+                -- We need a gameplay gamemode now
+
+                -- Instead, just change to LoD
+                self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
+            else
+                -- We must have gotten someone we can just run
+                self:LoadGamemode(gamemode)
+            end
+
+
 
             --[[self:CreateVote({
                 sort = VOTE_SORT_SINGLE,
@@ -608,6 +626,31 @@ function FrotaGameMode:VoteForGamemode()
             })]]
         end
     })
+end
+
+function FrotaGameMode:LoadGamemode(pickMode, playMode)
+    if pickMode.sort == GAMEMODE_PICK then
+        -- Load picking stuff
+
+    else
+        -- Load the game
+
+        -- Attempt to assign heroes
+        local assignHero = pickMode.assignHero
+        if assignHero then
+            -- Loop over every player
+            for i=0, 9 do
+                -- Check if they are in
+                if Players:IsValidPlayer(i) then
+                    -- Assign them a hero
+                    assignHero(Players:GetPlayer(i))
+                end
+            end
+        end
+
+        -- Fire game start event
+        self:ChangeState(STATE_PLAYING, '')
+    end
 end
 
 function FrotaGameMode:BuildBuildsData()

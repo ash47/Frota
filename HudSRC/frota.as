@@ -710,13 +710,6 @@ package {
             var xx:Number = xo;
             var yy:Number = padding;
 
-            // Calculate useful shit
-            //var d = data.split("||")
-            //var dd = d[0].split("::")
-            //var endingTime = dd[0];
-            //var voteSort = dd[1];
-            //var voteDuration = dd[2];
-
             var timeLeft = Math.floor(data.endTime - this.globals.Game.Time());
 
             // Create text field to display how long left
@@ -737,11 +730,11 @@ package {
 
                     // Update timer, with a nice display
                     if(timeLeft > 0 && timeLeft != 1) {
-                        txt.text = timeLeft+" Seconds Remaining";
+                        txt.text = timeLeft+" #afs_seconds_remaining";
                     } else if(timeLeft == 1) {
-                        txt.text = "1 Second Remaining";
+                        txt.text = "1 #afs_second_remaining";
                     } else {
-                        txt.text = "Waiting for vote to end...";
+                        txt.text = "#afs_vote_waiting_to_end";
                     }
                 } else {
                     // Stop the timer
