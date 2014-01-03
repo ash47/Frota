@@ -348,7 +348,7 @@ function FrotaGameMode:ToggleReadyState(playerID)
     else
         -- Send out the updated data
         FireGameEvent("afs_update_builds", {
-            d = self:BuildBuildsData()
+            d = JSON:encode(self:BuildBuildsData())
         })
 
         -- Update the state data
