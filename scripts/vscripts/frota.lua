@@ -171,6 +171,20 @@ function FrotaGameMode:RegisterCommands()
 
     -- State handeling
     Convars:RegisterCommand( "afs_request_state", function(name, args)
+        -- Fire steamids
+        FireGameEvent("afs_steam_ids", {
+            ["0"] = Players:GetSteamAccountID(0),
+            ["1"] = Players:GetSteamAccountID(1),
+            ["2"] = Players:GetSteamAccountID(2),
+            ["3"] = Players:GetSteamAccountID(3),
+            ["4"] = Players:GetSteamAccountID(4),
+            ["5"] = Players:GetSteamAccountID(5),
+            ["6"] = Players:GetSteamAccountID(6),
+            ["7"] = Players:GetSteamAccountID(7),
+            ["8"] = Players:GetSteamAccountID(8),
+            ["9"] = Players:GetSteamAccountID(9)
+        })
+
         -- Send out state info
         FireGameEvent("afs_initial_state", {
             nState = self.currentState,

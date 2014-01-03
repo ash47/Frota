@@ -36,9 +36,15 @@ package {
         public var iconHeight:Number = 80;
         public var voteHeight:Number = 31;
         public var iconMiniSize:Number = 16;
+        public var avatarSize:Number = 64;
 
         // Limits
         public var maxSkills = 4;
+
+        // Side bar setting
+        private var sidePaddingX = 1;
+        private var sidePaddingY = 4;
+        private var sideTotalWidth = (iconMiniSize+sidePaddingX) * (maxSkills+2) + 128/4.5 + sidePaddingX*2;
 
         // Main panel stuff
         private var contentPanelHolder:ScrollPane;
@@ -83,6 +89,9 @@ package {
         public var dragClickedClip;
         public var dragTarget;
 
+        // An array of steamIDs, index = playerID
+        public var steamIDs = [];
+
         public function frota() {}
 
         public function onLoaded() : void {
@@ -99,6 +108,7 @@ package {
             this.gameAPI.SubscribeToGameEvent("afs_update_state", this.processState);
             this.gameAPI.SubscribeToGameEvent("afs_vote_status", this.updateVoteStatus);
             this.gameAPI.SubscribeToGameEvent("afs_update_builds", this.updateBuildDataHook);
+            this.gameAPI.SubscribeToGameEvent("afs_steam_ids", this.updateSteamIDs);
 
             // Hide the Hud Mask
             hudMask.visible = false;
@@ -377,6 +387,10 @@ package {
                     skill = getSpecial('ready_'+i);
                     if(skill) skill.visible = shouldDisplay && build.r;
 
+                    // Update steam avatar
+                    skill = getSpecial('avatar_'+i);
+                    if(skill) skill.visible = shouldDisplay;
+
                     for(j=0; j<maxSkills; j++) {
                         skill = getSpecial('skill_'+i+'_'+j);
                         if(skill) {
@@ -395,6 +409,25 @@ package {
 
         public function updateBuildDataHook(args:Object) {
             this.updateBuildData(decode(args.d));
+        }
+
+        public function updateSteamIDs(args:Object) {
+            for(var i=0; i<10; i++) {
+                // Grab the new ID
+                var newID = args[String(i)];
+
+                // Check if the ID has changed
+                if(this.steamIDs[i] != newID) {
+                    // Attempt to update avatar images
+                    var skill = getSpecial('avatar_'+i);
+                    if(skill) {
+                        Globals.instance.LoadImage('img://[M' + newID + ']', skill, false);
+                    }
+
+                    // Store new steamID
+                    this.steamIDs[i] = newID;
+                }
+            }
         }
 
         public function updateVoteStatus(args:Object) {
@@ -429,10 +462,10 @@ package {
 
             // Build Skill Picking panel
             contentPanelHolder = new ScrollPane();
-            contentPanelHolder.setSize(maxStageWidth-368, maxStageHeight - iconHeight - bottomMargin - 120);
-            addChild(contentPanelHolder)
-            contentPanelHolder.x = 208;
+            contentPanelHolder.x = 224;
             contentPanelHolder.y = 64;
+            contentPanelHolder.setSize(maxStageWidth-sideTotalWidth-sidePaddingX-contentPanelHolder.x-24, maxStageHeight - iconHeight - bottomMargin - 120);
+            addChild(contentPanelHolder)
 
             // Setup the panel where the icons will go
             contentPanel = new MovieClip();
@@ -611,13 +644,8 @@ package {
 
             // Side icons (Other people's builds)
 
-            // Settings
-            xpadding = 4;
-            ypadding = 4;
-            totalWidth = (iconMiniSize+xpadding) * (maxSkills+1) + 128/4.5 + xpadding;
-
             // Workout where to place them
-            sx = maxStageWidth - totalWidth;
+            sx = maxStageWidth - sideTotalWidth;
             sy = 64;
             xx = sx;
             yy = sy;
@@ -648,7 +676,19 @@ package {
                     skill.scaleX = 0.5;
                     skill.scaleY = 0.5;
 
-                    xx += iconMiniSize + xpadding;
+                    xx += iconMiniSize + sidePaddingX;
+
+                    // User's Steam Picture
+                    skill = new MovieClip();
+                    autoCleanupSpecial(skill, 'avatar_'+i);
+                    skill.x = xx;
+                    skill.y = yy;
+                    skill.visible = shouldDisplay;
+                    Globals.instance.LoadImage('img://[M' + this.steamIDs[i] + ']', skill, false);
+                    skill.scaleX = 16/avatarSize;
+                    skill.scaleY = 16/avatarSize;
+
+                    xx += iconMiniSize + sidePaddingX;
 
                     // Create hero image thingo
                     var heroIcon = new HeroDisplayMini(build.h);
@@ -657,7 +697,7 @@ package {
                     heroIcon.y = yy;
                     heroIcon.visible = shouldDisplay;
 
-                    xx += 128/4.5 + xpadding;
+                    xx += 128/4.5 + sidePaddingX;
 
                     // Loop over all the skills in the build
                     for(j=0; j<maxSkills; j++) {
@@ -679,17 +719,17 @@ package {
                         skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
                         skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
 
-                        xx += iconMiniSize + xpadding;
+                        xx += iconMiniSize + sidePaddingX;
                     }
                 }
 
                 xx = sx;
-                yy += iconMiniSize + ypadding;
+                yy += iconMiniSize + sidePaddingY;
             }
 
             // Add ready button
             var readyButton = new Button();
-            readyButton.x = sx + (totalWidth-readyButton.width)/2;
+            readyButton.x = sx + (sideTotalWidth-readyButton.width)/2;
             readyButton.y = sy + getContentHeight();
             readyButton.label = "#afs_toggle_ready";
             readyButton.addEventListener(MouseEvent.CLICK, this.readyPressed);
@@ -732,7 +772,7 @@ package {
                     if(timeLeft > 0 && timeLeft != 1) {
                         txt.text = timeLeft+" "+Translate("#afs_seconds_remaining");
                     } else if(timeLeft == 1) {
-                        txt.text = 1+Translate("#afs_second_remaining");
+                        txt.text = 1+" "+Translate("#afs_second_remaining");
                     } else {
                         txt.text = "#afs_vote_waiting_to_end";
                     }
