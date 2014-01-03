@@ -7,7 +7,10 @@ function Dynamic_Wrap( mt, name )
     end
 end
 
-require( "util" )
-require( "frota" )
+-- Json stuff
+require('json')
+require('util')
+require('frota')
+require('gamemodes')
 
 print("\n\nDone Loading!\n\n")

@@ -10,6 +10,8 @@ package {
     import flash.text.TextFormatAlign;
     import flash.geom.Point;
 
+    import com.adobe.serialization.json.*;
+
     import scaleform.clik.controls.TextInput;
     import scaleform.clik.events.FocusHandlerEvent;
 
@@ -220,6 +222,8 @@ package {
             // Cleanup anything from old states
             cleanHud();
 
+            // Parse data
+            var data = decode(args.d);
 
             switch(args.nState) {
                 case STATE_INIT:
@@ -227,13 +231,13 @@ package {
                 break;
 
                 case STATE_PICKING:
-                    this.ProcessPickingData(args.d);
+                    this.ProcessPickingData(data);
                     this.BuildPickingScreen();
                     hideGame.visible = true;
                 break;
 
                 case STATE_VOTING:
-                    this.BuildVoteScreen(args.d);
+                    this.BuildVoteScreen(data);
                     hideGame.visible = true;
                 break;
 
@@ -247,33 +251,37 @@ package {
             }
         }
 
-        public function ProcessPickingData(data:String) {
+        public function ProcessPickingData(data) {
             var s:String;
 
             // Reset the picking data
             pickingData = {};
             pickingData.skills = [];
-            pickingData.builds = [];
-            //pickingData.bans = {};
+            pickingData.builds = data.b;
 
-            // Split the data into fields
-            // 0 - List of abilities you can pick
-            // 1 - List of player's current builds
-            // 2 - Bans
-            var fields = data.split("|||");
+            // Build skill list
+            for(var name in data.s) {
+                // Grab info on this skill
+                var info = data.s[name];
 
-            // Grab skill data
-            var skillData = fields[0].split("||");
+                // Check if it's banned
+                var banned = false;
+                if(info.b) banned = true;
+
+                // Push the skill
+                pickingData.skills.push({
+                    skillName: name,
+                    skillSort: info.c,
+                    skillHero: info.h,
+                    banned: banned
+                })
+            }
 
             // Sort it
-            skillData.sort(function(a, b) {
-                // Grab skill data
-                var sa = a.split("::");
-                var sb = b.split("::");
-
+            pickingData.skills.sort(function(a, b) {
                 // Grab translated heroes
-                var ha = Translate("#"+sa[2]);
-                var hb = Translate("#"+sb[2]);
+                var ha = Translate("#"+a.skillHero);
+                var hb = Translate("#"+b.skillHero);
 
                 // Sort by hero, then type, then skill name
                 if(ha < hb) {
@@ -282,8 +290,8 @@ package {
                     return 1;
                 } else {
                     // Grab ability types
-                    var ta = sa[1];
-                    var tb = sb[1];
+                    var ta = a.skillSort;
+                    var tb = b.skillSort;
 
                     if(ta < tb) {
                         return -1;
@@ -291,64 +299,36 @@ package {
                         return 1;
                     } else {
                         // Grab translated skill names
-                        var na = Translate("#DOTA_Tooltip_ability_"+sa[0]);
-                        var nb = Translate("#DOTA_Tooltip_ability_"+sb[0]);
+                        var na = Translate("#DOTA_Tooltip_ability_"+a.skillName);
+                        var nb = Translate("#DOTA_Tooltip_ability_"+b.skillName);
 
                         if(na < nb) {
                             return -1;
                         } else if(na > nb) {
                             return 1;
                         } else {
-                            return 0;
+                            // Compare based on their raw skill name
+                            if(a.skillName < b.skillName) {
+                                return -1;
+                            } else if(a.skillName > b.skillName) {
+                                return 1;
+                            } else {
+                                return 0;
+                            }
                         }
                     }
                 }
             });
 
-            // Build list of skills
-            for each (s in skillData) {
-                // Grab the skill data
-                var skillInfo = s.split("::");
-
-                // Store the skill data
-                pickingData.skills.push({
-                    skillName: skillInfo[0],
-                    skillSort: skillInfo[1],
-                    skillHero: skillInfo[2]
-                });
-            }
-
             // Store hero builds
-            this.updateBuildData(fields[1]);
+            this.updateBuildData(data.b);
         }
 
-        public function updateBuildData(data:String) {
+        public function updateBuildData(data) {
             var skill, i:Number, j:Number, skillName:String;
 
             // Clear out current builds
-            pickingData.builds = [];
-
-            // Update current builds
-            var buildData = data.split("||");
-            for each (var s:String in buildData) {
-                // Grab the build data
-                var buildInfo = s.split("::");
-
-                // A list of skills in this build
-                var skillList = [];
-
-                // Store all skills in this build
-                for(i=2; i<buildInfo.length; i++) {
-                    skillList.push(buildInfo[i]);
-                }
-
-                // Store the skill data
-                pickingData.builds.push({
-                    hero: buildInfo[0],
-                    skills: skillList,
-                    ready: (Number(buildInfo[1]) == 1)
-                });
-            }
+            pickingData.builds = data;
 
             // Find icons for local hero
             var localSkills = [];
@@ -358,7 +338,7 @@ package {
 
             if(playerID >= 0 && playerID <= 9) {
                 // Update our local skill list
-                localSkills = pickingData.builds[playerID].skills;
+                localSkills = pickingData.builds[playerID].s;
             }
 
             // Update icons for your local hero
@@ -389,19 +369,19 @@ package {
                     // Update Hero Image
                     skill = getSpecial('hero_'+i);
                     if(skill) {
-                        skill.UpdateHero(build.hero);
+                        skill.UpdateHero(build.h);
                         skill.visible = shouldDisplay;
                     }
 
                     // Update ready state
                     skill = getSpecial('ready_'+i);
-                    if(skill) skill.visible = shouldDisplay && build.ready;
+                    if(skill) skill.visible = shouldDisplay && build.r;
 
                     for(j=0; j<maxSkills; j++) {
                         skill = getSpecial('skill_'+i+'_'+j);
                         if(skill) {
                             // Grab name of this skill
-                            skillName = build.skills[j];
+                            skillName = build.s[j];
                             if(!skillName) skillName = 'doom_bringer_empty1';
 
                             // Found it, update it
@@ -414,25 +394,28 @@ package {
         }
 
         public function updateBuildDataHook(args:Object) {
-            this.updateBuildData(args.d);
+            this.updateBuildData(decode(args.d));
         }
 
         public function updateVoteStatus(args:Object) {
             // Make sure we have the vote info
             if(voteHolder == null) return;
 
-            for each (var s:String in args.d.split(":::")) {
-                var voteInfo = s.split("::")
+            // Grab the data
+            var data = decode(args.d);
+
+            for (var name:String in data) {
+                var voteInfo = data[name];
 
                 // Create vote panel
-                var vote = voteHolder[voteInfo[0]];
+                var vote = voteHolder[name];
 
                 // Check if we found it
                 if(vote != null) {
                     // Update the count
-                    vote.updateCount(voteInfo[1]);
+                    vote.updateCount(voteInfo.count);
                 } else {
-                    trace("Failed to find "+voteInfo[0]);
+                    trace("Failed to find "+name);
                 }
             }
         }
@@ -590,7 +573,7 @@ package {
 
             if(playerID >= 0 && playerID <= 9) {
                 // Update our local skill list
-                localSkills = pickingData.builds[playerID].skills;
+                localSkills = pickingData.builds[playerID].s;
             }
 
             // Put icons for your local hero
@@ -660,7 +643,7 @@ package {
                     autoCleanupSpecial(skill, 'ready_'+i);
                     skill.x = xx;
                     skill.y = yy;
-                    skill.visible = shouldDisplay && build.ready;
+                    skill.visible = shouldDisplay && build.r;
                     Globals.instance.LoadImage('images/hud/tick.png', skill, false);
                     skill.scaleX = 0.5;
                     skill.scaleY = 0.5;
@@ -668,7 +651,7 @@ package {
                     xx += iconMiniSize + xpadding;
 
                     // Create hero image thingo
-                    var heroIcon = new HeroDisplayMini(build.hero);
+                    var heroIcon = new HeroDisplayMini(build.h);
                     autoCleanupSpecial(heroIcon, 'hero_'+i);
                     heroIcon.x = xx;
                     heroIcon.y = yy;
@@ -679,7 +662,7 @@ package {
                     // Loop over all the skills in the build
                     for(j=0; j<maxSkills; j++) {
                         // Grab name of this skill
-                        skillName = build.skills[j];
+                        skillName = build.s[j];
                         if(!skillName) skillName = 'doom_bringer_empty1';
 
                         // Create a mini skill icon for it
@@ -717,7 +700,7 @@ package {
             gameAPI.SendServerCommand("afs_ready_pressed");
         }
 
-        public function BuildVoteScreen(data:String) {
+        public function BuildVoteScreen(data) {
             // Create a new panel for the skills
             newPanel();
 
@@ -728,13 +711,13 @@ package {
             var yy:Number = padding;
 
             // Calculate useful shit
-            var d = data.split("||")
-            var dd = d[0].split("::")
-            var endingTime = dd[0];
-            var voteSort = dd[1];
-            var voteDuration = dd[2];
+            //var d = data.split("||")
+            //var dd = d[0].split("::")
+            //var endingTime = dd[0];
+            //var voteSort = dd[1];
+            //var voteDuration = dd[2];
 
-            var timeLeft = Math.floor(endingTime - this.globals.Game.Time());
+            var timeLeft = Math.floor(data.endTime - this.globals.Game.Time());
 
             // Create text field to display how long left
             var txt = makeTextField(18);
@@ -750,7 +733,7 @@ package {
                 // Ensure timer still exists
                 if(txt) {
                     // Workout how long is left
-                    timeLeft = Math.floor(endingTime - globals.Game.Time());
+                    timeLeft = Math.floor(data.endTime - globals.Game.Time());
 
                     // Update timer, with a nice display
                     if(timeLeft > 0 && timeLeft != 1) {
@@ -771,11 +754,11 @@ package {
             voteHolder = {};
 
             // Fill it with vote options
-            for each (var s:String in d[1].split(":::")) {
-                var voteInfo = s.split("::")
+            for(var name:String in data.options) {
+                var voteInfo = data.options[name];
 
                 // Create vote panel
-                var vote = new VoteButton(voteInfo[0], voteInfo[1], voteInfo[2]);
+                var vote = new VoteButton(name, voteInfo.des, voteInfo.count);
                 addPanelChild(vote);
                 vote.x = xx;
                 vote.y = yy;
@@ -784,7 +767,7 @@ package {
                 vote.Button.addEventListener(MouseEvent.CLICK, this.votePressed);
 
                 // Store this panel
-                voteHolder[voteInfo[0]] = vote;
+                voteHolder[name] = vote;
 
                 // Move the next panel down
                 yy = yy + voteHeight + padding;
@@ -863,6 +846,16 @@ package {
                 // Remove drag target
                 dragTarget = null;
             }
+        }
+
+        // JSON decoder
+        public static function decode( s:String, strict:Boolean = true ):* {
+            return new JSONDecoder( s, strict ).getValue();
+        }
+
+        // JSON encoder
+        public static function encode( o:Object ):String {
+            return new JSONEncoder( o ).getString();
         }
     }
 }

@@ -5,11 +5,18 @@ MAX_PLAYERS = 10
 STARTING_GOLD = 625
 
 -- State control
-STATE_INIT = 0
-STATE_VOTING = 1
-STATE_PICKING = 2
-STATE_BANNING = 3
-STATE_PLAYING = 4
+STATE_INIT = 0      -- Waiting for players
+STATE_VOTING = 1    -- Voting on what to play
+STATE_PICKING = 2   -- Players are selecting builds / skills / heroes
+STATE_BANNING = 3   -- Players are banning stuff
+STATE_PLAYING = 4   -- Players are playing
+STATE_FINISHED = 5  -- A round is finished, display stats + Vote to restart?
+
+-- Gamemode Sorts
+GAMEMODE_PICK = 1   -- A gamemode which only has a picking stage
+GAMEMODE_PLAY = 2   -- A gamemode which only has a playing park
+GAMEMODE_BOTH = 3   -- A gamemode which needs both to work
+GAMEMODE_ADDON = 4  -- An addon such as Lucky Items or CSP
 
 -- Vote types
 VOTE_SORT_SINGLE = 0    -- A person can vote for only one option
@@ -46,7 +53,7 @@ function FrotaGameMode:_SetInitialValues()
 
     -- The state of the gane
     self.currentState = STATE_INIT;
-    self.currentStateData = "";
+    self:ChangeStateData({});
 
     -- Store the default axe build for each player
     self.selectedBuilds = {}
@@ -134,7 +141,7 @@ function FrotaGameMode:RegisterCommands()
         -- Send out state info
         FireGameEvent("afs_initial_state", {
             nState = self.currentState,
-            d = self.currentStateData
+            d = self:GetStateData()
         })
     end, "Client requested the current state", 0 )
 
@@ -272,11 +279,11 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
 
     -- Send out the updated builds
     FireGameEvent("afs_update_builds", {
-        d = self:BuildBuildsData()
+        d = JSON:encode(self:BuildBuildsData())
     })
 
     -- Update the state data
-    self.currentStateData = self:BuildAbilityListData()
+    self:ChangeStateData(self:BuildAbilityListData())
 end
 
 function FrotaGameMode:ToggleReadyState(playerID)
@@ -312,19 +319,27 @@ function FrotaGameMode:ToggleReadyState(playerID)
         })
 
         -- Update the state data
-        self.currentStateData = self:BuildAbilityListData()
+        self:ChangeStateData(self:BuildAbilityListData())
     end
+end
+
+function FrotaGameMode:ChangeStateData(data)
+    self.currentStateData = JSON:encode(data)
+end
+
+function FrotaGameMode:GetStateData()
+    return self.currentStateData
 end
 
 function FrotaGameMode:ChangeState(newState, newData)
     -- Update local state
     self.currentState = newState;
-    self.currentStateData = newData;
+    self:ChangeStateData(newData);
 
     -- Send out state info
     FireGameEvent("afs_update_state", {
         nState = self.currentState,
-        d = self.currentStateData
+        d = self:GetStateData()
     })
 end
 
@@ -411,37 +426,48 @@ function FrotaGameMode:CastVote(playerID, vote, mutli)
         -- Single vote, remove their old vote
         for k, v in pairs(self.currentVote.options) do
             if v.votes[playerID] then
-                v.votes[playerID] = false
+                v.votes[playerID] = 0
                 v.count = v.count - 1
             end
         end
 
         -- Add their new vote
-        usersChoice.votes[playerID] = true
+        usersChoice.votes[playerID] = 1
         usersChoice.count = usersChoice.count + 1
     else
         -- Adjust this user's vote
         if mutli then
             if not usersChoice.votes[playerID] then
-                usersChoice.votes[playerID] = true
+                usersChoice.votes[playerID] = 1
                 usersChoice.count = usersChoice.count + 1
             end
         else
             if usersChoice.votes[playerID] then
-                usersChoice.votes[playerID] = false
+                usersChoice.votes[playerID] = 0
                 usersChoice.count = usersChoice.count - 1
             end
         end
     end
 
     -- Update data on this vote
-    self.currentStateData = self:BuildVoteData()
+    self:ChangeStateData(self:BuildVoteData())
 
     -- Send the updated columns to everyone
     self:SendVoteStatus()
 end
 
 function FrotaGameMode:BuildVoteData()
+    local data = {
+        endTime = self.currentVote.endTime,
+        sort = self.currentVote.sort,
+        duration = self.currentVote.duration,
+        options = self.currentVote.options
+    }
+
+    return data
+end
+
+--[[function FrotaGameMode:BuildVoteData()
     if not self.currentVote then return "" end
 
     local str = self.currentVote.endTime.."::"..self.currentVote.sort.."::"..self.currentVote.duration.."||"
@@ -454,9 +480,17 @@ function FrotaGameMode:BuildVoteData()
     str = string.sub(str, 1, -4)
 
     return str
-end
+end]]
 
 function FrotaGameMode:SendVoteStatus()
+    local cv = self.currentVote
+    if not cv then return end
+
+    FireGameEvent("afs_vote_status", {
+        d = JSON:encode(cv.options)
+    })
+end
+--[[function FrotaGameMode:SendVoteStatus()
     local cv = self.currentVote
     if not cv then return end
 
@@ -491,7 +525,7 @@ function FrotaGameMode:SendVoteStatus()
     FireGameEvent("afs_vote_status", {
         d = str
     })
-end
+end]]
 
 local startedInitialVote = false
 function FrotaGameMode:_thinkState_Voting(dt)
@@ -544,16 +578,24 @@ function FrotaGameMode:_thinkState_Voting(dt)
 end
 
 function FrotaGameMode:VoteForGamemode()
+    -- Grab all the gamemodes the require picking
+    local modes = GetPickingGamemodes()
+
+    local options = {}
+    for k, v in pairs(modes) do
+        options['#afs_name_'..v] = '#afs_des_'..v
+    end
+
     -- Create a vote for the game mode
     self:CreateVote({
         sort = VOTE_SORT_SINGLE,
-        options = {
-            ["Legends of Dota"] = "Pick your skills / hero",
-            ["Random OMG x5"] = "Choose between 5 random builds"
-        },
+        options = options,
         duration = 30,
         onFinish = function(winners)
-            self:CreateVote({
+            -- Just change to LoD
+            self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
+
+            --[[self:CreateVote({
                 sort = VOTE_SORT_SINGLE,
                 options = {
                     ["King of the Shop"] = "Defend the shop, yo"
@@ -563,14 +605,15 @@ function FrotaGameMode:VoteForGamemode()
                     -- Load up LoD
                     self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
                 end
-            })
+            })]]
         end
     })
 end
 
 function FrotaGameMode:BuildBuildsData()
+    local data = {}
+
     -- Build list of builds
-    local sBuildList = '';
     for i = 0,9 do
         local v = self.selectedBuilds[i]
 
@@ -580,37 +623,41 @@ function FrotaGameMode:BuildBuildsData()
             ready = 1
         end
 
+        data[i] = {
+            r = ready,
+            h = v.hero,
+            s = {}
+        }
+
         -- Add hero and ready state
         local sBuild = v.hero..'::'..ready
 
         -- Add all skills
+        local j = 0
         for kk, vv in pairs(v.skills) do
-            sBuild = sBuild..'::'..vv
+            data[i].s[j] = vv
+            j = j + 1
         end
-
-        -- Add to the master list
-        sBuildList = sBuildList..sBuild..'||'
     end
 
-    -- Remove the last ||
-    sBuildList = string.sub(sBuildList, 1, -3)
-
-    return sBuildList
+    return data
 end
 
 function FrotaGameMode:BuildAbilityListData()
-    local sSkillList = ""
-    for k,v in pairs(self.vAbList) do
-        local sSkill = v.name.."::"..v.sort.."::"..v.hero
+    local data = {
+        s = {},
+        b = self:BuildBuildsData()
+    }
 
-        sSkillList = sSkillList..sSkill.."||"
+    for k,v in pairs(self.vAbList) do
+        data.s[v.name] = {
+            c = v.sort,
+            h = v.hero
+        }
     end
 
-    -- Remove the last ||
-    sSkillList = string.sub(sSkillList, 1, -3)
-
     -- Return the data
-    return sSkillList..'|||'..self:BuildBuildsData()..'|||'..'Bans will go here';
+    return data;
 end
 
 function FrotaGameMode:PrecacheSkill(skillName)
