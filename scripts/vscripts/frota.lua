@@ -87,10 +87,12 @@ function FrotaGameMode:InitGameMode()
     GameRules:SetCreepMinimapIconScale( 0.7 )
     GameRules:SetRuneMinimapIconScale( 0.7 )
 
+    -- Hooks
+
     -- Load initital Values
     self:_SetInitialValues()
 
-    Convars:SetBool( "dota_suppress_invalid_orders", true )
+    Convars:SetBool('dota_suppress_invalid_orders', true)
 end
 
 function FrotaGameMode:RegisterCommands()
@@ -378,6 +380,16 @@ function FrotaGameMode:Think()
     if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
         self._scriptBind:EndThink( "GameThink" )
         return
+    end
+
+    -- Hero Selection Screen Bypass
+    if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
+        for i=0, 9 do
+            if Players:IsValidPlayer(i) and not Players:GetSelectedHeroEntity(i) then
+                local ply = Players:GetPlayer(i)
+                CreateHeroForPlayer('npc_dota_hero_axe', ply)
+            end
+        end
     end
 
     -- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.

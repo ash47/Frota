@@ -5,7 +5,4 @@
 
 "CustomHeroList"
 {
-	"npc_dota_hero_axe"             "1"
-    "npc_dota_hero_bane"            "1"
-    "npc_dota_hero_bloodseeker"     "1"
 }
