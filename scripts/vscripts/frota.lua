@@ -57,7 +57,7 @@ function FrotaGameMode:_SetInitialValues()
 
     -- Store the default axe build for each player
     self.selectedBuilds = {}
-    for i = 0, 9 do
+    for i = 0,MAX_PLAYERS-1 do
         self.selectedBuilds[i] = {
             hero = 'npc_dota_hero_axe',
             skills = {
@@ -99,7 +99,7 @@ function FrotaGameMode:InitGameMode()
             [DOTA_TEAM_BADGUYS] = 0
         }
 
-        for i=0, 9 do
+        for i=0,MAX_PLAYERS-1 do
             if Players:IsValidPlayer(i) then
                 print('valid player '..i)
                 local ply = Players:GetPlayer(i)
@@ -150,7 +150,7 @@ function FrotaGameMode:RegisterCommands()
         local cmdPlayer = Convars:GetCommandClient()
         if cmdPlayer then
             local playerID = cmdPlayer:GetPlayerID()
-            if playerID >= 0 and playerID <= 9 then
+            if playerID >= 0 and playerID < MAX_PLAYERS then
                 self:ToggleReadyState(playerID)
                 return
             end
@@ -271,18 +271,7 @@ function FrotaGameMode:LoadAbilityList()
     --PrintTable(self.vAbList)
 end
 
-function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
-    -- Validate Data here (never trust client)
-
-    -- Grab playerID
-    local playerID = hero:GetPlayerID()
-    if(playerID < 0 or playerID > 9) then
-        return
-    end
-
-    -- Preache the new skill
-    self:PrecacheSkill(skillName)
-
+function FrotaGameMode:RemoveAllSkills(hero)
     -- Check if we've touched this hero before
     if not self.currentSkillList[hero] then
         -- Grab the name of this hero
@@ -312,17 +301,42 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
             hero:RemoveAbility(v)
         end
     end
+end
+
+function FrotaGameMode:ApplyBuild(hero)
+    -- Grab playerID
+    local playerID = hero:GetPlayerID()
+    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
+        return
+    end
+
+    -- Remove all the skills from our hero
+    self:RemoveAllSkills(hero)
+
+    -- Give all the abilities in this build
+    for k,v in ipairs(self.selectedBuilds[playerID].skills) do
+        hero:AddAbility(v)
+        self.currentSkillList[hero][k] = v
+    end
+end
+
+function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
+    -- Validate Data here (never trust client)
+
+    -- Grab playerID
+    local playerID = hero:GetPlayerID()
+    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
+        return
+    end
+
+    -- Preache the new skill
+    self:PrecacheSkill(skillName)
 
     -- Update build
     self.selectedBuilds[playerID].skills[skillSlot] = skillName
 
-    -- Change the skills on this hero
-    self.currentSkillList[hero] = self.selectedBuilds[playerID].skills
-
-    -- Re-give all abilities
-    for k,v in ipairs(self.currentSkillList[hero]) do
-        hero:AddAbility(v)
-    end
+    -- Apply the new build
+    self:ApplyBuild(hero)
 
     -- Send out the updated builds
     FireGameEvent("afs_update_builds", {
@@ -335,7 +349,7 @@ end
 
 function FrotaGameMode:ToggleReadyState(playerID)
     -- Validate playerID
-    if(playerID < 0 or playerID > 9) then
+    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
         return
     end
 
@@ -344,7 +358,7 @@ function FrotaGameMode:ToggleReadyState(playerID)
 
     -- Check if everyone is ready
     local allReady = true
-    for i=0,9 do
+    for i=0,MAX_PLAYERS-1 do
         if Players:IsValidPlayer(i) and (not self.selectedBuilds[i].ready) then
             allReady = false
             break
@@ -355,10 +369,8 @@ function FrotaGameMode:ToggleReadyState(playerID)
         -- Change to game time
         print('GAME START NOW!')
 
-
-
-        -- Begin gameplay
-        self:ChangeState(STATE_PLAYING, '')
+        -- Start the game
+        self:StartGame()
     else
         -- Send out the updated data
         FireGameEvent("afs_update_builds", {
@@ -429,7 +441,7 @@ function FrotaGameMode:Think()
 
     -- Hero Selection Screen Bypass
     if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
-        for i=0, 9 do
+        for i=0,MAX_PLAYERS-1 do
             if Players:IsValidPlayer(i) and not Players:GetSelectedHeroEntity(i) then
                 -- Grab the player and create them a default hero
                 local ply = Players:GetPlayer(i)
@@ -440,7 +452,7 @@ function FrotaGameMode:Think()
                     -- Check if we need to assign a hero
                     local assignHero = self:GetAssignHero()
                     if assignHero then
-                        assignHero(ply)
+                        assignHero(ply, self)
                     end
                 end
             end
@@ -662,40 +674,46 @@ function FrotaGameMode:VoteForGamemode()
     self:CreateVote({
         sort = VOTE_SORT_SINGLE,
         options = options,
-        duration = 30,
+        duration = 15,
         onFinish = function(winners)
             -- Grab the winning option, we need to remove the #afs_name_ from the start
             local mode = string.sub(winners[math.random(1, #winners)], 11)
 
-            print(mode)
-
             -- Grab the mode
-            local gamemode = GetGamemode(mode)
+            local pickMode = GetGamemode(mode)
 
             -- Check if it was a picking gamemode
-            if gamemode.sort == GAMEMODE_PICK then
+            if pickMode.sort == GAMEMODE_PICK then
                 -- We need a gameplay gamemode now
 
-                -- Instead, just change to LoD
-                self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
+                -- Grab all the gamemodes the require picking
+                local modes = GetPlayingGamemodes()
+
+                local options = {}
+                for k, v in pairs(modes) do
+                    options['#afs_name_'..v] = '#afs_des_'..v
+                end
+
+                -- Vote for the gameplau section
+                self:CreateVote({
+                    sort = VOTE_SORT_SINGLE,
+                    options = options,
+                    duration = 15,
+                    onFinish = function(winners)
+                        -- Grab the winning option, we need to remove the #afs_name_ from the start
+                        local mode = string.sub(winners[math.random(1, #winners)], 11)
+
+                        -- Grab the mode
+                        local playMode = GetGamemode(mode)
+
+                        -- Load this gamemode up
+                        self:LoadGamemode(pickMode, playMode)
+                    end
+                })
             else
                 -- We must have gotten someone we can just run
-                self:LoadGamemode(gamemode)
+                self:LoadGamemode(pickMode)
             end
-
-
-
-            --[[self:CreateVote({
-                sort = VOTE_SORT_SINGLE,
-                options = {
-                    ["King of the Shop"] = "Defend the shop, yo"
-                },
-                duration = 5,
-                onFinish = function(winners)
-                    -- Load up LoD
-                    self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
-                end
-            })]]
         end
     })
 end
@@ -705,36 +723,55 @@ function FrotaGameMode:LoadGamemode(pickMode, playMode)
     self.pickMode = pickMode
     self.playMode = playMode
 
-    -- Depending on the type, it will be loaded differently
-    if pickMode.sort == GAMEMODE_PICK then
-        -- Load picking stuff
-
+    -- Check if there is any sort of picking
+    if pickMode.pickHero or pickMode.pickSkills then
+        -- Start picking
+        self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
     else
-        -- Load the game
+        -- Start the game
+        self:StartGame()
+    end
+end
 
-        -- Attempt to assign heroes
-        local assignHero = pickMode.assignHero
-        if assignHero then
-            -- Loop over every player
-            for i=0, 9 do
-                -- Check if they are in
-                if Players:IsValidPlayer(i) then
-                    -- Assign them a hero
-                    assignHero(Players:GetPlayer(i))
-                end
+function FrotaGameMode:StartGame()
+    -- Cleanup time
+
+    -- Remove all NPCs
+    for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
+        v:Remove()
+    end
+
+    -- Reset everyone's hero to Axe
+    for i=0,MAX_PLAYERS-1 do
+        -- Check if this player exists
+        if Players:IsValidPlayer(i) then
+            ply = Players:GetPlayer(i)
+            CreateHeroForPlayer('npc_dota_hero_axe', ply)
+        end
+    end
+
+    -- Attempt to assign heroes
+    local assignHero = self:GetAssignHero()
+    if assignHero then
+        -- Loop over every player
+        for i=0,MAX_PLAYERS-1 do
+            -- Check if they are in
+            if Players:IsValidPlayer(i) then
+                -- Assign them a hero
+                assignHero(Players:GetPlayer(i), self)
             end
         end
-
-        -- Fire game start event
-        self:ChangeState(STATE_PLAYING, '')
     end
+
+    -- Change to playing
+    self:ChangeState(STATE_PLAYING, '')
 end
 
 function FrotaGameMode:BuildBuildsData()
     local data = {}
 
     -- Build list of builds
-    for i = 0,9 do
+    for i = 0,MAX_PLAYERS-1 do
         local v = self.selectedBuilds[i]
 
         -- Convert ready bool into a number

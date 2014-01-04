@@ -49,7 +49,21 @@ RegisterGamemode('lod', {
 
     -- Allow certain picking things
     pickHero = true,
-    pickSkills = true
+    pickSkills = true,
+
+    -- Function to give out heroes
+    assignHero = function(ply, frota)
+        local playerID = ply:GetPlayerID()
+        local build = frota.selectedBuilds[playerID]
+
+        -- Change hero
+        ply:ReplaceHeroWith(build.hero, 0, 0)
+
+        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Change skills
+        frota:ApplyBuild(hero)
+    end,
 })
 
 -- Standard Arena PvP
@@ -64,7 +78,7 @@ RegisterGamemode('pudgewars', {
     sort = GAMEMODE_BOTH,
 
     -- Function to give out heroes
-    assignHero = function(ply)
+    assignHero = function(ply, frota)
         ply:ReplaceHeroWith('npc_dota_hero_pudge', 0, 0)
     end,
 
