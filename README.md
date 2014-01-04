@@ -34,6 +34,12 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
 ###Translations###
  - English by Ash47
  - Russian by lokkdokk
+ - French by Canardlaquay
+ - Hungarian by Easimer
+ - German by DarkMio_mainframe
+
+###Maps###
+ - riverofsouls by Z-Machine
 
 ###Up next###
  - More work on the game mode system
