@@ -798,6 +798,12 @@ function FrotaGameMode:StartGame()
         v:Remove()
     end
 
+    -- Clean up everything on the ground;
+    while GameRules:NumDroppedItems() > 0 do
+        local item = GameRules:GetDroppedItem(0)
+        UTIL_RemoveImmediate( item )
+    end
+
     -- Reset everyone's hero to Axe
     for i=0,MAX_PLAYERS-1 do
         -- Check if this player exists

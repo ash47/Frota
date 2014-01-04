@@ -57,7 +57,7 @@ RegisterGamemode('lod', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        ply:ReplaceHeroWith(build.hero, 0, 0)
+        ply:ReplaceHeroWith(build.hero, 100000, 32400)
 
         local hero = Players:GetSelectedHeroEntity(playerID)
 
@@ -91,7 +91,7 @@ RegisterGamemode('pudgewars', {
 
     -- Function to give out heroes
     assignHero = function(ply, frota)
-        ply:ReplaceHeroWith('npc_dota_hero_pudge', 0, 0)
+        ply:ReplaceHeroWith('npc_dota_hero_pudge', 100000, 32400)
     end,
 
     -- A list of options for fast gameplay stuff
