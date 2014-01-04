@@ -1,0 +1,36 @@
+"lang"
+{
+        "Language"                "French"
+        "Tokens"
+        {
+                // Name of the game
+                "game_mode_15"                  "FROTA"
+
+                // Toggle ready state
+                "afs_toggle_ready"              "Je suis prêt"
+
+                // Legends of Dota
+                "afs_name_lod"                  "Legends of dota"
+                "afs_des_lod"                   "Choisissez votre héros et vos abilités."
+
+                // PvP Arena
+                "afs_name_arena"                "PvP Arena"
+                "afs_des_arena"                 "Un simple mode JcJ."
+
+                // Pudge Wars
+                "afs_name_pudgewars"            "Pudge Wars"
+                "afs_des_pudgewars"             "Jouez en tant que Pudge, la première équipe à 10 kills gagne."
+
+                // Random OMG
+                "afs_name_romg"                 "Random OMG"
+                "afs_des_romg"                  "Jouez avec un héros, 3 abilités et un ultime, le tout déterminé aléatoirement."
+
+                // Vote related
+                "afs_seconds_remaining"         "secondes"
+                "afs_second_remaining"          "seconde"
+                "afs_vote_ends_in"              "Le vote prend fin dans"
+
+                // Picking related
+                "afs_picking_timer"             "La phase de picks prend fin dans"
+        }
+}
