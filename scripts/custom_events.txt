@@ -27,36 +27,37 @@
 		"nState"			"short"
 		"d"					"string"
 	}
+
 	// Same as above, but will force a state change, and can't be requested by clients
 	"afs_update_state"
 	{
 		"nState"			"short"
 		"d"					"string"
 	}
+
 	// Sending the status of a vote
 	"afs_vote_status"
 	{
 		"nState"			"short"
 		"d"					"string"
 	}
+
 	// Sending an updated list of the currect builds
 	"afs_update_builds"
 	{
 		"d"					"string"
 	}
+
 	// Sending a list of steam IDs
 	"afs_steam_ids"
 	{
-		"0"					"long"
-		"1"					"long"
-		"2"					"long"
-		"3"					"long"
-		"4"					"long"
-		"5"					"long"
-		"6"					"long"
-		"7"					"long"
-		"8"					"long"
-		"9"					"long"
+		"d"					"string"
+	}
+
+	// Sending updated timer data
+	"afs_timer_update"
+	{
+		"d"					"string"
 	}
 }
 

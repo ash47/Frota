@@ -22,6 +22,9 @@ GAMEMODE_ADDON = 4  -- An addon such as Lucky Items or CSP
 VOTE_SORT_SINGLE = 0    -- A person can vote for only one option
 VOTE_SORT_MULTI = 1     -- A person votes yes or no for many options
 
+-- Amount of time to pick skills
+PICKING_TIME = 60 * 2   -- 2 minutes tops
+
 -- Default settings for regular Dota
 local minimapHeroScale = 600
 local minimapCreepScale = 1
@@ -43,6 +46,9 @@ end
 function FrotaGameMode:_SetInitialValues()
     -- Load ability List
     self:LoadAbilityList()
+
+    -- Timers
+    self.timers = {}
 
     -- Voting thinking
     self.thinkState = Dynamic_Wrap( FrotaGameMode, '_thinkState_Voting' )
@@ -149,18 +155,21 @@ function FrotaGameMode:RegisterCommands()
 
     -- State handeling
     Convars:RegisterCommand( "afs_request_state", function(name, args)
+        local data = {}
+
+        for i=0, MAX_PLAYERS-1 do
+            local steamID = Players:GetSteamAccountID(i)
+
+            if steamID > 0 then
+                data[i] = steamID
+            end
+        end
+
+        print(JSON:encode(data))
+
         -- Fire steamids
         FireGameEvent("afs_steam_ids", {
-            ["0"] = Players:GetSteamAccountID(0),
-            ["1"] = Players:GetSteamAccountID(1),
-            ["2"] = Players:GetSteamAccountID(2),
-            ["3"] = Players:GetSteamAccountID(3),
-            ["4"] = Players:GetSteamAccountID(4),
-            ["5"] = Players:GetSteamAccountID(5),
-            ["6"] = Players:GetSteamAccountID(6),
-            ["7"] = Players:GetSteamAccountID(7),
-            ["8"] = Players:GetSteamAccountID(8),
-            ["9"] = Players:GetSteamAccountID(9)
+            d = JSON:encode(data)
         })
 
         -- Send out state info
@@ -187,6 +196,28 @@ function FrotaGameMode:RegisterCommands()
         -- Start the game
         self:StartGame()
     end, "Start the game", 0 )
+end
+
+function FrotaGameMode:CreateTimer(name, args)
+    --[[
+        args: {
+            endTime = Time you want this timer to end: Time() + 30 (for 30 seconds from now),
+            callback = function(frota, args) to run when this timer expires,
+            text = text to display to clients,
+            send = set this to true if you want clients to get this
+        }
+    ]]
+
+    if not args.endTime or not args.callback then
+        print("Invalid timer created: "..name)
+        return
+    end
+
+    -- Store the timer
+    self.timers[name] = args
+
+    -- Update the timer
+    self:UpdateTimerData()
 end
 
 -- Auto assigns a player when they connect
@@ -439,8 +470,43 @@ function FrotaGameMode:ToggleReadyState(playerID)
     end
 end
 
+function FrotaGameMode:BuildTimerData()
+    local timers = {}
+
+    -- Store timers
+    for k, v in pairs(self.timers) do
+        -- Make sure we need to send it
+        if v.send then
+            timers[k] = {
+                e = v.endTime,
+                t = v.text
+            }
+        end
+    end
+
+    return timers
+end
+
+function FrotaGameMode:UpdateTimerData()
+    -- Change the state
+    self:ChangeStateData(self.currentStateDataRaw)
+
+    -- Update clients
+    FireGameEvent("afs_timer_update", {
+        d = JSON:encode(self:BuildTimerData())
+    })
+end
+
 function FrotaGameMode:ChangeStateData(data)
+    -- Make sure there is some data
+    data = data or {}
+
+    -- Store timers
+    data.timers = self:BuildTimerData()
+
+    -- Set the current data
     self.currentStateData = JSON:encode(data)
+    self.currentStateDataRaw = data
 end
 
 function FrotaGameMode:GetStateData()
@@ -449,8 +515,37 @@ end
 
 function FrotaGameMode:ChangeState(newState, newData)
     -- Update local state
-    self.currentState = newState;
-    self:ChangeStateData(newData);
+    self.currentState = newState
+    self:ChangeStateData(newData)
+
+    -- Hook stuff
+    if newState == STATE_PICKING then
+        -- Picking Phase
+
+        self:CreateTimer('pickTimer', {
+            endTime = Time() + PICKING_TIME,
+            callback = function(frota, args)
+                -- Make sure we are still in the picking phase
+                if frota.currentState == STATE_PICKING then
+                    -- Start the game
+                    frota:StartGame()
+                end
+            end,
+            text = "#afs_picking_timer",
+            send = true
+        })
+
+        -- When the picking phase will end
+        --self.pickingOverTime = Time() + PICKING_TIME
+
+        -- Set the correct think state
+        self.thinkState = Dynamic_Wrap(FrotaGameMode, '_thinkState_Picking')
+    elseif newState == STATE_VOTING then
+        -- Voting Think
+        self.thinkState = Dynamic_Wrap(FrotaGameMode, '_thinkState_Voting')
+    else
+        self.thinkState = Dynamic_Wrap(FrotaGameMode, '_thinkState_None')
+    end
 
     -- Send out state info
     FireGameEvent("afs_update_state", {
@@ -496,6 +591,21 @@ function FrotaGameMode:Think()
         return
     end
 
+    -- Process timers
+    for k,v in pairs(self.timers) do
+        -- Check if the timer has finished
+        if Time() > v.endTime then
+            -- Remove from timers list
+            self.timers[k] = nil
+
+            -- Run the callback
+            v.callback(self, v)
+
+            -- Update timer data
+            self:UpdateTimerData()
+        end
+    end
+
     -- Hero Selection Screen Bypass
     if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
         for i=0,MAX_PLAYERS-1 do
@@ -536,9 +646,7 @@ function FrotaGameMode:CreateVote(args)
     -- Create new vote
     self.currentVote = {
         options = {},
-        endTime = Time()+args.duration,
         sort = args.sort,
-        duration = args.duration,
         onFinish = args.onFinish
     }
 
@@ -550,6 +658,45 @@ function FrotaGameMode:CreateVote(args)
             count = 0
         }
     end
+
+    -- Create a timer
+    self:CreateTimer('voteTimer', {
+        endTime = Time() + args.duration,
+        callback = function(frota, args)
+            -- Check if there is a vote active
+            local cv = frota.currentVote
+            if cv then
+                -- Table to store which option(s) won
+                local winners = {}
+
+                if cv.sort == VOTE_SORT_SINGLE then
+                    local highestVotes = 0
+
+                    for k,v in pairs(cv.options) do
+                        if v.count > highestVotes then
+                            -- New leader, reset list of winners
+                            highestVotes = v.count
+                            winners = {k}
+                        elseif v.count == highestVotes then
+                            -- A draw, add to list of winners
+                            table.insert(winners, k)
+                        end
+                    end
+                else
+                    -- implement this
+
+                end
+
+                -- Remove the active vote
+                frota.currentVote = nil
+
+                -- Call the callback for vote ending
+                cv.onFinish(winners)
+            end
+        end,
+        text = "#afs_vote_ends_in",
+        send = true
+    })
 
     -- Build data, and send
     self:ChangeState(STATE_VOTING, self:BuildVoteData())
@@ -599,9 +746,9 @@ end
 
 function FrotaGameMode:BuildVoteData()
     local data = {
-        endTime = self.currentVote.endTime,
+        --endTime = self.currentVote.endTime,
         sort = self.currentVote.sort,
-        duration = self.currentVote.duration,
+        --duration = self.currentVote.duration,
         options = self.currentVote.options
     }
 
@@ -675,39 +822,6 @@ function FrotaGameMode:_thinkState_Voting(dt)
         return
     end
 
-    -- Check if there is a vote active
-    local cv = self.currentVote
-    if cv then
-        -- Check if the vote should finish
-        if Time() > cv.endTime then
-            -- Table to store which option(s) won
-            local winners = {}
-
-            if cv.sort == VOTE_SORT_SINGLE then
-                local highestVotes = 0
-
-                for k,v in pairs(cv.options) do
-                    if v.count > highestVotes then
-                        -- New leader, reset list of winners
-                        highestVotes = v.count
-                        winners = {k}
-                    elseif v.count == highestVotes then
-                        -- A draw, add to list of winners
-                        table.insert(winners, k)
-                    end
-                end
-            else
-
-            end
-
-            -- Remove the active vote
-            self.currentVote = nil
-
-            -- Call the callback for vote ending
-            cv.onFinish(winners)
-        end
-    end
-
     -- Change to picking phase if it isn't already active
     if (not startedInitialVote) and self.currentState ~= STATE_VOTING then
         -- This only ever runs once
@@ -716,6 +830,17 @@ function FrotaGameMode:_thinkState_Voting(dt)
         -- Begin gamemode voting
         self:VoteForGamemode()
     end
+end
+
+function FrotaGameMode:_thinkState_Picking(dt)
+    -- Check if picking has gone on for too long
+    --[[if Time() > self.pickingOverTime then
+        self:StartGame()
+    end]]
+end
+
+-- Nothing is happening
+function FrotaGameMode:_thinkState_None(dt)
 end
 
 function FrotaGameMode:VoteForGamemode()
@@ -834,7 +959,7 @@ function FrotaGameMode:StartGame()
     self.scoreRadiant = 0
 
     -- Change to playing
-    self:ChangeState(STATE_PLAYING, '')
+    self:ChangeState(STATE_PLAYING, {})
 end
 
 function FrotaGameMode:BuildBuildsData()

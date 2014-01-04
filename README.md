@@ -20,6 +20,15 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
  - **Arena**
   - Added header file for it
 
+###How do I use this?###
+ - Keep in mind it is still in development, and may be buggy
+ - Download the zip (or clone if you are good enough)
+ - Stick the files into "Steam\steamapps\common\dota 2 beta\dota\addons\Frota"
+ - If done correctly, the following folder should exist "Steam\steamapps\common\dota 2 beta\dota\addons\Frota\HudSRC"
+ - Reopen dota after each install / update (hud might not update)
+ - Run the following command
+  - dota_local_custom_enable 1;dota_local_custom_game Frota;dota_local_custom_map Frota;dota_force_gamemode 15;update_addon_paths;dota_wait_for_players_to_load 0;dota_wait_for_players_to_load_timeout 10;map riverofsouls;
+
 ###Up next###
  - More work on the game mode system
  - Improved picking

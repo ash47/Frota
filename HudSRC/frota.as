@@ -82,7 +82,7 @@ package {
         private var stateCleanupSpecial = {};   // Specific things that can be removed
 
         // Shortcut functions
-        public var Translate;  // Translates a #tag into something readable
+        public static var Translate;  // Translates a #tag into something readable
 
         // Contains the movieclip we are dragging
         public var dragClip;
@@ -91,6 +91,9 @@ package {
 
         // An array of steamIDs, index = playerID
         public var steamIDs = [];
+
+        // An object to store timers
+        public var serverTimers = {};
 
         public function frota() {}
 
@@ -109,6 +112,7 @@ package {
             this.gameAPI.SubscribeToGameEvent("afs_vote_status", this.updateVoteStatus);
             this.gameAPI.SubscribeToGameEvent("afs_update_builds", this.updateBuildDataHook);
             this.gameAPI.SubscribeToGameEvent("afs_steam_ids", this.updateSteamIDs);
+            this.gameAPI.SubscribeToGameEvent("afs_timer_update", this.updateTimersHook);
 
             // Hide the Hud Mask
             hudMask.visible = false;
@@ -234,6 +238,11 @@ package {
 
             // Parse data
             var data = decode(args.d);
+
+            // Update timers if there are any
+            if(data.timers) {
+                updateTimers(data.timers);
+            }
 
             switch(args.nState) {
                 case STATE_INIT:
@@ -408,25 +417,80 @@ package {
         }
 
         public function updateBuildDataHook(args:Object) {
-            this.updateBuildData(decode(args.d));
+            if(args.d) {
+                this.updateBuildData(decode(args.d));
+            }
         }
 
         public function updateSteamIDs(args:Object) {
-            for(var i=0; i<10; i++) {
-                // Grab the new ID
-                var newID = args[String(i)];
+            if(args.d) {
+                var data = decode(args.d);
 
-                // Check if the ID has changed
-                if(this.steamIDs[i] != newID) {
-                    // Attempt to update avatar images
-                    var skill = getSpecial('avatar_'+i);
-                    if(skill) {
-                        Globals.instance.LoadImage('img://[M' + newID + ']', skill, false);
+                for(var i=0; i<10; i++) {
+                    var newID = data[i];
+                    if(!newID) newID = 0;
+
+                    if(this.steamIDs[i] != newID) {
+                        // Attempt to update avatar images
+                        var skill = getSpecial('avatar_'+i);
+                        if(skill) {
+                            Globals.instance.LoadImage('img://[M' + newID + ']', skill, false);
+                        }
+
+                        // Store new steamID
+                        this.steamIDs[i] = newID;
                     }
-
-                    // Store new steamID
-                    this.steamIDs[i] = newID;
                 }
+            }
+        }
+
+        public function updateTimersHook(args:Object) {
+            if(args.d) {
+                // Update the timers
+                this.updateTimers(decode(args.d));
+            }
+        }
+
+        public function updateTimers(timers:Object) {
+            var timer;
+
+            // Remvoe all old timers
+            for(var key in this.serverTimers) {
+                timer = this.serverTimers[key];
+                if(timer) {
+                    // Check if there is still a timer running
+                    if(timer.timer) timer.timer.stop();
+
+                    // Remove from the screen
+                    if(this.contains(timer)) removeChild(timer);
+                }
+
+                // Set it to null
+                this.serverTimers[key] = null;
+            }
+
+            var xx = 0;
+            var yy = 32;
+
+            // Build new timers
+            for(key in timers) {
+                // Grab data
+                var timerData = timers[key];
+                var timeLeft = Math.floor(timerData.e - this.globals.Game.Time());
+
+                // Create timer
+                timer = new ServerTimer(timerData.t, timeLeft);
+                addChild(timer);
+
+                // Move into position
+                timer.x = xx;
+                timer.y = yy;
+
+                // Increase y
+                yy += timer.height + 8;
+
+                // Store timer
+                this.serverTimers[key] = timer;
             }
         }
 
@@ -749,39 +813,6 @@ package {
             var xo = padding;
             var xx:Number = xo;
             var yy:Number = padding;
-
-            var timeLeft = Math.floor(data.endTime - this.globals.Game.Time());
-
-            // Create text field to display how long left
-            var txt = makeTextField(18);
-            autoCleanup(txt);
-            txt.x = 4;
-            txt.y = 32;
-            txt.width = 240;
-            txt.text = timeLeft+" Seconds Remaining";
-
-            // Make the time left change
-            var timer:Timer = new Timer(1000, timeLeft);
-            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
-                // Ensure timer still exists
-                if(txt) {
-                    // Workout how long is left
-                    timeLeft = Math.floor(data.endTime - globals.Game.Time());
-
-                    // Update timer, with a nice display
-                    if(timeLeft > 0 && timeLeft != 1) {
-                        txt.text = timeLeft+" "+Translate("#afs_seconds_remaining");
-                    } else if(timeLeft == 1) {
-                        txt.text = 1+" "+Translate("#afs_second_remaining");
-                    } else {
-                        txt.text = "#afs_vote_waiting_to_end";
-                    }
-                } else {
-                    // Stop the timer
-                    timer.stop();
-                }
-            });
-            timer.start();
 
             // This will store all the vote panels
             voteHolder = {};
