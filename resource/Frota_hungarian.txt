@@ -1,0 +1,36 @@
+"lang"
+{
+        "Language"              "hungarian"
+        "Tokens"
+        {
+                // Name of the game
+                "game_mode_15"                  "FROTA"
+
+                // Toggle ready state
+                "afs_toggle_ready"              "Készültség be/ki"
+
+                // Legends of Dota
+                "afs_name_lod"                  "Legends of dota"
+                "afs_des_lod"                   "Válassz képességeket és hőst"
+
+                // PvP Arena
+                "afs_name_arena"                "PvP Aréna"
+                "afs_des_arena"                 "Egyszerű PvP Aréna mód."
+
+                // Pudge Wars
+                "afs_name_pudgewars"            "Pudge Wars"
+                "afs_des_pudgewars"             "Játssz mint Pudge, az első csapat 10 ponttal győz."
+
+                // Random OMG
+                "afs_name_romg"                 "Random OMG"
+                "afs_des_romg"                  "Véletlenszerű hős, 3 képesség és ulti"
+
+                // Vote related
+                "afs_seconds_remaining"         "másodperc múlva"
+                "afs_second_remaining"          "másodperc múlva"
+                "afs_vote_ends_in"              "Szavazás vége"
+
+                // Picking related
+                "afs_picking_timer"             "Választás vége"
+        }
+}
