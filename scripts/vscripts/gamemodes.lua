@@ -77,7 +77,7 @@ RegisterGamemode('arena', {
         killsScore = true,
 
         -- Score Limit
-        scoreLimit = 2,
+        scoreLimit = 10,
 
         -- Respawn delay
         respawnDelay = 0
@@ -100,7 +100,7 @@ RegisterGamemode('pudgewars', {
         killsScore = true,
 
         -- Score Limit
-        scoreLimit = 2,
+        scoreLimit = 10,
 
         -- Respawn delay
         respawnDelay = 0

@@ -181,6 +181,12 @@ function FrotaGameMode:RegisterCommands()
             end
         end
     end, "Swaps a given players hero to bane.", 0 )
+
+    -- When a user toggles ready state
+    Convars:RegisterCommand( "afs_force_start", function(name, skillName, slotNumber)
+        -- Start the game
+        self:StartGame()
+    end, "Start the game", 0 )
 end
 
 -- Auto assigns a player when they connect
