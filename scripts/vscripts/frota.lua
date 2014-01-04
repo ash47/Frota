@@ -69,6 +69,13 @@ function FrotaGameMode:_SetInitialValues()
             ready = false
         }
     end
+
+    -- Options
+    self.gamemodeOptions = {}
+
+    -- Scores
+    self.scoreDire = 0
+    self.scoreRadiant = 0
 end
 
 function FrotaGameMode:InitGameMode()
@@ -88,37 +95,8 @@ function FrotaGameMode:InitGameMode()
     GameRules:SetRuneMinimapIconScale( 0.7 )
 
     -- Hooks
-    ListenToGameEvent('player_connect_full', function(self, keys)
-        -- Grab the entity index of this player
-        local entIndex = keys.index+1
-        local ply = EntIndexToHScript(entIndex)
-
-        -- Find the team with the least players
-        local teamSize = {
-            [DOTA_TEAM_GOODGUYS] = 0,
-            [DOTA_TEAM_BADGUYS] = 0
-        }
-
-        for i=0,MAX_PLAYERS-1 do
-            if Players:IsValidPlayer(i) then
-                print('valid player '..i)
-                local ply = Players:GetPlayer(i)
-                if ply then
-                    -- Grab the players team
-                    local team = ply:GetTeam()
-
-                    -- Increase the number of players on this players team
-                    teamSize[team] = (teamSize[team] or 0) + 1
-                end
-            end
-        end
-
-        if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then
-            ply:SetTeam(DOTA_TEAM_BADGUYS)
-        else
-            ply:SetTeam(DOTA_TEAM_GOODGUYS)
-        end
-    end, self)
+    ListenToGameEvent('entity_killed', Dynamic_Wrap(FrotaGameMode, 'OnEntityKilled'), self)
+    ListenToGameEvent('player_connect_full', Dynamic_Wrap(FrotaGameMode, 'AutoAssignPlayer'), self)
 
     -- Load initital Values
     self:_SetInitialValues()
@@ -205,6 +183,91 @@ function FrotaGameMode:RegisterCommands()
     end, "Swaps a given players hero to bane.", 0 )
 end
 
+-- Auto assigns a player when they connect
+function FrotaGameMode:AutoAssignPlayer(keys)
+    -- Grab the entity index of this player
+    local entIndex = keys.index+1
+    local ply = EntIndexToHScript(entIndex)
+
+    -- Find the team with the least players
+    local teamSize = {
+        [DOTA_TEAM_GOODGUYS] = 0,
+        [DOTA_TEAM_BADGUYS] = 0
+    }
+
+    for i=0,MAX_PLAYERS-1 do
+        if Players:IsValidPlayer(i) then
+            print('valid player '..i)
+            local ply = Players:GetPlayer(i)
+            if ply then
+                -- Grab the players team
+                local team = ply:GetTeam()
+
+                -- Increase the number of players on this players team
+                teamSize[team] = (teamSize[team] or 0) + 1
+            end
+        end
+    end
+
+    if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then
+        ply:SetTeam(DOTA_TEAM_BADGUYS)
+    else
+        ply:SetTeam(DOTA_TEAM_GOODGUYS)
+    end
+end
+
+function FrotaGameMode:OnEntityKilled(keys)
+    local killedUnit = EntIndexToHScript( keys.entindex_killed )
+    local killerEntity = nil
+
+    if keys.entindex_attacker ~= nil then
+        killerEntity = EntIndexToHScript( keys.entindex_attacker )
+    end
+
+    if killedUnit and killedUnit:IsRealHero() then
+        -- Make sure we are playing
+        if self.currentState ~= STATE_PLAYING then return end
+
+        -- Check if point score
+        if not self.gamemodeOptions.killsScore then return end
+
+        local winner = -1
+
+        -- Decide who to give a point to
+        local team = killedUnit:GetTeam()
+        if team == DOTA_TEAM_GOODGUYS then
+            -- Add to the points
+            self.scoreDire = self.scoreDire + 1
+
+            -- Check if the game was won
+            if self.scoreDire == (self.gamemodeOptions.scoreLimit or -1) then
+                winner = DOTA_TEAM_BADGUYS
+            end
+        else
+            -- Add to the points
+            self.scoreRadiant = self.scoreRadiant + 1
+
+            -- Check if the game was won
+            if self.scoreRadiant == (self.gamemodeOptions.scoreLimit or -1) then
+                winner = DOTA_TEAM_GOODGUYS
+            end
+        end
+
+        -- Check if there was a winner
+        if winner ~= -1 then
+            print('there was a winner: '..winner)
+
+            -- Reset back to gamemode voting
+            self:VoteForGamemode()
+        end
+
+        -- Respawn the dead guy
+        killedUnit:RespawnHero(false, false, false)
+
+        print(self.scoreRadiant..' - '..self.scoreDire)
+    end
+end
+
 function FrotaGameMode:FindHeroOwner(skillName)
     local heroOwner = ""
     for heroName, values in pairs(self.heroList) do
@@ -236,19 +299,7 @@ function FrotaGameMode:LoadAbilityList()
             -- This comparison is really dodgy for some reason
             if tonumber(vv) == 1 then
                 -- Attempt to find the owning hero of this ability
-                local heroOwner = ""
-                for heroName, values in pairs(self.heroList) do
-                    if type(values) == "table" then
-                        for i = 1, 16 do
-                            if values["Ability"..i] == kk then
-                                heroOwner = heroName
-                                goto foundHeroName
-                            end
-                        end
-                    end
-                end
-
-                ::foundHeroName::
+                local heroOwner = self:FindHeroOwner(kk)
 
                 -- Check if the owner was found
                 if heroOwner ~= '' then
@@ -762,6 +813,13 @@ function FrotaGameMode:StartGame()
             end
         end
     end
+
+    -- Store options
+    self.gamemodeOptions = (self.playMode and self.playMode.options) or (self.pickMode and self.pickMode.options) or {}
+
+    -- Reset scores
+    self.scoreDire = 0
+    self.scoreRadiant = 0
 
     -- Change to playing
     self:ChangeState(STATE_PLAYING, '')

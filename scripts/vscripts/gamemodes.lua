@@ -69,7 +69,19 @@ RegisterGamemode('lod', {
 -- Standard Arena PvP
 RegisterGamemode('arena', {
     -- Gamemode only has a gameplay component
-    sort = GAMEMODE_PLAY
+    sort = GAMEMODE_PLAY,
+
+    -- A list of options for fast gameplay stuff
+    options = {
+        -- Kills give team points
+        killsScore = true,
+
+        -- Score Limit
+        scoreLimit = 2,
+
+        -- Respawn delay
+        respawnDelay = 0
+    }
 })
 
 -- A Pudge Wars Base Gamemode
@@ -88,6 +100,9 @@ RegisterGamemode('pudgewars', {
         killsScore = true,
 
         -- Score Limit
-        killLimit = 10
+        scoreLimit = 2,
+
+        -- Respawn delay
+        respawnDelay = 0
     }
 })
