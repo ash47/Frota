@@ -1080,7 +1080,7 @@ function FrotaGameMode:BuildBuildsData()
 
         -- Add all skills
         local j = 0
-        for kk, vv in pairs(v.skills) do
+        for kk, vv in ipairs(v.skills) do
             data[i].s[j] = vv
             j = j + 1
         end
