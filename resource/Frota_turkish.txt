@@ -1,0 +1,36 @@
+"lang"
+{
+        "Language"                "Turkish"
+        "Tokens"
+        {
+                // Name of the game
+                "game_mode_15"                  "FROTA"
+
+                // Toggle ready state
+                "afs_toggle_ready"              "Hazır"
+
+                // Legends of Dota
+                "afs_name_lod"                  "Legends of Dota"
+                "afs_des_lod"                   "Yeteneklerini ve kahramanını kendin seç."
+
+                // PvP Arena
+                "afs_name_arena"                "PvP Arena"
+                "afs_des_arena"                 "Basit bir PvP modu."
+
+                // Pudge Wars
+                "afs_name_pudgewars"            "Pudge Savaşları"
+                "afs_des_pudgewars"             "Pudge olarak oynayın, 10 leş alan ilk takım kazanır."
+
+                // Random OMG
+                "afs_name_romg"                 "Rastgele OMG"
+                "afs_des_romg"                  "Rastgele bir kahraman, 3 rastgele yetenek ve rastgele ulti alın."
+
+                // Vote related
+                "afs_seconds_remaining"         "saniye"
+                "afs_second_remaining"          "saniye"
+                "afs_vote_ends_in"              "Oylamanın bitmesine"
+
+                // Picking related
+                "afs_picking_timer"             "Seçmelerin bitmesine"
+        }
+}
