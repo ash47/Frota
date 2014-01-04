@@ -1,0 +1,36 @@
+"lang"
+{
+        "Language"                "German"
+        "Tokens"
+        {
+        // Name of the game
+        "game_mode_15"                  "FROTA"
+
+        // Toggle ready state
+        "afs_toggle_ready"              "Kampfbereit?"
+
+        // Legends of Dota
+        "afs_name_lod"                  "Legends of dota"
+        "afs_des_lod"                   "Wähle Skills und Fähigkeiten."
+
+        // PvP Arena
+        "afs_name_arena"                "PvP Arena"
+        "afs_des_arena"                 "Eine einfache PvP Arena."
+
+        // Pudge Wars
+        "afs_name_pudgewars"            "Pudge Wars"
+        "afs_des_pudgewars"             "Spiele Pudge - das Team mit 10 Kills gewinnt."
+
+        // Random OMG
+        "afs_name_romg"                 "Random OMG"
+        "afs_des_romg"                  "Spiele einen zufälligen Helden mit 3 zufälligen Fähgikeiten und einer Ultimate."
+
+        // Vote related
+        "afs_seconds_remaining"         "Sekunden"
+        "afs_second_remaining"          "Selunde"
+        "afs_vote_ends_in"              "Abstimmung endet in"
+
+        // Picking related
+        "afs_picking_timer"             "Auswahl endet in"
+        }
+}
