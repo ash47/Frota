@@ -44,6 +44,10 @@ function FrotaGameMode:new (o)
 end
 
 function FrotaGameMode:_SetInitialValues()
+    -- Change random seed
+    local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
+    math.randomseed(tonumber(timeTxt))
+
     -- Load ability List
     self:LoadAbilityList()
 
@@ -85,6 +89,9 @@ function FrotaGameMode:_SetInitialValues()
 end
 
 function FrotaGameMode:InitGameMode()
+    -- Load version
+    self.frotaVersion = LoadKeyValues("scripts/version.txt").version
+
     -- Register console commands
     self:RegisterCommands()
 
@@ -154,7 +161,21 @@ function FrotaGameMode:RegisterCommands()
     end, "User trying to vote", 0 )
 
     -- State handeling
-    Convars:RegisterCommand( "afs_request_state", function(name, args)
+    Convars:RegisterCommand( "afs_request_state", function(name, version)
+        -- Make sure a version was parsed
+        version = version or "Unknown"
+
+        -- Load this client's version
+        if version ~= self.frotaVersion then
+            local cmdPlayer = Convars:GetCommandClient()
+            if cmdPlayer then
+                local playerID = cmdPlayer:GetPlayerID()
+                if playerID ~= nil and playerID ~= -1 then
+                    Say(cmdPlayer, "I have frota version "..version.." and the server has version "..self.frotaVersion, false)
+                end
+            end
+        end
+
         local data = {}
 
         for i=0, MAX_PLAYERS-1 do
@@ -164,8 +185,6 @@ function FrotaGameMode:RegisterCommands()
                 data[i] = steamID
             end
         end
-
-        print(JSON:encode(data))
 
         -- Fire steamids
         FireGameEvent("afs_steam_ids", {
@@ -233,8 +252,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     }
 
     for i=0,MAX_PLAYERS-1 do
-        if Players:IsValidPlayer(i) then
-            print('valid player '..i)
+        if Players:GetPlayer(i) then
             local ply = Players:GetPlayer(i)
             if ply then
                 -- Grab the players team
@@ -250,6 +268,12 @@ function FrotaGameMode:AutoAssignPlayer(keys)
         ply:SetTeam(DOTA_TEAM_BADGUYS)
     else
         ply:SetTeam(DOTA_TEAM_GOODGUYS)
+    end
+
+    local playerID = ply:GetPlayerID()
+    local hero = Players:GetSelectedHeroEntity(playerID)
+    if hero then
+        hero:Remove()
     end
 end
 
@@ -307,7 +331,7 @@ end
 
 function FrotaGameMode:FindHeroOwner(skillName)
     local heroOwner = ""
-    for heroName, values in pairs(self.heroList) do
+    for heroName, values in pairs(self.heroListKV) do
         if type(values) == "table" then
             for i = 1, 16 do
                 if values["Ability"..i] == skillName then
@@ -324,11 +348,21 @@ end
 
 function FrotaGameMode:LoadAbilityList()
     local abs = LoadKeyValues( "scripts/kv/abilities.kv" )
-    self.heroList = LoadKeyValues( "scripts/npc/npc_heroes.txt" )
+    self.heroListKV = LoadKeyValues( "scripts/npc/npc_heroes.txt" )
     --local englishPack = LoadKeyValues( "resource/dota_english.txt" )
+
+    -- Build list of heroes
+    self.heroList = {}
+    for heroName, values in pairs(self.heroListKV) do
+        -- Validate hero name
+        if heroName ~= 'Version' and heroName ~= 'npc_dota_hero_base' and heroName ~= 'npc_dota_hero_abyssal_underlord' then
+            table.insert(self.heroList, heroName)
+        end
+    end
 
     -- Table containing every skill
     self.vAbList = {}
+    self.vAbListSort = {}
 
     -- Build skill list
     for k,v in pairs(abs) do
@@ -352,11 +386,27 @@ function FrotaGameMode:LoadAbilityList()
                     sort = k,
                     hero = heroOwner
                 })
+
+                -- Store into the sort container
+                if not self.vAbListSort[k] then
+                    self.vAbListSort[k] = {}
+                end
+
+                -- Store the sort reference
+                table.insert(self.vAbListSort[k], kk)
             end
         end
     end
 
     --PrintTable(self.vAbList)
+end
+
+function FrotaGameMode:GetRandomAbility(sort)
+    if not sort or not self.vAbListSort[sort] then
+        sort = 'Abs'
+    end
+
+    return self.vAbListSort[sort][math.random(1, #self.vAbListSort[sort])]
 end
 
 function FrotaGameMode:RemoveAllSkills(hero)
@@ -368,11 +418,11 @@ function FrotaGameMode:RemoveAllSkills(hero)
         local skills = {}
 
         -- Build list of abilities
-        for heroName, values in pairs(self.heroList) do
+        for heroName, values in pairs(self.heroListKV) do
             if heroName == heroClass then
                 for i = 1, 16 do
                     local ab = values["Ability"..i]
-                    if ab then
+                    if ab and ab ~= 'attribute_bonus' then
                         table.insert(skills, ab)
                     end
                 end
@@ -403,6 +453,10 @@ function FrotaGameMode:ApplyBuild(hero)
 
     -- Give all the abilities in this build
     for k,v in ipairs(self.selectedBuilds[playerID].skills) do
+        -- Preache ability
+        self:PrecacheSkill(v)
+
+        -- Add to build
         hero:AddAbility(v)
         self.currentSkillList[hero][k] = v
     end
@@ -447,7 +501,7 @@ function FrotaGameMode:ToggleReadyState(playerID)
     -- Check if everyone is ready
     local allReady = true
     for i=0,MAX_PLAYERS-1 do
-        if Players:IsValidPlayer(i) and (not self.selectedBuilds[i].ready) then
+        if Players:GetPlayer(i) and (not self.selectedBuilds[i].ready) then
             allReady = false
             break
         end
@@ -612,14 +666,16 @@ function FrotaGameMode:Think()
             if Players:IsValidPlayer(i) and not Players:GetSelectedHeroEntity(i) then
                 -- Grab the player and create them a default hero
                 local ply = Players:GetPlayer(i)
-                CreateHeroForPlayer('npc_dota_hero_axe', ply)
+                if ply then
+                    CreateHeroForPlayer('npc_dota_hero_axe', ply)
 
-                -- Check if we are in a game
-                if self.currentState == STATE_PLAYING then
-                    -- Check if we need to assign a hero
-                    local assignHero = self:GetAssignHero()
-                    if assignHero then
-                        assignHero(ply, self)
+                    -- Check if we are in a game
+                    if self.currentState == STATE_PLAYING then
+                        -- Check if we need to assign a hero
+                        local assignHero = self:GetAssignHero()
+                        if assignHero then
+                            assignHero(ply, self)
+                        end
                     end
                 end
             end
@@ -635,6 +691,13 @@ function FrotaGameMode:Think()
     self.t0 = now
 
     self:thinkState( dt )
+end
+
+function FrotaGameMode:SetBuildSkills(playerID, skills)
+    if not self.selectedBuilds[playerID] then return end
+
+    -- Change the skills
+    self.selectedBuilds[playerID].skills = skills
 end
 
 -- Finds a function that assigns heroes
@@ -843,6 +906,10 @@ end
 function FrotaGameMode:_thinkState_None(dt)
 end
 
+function FrotaGameMode:ChooseRandomHero()
+    return self.heroList[math.random(1, #self.heroList)]
+end
+
 function FrotaGameMode:VoteForGamemode()
     -- Grab all the gamemodes the require picking
     local modes = GetPickingGamemodes()
@@ -943,10 +1010,12 @@ function FrotaGameMode:StartGame()
     if assignHero then
         -- Loop over every player
         for i=0,MAX_PLAYERS-1 do
+            local ply = Players:GetPlayer(i)
+
             -- Check if they are in
-            if Players:IsValidPlayer(i) then
+            if ply then
                 -- Assign them a hero
-                assignHero(Players:GetPlayer(i), self)
+                assignHero(ply, self)
             end
         end
     end

@@ -10,6 +10,9 @@ package {
     import flash.text.TextFormatAlign;
     import flash.geom.Point;
 
+    import flash.net.URLLoader;
+    import flash.net.URLRequest;
+
     import com.adobe.serialization.json.*;
 
     import scaleform.clik.controls.TextInput;
@@ -103,6 +106,9 @@ package {
 
             trace("\n\n-- Frota hud starting to load! --\n\n");
 
+            // Allow people to see
+            hideGame.visible = false;
+
             //trace('globals:');
             //PrintTable(globals, 1);
 
@@ -147,7 +153,8 @@ package {
             // Request the current game state (after a delay)
             var timer:Timer = new Timer(1000, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
-                gameAPI.SendServerCommand("afs_request_state");
+                var ver = Globals.instance.GameInterface.LoadKVFile("scripts/version.txt").version;
+                gameAPI.SendServerCommand("afs_request_state \""+ver+"\"");
             });
             timer.start();
         }

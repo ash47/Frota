@@ -19,6 +19,8 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
   - Players will spawn as pudge if this gamemode is selected
  - **Arena**
   - Added header file for it
+ - Random OMG
+  - Seems to work, you get a random hero, 3 skills and an ult
 
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
@@ -28,6 +30,10 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
  - Reopen dota after each install / update (hud might not update)
  - Run the following command
   - dota_local_custom_enable 1;dota_local_custom_game Frota;dota_local_custom_map Frota;dota_force_gamemode 15;update_addon_paths;dota_wait_for_players_to_load 0;dota_wait_for_players_to_load_timeout 10;map riverofsouls;
+
+###Translations###
+ - English by Ash47
+ - Russian by lokkdokk
 
 ###Up next###
  - More work on the game mode system

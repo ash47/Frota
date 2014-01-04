@@ -66,6 +66,34 @@ RegisterGamemode('lod', {
     end,
 })
 
+-- Random OMG
+RegisterGamemode('romg', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_PICK,
+
+    -- Function to give out heroes
+    assignHero = function(ply, frota)
+        local playerID = ply:GetPlayerID()
+        local build = frota.selectedBuilds[playerID]
+
+        -- Change hero
+        ply:ReplaceHeroWith(frota:ChooseRandomHero(), 100000, 32400)
+
+        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Make a random build
+        frota:SetBuildSkills(playerID, {
+            [1] = frota:GetRandomAbility(),
+            [2] = frota:GetRandomAbility(),
+            [3] = frota:GetRandomAbility(),
+            [4] = frota:GetRandomAbility('Ults')
+        })
+
+        -- Change skills
+        frota:ApplyBuild(hero)
+    end,
+})
+
 -- Standard Arena PvP
 RegisterGamemode('arena', {
     -- Gamemode only has a gameplay component
