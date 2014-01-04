@@ -19,7 +19,7 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
   - Players will spawn as pudge if this gamemode is selected
  - **Arena**
   - Added header file for it
- - Random OMG
+ - **Random OMG**
   - Seems to work, you get a random hero, 3 skills and an ult
 
 ###How do I use this?###
@@ -37,6 +37,8 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
 
 ###Up next###
  - More work on the game mode system
+  - Scores need to be added
+  - Which team actually won needs to be added
  - Improved picking
   - Hero picking
   - Filters
