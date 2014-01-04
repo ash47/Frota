@@ -107,6 +107,9 @@ RegisterGamemode('arena', {
         -- Score Limit
         scoreLimit = 10,
 
+        -- Enable scores
+        useScores = true,
+
         -- Respawn delay
         respawnDelay = 0
     }
@@ -129,6 +132,9 @@ RegisterGamemode('pudgewars', {
 
         -- Score Limit
         scoreLimit = 10,
+
+        -- Enable scores
+        useScores = true,
 
         -- Respawn delay
         respawnDelay = 0

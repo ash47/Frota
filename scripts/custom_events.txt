@@ -59,5 +59,11 @@
 	{
 		"d"					"string"
 	}
+
+	// Sending the scores
+	"afs_score_update"
+	{
+		"d"					"string"
+	}
 }
 

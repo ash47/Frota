@@ -61,10 +61,6 @@ function FrotaGameMode:_SetInitialValues()
     -- Stores the current skill list for each hero
     self.currentSkillList = {}
 
-    -- The state of the gane
-    self.currentState = STATE_INIT;
-    self:ChangeStateData({});
-
     -- Store the default axe build for each player
     self.selectedBuilds = {}
     for i = 0,MAX_PLAYERS-1 do
@@ -86,6 +82,10 @@ function FrotaGameMode:_SetInitialValues()
     -- Scores
     self.scoreDire = 0
     self.scoreRadiant = 0
+
+    -- The state of the gane
+    self.currentState = STATE_INIT;
+    self:ChangeStateData({});
 end
 
 function FrotaGameMode:InitGameMode()
@@ -313,6 +313,9 @@ function FrotaGameMode:OnEntityKilled(keys)
                 winner = DOTA_TEAM_GOODGUYS
             end
         end
+
+        -- Update the scores
+        self:UpdateScoreData()
 
         -- Check if there was a winner
         if winner ~= -1 then
@@ -542,7 +545,7 @@ function FrotaGameMode:BuildTimerData()
 end
 
 function FrotaGameMode:UpdateTimerData()
-    -- Change the state
+    -- Change the state data
     self:ChangeStateData(self.currentStateDataRaw)
 
     -- Update clients
@@ -551,12 +554,34 @@ function FrotaGameMode:UpdateTimerData()
     })
 end
 
+function FrotaGameMode:UpdateScoreData()
+    -- Change the state data
+    self:ChangeStateData(self.currentStateDataRaw)
+
+    -- Check if this gamemode uses scores
+    if self.gamemodeOptions.useScores then
+        -- Update clients
+        FireGameEvent("afs_score_update", {
+            d = JSON:encode({
+                scoreDire = self.scoreDire,
+                scoreRadiant = self.scoreRadiant
+            })
+        })
+    end
+end
+
 function FrotaGameMode:ChangeStateData(data)
     -- Make sure there is some data
     data = data or {}
 
     -- Store timers
     data.timers = self:BuildTimerData()
+
+    -- Store scores
+    if self.gamemodeOptions.useScores then
+        data.scoreDire = self.scoreDire
+        data.scoreRadiant = self.scoreRadiant
+    end
 
     -- Set the current data
     self.currentStateData = JSON:encode(data)

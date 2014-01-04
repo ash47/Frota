@@ -119,6 +119,7 @@ package {
             this.gameAPI.SubscribeToGameEvent("afs_update_builds", this.updateBuildDataHook);
             this.gameAPI.SubscribeToGameEvent("afs_steam_ids", this.updateSteamIDs);
             this.gameAPI.SubscribeToGameEvent("afs_timer_update", this.updateTimersHook);
+            this.gameAPI.SubscribeToGameEvent("afs_score_update", this.updateScoreHook);
 
             // Hide the Hud Mask
             hudMask.visible = false;
@@ -216,6 +217,14 @@ package {
             return stateCleanupSpecial[name];
         }
 
+        public function removeSpecial(name) {
+            var mc = getSpecial(name);
+            if(mc && this.contains(mc)) {
+                this.removeChild(mc);
+                stateCleanupSpecial[name] = null;
+            }
+        }
+
         public function makeTextField(txtSize:Number):TextField {
             var txt:TextField = new TextField();
             var textFormat:TextFormat = new TextFormat();
@@ -248,8 +257,14 @@ package {
 
             // Update timers if there are any
             if(data.timers) {
-                updateTimers(data.timers);
+                this.updateTimers(data.timers);
             }
+
+            // Update the scores
+            this.updateScore({
+                scoreDire: data.scoreDire,
+                scoreRadiant: data.scoreRadiant
+            });
 
             switch(args.nState) {
                 case STATE_INIT:
@@ -448,6 +463,40 @@ package {
                         this.steamIDs[i] = newID;
                     }
                 }
+            }
+        }
+
+        public function updateScoreHook(args:Object) {
+            if(args.d) {
+                // Update the timers
+                this.updateScore(decode(args.d));
+            }
+        }
+
+        public function updateScore(scores:Object) {
+            // Cleanup old scores
+            removeSpecial("score_dire");
+            removeSpecial("score_radiant");
+
+            // Distance from the middle
+            var distanceFromMiddle = 24;
+
+            if(scores.scoreRadiant != null) {
+                var scoreRadiant = makeTextField(18);
+                scoreRadiant.text = scores.scoreRadiant;
+                autoCleanupSpecial(scoreRadiant, "score_radiant");
+                scoreRadiant.width = scoreRadiant.textWidth;
+                scoreRadiant.x = maxStageWidth/2 - scoreRadiant.width - distanceFromMiddle;
+                scoreRadiant.y = 32;
+            }
+
+            if(scores.scoreDire != null) {
+                var scoreDire = makeTextField(18);
+                scoreDire.text = scores.scoreDire;
+                autoCleanupSpecial(scoreDire, "score_dire");
+                scoreDire.width = scoreDire.textWidth;
+                scoreDire.x = maxStageWidth/2 + distanceFromMiddle;
+                scoreDire.y = 32;
             }
         }
 
