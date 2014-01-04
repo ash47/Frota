@@ -24,6 +24,7 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
 
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
+ - **IMPORTANT: ** Dota will only load the first plugin in your addons folder, to prevent this, move all other addons out of your addons folder. (I moved mine into an addons_disabled folder) - ONLY the host has to do this. This is not required if you use d2fixups
  - Download the zip (or clone if you are good enough)
  - Stick the files into "Steam\steamapps\common\dota 2 beta\dota\addons\Frota"
  - If done correctly, the following folder should exist "Steam\steamapps\common\dota 2 beta\dota\addons\Frota\HudSRC"
