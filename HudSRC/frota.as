@@ -19,6 +19,7 @@ package {
     import scaleform.clik.events.FocusHandlerEvent;
 
     import ValveLib.Globals;
+    import ValveLib.ResizeManager;
 
     public class frota extends MovieClip {
         // Game API related stuff
@@ -98,6 +99,13 @@ package {
         // An object to store timers
         public var serverTimers = {};
 
+        // Stores the last state data
+        public var lastStateData;
+
+        // Update related
+        public var lastUpdate = 0;
+        public var lastUpdateCheck = 0;
+
         public function frota() {}
 
         public function onLoaded() : void {
@@ -113,6 +121,12 @@ package {
             //PrintTable(globals, 1);
 
             this.gameAPI.SubscribeToGameEvent("hero_picker_hidden", this.requestCurrentState);
+            this.gameAPI.SubscribeToGameEvent("gameui_activated", function() {
+                trace("ACTIVATED!");
+            });
+            this.gameAPI.SubscribeToGameEvent("gameui_hidden", function() {
+                trace("HIDDEN!");
+            });
             this.gameAPI.SubscribeToGameEvent("afs_initial_state", this.receiveInitialState);
             this.gameAPI.SubscribeToGameEvent("afs_update_state", this.processState);
             this.gameAPI.SubscribeToGameEvent("afs_vote_status", this.updateVoteStatus);
@@ -135,6 +149,21 @@ package {
             this.gameAPI.OnReady();
             Globals.instance.GameInterface.AddMouseInputConsumer();
 
+            // Update checker (the hud can be disabled, and miss events, this fixes that)
+            lastUpdateCheck = this.globals.Game.Time();
+            var timer:Timer = new Timer(1000);
+            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
+                // Check if too much time has passed
+                if(globals.Game.Time() - lastUpdateCheck > 2) {
+                    requestCurrentStateInsant();
+                }
+
+                // Update when we last checked for updates
+                lastUpdateCheck = globals.Game.Time();
+            });
+            timer.start();
+
+
             // Text input
             /*var a = new DefaultTextInput();
             addChild(a);
@@ -147,15 +176,31 @@ package {
             a.addEventListener(FocusHandlerEvent.FOCUS_OUT, inputBoxLoseFocus);*/
         }
 
-        public function requestCurrentState() {
+        // Instantly ask for the current state
+        public function requestCurrentStateInsant() {
+            // Check if we've recently gotten an update
+            if(this.globals.Game.Time() - this.lastUpdate < 2) {
+                return;
+            }
+
             // Reset initial state received
             this.gottenInitialState = false;
 
+            // Send our version, and request the current state
+            var ver = Globals.instance.GameInterface.LoadKVFile("scripts/version.txt").version;
+            gameAPI.SendServerCommand("afs_request_state \""+ver+"\"");
+
+            // Update when we last requested an update
+            this.lastUpdate = this.globals.Game.Time();
+        }
+
+        // Ask for the current state after a delay
+        public function requestCurrentState() {
             // Request the current game state (after a delay)
             var timer:Timer = new Timer(1000, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
-                var ver = Globals.instance.GameInterface.LoadKVFile("scripts/version.txt").version;
-                gameAPI.SendServerCommand("afs_request_state \""+ver+"\"");
+                // Ask for the current state
+                requestCurrentStateInsant();
             });
             timer.start();
         }
@@ -251,6 +296,9 @@ package {
         public function processState(args:Object) {
             // Cleanup anything from old states
             cleanHud();
+
+            // Store the last state data
+            this.lastStateData = args;
 
             // Parse data
             var data = decode(args.d);
@@ -657,12 +705,40 @@ package {
         }
 
         public function onScreenSizeChanged() : void {
+            // Align to top of screen
             x = 0;
             y = 0;
-            trace("Screen size changed: "+stage.stageWidth+" "+stage.stageHeight+" "+this.globals.resizeManager.ScreenWidth+" "+this.globals.resizeManager.ScreenHeight);
 
             // Lets assume the height never changes:
             maxStageWidth = stage.stageWidth / stage.stageHeight * 768;
+
+            // Check if we have any state data
+            if(this.lastStateData) {
+                // Rebuild the hud
+                this.processState(this.lastStateData);
+            }
+        }
+
+        public function onResize(re:ResizeManager) : * {
+            // Align to top of screen
+            x = 0;
+            y = 0;
+
+            // Update the stage width
+            maxStageWidth = re.ScreenWidth / re.ScreenHeight * 768;
+
+            // Scale hud up
+            this.scaleX = re.ScreenWidth/maxStageWidth;
+            this.scaleY = re.ScreenHeight/maxStageHeight;
+
+            trace(re.ScreenWidth);
+            trace(re.ScreenHeight);
+
+            // Check if we have any state data
+            if(this.lastStateData) {
+                // Rebuild the hud
+                this.processState(this.lastStateData);
+            }
         }
 
         // Displays the skill info thing about a given skill (requires rollOver event)
