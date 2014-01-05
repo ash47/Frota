@@ -27,7 +27,7 @@
 
         // Vote related
         "afs_seconds_remaining"         "Sekunden"
-        "afs_second_remaining"          "Selunde"
+        "afs_second_remaining"          "Sekunde"
         "afs_vote_ends_in"              "Abstimmung endet in"
 
         // Picking related
