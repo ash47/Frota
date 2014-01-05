@@ -283,6 +283,23 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
     -- Store into our map
     self.vUserIDMap[keys.userid] = ply
+
+    -- Autoassign player
+    self:CreateTimer('assign_player_'..entIndex, {
+        endTime = Time(),
+        callback = function(frota, args)
+            CreateHeroForPlayer('npc_dota_hero_axe', ply)
+
+            -- Check if we are in a game
+            if self.currentState == STATE_PLAYING then
+                -- Check if we need to assign a hero
+                local assignHero = self:GetAssignHero()
+                if assignHero then
+                    assignHero(ply, self)
+                end
+            end
+        end
+    })
 end
 
 -- Cleanup a player when they leave
@@ -743,7 +760,7 @@ function FrotaGameMode:Think()
     end
 
     -- Hero Selection Screen Bypass
-    if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
+    --[[if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
         for i=0,MAX_PLAYERS-1 do
             if Players:IsValidPlayer(i) and not Players:GetSelectedHeroEntity(i) then
                 -- Grab the player and create them a default hero
@@ -762,7 +779,7 @@ function FrotaGameMode:Think()
                 end
             end
         end
-    end
+    end]]
 
     -- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
     local now = GameRules:GetGameTime()
