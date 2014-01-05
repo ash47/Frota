@@ -111,7 +111,7 @@ RegisterGamemode('arena', {
         useScores = true,
 
         -- Respawn delay
-        respawnDelay = 0
+        respawnDelay = 3
     }
 })
 
@@ -137,6 +137,6 @@ RegisterGamemode('pudgewars', {
         useScores = true,
 
         -- Respawn delay
-        respawnDelay = 0
+        respawnDelay = 3
     }
 })

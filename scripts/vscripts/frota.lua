@@ -55,6 +55,7 @@ function FrotaGameMode:_SetInitialValues()
     self.timers = {}
 
     -- Voting thinking
+    self.startedInitialVote = false
     self.thinkState = Dynamic_Wrap( FrotaGameMode, '_thinkState_Voting' )
     self._scriptBind:BeginThink( "FrotaThink", Dynamic_Wrap( FrotaGameMode, 'Think' ), 0.25 )
 
@@ -110,11 +111,15 @@ function FrotaGameMode:InitGameMode()
     -- Hooks
     ListenToGameEvent('entity_killed', Dynamic_Wrap(FrotaGameMode, 'OnEntityKilled'), self)
     ListenToGameEvent('player_connect_full', Dynamic_Wrap(FrotaGameMode, 'AutoAssignPlayer'), self)
+    ListenToGameEvent('player_disconnect', Dynamic_Wrap(FrotaGameMode, 'CleanupPlayer'), self)
 
     -- Load initital Values
     self:_SetInitialValues()
 
     Convars:SetBool('dota_suppress_invalid_orders', true)
+
+    -- userID map
+    self.vUserIDMap = {}
 end
 
 function FrotaGameMode:RegisterCommands()
@@ -275,6 +280,46 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     if hero then
         hero:Remove()
     end
+
+    -- Store into our map
+    self.vUserIDMap[keys.userid] = ply
+end
+
+-- Cleanup a player when they leave
+function FrotaGameMode:CleanupPlayer(keys)
+    -- Grab and validate the leaver
+    local leavingPly = self.vUserIDMap[keys.userid];
+    if not leavingPly then return end
+
+    -- Remove all Heroes owned by this player
+    for k,v in pairs(Entities:FindAllByClassname('npc_dota_hero_*')) do
+        if v:IsRealHero() then
+            -- Grab the owning player
+            local ply = Players:GetPlayer(v:GetPlayerID())
+
+            -- Check if this is our leaver
+            if ply and ply == leavingPly then
+                -- Remove this hero
+                v:Remove()
+            end
+        end
+    end
+
+    self:CreateTimer('cleanup_player_'..keys.userid, {
+        endTime = Time() + 1,
+        callback = function(frota, args)
+            -- Check if there are any players connected
+            for i=0, MAX_PLAYERS-1 do
+                local ply = Players:GetPlayer(i)
+                if ply then
+                    return
+                end
+            end
+
+            -- No players are in, reset to initial vote
+            self:_SetInitialValues()
+        end
+    })
 end
 
 function FrotaGameMode:OnEntityKilled(keys)
@@ -288,6 +333,21 @@ function FrotaGameMode:OnEntityKilled(keys)
     if killedUnit and killedUnit:IsRealHero() then
         -- Make sure we are playing
         if self.currentState ~= STATE_PLAYING then return end
+
+        -- Respawn the dead guy after a delay
+        self:CreateTimer('respawn_hero_'..killedUnit:GetPlayerID(), {
+            endTime = Time() + (self.gamemodeOptions.respawnDelay or 1),
+            callback = function(frota, args)
+                -- Make sure we are still playing
+                if frota.currentState == STATE_PLAYING then
+                    -- Validate the unit
+                    if killedUnit then
+                        -- Respawn the dead guy
+                        killedUnit:RespawnHero(false, false, false)
+                    end
+                end
+            end
+        })
 
         -- Check if point score
         if not self.gamemodeOptions.killsScore then return end
@@ -324,9 +384,6 @@ function FrotaGameMode:OnEntityKilled(keys)
             -- Reset back to gamemode voting
             self:VoteForGamemode()
         end
-
-        -- Respawn the dead guy
-        killedUnit:RespawnHero(false, false, false)
 
         print(self.scoreRadiant..' - '..self.scoreDire)
     end
@@ -903,7 +960,6 @@ end
     })
 end]]
 
-local startedInitialVote = false
 function FrotaGameMode:_thinkState_Voting(dt)
     if GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME then
         -- Waiting on the game to start...
@@ -911,9 +967,23 @@ function FrotaGameMode:_thinkState_Voting(dt)
     end
 
     -- Change to picking phase if it isn't already active
-    if (not startedInitialVote) and self.currentState ~= STATE_VOTING then
+    if (not self.startedInitialVote) and self.currentState ~= STATE_VOTING then
+        local totalPlayers = 0
+
+        -- Check how many players are in
+        for i=0, MAX_PLAYERS-1 do
+            if Players:GetPlayer(i) then
+                totalPlayers = totalPlayers + 1
+            end
+        end
+
+        -- Ensure we have at least one player
+        if totalPlayers <= 0 then
+            return
+        end
+
         -- This only ever runs once
-        startedInitialVote = true
+        self.startedInitialVote = true
 
         -- Begin gamemode voting
         self:VoteForGamemode()
@@ -935,7 +1005,22 @@ function FrotaGameMode:ChooseRandomHero()
     return self.heroList[math.random(1, #self.heroList)]
 end
 
+-- Resets everyone's hero to axe
+function FrotaGameMode:ResetAllHeroes()
+    -- Replace all player's heroes, and then stun them
+    for i=0, MAX_PLAYERS-1 do
+        local ply = Players:GetPlayer(i)
+        if ply then
+            -- Give default hero
+            ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0)
+        end
+    end
+end
+
 function FrotaGameMode:VoteForGamemode()
+    -- Freeze everyone
+    self:ResetAllHeroes()
+
     -- Grab all the gamemodes the require picking
     local modes = GetPickingGamemodes()
 

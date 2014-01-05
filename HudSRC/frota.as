@@ -731,9 +731,6 @@ package {
             this.scaleX = re.ScreenWidth/maxStageWidth;
             this.scaleY = re.ScreenHeight/maxStageHeight;
 
-            trace(re.ScreenWidth);
-            trace(re.ScreenHeight);
-
             // Check if we have any state data
             if(this.lastStateData) {
                 // Rebuild the hud
