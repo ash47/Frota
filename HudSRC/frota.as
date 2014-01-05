@@ -1015,6 +1015,14 @@ package {
         public function dragFromRollOut(e:MouseEvent) {
             // Check if this is the clip we tried to drag
             if(dragClickedClip == e.target) {
+                // Check if there is already a drag clip
+                if(dragClip && this.contains(dragClip)) {
+                    // Remove drag object
+                    removeChild(dragClip);
+                    dragClip = null;
+                }
+
+                // Make a new dragclip
                 dragClip = new MovieClip();
                 dragClip.mouseEnabled = false;
                 addChild(dragClip);
