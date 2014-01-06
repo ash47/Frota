@@ -1,0 +1,50 @@
+"lang"
+{
+    "Language"      "Spanish"
+    "Tokens"
+    {
+                // Name of the game
+                "game_mode_15"                  "FROTA"
+
+                // Toggle ready state
+                "afs_toggle_ready"              "Estoy listo."
+
+                // All Pick
+                "afs_name_allpick"              "Elección Libre"
+                "afs_des_allpick"               "Cada jugador elige un héroe entre todos los disponibles."
+
+                // Legends of Dota
+                "afs_name_lod"                  "Leyendas de DotA"
+                "afs_des_lod"                   "Escoge tus habilidades y héroe"
+
+                // Random OMG
+                "afs_name_romg"                 "OMG Aleatorio"
+                "afs_des_romg"                  "Consigue un héroe aleatorio,tres habilidades aleatorias y una habilidad definitiva aleatoria."
+
+                // PvP Arena
+                "afs_name_arena"                "Arena PvP"
+                "afs_des_arena"                 "Un modo de arena PvP simple."
+
+                // Pudge Wars
+                "afs_name_pudgewars"            "Guerras de Pudge"
+                "afs_des_pudgewars"             "Juega como Pudge,el primer equipo en conseguir 10 asesinatos gana."
+
+                // Tiny Wars
+                "afs_name_tinywars"            "Guerras de Tiny"
+                "afs_des_tinywars"             "Juega como Tiny,el primer equipo en conseguir 10 asesinatos gana."
+
+                // Sunstrike Wars
+                "afs_name_sunstrikewars"        "Guerras de Sun Strike"
+                "afs_des_sunstrikewars"         "Un jugador empieza con Sunstrike y debe matar al resto de jugadores con el."
+
+                // Vote related
+                "afs_seconds_remaining"         "segundos"
+                "afs_second_remaining"          "segundo"
+                "afs_vote_ends_in"              "El voto acaba en"
+
+                // Picking related
+                "afs_picking_timer"             "El tiempo para escoger acaba en"
+                "afs_tab_pick_skills"           "Escoge habilidades"
+                "afs_tab_pick_hero"             "Escoge héroe"
+    }
+}

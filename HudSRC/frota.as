@@ -43,7 +43,7 @@ package {
         public var iconMiniSize:Number = 16;
         public var avatarSize:Number = 64;
         public var heroIconWidth:Number = 64;
-        public var heroIconHeight:Number = 60;
+        public var heroIconHeight:Number = 49;
         public var heroIconHeightX:Number = 36; // Height of the icon (not including the text)
 
         // Limits
