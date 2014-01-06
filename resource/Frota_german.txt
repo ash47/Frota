@@ -3,34 +3,48 @@
         "Language"                "German"
         "Tokens"
         {
-        // Name of the game
-        "game_mode_15"                  "FROTA"
+                // Name of the game
+                "game_mode_15"                  "FROTA"
 
-        // Toggle ready state
-        "afs_toggle_ready"              "Kampfbereit?"
+                // Toggle ready state
+                "afs_toggle_ready"              "Kampfbereit?"
 
-        // Legends of Dota
-        "afs_name_lod"                  "Legends of dota"
-        "afs_des_lod"                   "Wähle Skills und Fähigkeiten."
+                // All Pick
+                "afs_name_allpick"              "All Pick"
+                "afs_des_allpick"               "Wähle zwischen allen Helden."
 
-        // PvP Arena
-        "afs_name_arena"                "PvP Arena"
-        "afs_des_arena"                 "Eine einfache PvP Arena."
+                // Legends of Dota
+                "afs_name_lod"                  "Legends of dota"
+                "afs_des_lod"                   "Wähle deinen Helden und die Skills dazu."
 
-        // Pudge Wars
-        "afs_name_pudgewars"            "Pudge Wars"
-        "afs_des_pudgewars"             "Spiele Pudge - das Team mit 10 Kills gewinnt."
+                // Random OMG
+                "afs_name_romg"                 "Random OMG"
+                "afs_des_romg"                  "Spiele einen zufälligen Helden mit 3 zufälligen Fähgikeiten und einer Ultimate."
 
-        // Random OMG
-        "afs_name_romg"                 "Random OMG"
-        "afs_des_romg"                  "Spiele einen zufälligen Helden mit 3 zufälligen Fähgikeiten und einer Ultimate."
+                // PvP Arena
+                "afs_name_arena"                "PvP Arena"
+                "afs_des_arena"                 "Eine einfache PvP Arena."
 
-        // Vote related
-        "afs_seconds_remaining"         "Sekunden"
-        "afs_second_remaining"          "Sekunde"
-        "afs_vote_ends_in"              "Abstimmung endet in"
+                // Pudge Wars
+                "afs_name_pudgewars"            "Pudge Wars"
+                "afs_des_pudgewars"             "Spiele Pudge - das Team mit 10 Kills gewinnt."
 
-        // Picking related
-        "afs_picking_timer"             "Auswahl endet in"
+                // Tiny Wars
+                "afs_name_tinywars"            "Tiny Wars"
+                "afs_des_tinywars"             "Spiele Tiny - das Team mit 10 Kills gewinnt."
+
+                // Sunstrike Wars
+                "afs_name_sunstrikewars"        "Sun Strike Wars"
+                "afs_des_sunstrikewars"         "Ein Spieler hat Sunstrike und muss alle andere Spieler töten."
+
+                // Vote related
+                "afs_seconds_remaining"         "Sekunden"
+                "afs_second_remaining"          "Sekunde"
+                "afs_vote_ends_in"              "Voting endet in"
+
+                // Picking related
+                "afs_picking_timer"             "Auswahl endet in"
+                "afs_tab_pick_skills"           "Wähle Skills aus"
+                "afs_tab_pick_hero"             "Wähle einen Helden aus"
         }
 }
