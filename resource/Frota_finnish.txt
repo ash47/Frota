@@ -1,0 +1,50 @@
+"lang"
+{
+        "Language"                "finnish"
+        "Tokens"
+        {
+                // Name of the game
+                "game_mode_15"                  "FROTA"
+ 
+                // Toggle ready state
+                "afs_toggle_ready"              "Valitse Valmis"
+ 
+                // All Pick
+                "afs_name_allpick"              "Vapaa valinta"
+                "afs_des_allpick"               "Valitse vapaasti sankareista."
+ 
+                // Legends of Dota
+                "afs_name_lod"                  "Dotan Legendat"
+                "afs_des_lod"                   "Valitse kykysi sekä sankarisi."
+ 
+                // Random OMG
+                "afs_name_romg"                 "Satunnainen OMG"
+                "afs_des_romg"                  "Saat satunnaisen sankarin, 3 satunnaista kykyä sekä satunnaisen ultimaten."
+ 
+                // PvP Arena
+                "afs_name_arena"                "PvP Areena"
+                "afs_des_arena"                 "Yksinkertainen PvP areena pelimuoto."
+ 
+                // Pudge Wars
+                "afs_name_pudgewars"            "Pudge Sota"
+                "afs_des_pudgewars"             "Pelaa Pudgena, ensimmäinen tiimi 10:llä tapolla voittaa."
+ 
+                // Tiny Wars
+                "afs_name_tinywars"            "Tiny Sota"
+                "afs_des_tinywars"             "Pelaa Tinyllä, ensimmäinen tiimi 10:llä tapolla voittaa."
+ 
+                // Sunstrike Wars
+                "afs_name_sunstrikewars"        "Sun Strike Sota"
+                "afs_des_sunstrikewars"         "Yksi syntyvistä pelaajista saa Sun Striken ja hänen on tapettava kaikki muut pelaajat sillä."
+ 
+                // Vote related
+                "afs_seconds_remaining"         "sekuntia"
+                "afs_second_remaining"          "sekunti"
+                "afs_vote_ends_in"              "Äänestys loppuu"
+ 
+                // Picking related
+                "afs_picking_timer"             "Valitseminen loppuu"
+                "afs_tab_pick_skills"           "Valitse kyvyt"
+                "afs_tab_pick_hero"             "Valitse sankari"
+        }
+}
