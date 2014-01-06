@@ -32,6 +32,8 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
  - **sunstrikewars**
   - Added header + language files for it
   - Lots of hooks need to be added before this game mode can be made
+ - **pureskill**
+  - An unoffical gamemode: Play as mirana with skewer, arrow, meat hook and ice shards.
 
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
@@ -42,6 +44,7 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
  - Reopen dota after each install / update (hud might not update)
  - Run the following command
   - dota_local_custom_enable 1;dota_local_custom_game Frota;dota_local_custom_map Frota;dota_force_gamemode 15;update_addon_paths;dota_wait_for_players_to_load 0;dota_wait_for_players_to_load_timeout 10;map riverofsouls;
+ - **NOTE** If you reach the hero selection screen, it means Frota didn't load correctly! Frota should override / skip the hero selection screen, and  take you directly to a vote screen! Please ensure you removed Frostivus (and any other addons) and then restart your client.
 
 ###Translations###
  - Please make a pull request if you want to update translations
