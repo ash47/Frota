@@ -127,6 +127,7 @@ function FrotaGameMode:RegisterCommands()
     Convars:RegisterCommand('afs_skill', function(name, skillName, slotNumber)
         -- Verify we are in picking mode
         if self.currentState ~= STATE_PICKING then return end
+        if not self.pickMode.pickSkills then return end
 
         local cmdPlayer = Convars:GetCommandClient()
         if cmdPlayer then
@@ -142,6 +143,7 @@ function FrotaGameMode:RegisterCommands()
     Convars:RegisterCommand('afs_hero', function(name, heroName)
         -- Verify we are in picking mode
         if self.currentState ~= STATE_PICKING then return end
+        if not self.pickMode.pickHero then return end
 
         local cmdPlayer = Convars:GetCommandClient()
         if cmdPlayer then
@@ -491,25 +493,31 @@ function FrotaGameMode:GetRandomAbility(sort)
     return self.vAbListSort[sort][math.random(1, #self.vAbListSort[sort])]
 end
 
+function FrotaGameMode:GetHeroSkills(heroClass)
+    local skills = {}
+
+    -- Build list of abilities
+    for heroName, values in pairs(self.heroListKV) do
+        if heroName == heroClass then
+            for i = 1, 16 do
+                local ab = values["Ability"..i]
+                if ab and ab ~= 'attribute_bonus' then
+                    table.insert(skills, ab)
+                end
+            end
+        end
+    end
+
+    return skills
+end
+
 function FrotaGameMode:RemoveAllSkills(hero)
     -- Check if we've touched this hero before
     if not self.currentSkillList[hero] then
         -- Grab the name of this hero
         local heroClass = hero:GetUnitName()
 
-        local skills = {}
-
-        -- Build list of abilities
-        for heroName, values in pairs(self.heroListKV) do
-            if heroName == heroClass then
-                for i = 1, 16 do
-                    local ab = values["Ability"..i]
-                    if ab and ab ~= 'attribute_bonus' then
-                        table.insert(skills, ab)
-                    end
-                end
-            end
-        end
+        local skills = self:GetHeroSkills(heroClass)
 
         -- Store it
         self.currentSkillList[hero] = skills
@@ -541,6 +549,20 @@ function FrotaGameMode:ApplyBuild(hero)
         -- Add to build
         hero:AddAbility(v)
         self.currentSkillList[hero][k] = v
+    end
+end
+
+function FrotaGameMode:LoadBuildFromHero(hero)
+    -- Grab playerID
+    local playerID = hero:GetPlayerID()
+    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
+        return
+    end
+
+    -- Stick this hero's skills in
+    local skills = self:GetHeroSkills(hero:GetUnitName())
+    for i=1,4 do
+        self.selectedBuilds[playerID].skills[i] = skills[i]
     end
 end
 
@@ -588,9 +610,17 @@ function FrotaGameMode:SelectHero(ply, heroName)
     -- Change hero
     ply:ReplaceHeroWith(heroName, 0, 0)
 
+    -- Make sure we have a hero
     local hero = Players:GetSelectedHeroEntity(playerID)
     if hero then
-        self:ApplyBuild(hero)
+        -- Check if the user is allowed to pick skills
+        if not self.pickMode.pickSkills then
+            -- Update build with our hero's skills
+            self:LoadBuildFromHero(hero)
+        else
+            -- Apply build
+            self:ApplyBuild(hero)
+        end
     end
 
     -- Send out the updated builds
@@ -1091,7 +1121,7 @@ function FrotaGameMode:VoteForGamemode()
     self:CreateVote({
         sort = VOTE_SORT_SINGLE,
         options = options,
-        duration = 5,
+        duration = 10,
         onFinish = function(winners)
             -- Grab the winning option, we need to remove the #afs_name_ from the start
             local mode = string.sub(winners[math.random(1, #winners)], 11)
@@ -1115,7 +1145,7 @@ function FrotaGameMode:VoteForGamemode()
                 self:CreateVote({
                     sort = VOTE_SORT_SINGLE,
                     options = options,
-                    duration = 5,
+                    duration = 10,
                     onFinish = function(winners)
                         -- Grab the winning option, we need to remove the #afs_name_ from the start
                         local mode = string.sub(winners[math.random(1, #winners)], 11)
@@ -1141,7 +1171,7 @@ function FrotaGameMode:LoadGamemode(pickMode, playMode)
     self.playMode = playMode
 
     -- Check if there is any sort of picking
-    if pickMode.pickHero or pickMode.pickSkills then
+    if self.pickMode.pickHero or self.pickMode.pickSkills then
         -- Start picking
         self:ChangeState(STATE_PICKING, self:BuildAbilityListData())
     else
@@ -1234,16 +1264,24 @@ end
 
 function FrotaGameMode:BuildAbilityListData()
     local data = {
-        s = {},
-        b = self:BuildBuildsData(),
-        h = self.heroListEnabled
+        b = self:BuildBuildsData()
     }
 
-    for k,v in pairs(self.vAbList) do
-        data.s[v.name] = {
-            c = v.sort,
-            h = v.hero
-        }
+    -- Should we add hero picker?
+    if self.pickMode.pickHero then
+        data.h = self.heroListEnabled
+    end
+
+    -- Should we add skill picker?
+    if self.pickMode.pickSkills then
+        print('b')
+        data.s = {};
+        for k,v in pairs(self.vAbList) do
+            data.s[v.name] = {
+                c = v.sort,
+                h = v.hero
+            }
+        end
     end
 
     -- Return the data

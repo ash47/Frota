@@ -83,9 +83,10 @@ package {
         public static var STATE_PLAYING = 4;
 
         // Tab control
-        public static var TAB_SKILL_PICKER = 0
-        public static var TAB_HERO_PICKER = 1
-        public static var TAB_SKILL_BANNER = 2
+        public static var TAB_NONE = 0
+        public static var TAB_SKILL_PICKER = 1;
+        public static var TAB_HERO_PICKER = 2;
+        public static var TAB_SKILL_BANNER = 3;
 
         // Drag sorts
         public static var DRAG_SORT_SKILL = 1;
@@ -121,7 +122,7 @@ package {
         public var lastUpdateCheck = 0;
 
         // Current picker tab
-        private var currentPickerTab = TAB_HERO_PICKER;
+        private var currentPickerTab = TAB_SKILL_PICKER;
 
         public function frota() {}
 
@@ -183,8 +184,8 @@ package {
 
             a.text = "";
 
-            a.addEventListener(FocusHandlerEvent.FOCUS_IN, inputBoxGainFocus);
-            a.addEventListener(FocusHandlerEvent.FOCUS_OUT, inputBoxLoseFocus);*/
+            a.addEventListener(FocusHandlerEvent.FOCUS_IN, inputBoxGainFocus, false, 0, true);
+            a.addEventListener(FocusHandlerEvent.FOCUS_OUT, inputBoxLoseFocus, false, 0, true);*/
         }
 
         // Instantly ask for the current state
@@ -248,8 +249,17 @@ package {
 
             // Cleanup content panel
             if(contentPanelHolder != null) {
-                removeChild(contentPanelHolder)
-                contentPanelHolder = null;
+                // Remove everything from the content panel
+                while (contentPanelHolder.source.numChildren > 0) {
+                    contentPanelHolder.source.removeChildAt(0);
+                }
+
+                // Make it invisible
+                contentPanelHolder.visible = false;
+
+                // Remove the content panel
+                //removeChild(contentPanelHolder)
+                //contentPanelHolder = null;
             }
         }
 
@@ -356,70 +366,75 @@ package {
 
             // Reset the picking data
             pickingData = {};
-            pickingData.skills = [];
             pickingData.builds = data.b;
             pickingData.heroes = data.h;
 
-            // Build skill list
-            for(var name in data.s) {
-                // Grab info on this skill
-                var info = data.s[name];
+            // Check if we can pick skills
+            if(data.s) {
+                // Create an array for skills
+                pickingData.skills = [];
 
-                // Check if it's banned
-                var banned = false;
-                if(info.b) banned = true;
+                // Build skill list
+                for(var name in data.s) {
+                    // Grab info on this skill
+                    var info = data.s[name];
 
-                // Push the skill
-                pickingData.skills.push({
-                    skillName: name,
-                    skillSort: info.c,
-                    skillHero: info.h,
-                    banned: banned
-                })
-            }
+                    // Check if it's banned
+                    var banned = false;
+                    if(info.b) banned = true;
 
-            // Sort it
-            pickingData.skills.sort(function(a, b) {
-                // Grab translated heroes
-                var ha = Translate("#"+a.skillHero);
-                var hb = Translate("#"+b.skillHero);
+                    // Push the skill
+                    pickingData.skills.push({
+                        skillName: name,
+                        skillSort: info.c,
+                        skillHero: info.h,
+                        banned: banned
+                    })
+                }
 
-                // Sort by hero, then type, then skill name
-                if(ha < hb) {
-                    return -1;
-                } else if(ha > hb) {
-                    return 1;
-                } else {
-                    // Grab ability types
-                    var ta = a.skillSort;
-                    var tb = b.skillSort;
+                // Sort it
+                pickingData.skills.sort(function(a, b) {
+                    // Grab translated heroes
+                    var ha = Translate("#"+a.skillHero);
+                    var hb = Translate("#"+b.skillHero);
 
-                    if(ta < tb) {
+                    // Sort by hero, then type, then skill name
+                    if(ha < hb) {
                         return -1;
-                    } else if(ta > tb) {
+                    } else if(ha > hb) {
                         return 1;
                     } else {
-                        // Grab translated skill names
-                        var na = Translate("#DOTA_Tooltip_ability_"+a.skillName);
-                        var nb = Translate("#DOTA_Tooltip_ability_"+b.skillName);
+                        // Grab ability types
+                        var ta = a.skillSort;
+                        var tb = b.skillSort;
 
-                        if(na < nb) {
+                        if(ta < tb) {
                             return -1;
-                        } else if(na > nb) {
+                        } else if(ta > tb) {
                             return 1;
                         } else {
-                            // Compare based on their raw skill name
-                            if(a.skillName < b.skillName) {
+                            // Grab translated skill names
+                            var na = Translate("#DOTA_Tooltip_ability_"+a.skillName);
+                            var nb = Translate("#DOTA_Tooltip_ability_"+b.skillName);
+
+                            if(na < nb) {
                                 return -1;
-                            } else if(a.skillName > b.skillName) {
+                            } else if(na > nb) {
                                 return 1;
                             } else {
-                                return 0;
+                                // Compare based on their raw skill name
+                                if(a.skillName < b.skillName) {
+                                    return -1;
+                                } else if(a.skillName > b.skillName) {
+                                    return 1;
+                                } else {
+                                    return 0;
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
+            }
 
             // Store hero builds
             this.updateBuildData(data.b);
@@ -603,6 +618,10 @@ package {
                 timer = new ServerTimer(timerData.t, timeLeft);
                 addChild(timer);
 
+                // Stop mouse interactions
+                timer.mouseEnabled = false;
+                timer.mouseChildren = false;
+
                 // Move into position
                 timer.x = xx;
                 timer.y = yy;
@@ -639,22 +658,30 @@ package {
         }
 
         public function newPanel() : void {
-            // Cleanup old skill picker
+            // Check if we already have a content panel
             if(contentPanelHolder != null) {
-                removeChild(contentPanelHolder)
-                contentPanelHolder = null;
+                // Remove everything from the content panel
+                while (contentPanelHolder.source.numChildren > 0) {
+                    contentPanelHolder.source.removeChildAt(0);
+                }
+
+                // Make it visible
+                contentPanelHolder.visible = true;
+            } else {
+                // Create new content panel
+                contentPanelHolder = new ScrollPane();
+                addChild(contentPanelHolder)
+
+                // Setup the panel where the icons will go
+                contentPanel = new MovieClip();
+                contentPanelHolder.source = contentPanel;
             }
 
-            // Build Skill Picking panel
-            contentPanelHolder = new ScrollPane();
+            // Position and size the content panel
             contentPanelHolder.x = 224;
             contentPanelHolder.y = 64;
             contentPanelHolder.setSize(maxStageWidth-sideTotalWidth-sidePaddingX-contentPanelHolder.x-24, maxStageHeight - iconHeight - bottomMargin - 120);
-            addChild(contentPanelHolder)
 
-            // Setup the panel where the icons will go
-            contentPanel = new MovieClip();
-            contentPanelHolder.source = contentPanel;
         }
 
         public function addPanelChild(clip:MovieClip) {
@@ -776,50 +803,102 @@ package {
             globals.Loader_heroselection.gameAPI.OnSkillRollOut();
         }
 
+        public function changeToTabSkills() {
+            // Change the tab
+            currentPickerTab = TAB_SKILL_PICKER;
+
+            // Clean the hud
+            cleanHud();
+
+            // Reload picking
+            BuildPickingScreen()
+        }
+
+        public function changeToTabHero() {
+            // Change the tab
+            currentPickerTab = TAB_HERO_PICKER;
+
+            // Clean the hud
+            cleanHud();
+
+            // Reload picking
+            BuildPickingScreen()
+        }
+
         public function BuildPickingScreen() {
-            var skill:MovieClip, hero:MovieClip, btn, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, heroName:String, sx:Number, sy:Number;
+            var skill:MovieClip, hero:MovieClip, btn, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, heroName:String, sx:Number, sy:Number, xx:Number, yy:Number;
 
             // Create a new panel for the skills
             newPanel();
 
+            // Position of the first button
+            xx = contentPanelHolder.x;
+            yy = 32;
+
             // Add tab changing buttons
-            btn = new Button();
-            autoCleanup(btn);
-            btn.x = contentPanelHolder.x;
-            btn.y = 32;
-            btn.label = '#afs_tab_pick_skills';
-            btn.addEventListener(MouseEvent.CLICK, function() {
-                // Change the tab
-                currentPickerTab = TAB_SKILL_PICKER;
 
-                // Clean the hud
-                cleanHud();
+            // Skill picker button
+            if(pickingData.skills) {
+                btn = new Button();
+                autoCleanup(btn);
+                btn.x = xx;
+                btn.y = yy;
+                btn.label = '#afs_tab_pick_skills';
+                btn.addEventListener(MouseEvent.CLICK, changeToTabSkills, false, 0, true);
 
-                // Reload picking
-                BuildPickingScreen()
-            });
+                // Move the position of the next button
+                xx += btn.width + 8;
 
-            btn = new Button();
-            autoCleanup(btn);
-            btn.x = contentPanelHolder.x + btn.width + 8;
-            btn.y = 32;
-            btn.label = '#afs_tab_pick_hero';
-            btn.addEventListener(MouseEvent.CLICK, function() {
-                // Change the tab
-                currentPickerTab = TAB_HERO_PICKER;
+                // Change to this tab, if none is selected
+                if(this.currentPickerTab == TAB_NONE) {
+                    this.currentPickerTab = TAB_SKILL_PICKER;
+                }
+            } else {
+                // Check if we are on an invalid tab
+                if(this.currentPickerTab == TAB_SKILL_PICKER) {
+                    // Check if the hero tab exists
+                    if(pickingData.heroes) {
+                        // Change to hero picker tab
+                        this.currentPickerTab = TAB_HERO_PICKER;
+                    } else {
+                        // Display no tab
+                        this.currentPickerTab = TAB_NONE;
+                    }
+                }
+            }
 
-                // Clean the hud
-                cleanHud();
+            // Hero picker button
+            if(pickingData.heroes) {
+                btn = new Button();
+                autoCleanup(btn);
+                btn.x = xx;
+                btn.y = yy;
+                btn.label = '#afs_tab_pick_hero';
+                btn.addEventListener(MouseEvent.CLICK, changeToTabHero, false, 0, true);
 
-                // Reload picking
-                BuildPickingScreen()
-            });
+                // Change to this tab, if none is selected
+                if(this.currentPickerTab == TAB_NONE) {
+                    this.currentPickerTab = TAB_HERO_PICKER;
+                }
+            } else {
+                // Check if we are on an invalid tab
+                if(this.currentPickerTab == TAB_HERO_PICKER) {
+                    // Check if the skills tab exists
+                    if(pickingData.skills) {
+                        // Change to skill picker tab
+                        this.currentPickerTab = TAB_SKILL_PICKER;
+                    } else {
+                        // Display no tab
+                        this.currentPickerTab = TAB_NONE;
+                    }
+                }
+            }
 
             // Setting for skill picking panel
             var padding:Number = 4;
             var xo = 16;//(getContentWidth() - Math.floor(getContentWidth()/(iconWidth+padding))*iconWidth)/4;
-            var xx:Number = xo;
-            var yy:Number = 0;
+            xx = xo;
+            yy = 0;
 
             if(this.currentPickerTab == TAB_HERO_PICKER) {
                 // Hero picking tab
@@ -857,8 +936,8 @@ package {
                     dragMakeValidFrom(skill);
 
                     //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
-                    skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
-                    skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
+                    skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver, false, 0, true);
+                    skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut, false, 0, true);
 
                     xx = xx + iconWidth + padding;
                     if(xx+iconWidth > getContentWidth()) {
@@ -917,8 +996,8 @@ package {
                 dragMakeValidTarget(skill)
 
                 // Hook the skill
-                skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
-                skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
+                skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver, false, 0, true);
+                skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut, false, 0, true);
 
                 // Move it into position
                 xx += iconWidth + xpadding;
@@ -999,8 +1078,8 @@ package {
                         dragMakeValidFrom(skill);
 
                         // Make it display info
-                        skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
-                        skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
+                        skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver, false, 0, true);
+                        skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut, false, 0, true);
 
                         xx += iconMiniSize + sidePaddingX;
                     }
@@ -1015,7 +1094,7 @@ package {
             readyButton.x = sx + (sideTotalWidth-readyButton.width)/2;
             readyButton.y = sy + getContentHeight();
             readyButton.label = "#afs_toggle_ready";
-            readyButton.addEventListener(MouseEvent.CLICK, this.readyPressed);
+            readyButton.addEventListener(MouseEvent.CLICK, this.readyPressed, false, 0, true);
             autoCleanup(readyButton);
         }
 
@@ -1047,7 +1126,7 @@ package {
                 vote.y = yy;
 
                 // Listen to button press
-                vote.Button.addEventListener(MouseEvent.CLICK, this.votePressed);
+                vote.Button.addEventListener(MouseEvent.CLICK, this.votePressed, false, 0, true);
 
                 // Store this panel
                 voteHolder[name] = vote;
@@ -1062,14 +1141,14 @@ package {
 
         // Makes this movieclip draggable
         public function dragMakeValidFrom(mc) {
-            mc.addEventListener(MouseEvent.MOUSE_DOWN, dragMousePressed);
-            mc.addEventListener(MouseEvent.MOUSE_UP, dragMouseReleased);
-            mc.addEventListener(MouseEvent.ROLL_OUT, dragFromRollOut);
+            mc.addEventListener(MouseEvent.MOUSE_DOWN, dragMousePressed, false, 0, true);
+            mc.addEventListener(MouseEvent.MOUSE_UP, dragMouseReleased, false, 0, true);
+            mc.addEventListener(MouseEvent.ROLL_OUT, dragFromRollOut, false, 0, true);
         }
         // Makes this movieclip into a valid target
         public function dragMakeValidTarget(mc) {
-            mc.addEventListener(MouseEvent.ROLL_OVER, dragTargetRollOver);
-            mc.addEventListener(MouseEvent.ROLL_OUT, dragTargetRollOut);
+            mc.addEventListener(MouseEvent.ROLL_OVER, dragTargetRollOver, false, 0, true);
+            mc.addEventListener(MouseEvent.ROLL_OUT, dragTargetRollOut, false, 0, true);
         }
         public function dragListener(e:MouseEvent) {
             dragClip.x = mouseX;
@@ -1145,8 +1224,8 @@ package {
                 }
 
                 // Add listeners
-                stage.addEventListener(MouseEvent.MOUSE_MOVE, dragListener);
-                stage.addEventListener(MouseEvent.MOUSE_UP, dragMouseUp);
+                stage.addEventListener(MouseEvent.MOUSE_MOVE, dragListener, false, 0, true);
+                stage.addEventListener(MouseEvent.MOUSE_UP, dragMouseUp, false, 0, true);
 
                 // Stop it from procing again
                 dragClickedClip = null;

@@ -40,7 +40,12 @@
                     textField.text = frota.Translate(this.text)+"\n1 "+frota.Translate("#afs_second_remaining");
                 } else {
                 	// Remove self
-                    this.parent.removeChild(this);
+                    if(this.parent) {
+                        this.parent.removeChild(this);
+                    } else {
+                        // Stop timer
+                        timer.stop();
+                    }
                 }
 
                 // Lower the amout left
