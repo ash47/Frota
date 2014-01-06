@@ -42,6 +42,24 @@ function GetGamemode(name)
     return gamemodes.g[name]
 end
 
+-- All Pick
+RegisterGamemode('allpick', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_PICK,
+
+    -- Allow certain picking things
+    pickHero = true,
+
+    -- Function to give out heroes
+    assignHero = function(ply, frota)
+        local playerID = ply:GetPlayerID()
+        local build = frota.selectedBuilds[playerID]
+
+        -- Change hero
+        ply:ReplaceHeroWith(build.hero, 100000, 32400)
+    end,
+})
+
 -- Legends of Dota
 RegisterGamemode('lod', {
     -- This gamemode is only for picking
@@ -140,3 +158,36 @@ RegisterGamemode('pudgewars', {
         respawnDelay = 3
     }
 })
+
+-- A Pudge Wars Base Gamemode
+--[[RegisterGamemode('sunstrikewars', {
+    -- Gamemode only has a gameplay component
+    sort = GAMEMODE_BOTH,
+
+    -- Players can pick their hero
+    pickHero = true,
+
+    -- Function to give out heroes
+    assignHero = function(ply, frota)
+        local playerID = ply:GetPlayerID()
+        local build = frota.selectedBuilds[playerID]
+
+        -- Change hero
+        ply:ReplaceHeroWith(build.hero, 100000, 32400)
+    end,
+
+    -- A list of options for fast gameplay stuff
+    options = {
+        -- Kills give team points
+        killsScore = true,
+
+        -- Score Limit
+        scoreLimit = 10,
+
+        -- Enable scores
+        useScores = true,
+
+        -- Respawn delay
+        respawnDelay = 3
+    }
+})]]
