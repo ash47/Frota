@@ -1,0 +1,50 @@
+"lang"
+{
+        "Language"                "Portuguese"
+        "Tokens"
+        {
+                // Name of the game
+                "game_mode_15"                  "FROTA"
+
+                // Toggle ready state
+                "afs_toggle_ready"              "Preparado"
+
+                // All Pick
+                "afs_name_allpick"              "Todos Escolhem"
+                "afs_des_allpick"               "Escolha dentro de um grupo de heroís."
+
+                // Legends of Dota
+                "afs_name_lod"                  "Lendas de Dota
+                "afs_des_lod"                   "Escolha suas habilidades e seu heroí."
+
+                // Random OMG
+                "afs_name_romg"                 "OMG Aleatório"
+                "afs_des_romg"                  "Obtenha um heroí aleatório, 3 habilidades aleatórias e um ultimate aleatório."
+
+                // PvP Arena
+                "afs_name_arena"                "Arena PvP"
+                "afs_des_arena"                 "Um simples modo de Arena PvP."
+
+                // Pudge Wars
+                "afs_name_pudgewars"            "Guerra de Pudge"
+                "afs_des_pudgewars"             "Jogue de Pudge, o primeiro time a obter 10 kills ganha."
+
+                // Tiny Wars
+                "afs_name_tinywars"            "Guerra de Tiny"
+                "afs_des_tinywars"             "Jogue de Tiny, o primeiro time a obter 10 kills ganha."
+
+                // Sunstrike Wars
+                "afs_name_sunstrikewars"        "Guerra de Sun Strike"
+                "afs_des_sunstrikewars"         "Um jogador nasce com a haom ela.bilidade Sun Strike e tem que matar todos os outros jogadores ."
+
+                // Vote related
+                "afs_seconds_remaining"         "Segundos"
+                "afs_second_remaining"          "Segundos"
+                "afs_vote_ends_in"              "O voto acaba em"
+
+                // Picking related
+                "afs_picking_timer"             "A escolha acaba em"
+                "afs_tab_pick_skills"           "Escolha Habilidades"
+                "afs_tab_pick_hero"             "Escolha Heroís"
+        }
+}
