@@ -38,9 +38,13 @@ package {
         // Sizing
         public var iconWidth:Number = 64;
         public var iconHeight:Number = 80;
+        public var iconHeightX:Number = 64;
         public var voteHeight:Number = 31;
         public var iconMiniSize:Number = 16;
         public var avatarSize:Number = 64;
+        public var heroIconWidth:Number = 64;
+        public var heroIconHeight:Number = 60;
+        public var heroIconHeightX:Number = 36; // Height of the icon (not including the text)
 
         // Limits
         public var maxSkills = 4;
@@ -72,11 +76,20 @@ package {
         // State control
         private var currentState:Number = 0;
         private var gottenInitialState = false;
-        private var STATE_INIT = 0;
-        private var STATE_VOTING = 1;
-        private var STATE_PICKING = 2;
-        private var STATE_BANNING = 3;
-        private var STATE_PLAYING = 4;
+        public static var STATE_INIT = 0;
+        public static var STATE_VOTING = 1;
+        public static var STATE_PICKING = 2;
+        public static var STATE_BANNING = 3;
+        public static var STATE_PLAYING = 4;
+
+        // Tab control
+        public static var TAB_SKILL_PICKER = 0
+        public static var TAB_HERO_PICKER = 1
+        public static var TAB_SKILL_BANNER = 2
+
+        // Drag sorts
+        public static var DRAG_SORT_SKILL = 1;
+        public static var DRAG_SORT_HERO = 2;
 
         // This is for toggling input on text fields
         private var bGotInput = false;
@@ -92,6 +105,7 @@ package {
         public var dragClip;
         public var dragClickedClip;
         public var dragTarget;
+        public var dragSort;
 
         // An array of steamIDs, index = playerID
         public var steamIDs = [];
@@ -105,6 +119,9 @@ package {
         // Update related
         public var lastUpdate = 0;
         public var lastUpdateCheck = 0;
+
+        // Current picker tab
+        private var currentPickerTab = TAB_HERO_PICKER;
 
         public function frota() {}
 
@@ -121,12 +138,6 @@ package {
             //PrintTable(globals, 1);
 
             this.gameAPI.SubscribeToGameEvent("hero_picker_hidden", this.requestCurrentState);
-            this.gameAPI.SubscribeToGameEvent("gameui_activated", function() {
-                trace("ACTIVATED!");
-            });
-            this.gameAPI.SubscribeToGameEvent("gameui_hidden", function() {
-                trace("HIDDEN!");
-            });
             this.gameAPI.SubscribeToGameEvent("afs_initial_state", this.receiveInitialState);
             this.gameAPI.SubscribeToGameEvent("afs_update_state", this.processState);
             this.gameAPI.SubscribeToGameEvent("afs_vote_status", this.updateVoteStatus);
@@ -347,6 +358,7 @@ package {
             pickingData = {};
             pickingData.skills = [];
             pickingData.builds = data.b;
+            pickingData.heroes = data.h;
 
             // Build skill list
             for(var name in data.s) {
@@ -431,6 +443,11 @@ package {
             }
 
             // Update icons for your local hero
+            var hero = getSpecial('localhero');
+            if(hero) {
+                hero.UpdateHero(pickingData.builds[playerID].h);
+            }
+
             for(i=0; i<maxSkills; i++) {
                 // Attempt to grab this skill
                 skill = getSpecial('skill_'+i);
@@ -660,6 +677,10 @@ package {
             this.gameAPI.SendServerCommand("afs_skill \""+skillName+"\" "+slotNumber);
         }
 
+        public function selectHero(heroName) {
+            this.gameAPI.SendServerCommand("afs_hero \""+heroName+"\"");
+        }
+
         public function votePressed(e:Event) {
             var vote = e.currentTarget.parent;
             this.gameAPI.SendServerCommand("afs_vote \""+vote.optionName+"\"");
@@ -756,10 +777,43 @@ package {
         }
 
         public function BuildPickingScreen() {
-            var skill:MovieClip, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, sx:Number, sy:Number;
+            var skill:MovieClip, hero:MovieClip, btn, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, heroName:String, sx:Number, sy:Number;
 
             // Create a new panel for the skills
             newPanel();
+
+            // Add tab changing buttons
+            btn = new Button();
+            autoCleanup(btn);
+            btn.x = contentPanelHolder.x;
+            btn.y = 32;
+            btn.label = '#afs_tab_pick_skills';
+            btn.addEventListener(MouseEvent.CLICK, function() {
+                // Change the tab
+                currentPickerTab = TAB_SKILL_PICKER;
+
+                // Clean the hud
+                cleanHud();
+
+                // Reload picking
+                BuildPickingScreen()
+            });
+
+            btn = new Button();
+            autoCleanup(btn);
+            btn.x = contentPanelHolder.x + btn.width + 8;
+            btn.y = 32;
+            btn.label = '#afs_tab_pick_hero';
+            btn.addEventListener(MouseEvent.CLICK, function() {
+                // Change the tab
+                currentPickerTab = TAB_HERO_PICKER;
+
+                // Clean the hud
+                cleanHud();
+
+                // Reload picking
+                BuildPickingScreen()
+            });
 
             // Setting for skill picking panel
             var padding:Number = 4;
@@ -767,24 +821,50 @@ package {
             var xx:Number = xo;
             var yy:Number = 0;
 
-            // Put all the icons in
-            for each (var skillInfo in pickingData.skills) {
-                skill = new Skill(skillInfo.skillName, skillInfo.skillSort, skillInfo.skillHero);
-                addPanelChild(skill);
-                skill.x = xx;
-                skill.y = yy;
+            if(this.currentPickerTab == TAB_HERO_PICKER) {
+                // Hero picking tab
 
-                // Allow dragging from this
-                dragMakeValidFrom(skill);
+                // Put hero icons in
+                for(heroName in pickingData.heroes) {
+                    // Create a new hero icon
+                    hero = new HeroIcon(heroName)
+                    addPanelChild(hero);
+                    hero.x = xx;
+                    hero.y = yy;
 
-                //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
-                skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
-                skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
+                    // Allow dragging from this
+                    dragMakeValidFrom(hero);
 
-                xx = xx + iconWidth + padding;
-                if(xx+iconWidth > getContentWidth()) {
-                    xx = xo;
-                    yy = yy + iconHeight + padding;
+                    // Grab the position of the next icon
+                    xx = xx + heroIconWidth + padding;
+                    if(xx+iconWidth > getContentWidth()) {
+                        xx = xo;
+                        yy = yy + heroIconHeight + padding;
+                    }
+                }
+            }else if(this.currentPickerTab == TAB_SKILL_PICKER) {
+                // Skill picking tab
+
+                // Put all the icons in
+                for each (var skillInfo in pickingData.skills) {
+                    // Create a new skill icon
+                    skill = new Skill(skillInfo.skillName, skillInfo.skillSort, skillInfo.skillHero);
+                    addPanelChild(skill);
+                    skill.x = xx;
+                    skill.y = yy;
+
+                    // Allow dragging from this
+                    dragMakeValidFrom(skill);
+
+                    //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
+                    skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver);
+                    skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut);
+
+                    xx = xx + iconWidth + padding;
+                    if(xx+iconWidth > getContentWidth()) {
+                        xx = xo;
+                        yy = yy + iconHeight + padding;
+                    }
                 }
             }
 
@@ -809,6 +889,15 @@ package {
 
             xx = (maxStageWidth - totalWidth) / 2;
             yy = maxStageHeight - iconHeight - bottomMargin - 32;
+
+            hero = new HeroIcon(pickingData.builds[playerID].h);
+            autoCleanupSpecial(hero, 'localhero');
+            hero.x = xx;
+            hero.y = yy + iconHeightX - heroIconHeightX;
+            dragMakeValidTarget(hero);
+
+            // Move into new position
+            xx += heroIconWidth + xpadding;
 
             for(i=0; i<maxSkills; i++) {
                 // Grab name of this skill
@@ -889,6 +978,7 @@ package {
                     heroIcon.x = xx;
                     heroIcon.y = yy;
                     heroIcon.visible = shouldDisplay;
+                    dragMakeValidFrom(heroIcon);
 
                     xx += 128/4.5 + sidePaddingX;
 
@@ -986,13 +1076,22 @@ package {
             dragClip.y = mouseY;
         }
         public function dragTargetRollOver(e:MouseEvent) {
-            dragTarget = e.target;
+            // Check if we can even drag here
+            if(e.target.dragSort == dragSort) {
+                dragTarget = e.target;
+            }
         }
         public function dragMouseUp(e:MouseEvent) {
             dragClickedClip = null;
             if(dragClip) {
                 if(dragTarget) {
-                    skillIntoSlot(dragClip.name, dragTarget.name);
+                    if(dragSort == DRAG_SORT_SKILL) {
+                        // Put a skill into a slot
+                        skillIntoSlot(dragClip.name, dragTarget.name);
+                    } else if(dragSort == DRAG_SORT_HERO) {
+                        // Select a hero
+                        selectHero(dragClip.name);
+                    }
                 }
 
                 // Remove drag object
@@ -1022,16 +1121,28 @@ package {
                     dragClip = null;
                 }
 
+                // Store new drag sort
+                dragSort = dragClickedClip.dragSort
+
                 // Make a new dragclip
                 dragClip = new MovieClip();
                 dragClip.mouseEnabled = false;
                 addChild(dragClip);
 
                 // Make it look nice / give it a name
-                dragClip.name = dragClickedClip.skillName;
-                Globals.instance.LoadAbilityImage(dragClickedClip.skillName, dragClip);
-                dragClip.scaleX = 0.5;
-                dragClip.scaleY = 0.5;
+                if(dragSort == DRAG_SORT_SKILL) {
+                    // Skill icon
+                    dragClip.name = dragClickedClip.skillName;
+                    Globals.instance.LoadAbilityImage(dragClickedClip.skillName, dragClip);
+                    dragClip.scaleX = 0.5;
+                    dragClip.scaleY = 0.5;
+                } else if (dragSort == DRAG_SORT_HERO) {
+                    // Hero icon
+                    dragClip.name = dragClickedClip.heroName;
+                    Globals.instance.LoadHeroImage(dragClickedClip.heroName.replace('npc_dota_hero_', ''), dragClip);
+                    dragClip.scaleX = 0.5;
+                    dragClip.scaleY = 0.5;
+                }
 
                 // Add listeners
                 stage.addEventListener(MouseEvent.MOUSE_MOVE, dragListener);

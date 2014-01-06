@@ -1,0 +1,10 @@
+frostivus
+{
+	material overviews/riverofsouls
+    pos_x -2300
+	pos_y 2300
+	scale 4.500
+	rotate 0
+	zoom 1.0000
+}
+

@@ -124,9 +124,9 @@ end
 
 function FrotaGameMode:RegisterCommands()
     -- When a user tries to put a skill into a slot
-    Convars:RegisterCommand( "afs_skill", function(name, skillName, slotNumber)
+    Convars:RegisterCommand('afs_skill', function(name, skillName, slotNumber)
         -- Verify we are in picking mode
-
+        if self.currentState ~= STATE_PICKING then return end
 
         local cmdPlayer = Convars:GetCommandClient()
         if cmdPlayer then
@@ -136,12 +136,24 @@ function FrotaGameMode:RegisterCommands()
                 return
             end
         end
-    end, "A user tried to put a skill into a slot", 0 )
+    end, 'A user tried to put a skill into a slot', 0 )
+
+    -- When a user tries to change heroes
+    Convars:RegisterCommand('afs_hero', function(name, heroName)
+        -- Verify we are in picking mode
+        if self.currentState ~= STATE_PICKING then return end
+
+        local cmdPlayer = Convars:GetCommandClient()
+        if cmdPlayer then
+            self:SelectHero(cmdPlayer, heroName)
+            return
+        end
+    end, 'A user tried to change heroes', 0 )
 
     -- When a user toggles ready state
-    Convars:RegisterCommand( "afs_ready_pressed", function(name, skillName, slotNumber)
+    Convars:RegisterCommand('afs_ready_pressed', function(name, skillName, slotNumber)
         -- Verify we are in a state that needs ready
-
+        if self.currentState ~= STATE_PICKING then return end
 
         local cmdPlayer = Convars:GetCommandClient()
         if cmdPlayer then
@@ -151,10 +163,10 @@ function FrotaGameMode:RegisterCommands()
                 return
             end
         end
-    end, "Used tried to toggle their ready state", 0 )
+    end, 'Used tried to toggle their ready state', 0 )
 
     -- When a user tries to vote on something
-    Convars:RegisterCommand( "afs_vote", function(name, vote, multi)
+    Convars:RegisterCommand('afs_vote', function(name, vote, multi)
         local cmdPlayer = Convars:GetCommandClient()
         if cmdPlayer then
             local playerID = cmdPlayer:GetPlayerID()
@@ -163,12 +175,12 @@ function FrotaGameMode:RegisterCommands()
                 return
             end
         end
-    end, "User trying to vote", 0 )
+    end, 'User trying to vote', 0 )
 
     -- State handeling
-    Convars:RegisterCommand( "afs_request_state", function(name, version)
+    Convars:RegisterCommand('afs_request_state', function(name, version)
         -- Make sure a version was parsed
-        version = version or "Unknown"
+        version = version or 'Unknown'
 
         -- Load this client's version
         if version ~= self.frotaVersion then
@@ -176,7 +188,7 @@ function FrotaGameMode:RegisterCommands()
             if cmdPlayer then
                 local playerID = cmdPlayer:GetPlayerID()
                 if playerID ~= nil and playerID ~= -1 then
-                    Say(cmdPlayer, "I have frota version "..version.." and the server has version "..self.frotaVersion, false)
+                    Say(cmdPlayer, 'I have frota version '..version..' and the server has version '..self.frotaVersion, false)
                 end
             end
         end
@@ -192,34 +204,22 @@ function FrotaGameMode:RegisterCommands()
         end
 
         -- Fire steamids
-        FireGameEvent("afs_steam_ids", {
+        FireGameEvent('afs_steam_ids', {
             d = JSON:encode(data)
         })
 
         -- Send out state info
-        FireGameEvent("afs_initial_state", {
+        FireGameEvent('afs_initial_state', {
             nState = self.currentState,
             d = self:GetStateData()
         })
-    end, "Client requested the current state", 0 )
-
-    -- Swap heroes
-    Convars:RegisterCommand( "afs_swap_hero", function(name, msg)
-        local cmdPlayer = Convars:GetCommandClient()
-        if cmdPlayer then
-            local playerID = cmdPlayer:GetPlayerID()
-            if playerID ~= nil and playerID ~= -1 then
-                cmdPlayer:ReplaceHeroWith('npc_dota_hero_bane', 0, 0)
-                return
-            end
-        end
-    end, "Swaps a given players hero to bane.", 0 )
+    end, 'Client requested the current state', 0)
 
     -- When a user toggles ready state
-    Convars:RegisterCommand( "afs_force_start", function(name, skillName, slotNumber)
+    --[[Convars:RegisterCommand( "afs_force_start", function(name, skillName, slotNumber)
         -- Start the game
         self:StartGame()
-    end, "Start the game", 0 )
+    end, "Start the game", 0 )]]
 end
 
 function FrotaGameMode:CreateTimer(name, args)
@@ -430,10 +430,15 @@ function FrotaGameMode:LoadAbilityList()
 
     -- Build list of heroes
     self.heroList = {}
+    self.heroListEnabled = {}
     for heroName, values in pairs(self.heroListKV) do
         -- Validate hero name
         if heroName ~= 'Version' and heroName ~= 'npc_dota_hero_base' and heroName ~= 'npc_dota_hero_abyssal_underlord' then
-            table.insert(self.heroList, heroName)
+            -- Make sure the hero is enabled
+            if values.Enabled == 1 then
+                table.insert(self.heroList, heroName)
+                self.heroListEnabled[heroName] = 1
+            end
         end
     end
 
@@ -556,6 +561,37 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
 
     -- Apply the new build
     self:ApplyBuild(hero)
+
+    -- Send out the updated builds
+    FireGameEvent("afs_update_builds", {
+        d = JSON:encode(self:BuildBuildsData())
+    })
+
+    -- Update the state data
+    self:ChangeStateData(self:BuildAbilityListData())
+end
+
+function FrotaGameMode:SelectHero(ply, heroName)
+    -- Validate Data Hero (never trust the client)
+    if not heroName then return end
+    if not self.heroListEnabled[heroName] then return end
+
+    -- Grab playerID
+    local playerID = ply:GetPlayerID()
+    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
+        return
+    end
+
+    -- Update build
+    self.selectedBuilds[playerID].hero = heroName
+
+    -- Change hero
+    ply:ReplaceHeroWith(heroName, 0, 0)
+
+    local hero = Players:GetSelectedHeroEntity(playerID)
+    if hero then
+        self:ApplyBuild(hero)
+    end
 
     -- Send out the updated builds
     FireGameEvent("afs_update_builds", {
@@ -1055,7 +1091,7 @@ function FrotaGameMode:VoteForGamemode()
     self:CreateVote({
         sort = VOTE_SORT_SINGLE,
         options = options,
-        duration = 15,
+        duration = 5,
         onFinish = function(winners)
             -- Grab the winning option, we need to remove the #afs_name_ from the start
             local mode = string.sub(winners[math.random(1, #winners)], 11)
@@ -1079,7 +1115,7 @@ function FrotaGameMode:VoteForGamemode()
                 self:CreateVote({
                     sort = VOTE_SORT_SINGLE,
                     options = options,
-                    duration = 15,
+                    duration = 5,
                     onFinish = function(winners)
                         -- Grab the winning option, we need to remove the #afs_name_ from the start
                         local mode = string.sub(winners[math.random(1, #winners)], 11)
@@ -1199,7 +1235,8 @@ end
 function FrotaGameMode:BuildAbilityListData()
     local data = {
         s = {},
-        b = self:BuildBuildsData()
+        b = self:BuildBuildsData(),
+        h = self.heroListEnabled
     }
 
     for k,v in pairs(self.vAbList) do

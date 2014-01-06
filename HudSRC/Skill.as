@@ -1,8 +1,5 @@
 ﻿package {
-    import flash.display.*;
-    import flash.events.*;
-    import flash.net.URLRequest;
-
+    import flash.display.MovieClip;
     import ValveLib.Globals;
 
 	public class Skill extends MovieClip {
@@ -12,11 +9,12 @@
         public var skillSort:String;
         public var skillHero:String;
 
+        public var dragSort = frota.DRAG_SORT_SKILL;
+
         private var imageHolder:MovieClip;
 
         public function Skill(skillName:String, skillSort:String, skillHero:String) {
             // Store the info
-            this.skillName = skillName;
             this.skillSort = skillSort;
             this.skillHero = skillHero;
 
@@ -26,14 +24,8 @@
             imageHolder.scaleY = 0.5;
             this.addChild(imageHolder);
 
-            // Make sure a skill name was parsed
-            if(skillName != '') {
-                // Load the image
-                Globals.instance.LoadAbilityImage(this.skillName, imageHolder);
-
-                // Adjust text
-                skillNameText.text = "#DOTA_Tooltip_ability_"+this.skillName;
-            }
+            // Update the icon
+            UpdateSkill(skillName);
         }
 
         public function UpdateSkill(skillName:String) {

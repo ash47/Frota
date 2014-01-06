@@ -1,14 +1,13 @@
 ﻿package {
-    import flash.display.*;
-    import flash.events.*;
-    import flash.net.URLRequest;
-
+    import flash.display.MovieClip;
     import ValveLib.Globals;
 
 	public class HeroDisplayMini extends MovieClip {
         public var heroName:String;
 
         private var imageHolder:MovieClip;
+
+        public var dragSort = frota.DRAG_SORT_HERO;
 
         public function HeroDisplayMini(heroName:String) {
             // Store the info
