@@ -185,6 +185,45 @@ RegisterGamemode('tinywars', {
     }
 })
 
+--Mirana Wars or something like that
+RegisterGamemode('pureskill', {
+    -- Gamemode only has a gameplay component
+    sort = GAMEMODE_BOTH,
+
+    -- Function to give out heroes
+    assignHero = function(ply, frota)
+	
+		local playerID = ply:GetPlayerID()
+        local build = frota.selectedBuilds[playerID]
+		
+        ply:ReplaceHeroWith('npc_dota_hero_mirana', 100000, 32400)
+		
+		local hero = Players:GetSelectedHeroEntity(playerID)
+		
+		frota:SkillIntoSlot(hero,'magnataur_skewer',1)
+		frota:SkillIntoSlot(hero,'mirana_arrow',2)
+		frota:SkillIntoSlot(hero,'pudge_meat_hook',3)
+		frota:SkillIntoSlot(hero,'tusk_ice_shards',4)
+
+        -- Change skills
+		frota:ApplyBuild(hero)
+    end,	
+
+    -- A list of options for fast gameplay stuff
+    options = {
+        -- Kills give team points
+        killsScore = true,
+
+        -- Score Limit
+        scoreLimit = 10,
+
+        -- Enable scores
+        useScores = true,
+
+        -- Respawn delay
+        respawnDelay = 3
+    }
+
 -- A Pudge Wars Base Gamemode
 --[[RegisterGamemode('sunstrikewars', {
     -- Gamemode only has a gameplay component
