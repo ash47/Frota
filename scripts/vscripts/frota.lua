@@ -1038,6 +1038,11 @@ function FrotaGameMode:VoteForGamemode()
     -- Freeze everyone
     self:ResetAllHeroes()
 
+    -- Reset ready status
+    for i = 0,MAX_PLAYERS-1 do
+        self.selectedBuilds[i].ready = false
+    end
+
     -- Grab all the gamemodes the require picking
     local modes = GetPickingGamemodes()
 
