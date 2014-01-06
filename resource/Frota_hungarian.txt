@@ -3,89 +3,52 @@
         "Language"              "hungarian"
         "Tokens"
         {
-        
                 // Name of the game
-                
                 "game_mode_15"                  "FROTA"
 
-
-
                 // Toggle ready state
-                
                 "afs_toggle_ready"              "Készültség be/ki"
 
-
-
                 // All Pick
-
                 "afs_name_allpick"              "All Pick"
-
                 "afs_des_allpick"               "Minden játékos egy hőst választ az összes elérhető közül."
 
-
-
                 // Legends of Dota
-                
                 "afs_name_lod"                  "Legends of dota"
-                
                 "afs_des_lod"                   "Válassz képességeket és hőst."
 
-
-
                 // PvP Arena
-                
                 "afs_name_arena"                "PvP Aréna"
-                
                 "afs_des_arena"                 "Egyszerű PvP Aréna mód."
 
-
-
                 // Pudge Wars
-                
                 "afs_name_pudgewars"            "Pudge Csata"
-                
                 "afs_des_pudgewars"             "Játssz mint Pudge, az első csapat 10 ponttal győz."
 
-
-
                 // Random OMG
-                
                 "afs_name_romg"                 "Random OMG"
-                
                 "afs_des_romg"                  "Véletlenszerű hős, 3 képesség és ulti."
-
+                
                 // Tiny Wars
-
                 "afs_name_tinywars"            "Tiny Csata"
-
                 "afs_des_tinywars"             "Játssz mint Tiny, az első csapat 10 ponttal győz."
 
-
-
                 // Sunstrike Wars
-
                 "afs_name_sunstrikewars"        "Sun Strike Csata"
-
                 "afs_des_sunstrikewars"         "Mindenkinek Sun Strike, az utolsó élő játékos győz."
 
-
+                // Pure Skill
+                "afs_name_pureskill"            "Pure Skill"
+                "afs_des_pureskill"             "Játssz mint Mirana, csak Skewer-el, Sacred Arrow-al, Meat Hook-al és Ice Shard-szal."
 
                 // Vote related
-                
                 "afs_seconds_remaining"         "másodperc múlva"
-                
                 "afs_second_remaining"          "másodperc múlva"
-                
                 "afs_vote_ends_in"              "Szavazás vége"
 
-
-                
                 // Picking related
-
                 "afs_picking_timer"             "Picking ends in"
-
                 "afs_tab_pick_skills"           "Pick Skills"
-
                 "afs_tab_pick_hero"             "Pick Hero"
         }
 }
