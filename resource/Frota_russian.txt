@@ -1,36 +1,54 @@
 "lang"
 {
-	"Language"		"Russian"
-	"Tokens"
-	{
-        // Name of the game
-        "game_mode_15"                  "FROTA"
+        "Language"                "Russian"
+        "Tokens"
+        {
+                // Name of the game
+                "game_mode_15" "FROTA"
 
-        // Toggle ready state
-        "afs_toggle_ready"              "ГОТОВ"
+                // Toggle ready state
+                "afs_toggle_ready" "ГОТОВ"
 
-        // Legends of Dota
-        "afs_name_lod"                  "Legends of dota"
-        "afs_des_lod"                   "Выберите себе героя и умения."
+                // All Pick
+                "afs_name_allpick" "All Pick"
+                "afs_des_allpick" "Выбирайте из героев дальнего боя."
 
-        // PvP Arena
-        "afs_name_arena"                "PvP Arena"
-        "afs_des_arena"                 "Обычный режим PvP."
+                // Legends of Dota
+                "afs_name_lod" "Legends of dota"
+                "afs_des_lod" "Выберите себе героя и умения."
 
-        // Pudge Wars
-        "afs_name_pudgewars"            "Pudge Wars"
-        "afs_des_pudgewars"             "Играйте за Pudge, убейте 10 игроков и приведите команду к победе."
+                // Random OMG
+                "afs_name_romg" "Random OMG"
+                "afs_des_romg" "Получите случайного героя, 3 умения и ультимейт."
 
-        // Random OMG
-        "afs_name_romg"                 "Random OMG"
-        "afs_des_romg"                  "Случайный герой, 3 случайных умения и случайный ульт.
+                // PvP Arena
+                "afs_name_arena" "PvP Arena"
+                "afs_des_arena" "Простой режим PvP арены."
 
-        // Vote related
-        "afs_seconds_remaining"         "секунд"
-        "afs_second_remaining"          "секунд"
-        "afs_vote_ends_in"              "Голосование закончится через"
+                // Pudge Wars
+                "afs_name_pudgewars" "Pudge Wars"
+                "afs_des_pudgewars" "Станьте Пуджом, команда убившая 10 игроков побеждает."
 
-        // Picking related
-        "afs_picking_timer"             "Выбор закончится через"
-	}
+                // Tiny Wars
+                "afs_name_tinywars" "Tiny Wars"
+                "afs_des_tinywars" "Станьте Тини, команда убившая 10 игроков побеждает."
+
+                // Sunstrike Wars
+                "afs_name_sunstrikewars" "Sun Strike Wars"
+                "afs_des_sunstrikewars" "Один игрок появляется с Sun Strike, при этом он должен убить им остальных игроков."
+
+                // Pure Skill
+                "afs_name_pureskill" "Pure Skill"
+                "afs_des_pureskill" "Играйте Mirana с умениями: skewer, arrow, meat hook и ice shards."
+
+                // Vote related
+                "afs_seconds_remaining" "секунд"
+                "afs_second_remaining" "секунд"
+                "afs_vote_ends_in" "Голосование закончится через"
+
+                // Picking related
+                "afs_picking_timer" "Выбор закончится через"
+                "afs_tab_pick_skills" "Выберите умения"
+                "afs_tab_pick_hero" "Выберите героя"
+        }
 }
