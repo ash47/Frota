@@ -870,6 +870,10 @@ function FrotaGameMode:GetAssignHero()
     return (self.pickMode and self.pickMode.assignHero) or (self.playMode and self.playMode.assignHero)
 end
 
+function FrotaGameMode:GetInitGamemode()
+    return (self.pickMode and self.pickMode.initGamemode) or (self.playMode and self.playMode.initGamemode)
+end
+
 function FrotaGameMode:CreateVote(args)
     -- Create new vote
     self.currentVote = {
@@ -1217,6 +1221,11 @@ function FrotaGameMode:StartGame()
             end
         end
     end
+    local initGamemode = self:GetInitGamemode()
+    if initGamemode then
+	    	initGamemode(self)
+	  end
+    
 
     -- Store options
     self.gamemodeOptions = (self.playMode and self.playMode.options) or (self.pickMode and self.pickMode.options) or {}
