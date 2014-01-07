@@ -56,6 +56,7 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
  - Turkish by ozen
  - Spanish by JosDW
  - Portuguese by Kobb
+ - Finnish by SQL
 
 ###Maps###
  - riverofsouls by Z-Machine
