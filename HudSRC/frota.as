@@ -121,8 +121,12 @@ package {
         public var lastUpdate = 0;
         public var lastUpdateCheck = 0;
 
-        // Current picker tab
+        // Picker screen stuff
         private var currentPickerTab = TAB_SKILL_PICKER;
+        private var pickerTabs = {};
+
+        // Search related
+        private var lastSearchTerm = "";
 
         public function frota() {}
 
@@ -420,6 +424,25 @@ package {
             pickingData.builds = data.b;
             pickingData.heroes = data.h;
 
+            if(data.h) {
+                // Create new array for hero list
+                pickingData.heroesSorted = [];
+
+                for(var key in data.h) {
+                    pickingData.heroesSorted.push(key);
+                }
+
+                // Sort it
+                pickingData.heroesSorted.sort(function(a, b) {
+                    var ta = Translate("#"+a);
+                    var tb = Translate("#"+b);
+
+                    if(ta < tb) return -1;
+                    if(ta > tb) return 1;
+                    return 0;
+                });
+            }
+
             // Check if we can pick skills
             if(data.s) {
                 // Create an array for skills
@@ -444,51 +467,53 @@ package {
                 }
 
                 // Sort it
-                pickingData.skills.sort(function(a, b) {
-                    // Grab translated heroes
-                    var ha = Translate("#"+a.skillHero);
-                    var hb = Translate("#"+b.skillHero);
-
-                    // Sort by hero, then type, then skill name
-                    if(ha < hb) {
-                        return -1;
-                    } else if(ha > hb) {
-                        return 1;
-                    } else {
-                        // Grab ability types
-                        var ta = a.skillSort;
-                        var tb = b.skillSort;
-
-                        if(ta < tb) {
-                            return -1;
-                        } else if(ta > tb) {
-                            return 1;
-                        } else {
-                            // Grab translated skill names
-                            var na = Translate("#DOTA_Tooltip_ability_"+a.skillName);
-                            var nb = Translate("#DOTA_Tooltip_ability_"+b.skillName);
-
-                            if(na < nb) {
-                                return -1;
-                            } else if(na > nb) {
-                                return 1;
-                            } else {
-                                // Compare based on their raw skill name
-                                if(a.skillName < b.skillName) {
-                                    return -1;
-                                } else if(a.skillName > b.skillName) {
-                                    return 1;
-                                } else {
-                                    return 0;
-                                }
-                            }
-                        }
-                    }
-                });
+                pickingData.skills.sort(skillSort);
             }
 
             // Store hero builds
             this.updateBuildData(data.b);
+        }
+
+        public function skillSort(a, b) {
+            // Grab translated heroes
+            var ha = Translate("#"+a.skillHero);
+            var hb = Translate("#"+b.skillHero);
+
+            // Sort by hero, then type, then skill name
+            if(ha < hb) {
+                return -1;
+            } else if(ha > hb) {
+                return 1;
+            } else {
+                // Grab ability types
+                var ta = a.skillSort;
+                var tb = b.skillSort;
+
+                if(ta < tb) {
+                    return -1;
+                } else if(ta > tb) {
+                    return 1;
+                } else {
+                    // Grab translated skill names
+                    var na = Translate("#DOTA_Tooltip_ability_"+a.skillName);
+                    var nb = Translate("#DOTA_Tooltip_ability_"+b.skillName);
+
+                    if(na < nb) {
+                        return -1;
+                    } else if(na > nb) {
+                        return 1;
+                    } else {
+                        // Compare based on their raw skill name
+                        if(a.skillName < b.skillName) {
+                            return -1;
+                        } else if(a.skillName > b.skillName) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    }
+                }
+            }
         }
 
         public function updateBuildData(data) {
@@ -735,6 +760,15 @@ package {
 
         }
 
+        public function setPanelTab(clip:MovieClip) {
+            // Update the content panel to be the selected tab
+            contentPanel = clip;
+            contentPanelHolder.source = contentPanel;
+
+            // Reload the scrolling, etc
+            contentPanelHolder.update();
+        }
+
         public function addPanelChild(clip:MovieClip) {
             contentPanel.addChild(clip);
         }
@@ -858,29 +892,125 @@ package {
             // Change the tab
             currentPickerTab = TAB_SKILL_PICKER;
 
-            // Clean the hud
-            cleanHud();
+            // Check if the skill tab exists
+            if(pickerTabs.skillPickerTab != null) {
+                // Change directly to the tab
+                setPanelTab(pickerTabs.skillPickerTab);
 
-            // Reload picking
-            BuildPickingScreen()
+                trace("Clean swap! a");
+            } else {
+                // Clean the hud
+                cleanHud();
+
+                // Reload picking
+                BuildPickingScreen()
+            }
         }
 
         public function changeToTabHero() {
             // Change the tab
             currentPickerTab = TAB_HERO_PICKER;
 
-            // Clean the hud
-            cleanHud();
+            // Check if the hero tab exists
+            if(pickerTabs.heroPickerTab != null) {
+                // Change directly to the tab
+                setPanelTab(pickerTabs.heroPickerTab);
 
-            // Reload picking
-            BuildPickingScreen()
+                trace("Clean swap! b");
+            } else {
+                // Clean the hud
+                cleanHud();
+
+                // Reload picking
+                BuildPickingScreen()
+            }
+        }
+
+        public function awesomeSort(arr, query, field, tranPrefix) {
+            var i, key;
+
+            // Ensure is lowercase
+            query = query.toLowerCase();
+
+            // Convert to query terms
+            var q = query.split(" ");
+
+            arr.sort(function(a, b) {
+                var ta = 0;
+                var tb = 0;
+
+                var aText = Translate(tranPrefix+a[field]);
+                var bText = Translate(tranPrefix+b[field]);
+
+                for(i=0; i<q.length; i++) {
+                    key = q[i];
+
+                    if(aText.indexOf(key) != -1) ta++;
+                    if(bText.indexOf(key) != -1) tb++;
+                    if(a[field].indexOf(key) != -1) ta++;
+                    if(b[field].indexOf(key) != -1) tb++;
+                }
+
+                if(ta == tb) {
+                    return skillSort(a, b);
+                }
+
+                // Pick the one with MORE sub strings
+                return (ta > tb ? -1: 1);
+            });
+        }
+
+        public function searchTextChange(e:Event) {
+            var xx:Number, yy:Number, xo:Number, padding:Number;
+
+            // Grab the text
+            var txt = e.target.text;
+
+            // Check if we're already processed this
+            if(txt == lastSearchTerm) return;
+            lastSearchTerm = txt;
+
+            // Process
+            awesomeSort(pickerTabs.skillIconList, txt, "skillName", "#DOTA_Tooltip_ability_");
+
+            // Move icons into place
+            padding = 4;
+            xo = 16;
+            xx = xo;
+            yy = 0;
+
+            for each(var skill in pickerTabs.skillIconList) {
+                // Move into new position
+                skill.x = xx;
+                skill.y = yy;
+
+                // Move onto new position
+                xx = xx + iconWidth + padding;
+                if(xx+iconWidth > getContentWidth()) {
+                    xx = xo;
+                    yy = yy + iconHeight + padding;
+                }
+            }
         }
 
         public function BuildPickingScreen() {
             var skill:MovieClip, hero:MovieClip, btn, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, heroName:String, sx:Number, sy:Number, xx:Number, yy:Number;
 
+            // Reset the current picker tabs
+            this.pickerTabs = {}
+
             // Create a new panel for the skills
             newPanel();
+
+            // Search button
+            var searchButton = new DefaultTextInput();
+            autoCleanupSpecial(searchButton, "search_button");
+            searchButton.x = (contentPanelHolder.x - searchButton.width)/2;
+            searchButton.y = contentPanelHolder.y + 64;
+            searchButton.text = "";
+            searchButton.addEventListener(FocusHandlerEvent.FOCUS_IN, inputBoxGainFocus, false, 0, true);
+            searchButton.addEventListener(FocusHandlerEvent.FOCUS_OUT, inputBoxLoseFocus, false, 0, true);
+            searchButton.addEventListener(Event.CHANGE, searchTextChange, false, 0, true);
 
             // Position of the first button
             xx = contentPanelHolder.x;
@@ -945,57 +1075,78 @@ package {
                 }
             }
 
-            // Setting for skill picking panel
+            // Setting for picking panels
             var padding:Number = 4;
-            var xo = 16;//(getContentWidth() - Math.floor(getContentWidth()/(iconWidth+padding))*iconWidth)/4;
+            var xo = 16;
             xx = xo;
             yy = 0;
 
+            var heroTab = new MovieClip();
+            this.pickerTabs.heroPickerTab = heroTab;
+            this.pickerTabs.heroIconList = [];
+
+            // Put hero icons in
+            for each(heroName in pickingData.heroesSorted) {
+                // Create a new hero icon
+                hero = new HeroIcon(heroName)
+                heroTab.addChild(hero);
+                hero.x = xx;
+                hero.y = yy;
+
+                // Add to list of hero icons
+                this.pickerTabs.heroIconList.push(hero);
+
+                // Allow dragging from this
+                dragMakeValidFrom(hero);
+
+                // Grab the position of the next icon
+                xx = xx + heroIconWidth + padding;
+                if(xx+iconWidth > getContentWidth()) {
+                    xx = xo;
+                    yy = yy + heroIconHeight + padding;
+                }
+            }
+
+            // Reset settings
+            xx = xo;
+            yy = 0;
+
+            var skillTab = new MovieClip();
+            this.pickerTabs.skillPickerTab = skillTab;
+            this.pickerTabs.skillIconList = [];
+
+            // Put all the icons in
+            for each (var skillInfo in pickingData.skills) {
+                // Create a new skill icon
+                skill = new Skill(skillInfo.skillName, skillInfo.skillSort, skillInfo.skillHero);
+                skillTab.addChild(skill);
+                skill.x = xx;
+                skill.y = yy;
+
+                // Add to list of skills
+                this.pickerTabs.skillIconList.push(skill);
+
+                // Allow dragging from this
+                dragMakeValidFrom(skill);
+
+                //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
+                skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver, false, 0, true);
+                skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut, false, 0, true);
+
+                xx = xx + iconWidth + padding;
+                if(xx+iconWidth > getContentWidth()) {
+                    xx = xo;
+                    yy = yy + iconHeight + padding;
+                }
+            }
+
+            // Check which tab to display
             if(this.currentPickerTab == TAB_HERO_PICKER) {
-                // Hero picking tab
-
-                // Put hero icons in
-                for(heroName in pickingData.heroes) {
-                    // Create a new hero icon
-                    hero = new HeroIcon(heroName)
-                    addPanelChild(hero);
-                    hero.x = xx;
-                    hero.y = yy;
-
-                    // Allow dragging from this
-                    dragMakeValidFrom(hero);
-
-                    // Grab the position of the next icon
-                    xx = xx + heroIconWidth + padding;
-                    if(xx+iconWidth > getContentWidth()) {
-                        xx = xo;
-                        yy = yy + heroIconHeight + padding;
-                    }
-                }
+                // Display hero picker tab
+                setPanelTab(pickerTabs.heroPickerTab);
             }else if(this.currentPickerTab == TAB_SKILL_PICKER) {
-                // Skill picking tab
-
-                // Put all the icons in
-                for each (var skillInfo in pickingData.skills) {
-                    // Create a new skill icon
-                    skill = new Skill(skillInfo.skillName, skillInfo.skillSort, skillInfo.skillHero);
-                    addPanelChild(skill);
-                    skill.x = xx;
-                    skill.y = yy;
-
-                    // Allow dragging from this
-                    dragMakeValidFrom(skill);
-
-                    //skill.addEventListener(MouseEvent.CLICK, this.skillClicked);
-                    skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver, false, 0, true);
-                    skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut, false, 0, true);
-
-                    xx = xx + iconWidth + padding;
-                    if(xx+iconWidth > getContentWidth()) {
-                        xx = xo;
-                        yy = yy + iconHeight + padding;
-                    }
-                }
+                // Display skill picker tab
+                setPanelTab(pickerTabs.skillPickerTab);
             }
 
             // Update the scrollbar
