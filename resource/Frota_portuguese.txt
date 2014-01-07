@@ -33,9 +33,13 @@
                 "afs_name_tinywars"            "Guerra de Tiny"
                 "afs_des_tinywars"             "Jogue de Tiny, o primeiro time a obter 10 kills ganha."
 
+               // Pure Skill
+                "afs_name_pureskill"            "Habilidade Pura"
+                "afs_des_pureskill"             "Jogue de mirana com skewer, arrow, meat hook e ice shards."
+                
                 // Sunstrike Wars
                 "afs_name_sunstrikewars"        "Guerra de Sun Strike"
-                "afs_des_sunstrikewars"         "Um jogador nasce com a haom ela.bilidade Sun Strike e tem que matar todos os outros jogadores ."
+                "afs_des_sunstrikewars"         "Um jogador nasce com a habilidade Sun Strike e tem que matar todos os outros jogadores ."
 
                 // Vote related
                 "afs_seconds_remaining"         "Segundos"
