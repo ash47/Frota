@@ -51,5 +51,17 @@
                 "afs_picking_timer"             "El tiempo para escoger acaba en"
                 "afs_tab_pick_skills"           "Escoge habilidades"
                 "afs_tab_pick_hero"             "Escoge h��roe"
+				
+				// Unit Names
+                "npc_dota_mine"                                                        "Mina explosiva"
+                                
+                // Ability Names
+                "DOTA_Tooltip_Ability_pudge_place_mine"                                "Poner mina"
+                "DOTA_Tooltip_Ability_pudge_place_mine_description"                "Pone una mina explosiva que explota y daña en un area cuando un enemigo se acerca a ella."
+                "DOTA_Tooltip_Ability_mine_explosion"                                "Explotar"
+                "DOTA_Tooltip_Ability_mine_explosion_description"                "La mina explosiva es activada cuando se le acerca un enemigo."
+                                
+                // Modifier Names
+                "DOTA_Tooltip_aura_health_regen"                                "Área explosiva"
 	}
 }
