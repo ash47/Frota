@@ -138,6 +138,45 @@ package {
             //trace('globals:');
             //PrintTable(globals, 1);
 
+            /*var main = globals.Loader_shop.movieClip.shop.MainShop.MainShopContents;
+            var tab1 = main.tab1Button;
+            tab1.scaleX /= 2;
+
+            var tab1new = cloneObject(tab1);
+            tab1new.x += tab1new.width;
+
+            var tab2 = main.tab2Button;
+            tab2.scaleX /= 2;
+
+            var tab2new = cloneObject(tab2);
+            tab2new.x += tab2new.width;*/
+            //tab1new.
+
+            /*trace('SHOP STUFF:');
+            PrintTable(globals.Loader_shop.movieClip, 1);
+            trace('a');
+            PrintTable(globals.Loader_shop.movieClip.shop, 1);
+            trace('b');
+            PrintTable(globals.Loader_shop.movieClip.shop.MainShop, 1);
+            trace('c');
+
+            // Grab the shops
+            var shop = globals.Loader_shop.movieClip
+            var oldShop = shop.shop;
+
+            // Create a new shop
+            var newShop = new MovieClip();
+            shop.addChild(newShop);
+            newShop.x = oldShop.x;
+            newShop.y = oldShop.y;
+
+            // Remove the old shop
+            shop.removeChild(oldShop);
+
+            // Give the new shop a graphic
+            Globals.instance.LoadAbilityImage('antimage_spell_shield', newShop);*/
+
+            // Hook game events
             this.gameAPI.SubscribeToGameEvent("hero_picker_hidden", this.requestCurrentState);
             this.gameAPI.SubscribeToGameEvent("afs_initial_state", this.receiveInitialState);
             this.gameAPI.SubscribeToGameEvent("afs_update_state", this.processState);
@@ -215,6 +254,18 @@ package {
                 requestCurrentStateInsant();
             });
             timer.start();
+        }
+
+        public function cloneObject(src) {
+            var objectClass:Class = Object(src).constructor;
+            var instance:MovieClip = new objectClass() as MovieClip;
+            instance.transform = src.transform;
+            instance.filters = src.filters;
+            instance.cacheAsBitmap = src.cacheAsBitmap;
+            instance.opaqueBackground = src.opaqueBackground;
+            src.parent.addChild(instance);
+
+            return instance;
         }
 
         public function inputBoxGainFocus() {
