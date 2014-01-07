@@ -1,8 +1,8 @@
-"lang"
+﻿"lang"
 {
-    "Language"      "Spanish"
-    "Tokens"
-    {
+	"Language"		"Spanish"
+	"Tokens"
+	{
                 // Name of the game
                 "game_mode_15"                  "FROTA"
 
@@ -34,8 +34,13 @@
                 "afs_des_tinywars"             "Juega como Tiny,el primer equipo en conseguir 10 asesinatos gana."
 
                 // Sunstrike Wars
-                "afs_name_sunstrikewars"        "Guerras de Sun Strike"
+                "afs_name_sunstrikewars"        "Guerras de Sunstrike"
                 "afs_des_sunstrikewars"         "Un jugador empieza con Sunstrike y debe matar al resto de jugadores con el."
+				
+				// Pure Skill
+                "afs_name_pureskill"            "Pura Habilidad"
+                "afs_des_pureskill"             "Juega como mirana con skewer,arrow,meat hook y ice shards."
+
 
                 // Vote related
                 "afs_seconds_remaining"         "segundos"
@@ -45,6 +50,6 @@
                 // Picking related
                 "afs_picking_timer"             "El tiempo para escoger acaba en"
                 "afs_tab_pick_skills"           "Escoge habilidades"
-                "afs_tab_pick_hero"             "Escoge héroe"
-    }
+                "afs_tab_pick_hero"             "Escoge h��roe"
+	}
 }
