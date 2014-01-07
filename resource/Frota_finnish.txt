@@ -23,7 +23,7 @@
  
                 // PvP Arena
                 "afs_name_arena"                "PvP Areena"
-                "afs_des_arena"                 "Yksinkertainen PvP areena pelimuoto."
+                "afs_des_arena"                 "Yksinkertainen PvP-areena pelimuoto."
  
                 // Pudge Wars
                 "afs_name_pudgewars"            "Pudge Sota"
@@ -41,7 +41,7 @@
                 "afs_des_pureskill"             "Pelaa Miranalla skewerillä, arrowilla, meat hookilla sekä ice shardilla."
                 
                 // Vote related
-                "afs_seconds_remaining"         "sekuntia"
+                "afs_seconds_remaining"         "sekunnissa"
                 "afs_second_remaining"          "sekunti"
                 "afs_vote_ends_in"              "Äänestys loppuu"
  
