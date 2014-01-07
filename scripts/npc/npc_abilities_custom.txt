@@ -1,0 +1,223 @@
+// Dota Heroes File
+"DOTAAbilities"
+{
+	"Version"		"1"
+
+//=================================================================================================================
+	// Pudge Place Mine
+	//=================================================================================================================
+	"pudge_place_mine"
+	{
+		// General
+                //-------------------------------------------------------------------------------------------------------------
+                "BaseClass"             "ability_datadriven"
+                "AbilityBehavior"        "DOTA_ABILITY_BEHAVIOR_POINT"
+                "AbilityTextureName"     "tinker_rearm"
+ 
+                // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+ 
+                // Time
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+ 
+                // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+				
+				"OnSpellStart"
+                {
+				
+						"SpawnUnit"
+						{
+								"UnitName"				"npc_dota_mine"
+								"Target" 				"POINT"
+								"UnitCount"				"1"	
+								"OnSpawn"
+								{
+									"ApplyModifier"
+									{
+										"Target"			"TARGET"
+										"ModifierName"		"modifier_invisible"
+									}
+								
+								}
+						}
+						
+				
+						
+				}
+				
+	}
+	
+	
+	//=================================================================================================================
+	// Mine Explosion
+	//=================================================================================================================
+	"mine_explosion"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"tinker_rearm"
+		
+		"precache"
+		{
+			"particlefile"				"particles/units/heroes/hero_witchdoctor.pcf"
+
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+			
+				"ModifierName"			"aura_health_regen"
+				"Target"
+				{
+					"Center"			"CASTER"
+					"Radius"			"%health_radius"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHER"
+				}
+			}
+		}
+		
+		// Modifiers
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"fx_heal_aura"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"witchdoctor_voodoo_restoration"
+						"EffectAttachType"	"follow_origin"
+						
+						"ControlPoints"
+						{
+							"00"	"0 0 0"
+							"01"	"0 0 0"
+							"02"	"0 0 0"
+						}
+					}
+				}
+			}
+			
+			"aura_health_regen"
+			{
+				"IsHidden"				"0"
+				"Passive"				"1"
+				
+				"Aura"					"health_regen"
+				"Aura_Radius"			"%health_radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_ApplyToCaster"	"0"
+				
+				
+			}
+			
+			"health_regen"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"0"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"0"
+				}
+				
+				"OnCreated"
+				{
+				
+					"FireSound"
+					{
+						"EffectName"		"Hero_Gyrocopter.CallDown.Damage"
+						"Target"			"CASTER"
+					}
+					
+					"FireEffect"
+					{
+						"Target"				"CASTER"
+						"EffectName"			"generic_aoe_explosion_sphere_1"
+						"EffectAttachType"		"follow_origin"
+						"EffectRadius"			"200"
+						"EffectDurationScale"	"1"
+						"EffectLifeDurationScale" "1"
+						"EffectColorA"			"255 128 0"
+						"EffectColorB"			"255 0 0"
+					}
+				
+					
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"			"CASTER"
+							"Radius"			"200"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHER"
+						}
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"100"
+					}
+					
+					"Damage"
+					{
+						"Target"
+						{
+							"Center"			"CASTER"
+							"Radius"			"500"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHER"
+						}
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"100"
+					}
+					
+					"Damage"
+					{
+						"Target"			"CASTER"
+						"Type"				"DAMAGE_TYPE_PURE"
+						"Damage"			"1000"
+					}
+				}	
+					
+			}
+			
+			
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_radius"				"85"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_regen_amount"		"22.0 23.0 24.0 25.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_buff"				"8 12 18 22"
+			}
+		}
+	}
+	
+	}
