@@ -675,6 +675,9 @@ package {
 
                     // Remove from the screen
                     if(this.contains(timer)) removeChild(timer);
+
+                    // Mark it as removed
+                    timer.removed = true;
                 }
 
                 // Set it to null

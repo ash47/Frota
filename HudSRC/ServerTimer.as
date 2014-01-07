@@ -31,7 +31,7 @@
 			// Check if this timer has been removed
 			if(this.removed) {
 				// Stop it
-				timer.stop();
+				if(timer) timer.stop();
 			} else {
 				// Update timer, with a nice display
                 if(this.timeLeft > 0 && this.timeLeft != 1) {

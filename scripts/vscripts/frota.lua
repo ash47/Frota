@@ -246,6 +246,14 @@ function FrotaGameMode:CreateTimer(name, args)
     self:UpdateTimerData()
 end
 
+function FrotaGameMode:RemoveTimer(name)
+    -- Remove this timer
+    self.timers[name] = nil
+
+    -- Update the timers
+    self:UpdateTimerData()
+end
+
 -- Auto assigns a player when they connect
 function FrotaGameMode:AutoAssignPlayer(keys)
     -- Grab the entity index of this player
@@ -1182,6 +1190,9 @@ end
 
 function FrotaGameMode:StartGame()
     -- Cleanup time
+
+    -- Remove picking timer
+    self:RemoveTimer('pickTimer')
 
     -- Remove all NPCs
     for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
