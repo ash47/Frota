@@ -543,18 +543,21 @@ function FrotaGameMode:RemoveAllSkills(hero)
     end
 end
 
-function FrotaGameMode:ApplyBuild(hero)
+function FrotaGameMode:ApplyBuild(hero, build)
     -- Grab playerID
     local playerID = hero:GetPlayerID()
     if(playerID < 0 or playerID > MAX_PLAYERS-1) then
         return
     end
 
+    -- Make sure the build was parsed
+    build = build or self.selectedBuilds[playerID].skills
+
     -- Remove all the skills from our hero
     self:RemoveAllSkills(hero)
 
     -- Give all the abilities in this build
-    for k,v in ipairs(self.selectedBuilds[playerID].skills) do
+    for k,v in ipairs(build) do
         -- Preache ability
         self:PrecacheSkill(v)
 

@@ -140,14 +140,28 @@ RegisterGamemode('arena', {
     }
 })
 
--- A Pudge Wars Base Gamemode
+-- A Pudge Wars Type Gamemode
 RegisterGamemode('pudgewars', {
     -- Gamemode covers picking and playing
     sort = GAMEMODE_BOTH,
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
+        local hookSkill = 'pudge_meat_hook'
+
+        -- Change heroes
         ply:ReplaceHeroWith('npc_dota_hero_pudge', 100000, 32400)
+
+        local playerID = ply:GetPlayerID()
+        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Apply the build
+        frota:ApplyBuild(hero, {
+            [1] = hookSkill,
+            [2] = 'mirana_arrow',
+            [3] = 'magnataur_skewer',
+            [4] = 'tusk_ice_shards'
+        })
     end,
 
     -- A list of options for fast gameplay stuff
@@ -199,21 +213,19 @@ RegisterGamemode('pureskill', {
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
+        -- Change heroes
+        ply:ReplaceHeroWith('npc_dota_hero_pudge', 100000, 32400)
 
-		local playerID = ply:GetPlayerID()
-        local build = frota.selectedBuilds[playerID]
+        local playerID = ply:GetPlayerID()
+        local hero = Players:GetSelectedHeroEntity(playerID)
 
-        ply:ReplaceHeroWith('npc_dota_hero_mirana', 100000, 32400)
-
-		local hero = Players:GetSelectedHeroEntity(playerID)
-
-		frota:SkillIntoSlot(hero,'magnataur_skewer',1)
-		frota:SkillIntoSlot(hero,'mirana_arrow',2)
-		frota:SkillIntoSlot(hero,'pudge_meat_hook',3)
-		frota:SkillIntoSlot(hero,'tusk_ice_shards',4)
-
-        -- Change skills
-		frota:ApplyBuild(hero)
+        -- Apply the build
+        frota:ApplyBuild(hero, {
+            [1] = 'magnataur_skewer',
+            [2] = 'mirana_arrow',
+            [3] = 'pudge_meat_hook',
+            [4] = 'tusk_ice_shards'
+        })
     end,
 
     -- A list of options for fast gameplay stuff
