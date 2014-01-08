@@ -1,13 +1,12 @@
 Frota
 =====
 
-An addon for Dota 2, I intend for it to contain several sub game modes such as Legends of Dota and Random OMG
+An addon for Dota 2, It is a framework for sub game modes. Players connect to a server, then vote on what they would like to play, the most popular choice is loaded, people play it, then voting happens again.
 
 ###Current Status###
  - One option voting works, it still needs more work to look nice though
  - A basic gamemode system is in place
   - It has seperate categories for picking / gameplay based gamemodes
-  - Not much feature wise just yet
   - If a gamemode supports scores, they will be shown
  - "Version control" is now in place -- clients will be notified if they have an outdated version of Frota
 
@@ -22,6 +21,7 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
  - **Pudge Wars**
   - Players will spawn as pudge if this gamemode is selected
   - First team to 10 wins
+  - Custom hook related stuff is slowly being added, as well as upgrades
  - **Tiny Wars**
   - Players will spawn as tiny if this gamemode is selected
   - First team to 10 wins
@@ -46,6 +46,13 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
   - dota_local_custom_enable 1;dota_local_custom_game Frota;dota_local_custom_map Frota;dota_force_gamemode 15;update_addon_paths;dota_wait_for_players_to_load 0;dota_wait_for_players_to_load_timeout 10;map riverofsouls;
  - **NOTE** If you reach the hero selection screen, it means Frota didn't load correctly! Frota should override / skip the hero selection screen, and  take you directly to a vote screen! Please ensure you removed Frostivus (and any other addons) and then restart your client.
 
+###Hooks###
+ - **onPickingStart(frota)**: When the picking stage is loaded
+ - **onGameStart(frota)**: When the game actually starts
+ - **assignHero(frota, ply)**: A player needs a hero to be assigned
+ - **onHeroKilled(frota, killedUnit, killerEntity)**: A player was killed by something (note: killerEntity could be null)
+ - **onThink(frota, dt)**: dt is the time since the last think, should be around 0.1 of a second
+
 ###Translations###
  - Please make a pull request if you want to update translations
  - English by Ash47
@@ -64,7 +71,6 @@ An addon for Dota 2, I intend for it to contain several sub game modes such as L
 ###Up next###
  - More work on the game mode system
   - Which team actually won needs to be added (you can see via the scores, but an announcment would be nice)
-  - Lots of hooks (init, heroSpawn, heroDie) need to be added
  - Improved picking
   - Filters
   - Build picking / generation
