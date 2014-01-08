@@ -1,3 +1,10 @@
+--[[    EVENTS:
+    - onPickingStart(frota): When the picking stage is loaded
+    - onGameStart(frota): When the game actually starts
+    - assignHero(frota, ply): A player needs a hero to be assigned
+    - onHeroKilled(frota, killedUnit, killerEntity): A player was killed by something (note: killerEntity could be null)
+]]
+
 -- Table to store all the diffrent gamemodes
 gamemodes = gamemodes or {}
 
@@ -70,7 +77,7 @@ RegisterGamemode('lod', {
     pickSkills = true,
 
     -- Function to give out heroes
-    assignHero = function(ply, frota)
+    assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
         local build = frota.selectedBuilds[playerID]
 
@@ -90,7 +97,7 @@ RegisterGamemode('romg', {
     sort = GAMEMODE_PICK,
 
     -- Function to give out heroes
-    assignHero = function(ply, frota)
+    assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
         local build = frota.selectedBuilds[playerID]
 
@@ -135,11 +142,11 @@ RegisterGamemode('arena', {
 
 -- A Pudge Wars Base Gamemode
 RegisterGamemode('pudgewars', {
-    -- Gamemode only has a gameplay component
+    -- Gamemode covers picking and playing
     sort = GAMEMODE_BOTH,
 
     -- Function to give out heroes
-    assignHero = function(ply, frota)
+    assignHero = function(frota, ply)
         ply:ReplaceHeroWith('npc_dota_hero_pudge', 100000, 32400)
     end,
 
@@ -165,7 +172,7 @@ RegisterGamemode('tinywars', {
     sort = GAMEMODE_BOTH,
 
     -- Function to give out heroes
-    assignHero = function(ply, frota)
+    assignHero = function(frota, ply)
         ply:ReplaceHeroWith('npc_dota_hero_tiny', 100000, 32400)
     end,
 
@@ -191,7 +198,7 @@ RegisterGamemode('pureskill', {
     sort = GAMEMODE_BOTH,
 
     -- Function to give out heroes
-    assignHero = function(ply, frota)
+    assignHero = function(frota, ply)
 
 		local playerID = ply:GetPlayerID()
         local build = frota.selectedBuilds[playerID]
@@ -234,7 +241,7 @@ RegisterGamemode('pureskill', {
     pickHero = true,
 
     -- Function to give out heroes
-    assignHero = function(ply, frota)
+    assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
         local build = frota.selectedBuilds[playerID]
 

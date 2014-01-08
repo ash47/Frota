@@ -43,25 +43,7 @@ function FrotaGameMode:new (o)
     return o
 end
 
-function FrotaGameMode:_SetInitialValues()
-    -- Change random seed
-    local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
-    math.randomseed(tonumber(timeTxt))
-
-    -- Load ability List
-    self:LoadAbilityList()
-
-    -- Timers
-    self.timers = {}
-
-    -- Voting thinking
-    self.startedInitialVote = false
-    self.thinkState = Dynamic_Wrap( FrotaGameMode, '_thinkState_Voting' )
-    self._scriptBind:BeginThink( "FrotaThink", Dynamic_Wrap( FrotaGameMode, 'Think' ), 0.25 )
-
-    -- Stores the current skill list for each hero
-    self.currentSkillList = {}
-
+function FrotaGameMode:ResetBuilds()
     -- Store the default axe build for each player
     self.selectedBuilds = {}
     for i = 0,MAX_PLAYERS-1 do
@@ -76,6 +58,29 @@ function FrotaGameMode:_SetInitialValues()
             ready = false
         }
     end
+end
+
+function FrotaGameMode:_SetInitialValues()
+    -- Change random seed
+    local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
+    math.randomseed(tonumber(timeTxt))
+
+    -- Load ability List
+    self:LoadAbilityList()
+
+    -- Timers
+    self.timers = {}
+
+    -- Voting thinking
+    self.startedInitialVote = false
+    self.thinkState = Dynamic_Wrap( FrotaGameMode, '_thinkState_Voting' )
+    self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.25)
+
+    -- Stores the current skill list for each hero
+    self.currentSkillList = {}
+
+    -- Reset Builds
+    self:ResetBuilds()
 
     -- Options
     self.gamemodeOptions = {}
@@ -120,6 +125,9 @@ function FrotaGameMode:InitGameMode()
 
     -- userID map
     self.vUserIDMap = {}
+
+    -- Start processing timers
+    self._scriptBind:BeginThink('FrotaTimers', Dynamic_Wrap(FrotaGameMode, 'ThinkTimers'), 0.1)
 end
 
 function FrotaGameMode:RegisterCommands()
@@ -303,10 +311,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
             -- Check if we are in a game
             if self.currentState == STATE_PLAYING then
                 -- Check if we need to assign a hero
-                local assignHero = self:GetAssignHero()
-                if assignHero then
-                    assignHero(ply, self)
-                end
+                self:FireEvent('assignHero', ply)
             end
         end
     })
@@ -361,6 +366,9 @@ function FrotaGameMode:OnEntityKilled(keys)
         -- Make sure we are playing
         if self.currentState ~= STATE_PLAYING then return end
 
+        -- Fire onHeroKilled event
+        self:FireEvent('onHeroKilled', killedUnit, killerEntity)
+
         -- Respawn the dead guy after a delay
         self:CreateTimer('respawn_hero_'..killedUnit:GetPlayerID(), {
             endTime = Time() + (self.gamemodeOptions.respawnDelay or 1),
@@ -406,13 +414,9 @@ function FrotaGameMode:OnEntityKilled(keys)
 
         -- Check if there was a winner
         if winner ~= -1 then
-            print('there was a winner: '..winner)
-
             -- Reset back to gamemode voting
-            self:VoteForGamemode()
+            self:EndGamemode()
         end
-
-        print(self.scoreRadiant..' - '..self.scoreDire)
     end
 end
 
@@ -811,13 +815,8 @@ function FrotaGameMode:_RestartGame()
 
 end
 
-function FrotaGameMode:Think()
-    -- If the game's over, it's over.
-    if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-        self._scriptBind:EndThink( "GameThink" )
-        return
-    end
-
+-- Deals with timers
+function FrotaGameMode:ThinkTimers()
     -- Process timers
     for k,v in pairs(self.timers) do
         -- Check if the timer has finished
@@ -832,6 +831,14 @@ function FrotaGameMode:Think()
             self:UpdateTimerData()
         end
     end
+end
+
+function FrotaGameMode:Think()
+    -- If the game's over, it's over.
+    if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
+        self._scriptBind:EndThink( "GameThink" )
+        return
+    end
 
     -- Hero Selection Screen Bypass
     --[[if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
@@ -845,10 +852,7 @@ function FrotaGameMode:Think()
                     -- Check if we are in a game
                     if self.currentState == STATE_PLAYING then
                         -- Check if we need to assign a hero
-                        local assignHero = self:GetAssignHero()
-                        if assignHero then
-                            assignHero(ply, self)
-                        end
+                        self:FireEvent('heroAssign', ply)
                     end
                 end
             end
@@ -871,11 +875,6 @@ function FrotaGameMode:SetBuildSkills(playerID, skills)
 
     -- Change the skills
     self.selectedBuilds[playerID].skills = skills
-end
-
--- Finds a function that assigns heroes
-function FrotaGameMode:GetAssignHero()
-    return (self.pickMode and self.pickMode.assignHero) or (self.playMode and self.playMode.assignHero)
 end
 
 function FrotaGameMode:CreateVote(args)
@@ -1108,6 +1107,18 @@ function FrotaGameMode:ResetAllHeroes()
     end
 end
 
+-- Ends the current game, resetting to the voting stage
+function FrotaGameMode:EndGamemode()
+    -- Remove all timers
+    self.timers = {}
+
+    -- Fire start event
+    self:FireEvent('onGameEnd')
+
+    -- Start game mode vote
+    self:VoteForGamemode()
+end
+
 function FrotaGameMode:VoteForGamemode()
     -- Freeze everyone
     self:ResetAllHeroes()
@@ -1173,10 +1184,25 @@ function FrotaGameMode:VoteForGamemode()
     })
 end
 
+function FrotaGameMode:FireEvent(name, ...)
+    local e = (self.pickMode and self.pickMode[name])
+    if e then
+        e(self, ...)
+    end
+
+    local e = (self.playMode and self.playMode[name])
+    if e then
+        e(self, ...)
+    end
+end
+
 function FrotaGameMode:LoadGamemode(pickMode, playMode)
     -- Store the modes
     self.pickMode = pickMode
     self.playMode = playMode
+
+    -- Fire event
+    self:FireEvent('onPickingStart')
 
     -- Check if there is any sort of picking
     if self.pickMode.pickHero or self.pickMode.pickSkills then
@@ -1214,18 +1240,14 @@ function FrotaGameMode:StartGame()
         end
     end
 
-    -- Attempt to assign heroes
-    local assignHero = self:GetAssignHero()
-    if assignHero then
-        -- Loop over every player
-        for i=0,MAX_PLAYERS-1 do
-            local ply = Players:GetPlayer(i)
+    -- Loop over every player
+    for i=0,MAX_PLAYERS-1 do
+        local ply = Players:GetPlayer(i)
 
-            -- Check if they are in
-            if ply then
-                -- Assign them a hero
-                assignHero(ply, self)
-            end
+        -- Check if they are in
+        if ply then
+            -- Assign them a hero
+            self:FireEvent('assignHero', ply)
         end
     end
 
@@ -1238,6 +1260,9 @@ function FrotaGameMode:StartGame()
 
     -- Change to playing
     self:ChangeState(STATE_PLAYING, {})
+
+    -- Fire start event
+    self:FireEvent('onGameStart')
 end
 
 function FrotaGameMode:BuildBuildsData()
