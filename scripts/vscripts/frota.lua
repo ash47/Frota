@@ -870,7 +870,11 @@ function FrotaGameMode:Think()
     local dt = now - self.t0
     self.t0 = now
 
+    -- Run the current think state
     self:thinkState( dt )
+
+    -- Fire gamemode thinks
+    self:FireEvent('onThink', dt)
 end
 
 function FrotaGameMode:SetBuildSkills(playerID, skills)
