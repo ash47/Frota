@@ -50,5 +50,17 @@
                 "afs_picking_timer"             "Picking ends in"
                 "afs_tab_pick_skills"           "Pick Skills"
                 "afs_tab_pick_hero"             "Pick Hero"
+                
+                // Unit Names
+                "npc_dota_mine"                                                        "Akna"
+                                
+                // Ability Names
+                "DOTA_Tooltip_Ability_pudge_place_mine"                                "Akna elhelyezése"
+                "DOTA_Tooltip_Ability_pudge_place_mine_description"                "Egy akna ami felrobban ha ellenség megy a közelébe."
+                "DOTA_Tooltip_Ability_mine_explosion"                                "Robbantás"
+                "DOTA_Tooltip_Ability_mine_explosion_description"                "Az akna felrobban ha ellenség megy a közelébe."
+                                
+                // Modifier Names
+                "DOTA_Tooltip_aura_health_regen"                                "Robbantási terület"
         }
 }
