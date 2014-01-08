@@ -240,6 +240,12 @@ function FrotaGameMode:CreateTimer(name, args)
             text = text to display to clients,
             send = set this to true if you want clients to get this
         }
+
+        If you want your timer to loop, simply return the time of the next callback inside of your callback, for example:
+
+        callback = function()
+            return Time() + 30 -- Will fire again in 30 seconds
+        end
     ]]
 
     if not args.endTime or not args.callback then
@@ -828,7 +834,14 @@ function FrotaGameMode:ThinkTimers()
             self.timers[k] = nil
 
             -- Run the callback
-            v.callback(self, v)
+            local nextCall = v.callback(self, v)
+
+            -- Check if it needs to loop
+            if nextCall then
+                -- Change it's end time
+                v.endTime = nextCall
+                self.timers[k] = v
+            end
 
             -- Update timer data
             self:UpdateTimerData()
