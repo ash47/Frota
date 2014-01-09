@@ -118,6 +118,15 @@ function FrotaGameMode:InitGameMode()
     ListenToGameEvent('player_connect_full', Dynamic_Wrap(FrotaGameMode, 'AutoAssignPlayer'), self)
     ListenToGameEvent('player_disconnect', Dynamic_Wrap(FrotaGameMode, 'CleanupPlayer'), self)
 
+    -- Mod Events
+    self:ListenToEvent('dota_player_used_ability')
+    self:ListenToEvent('dota_player_learned_ability')
+    self:ListenToEvent('dota_player_gained_level')
+    self:ListenToEvent('dota_item_purchased')
+    self:ListenToEvent('dota_item_used')
+
+
+
     -- Load initital Values
     self:_SetInitialValues()
 
@@ -358,6 +367,17 @@ function FrotaGameMode:CleanupPlayer(keys)
             self:_SetInitialValues()
         end
     })
+end
+
+function FrotaGameMode:ListenToEvent(eventName)
+    ListenToGameEvent(eventName, Dynamic_Wrap(FrotaGameMode, 'AutoFireEvent'), {
+        self = self,
+        ev = eventName
+    })
+end
+
+function FrotaGameMode:AutoFireEvent(keys)
+    self.self:FireEvent(self.ev, keys)
 end
 
 function FrotaGameMode:OnEntityKilled(keys)

@@ -54,6 +54,26 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - **onThink(frota, dt)**: Runs ~every 0.1 seconds, dt is the time since the last think, should be around 0.1 of a second
  - **onGameEnd(frota)**: Runs when the game mode finishes, you can do cleanup here
 
+###Mod Events###
+Mod events are all in the form of (frota, keys), you can find the arguments below via keys: keys.PlayerID
+
+ - dota_player_used_ability
+  - "PlayerID"        "short"
+  - "abilityname"     "string"
+ - dota_player_learned_ability
+  - "PlayerID"        "short"
+  - "abilityname"     "string"
+ - dota_player_gained_level
+  - "PlayerID"        "short"
+  - "level"           "short"
+ - dota_item_purchased
+  - "PlayerID"        "short"
+  - "itemname"        "string"
+  - "itemcost"        "short"
+ - dota_item_used
+  - "PlayerID"        "short"
+  - "itemname"        "string"
+
 ###Translations###
  - Please make a pull request if you want to update translations
  - English by Ash47

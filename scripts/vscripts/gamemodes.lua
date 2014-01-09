@@ -1,10 +1,31 @@
---[[    EVENTS:
+--[[
+    EVENTS:
+
     - onPickingStart(frota): When the picking stage is loaded
     - onGameStart(frota): When the game actually starts
     - assignHero(frota, ply): A player needs a hero to be assigned
     - onHeroKilled(frota, killedUnit, killerEntity): A player was killed by something (note: killerEntity could be null)
     - onThink(frota, dt): Runs ~every 0.1 seconds, dt is the time since the last think, should be around 0.1 of a second
     - onGameEnd(frota): Runs when the game mode finishes, you can do cleanup here
+
+    MOD EVENTS -- Mod events are all in the form of (frota, keys), you can find the arguments below via keys: keys.PlayerID
+
+    - dota_player_used_ability
+        - "PlayerID"        "short"
+        - "abilityname"     "string"
+    - dota_player_learned_ability
+        - "PlayerID"        "short"
+        - "abilityname"     "string"
+    - dota_player_gained_level
+        - "PlayerID"        "short"
+        - "level"           "short"
+    - dota_item_purchased
+        - "PlayerID"        "short"
+        - "itemname"        "string"
+        - "itemcost"        "short"
+    - dota_item_used
+        - "PlayerID"        "short"
+        - "itemname"        "string"
 ]]
 
 -- Table to store all the diffrent gamemodes
