@@ -1,7 +1,7 @@
 -- Syntax copied mostly from frostivus example
 
 -- Constants
-MAX_PLAYERS = 10
+MAX_PLAYERS = 24
 STARTING_GOLD = 625
 
 -- State control
@@ -231,6 +231,10 @@ function FrotaGameMode:RegisterCommands()
                 data[i] = steamID
             end
         end
+
+        -- Check if we recently fired this
+        if self.lastRequestFire > Time() then return end
+        self.lastRequestFire = Time() + 1
 
         -- Fire steamids
         FireGameEvent('afs_steam_ids', {
