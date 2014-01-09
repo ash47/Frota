@@ -124,6 +124,12 @@ function FrotaGameMode:InitGameMode()
     self:ListenToEvent('dota_player_gained_level')
     self:ListenToEvent('dota_item_purchased')
     self:ListenToEvent('dota_item_used')
+    self:ListenToEvent('last_hit')
+    self:ListenToEvent('dota_item_picked_up')
+    self:ListenToEvent('dota_super_creep')
+    self:ListenToEvent('dota_glyph_used')
+    self:ListenToEvent('dota_courier_respawned')
+    self:ListenToEvent('"dota_courier_lost"')
 
 
 

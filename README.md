@@ -73,6 +73,15 @@ Mod events are all in the form of (frota, keys), you can find the arguments belo
  - dota_item_used
   - "PlayerID"        "short"
   - "itemname"        "string"
+ - last_hit
+  - PlayerID"         "short"
+  - "EntKilled"       "short"
+  - "FirstBlood"      "bool"
+  - "HeroKill"        "bool"
+  - "TowerKill"       "bool"
+ - dota_item_picked_up
+  - "itemname"        "string"
+  - "PlayerID"        "short"
 
 ###Translations###
  - Please make a pull request if you want to update translations

@@ -26,6 +26,23 @@
     - dota_item_used
         - "PlayerID"        "short"
         - "itemname"        "string"
+    - last_hit
+        - PlayerID"         "short"
+        - "EntKilled"       "short"
+        - "FirstBlood"      "bool"
+        - "HeroKill"        "bool"
+        - "TowerKill"       "bool"
+    - dota_item_picked_up
+        - "itemname"        "string"
+        - "PlayerID"        "short"
+     - dota_super_creep
+        - "teamnumber"      "short"
+    - dota_glyph_used
+        - "teamnumber"      "short"
+    - dota_courier_respawned
+        - "teamnumber"      "short"
+    - "dota_courier_lost"
+        - "teamnumber"      "short"
 ]]
 
 -- Table to store all the diffrent gamemodes
