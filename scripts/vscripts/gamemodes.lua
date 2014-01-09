@@ -204,10 +204,10 @@ RegisterGamemode('pudgewars', {
 
         -- Apply the build
         frota:ApplyBuild(hero, {
-            [1] = hookSkill,
-            [2] = 'mirana_arrow',
-            [3] = 'magnataur_skewer',
-            [4] = 'tusk_ice_shards'
+            [1] = 'pure_skill_meat_hook',
+            [2] = 'pure_skill_mirana_arrow',
+            [3] = 'pure_skill_magnataur_skewer',
+            [4] = 'pure_skill_tusk_ice_shards'
         })
 
         hero:__KeyValueFromInt('AbilityLayout', 6)
@@ -244,10 +244,10 @@ RegisterGamemode('pureskill', {
 
         -- Apply the build
         frota:ApplyBuild(hero, {
-            [1] = 'pudge_meat_hook',
-            [2] = 'magnataur_skewer',
-            [3] = 'mirana_arrow',
-            [4] = 'tusk_ice_shards'
+            [1] = 'pure_skill_meat_hook',
+            [2] = 'pure_skill_mirana_arrow',
+            [3] = 'pure_skill_magnataur_skewer',
+            [4] = 'pure_skill_tusk_ice_shards'
         })
     end,
 
