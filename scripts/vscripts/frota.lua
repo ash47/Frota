@@ -154,7 +154,7 @@ function FrotaGameMode:RegisterCommands()
         if cmdPlayer then
             local hero = cmdPlayer:GetAssignedHero()
             if hero then
-                self:SkillIntoSlot(hero, skillName, tonumber(slotNumber))
+                self:SkillIntoSlot(hero, skillName, tonumber(slotNumber), true)
                 return
             end
         end
@@ -174,7 +174,7 @@ function FrotaGameMode:RegisterCommands()
 
         local cmdPlayer = Convars:GetCommandClient()
         if cmdPlayer then
-            self:SelectHero(cmdPlayer, heroName)
+            self:SelectHero(cmdPlayer, heroName, true)
             return
         end
     end, 'A user tried to change heroes', 0 )
@@ -634,7 +634,7 @@ function FrotaGameMode:LoadBuildFromHero(hero)
     end
 end
 
-function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
+function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot, dontSlotIt)
     -- Validate Data here (never trust client)
 
     -- Grab playerID
@@ -643,14 +643,19 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
         return
     end
 
-    -- Preache the new skill
-    self:PrecacheSkill(skillName)
+    if not dontSlotIt then
+        -- Preache the new skill
+        self:PrecacheSkill(skillName)
 
-    -- Update build
-    self.selectedBuilds[playerID].skills[skillSlot] = skillName
+        -- Update build
+        self.selectedBuilds[playerID].skills[skillSlot] = skillName
 
-    -- Apply the new build
-    self:ApplyBuild(hero)
+        -- Apply the new build
+        self:ApplyBuild(hero)
+    else
+        -- Update build
+        self.selectedBuilds[playerID].skills[skillSlot] = skillName
+    end
 
     -- Send out the updated builds
     FireGameEvent("afs_update_builds", {
@@ -661,7 +666,7 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot)
     self:ChangeStateData(self:BuildAbilityListData())
 end
 
-function FrotaGameMode:SelectHero(ply, heroName)
+function FrotaGameMode:SelectHero(ply, heroName, dontChangeNow)
     -- Validate Data Hero (never trust the client)
     if not heroName then return end
     if not self.heroListEnabled[heroName] then return end
@@ -675,19 +680,21 @@ function FrotaGameMode:SelectHero(ply, heroName)
     -- Update build
     self.selectedBuilds[playerID].hero = heroName
 
-    -- Change hero
-    ply:ReplaceHeroWith(heroName, 0, 0)
+    if not dontChangeNow then
+        -- Change hero
+        ply:ReplaceHeroWith(heroName, 0, 0)
 
-    -- Make sure we have a hero
-    local hero = Players:GetSelectedHeroEntity(playerID)
-    if hero then
-        -- Check if the user is allowed to pick skills
-        if not self.pickMode.pickSkills then
-            -- Update build with our hero's skills
-            self:LoadBuildFromHero(hero)
-        else
-            -- Apply build
-            self:ApplyBuild(hero)
+        -- Make sure we have a hero
+        local hero = Players:GetSelectedHeroEntity(playerID)
+        if hero then
+            -- Check if the user is allowed to pick skills
+            if not self.pickMode.pickSkills then
+                -- Update build with our hero's skills
+                self:LoadBuildFromHero(hero)
+            else
+                -- Apply build
+                self:ApplyBuild(hero)
+            end
         end
     end
 
@@ -1175,7 +1182,7 @@ end
 -- Ends the current game, resetting to the voting stage
 function FrotaGameMode:EndGamemode()
     -- Cleanup
-    self:CleanupEverything()
+    self:CleanupEverything(true)
 
     -- Fire start event
     self:FireEvent('onGameEnd')
@@ -1185,9 +1192,6 @@ function FrotaGameMode:EndGamemode()
 end
 
 function FrotaGameMode:VoteForGamemode()
-    -- Freeze everyone
-    self:ResetAllHeroes()
-
     -- Reset ready status
     for i = 0,MAX_PLAYERS-1 do
         self.selectedBuilds[i].ready = false
@@ -1279,13 +1283,27 @@ function FrotaGameMode:LoadGamemode(pickMode, playMode)
     end
 end
 
-function FrotaGameMode:CleanupEverything()
+function FrotaGameMode:CleanupEverything(leaveHeroes)
     -- Remove all timers
     self.timers = {}
 
     -- Remove all NPCs
     for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
-        v:Remove()
+        -- Check if it's a h ero
+        if v:IsRealHero() then
+            -- Check if it has a player
+            local playerID = v:GetPlayerID()
+            local ply = Players:GetPlayer(playerID)
+            if ply then
+                -- Yes, replace this player's hero for axe
+                ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0)
+            else
+                -- Nope, remove it
+                v:Remove()
+            end
+        else
+            v:Remove()
+        end
     end
 
     -- Clean up everything on the ground;
@@ -1294,32 +1312,24 @@ function FrotaGameMode:CleanupEverything()
         UTIL_RemoveImmediate( item )
     end
 
-    -- Reset everyone's hero to Axe
-    for i=0,MAX_PLAYERS-1 do
-        -- Check if this player exists
-        if Players:IsValidPlayer(i) then
-            ply = Players:GetPlayer(i)
-            CreateHeroForPlayer('npc_dota_hero_axe', ply)
-        end
-    end
-
     -- Loop over every player
     for i=0,MAX_PLAYERS-1 do
         local ply = Players:GetPlayer(i)
 
         -- Check if they are in
         if ply then
-            -- Assign them a hero
-            self:FireEvent('assignHero', ply)
+            -- Check if we should touch heroes
+            if not leaveHeroes then
+                -- Assign them a hero
+                self:FireEvent('assignHero', ply)
+            end
+
+            -- Set buyback state
+            Players:SetBuybackCooldownTime(i, 0)
+            Players:SetBuybackGoldLimitTime(i, 0)
+            Players:ResetBuybackCostTime(i)
         end
-
-        -- Set buyback state
-        Players:SetBuybackCooldownTime(i, 0)
-        Players:SetBuybackGoldLimitTime(i, 0)
-        Players:ResetBuybackCostTime(i)
     end
-
-
 end
 
 function FrotaGameMode:StartGame()

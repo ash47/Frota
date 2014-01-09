@@ -244,9 +244,9 @@ RegisterGamemode('pureskill', {
 
         -- Apply the build
         frota:ApplyBuild(hero, {
-            [1] = 'magnataur_skewer',
-            [2] = 'mirana_arrow',
-            [3] = 'pudge_meat_hook',
+            [1] = 'pudge_meat_hook',
+            [2] = 'magnataur_skewer',
+            [3] = 'mirana_arrow',
             [4] = 'tusk_ice_shards'
         })
     end,
