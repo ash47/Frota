@@ -27,7 +27,7 @@
         - "PlayerID"        "short"
         - "itemname"        "string"
     - last_hit
-        - PlayerID"         "short"
+        - "PlayerID"         "short"
         - "EntKilled"       "short"
         - "FirstBlood"      "bool"
         - "HeroKill"        "bool"
@@ -43,6 +43,11 @@
         - "teamnumber"      "short"
     - dota_courier_lost
         - "teamnumber"      "short"
+    - entity_killed
+        - "entindex_killed"         "long"
+        - "entindex_attacker"       "long"
+        - "entindex_inflictor"      "long"
+        - "damagebits"              "long"
 ]]
 
 -- Table to store all the diffrent gamemodes

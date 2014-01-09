@@ -90,6 +90,11 @@ Mod events are all in the form of (frota, keys), you can find the arguments belo
   - "teamnumber"      "short"
  - dota_courier_lost
   - "teamnumber"      "short"
+ - entity_killed
+  - "entindex_killed"         "long"
+  - "entindex_attacker"       "long"
+  - "entindex_inflictor"      "long"
+  - "damagebits"              "long"
 
 ###Translations###
  - Please make a pull request if you want to update translations

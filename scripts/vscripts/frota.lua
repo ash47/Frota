@@ -387,6 +387,10 @@ function FrotaGameMode:AutoFireEvent(keys)
 end
 
 function FrotaGameMode:OnEntityKilled(keys)
+    -- Fire entity killed event
+    self:FireEvent('entity_killed', keys)
+
+    -- Proceed to do stuff
     local killedUnit = EntIndexToHScript( keys.entindex_killed )
     local killerEntity = nil
 
