@@ -74,7 +74,6 @@ function FrotaGameMode:_SetInitialValues()
     -- Voting thinking
     self.startedInitialVote = false
     self.thinkState = Dynamic_Wrap( FrotaGameMode, '_thinkState_Voting' )
-    self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.25)
 
     -- Stores the current skill list for each hero
     self.currentSkillList = {}
@@ -131,8 +130,6 @@ function FrotaGameMode:InitGameMode()
     self:ListenToEvent('dota_courier_respawned')
     self:ListenToEvent('dota_courier_lost')
 
-
-
     -- Load initital Values
     self:_SetInitialValues()
 
@@ -141,8 +138,9 @@ function FrotaGameMode:InitGameMode()
     -- userID map
     self.vUserIDMap = {}
 
-    -- Start processing timers
+    -- Start thinkers
     self._scriptBind:BeginThink('FrotaTimers', Dynamic_Wrap(FrotaGameMode, 'ThinkTimers'), 0.1)
+    self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.25)
 end
 
 function FrotaGameMode:RegisterCommands()
@@ -865,8 +863,6 @@ function FrotaGameMode:_RestartGame()
 
     -- Set initial Values again
     self:_SetInitialValues()
-
-
 end
 
 -- Deals with timers
