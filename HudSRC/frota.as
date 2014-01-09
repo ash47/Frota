@@ -118,8 +118,9 @@ package {
         public var lastStateData;
 
         // Update related
-        public var lastUpdate = 0;
-        public var lastUpdateCheck = 0;
+        public var lastUpdate:Number = 0;
+        public var lastUpdateCheck:Number = 0;
+        public var lastProcessed:Number = 0;
 
         // Picker screen stuff
         private var currentPickerTab = TAB_SKILL_PICKER;
@@ -180,6 +181,9 @@ package {
             // Give the new shop a graphic
             Globals.instance.LoadAbilityImage('antimage_spell_shield', newShop);*/
 
+            // Make the panel null
+            this.contentPanelHolder = null;
+
             // Hook game events
             this.gameAPI.SubscribeToGameEvent("hero_picker_hidden", this.requestCurrentState);
             this.gameAPI.SubscribeToGameEvent("afs_initial_state", this.receiveInitialState);
@@ -205,18 +209,10 @@ package {
             Globals.instance.GameInterface.AddMouseInputConsumer();
 
             // Update checker (the hud can be disabled, and miss events, this fixes that)
-            lastUpdateCheck = this.globals.Game.Time();
-            var timer:Timer = new Timer(1000);
-            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
-                // Check if too much time has passed
-                if(globals.Game.Time() - lastUpdateCheck > 2) {
-                    requestCurrentStateInsant();
-                }
-
-                // Update when we last checked for updates
-                lastUpdateCheck = globals.Game.Time();
-            });
-            timer.start();
+            this.lastUpdateCheck = this.globals.Game.Time()+5;
+            var updateTimer:Timer = new Timer(1000);
+            updateTimer.addEventListener(TimerEvent.TIMER, TimerCheckForUpdates, false, 0, true);
+            updateTimer.start();
 
 
             // Text input
@@ -229,6 +225,20 @@ package {
 
             a.addEventListener(FocusHandlerEvent.FOCUS_IN, inputBoxGainFocus, false, 0, true);
             a.addEventListener(FocusHandlerEvent.FOCUS_OUT, inputBoxLoseFocus, false, 0, true);*/
+        }
+
+        public function TimerCheckForUpdates(e:TimerEvent) {
+            if(stage) {
+                // Check if too much time has passed
+                if(globals.Game.Time() - lastUpdateCheck > 2) {
+                    requestCurrentStateInsant();
+                }
+
+                // Update when we last checked for updates
+                lastUpdateCheck = globals.Game.Time();
+            } else {
+                e.target.stop();
+            }
         }
 
         // Instantly ask for the current state
@@ -254,8 +264,10 @@ package {
             // Request the current game state (after a delay)
             var timer:Timer = new Timer(1000, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
-                // Ask for the current state
-                requestCurrentStateInsant();
+                if(stage) {
+                    // Ask for the current state
+                    requestCurrentStateInsant();
+                }
             });
             timer.start();
         }
@@ -370,6 +382,12 @@ package {
         }
 
         public function processState(args:Object) {
+            // Store the last update
+            lastUpdateCheck = globals.Game.Time();
+
+            if(globals.Game.Time() < lastProcessed) return;
+            lastProcessed = globals.Game.Time()+0.1;
+
             // Cleanup anything from old states
             cleanHud();
 
@@ -738,28 +756,28 @@ package {
 
         public function newPanel() : void {
             // Check if we already have a content panel
-            if(contentPanelHolder != null) {
+            if(this.contentPanelHolder != null) {
                 // Remove everything from the content panel
-                while (contentPanelHolder.source.numChildren > 0) {
-                    contentPanelHolder.source.removeChildAt(0);
+                while (this.contentPanelHolder.source.numChildren > 0) {
+                    this.contentPanelHolder.source.removeChildAt(0);
                 }
 
                 // Make it visible
-                contentPanelHolder.visible = true;
+                this.contentPanelHolder.visible = true;
             } else {
                 // Create new content panel
-                contentPanelHolder = new ScrollPane();
-                addChild(contentPanelHolder)
+                this.contentPanelHolder = new ScrollPane();
+                addChild(this.contentPanelHolder)
 
                 // Setup the panel where the icons will go
-                contentPanel = new MovieClip();
-                contentPanelHolder.source = contentPanel;
+                this.contentPanel = new MovieClip();
+                this.contentPanelHolder.source = this.contentPanel;
             }
 
             // Position and size the content panel
-            contentPanelHolder.x = 224;
-            contentPanelHolder.y = 64;
-            contentPanelHolder.setSize(maxStageWidth-sideTotalWidth-sidePaddingX-contentPanelHolder.x-24, maxStageHeight - iconHeight - bottomMargin - 120);
+            this.contentPanelHolder.x = 224;
+            this.contentPanelHolder.y = 64;
+            this.contentPanelHolder.setSize(maxStageWidth-sideTotalWidth-sidePaddingX-this.contentPanelHolder.x-24, maxStageHeight - iconHeight - bottomMargin - 120);
 
         }
 
@@ -899,8 +917,6 @@ package {
             if(pickerTabs.skillPickerTab != null) {
                 // Change directly to the tab
                 setPanelTab(pickerTabs.skillPickerTab);
-
-                trace("Clean swap! a");
             } else {
                 // Clean the hud
                 cleanHud();
@@ -918,8 +934,6 @@ package {
             if(pickerTabs.heroPickerTab != null) {
                 // Change directly to the tab
                 setPanelTab(pickerTabs.heroPickerTab);
-
-                trace("Clean swap! b");
             } else {
                 // Clean the hud
                 cleanHud();

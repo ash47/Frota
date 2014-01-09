@@ -141,6 +141,11 @@ function FrotaGameMode:InitGameMode()
     -- Start thinkers
     self._scriptBind:BeginThink('FrotaTimers', Dynamic_Wrap(FrotaGameMode, 'ThinkTimers'), 0.1)
     self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.25)
+
+    -- Precache everything
+    print('\n\nprecaching:')
+    PrecacheUnit('npc_precache_everything')
+    print('done!\n\n')
 end
 
 function FrotaGameMode:RegisterCommands()
@@ -220,11 +225,11 @@ function FrotaGameMode:RegisterCommands()
 
                 -- Check if we recently fired this
                 if (self.stateRequestData['all'] or Time()) > Time() then return end
-                self.stateRequestData['all'] = Time() + 3
+                self.stateRequestData['all'] = Time() + 2
 
                 -- Check if we recently fired this
                 if (self.stateRequestData[playerID] or Time()) > Time() then return end
-                self.stateRequestData[playerID] = Time() + 10
+                self.stateRequestData[playerID] = Time() + 5
 
                 local data = {}
 
@@ -326,7 +331,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
     local playerID = ply:GetPlayerID()
     local hero = Players:GetSelectedHeroEntity(playerID)
-    if hero then
+    if IsValidEntity(hero) then
         hero:Remove()
     end
 
@@ -342,7 +347,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
             -- Check if we are in a game
             if self.currentState == STATE_PLAYING then
                 -- Check if we need to assign a hero
-                if Players:GetSelectedHeroEntity(playerID) then
+                if IsValidEntity(Players:GetSelectedHeroEntity(playerID)) then
                     self:FireEvent('assignHero', ply)
                 end
             end
@@ -432,7 +437,7 @@ function FrotaGameMode:OnEntityKilled(keys)
                     -- Make sure we are still playing
                     if frota.currentState == STATE_PLAYING then
                         -- Validate the unit
-                        if killedUnit then
+                        if killedUnit and IsValidEntity(killedUnit) then
                             -- Respawn the dead guy
                             killedUnit:RespawnHero(false, false, false)
                         end
@@ -507,6 +512,7 @@ function FrotaGameMode:LoadAbilityList()
         if heroName ~= 'Version' and heroName ~= 'npc_dota_hero_base' and heroName ~= 'npc_dota_hero_abyssal_underlord' then
             -- Make sure the hero is enabled
             if values.Enabled == 1 then
+                -- Store this unit
                 table.insert(self.heroList, heroName)
                 self.heroListEnabled[heroName] = 1
             end
@@ -690,7 +696,7 @@ function FrotaGameMode:SelectHero(ply, heroName, dontChangeNow)
 
         -- Make sure we have a hero
         local hero = Players:GetSelectedHeroEntity(playerID)
-        if hero then
+        if IsValidEntity(hero) then
             -- Check if the user is allowed to pick skills
             if not self.pickMode.pickSkills then
                 -- Update build with our hero's skills
@@ -1321,7 +1327,7 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
         if ply then
             -- Check if we should touch heroes
             if not leaveHeroes then
-                if Players:GetSelectedHeroEntity(i) then
+                if IsValidEntity(Players:GetSelectedHeroEntity(i)) then
                     -- Assign them a hero
                     self:FireEvent('assignHero', ply)
                 end
@@ -1415,6 +1421,9 @@ function FrotaGameMode:PrecacheSkill(skillName)
     --[[PrecacheEntityFromTable({
         classname = skillName
     })]]
+
+    -- Don't precache
+    if 1 == 1 then return end
 
     local heroOwner = self:FindHeroOwner(skillName)
     --local unit = CreateUnitByName(heroOwner, Vec3(0,0,0), true, nil, nil, DOTA_TEAM_BADGUYS)
