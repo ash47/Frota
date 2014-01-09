@@ -1,7 +1,7 @@
 -- Syntax copied mostly from frostivus example
 
 -- Constants
-MAX_PLAYERS = 24
+MAX_PLAYERS = 10
 STARTING_GOLD = 625
 
 -- State control
