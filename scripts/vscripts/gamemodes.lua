@@ -56,7 +56,7 @@ gamemodes = gamemodes or {}
 -- Table to store acutal gamemodes
 gamemodes.g = gamemodes.g or {}
 
-local function RegisterGamemode(name, args)
+function RegisterGamemode(name, args)
     -- Store the gamemode
     gamemodes.g[name] = args
 end
@@ -227,32 +227,6 @@ RegisterGamemode('pudgewars', {
     }
 })
 
--- Tiny Wars
-RegisterGamemode('tinywars', {
-    -- Gamemode only has a gameplay component
-    sort = GAMEMODE_BOTH,
-
-    -- Function to give out heroes
-    assignHero = function(frota, ply)
-        ply:ReplaceHeroWith('npc_dota_hero_tiny', 100000, 32400)
-    end,
-
-    -- A list of options for fast gameplay stuff
-    options = {
-        -- Kills give team points
-        killsScore = true,
-
-        -- Score Limit
-        scoreLimit = 10,
-
-        -- Enable scores
-        useScores = true,
-
-        -- Respawn delay
-        respawnDelay = 3
-    }
-})
-
 --Mirana Wars or something like that
 RegisterGamemode('pureskill', {
     -- Gamemode only has a gameplay component
@@ -290,6 +264,7 @@ RegisterGamemode('pureskill', {
         respawnDelay = 3
     }
 })
+
 
 -- Not done yet
 --[[RegisterGamemode('sunstrikewars', {

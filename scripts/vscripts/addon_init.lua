@@ -13,4 +13,7 @@ require('util')
 require('frota')
 require('gamemodes')
 
+-- Include gamemodes
+require('gamemodes/tinywars')
+
 print("\n\nDone Loading!\n\n")
