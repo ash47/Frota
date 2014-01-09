@@ -188,7 +188,7 @@ RegisterGamemode('arena', {
 })
 
 -- A Pudge Wars Type Gamemode
-RegisterGamemode('pudgewars', {
+--[[RegisterGamemode('pudgewars', {
     -- Gamemode covers picking and playing
     sort = GAMEMODE_BOTH,
 
@@ -227,7 +227,7 @@ RegisterGamemode('pudgewars', {
         -- Respawn delay
         respawnDelay = 3
     }
-})
+})]]
 
 -- Mirana Wars or something like that
 RegisterGamemode('pureskill', {
@@ -241,6 +241,12 @@ RegisterGamemode('pureskill', {
 
         local playerID = ply:GetPlayerID()
         local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Precache skills
+        frota:PrecacheSkill('mirana_arrow')
+        frota:PrecacheSkill('magnataur_skewer')
+        frota:PrecacheSkill('tusk_ice_shards')
+        frota:PrecacheSkill('meat_hook')
 
         -- Apply the build
         frota:ApplyBuild(hero, {

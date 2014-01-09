@@ -726,9 +726,6 @@ function FrotaGameMode:ToggleReadyState(playerID)
     end
 
     if allReady then
-        -- Change to game time
-        print('GAME START NOW!')
-
         -- Start the game
         self:StartGame()
     else
@@ -1395,7 +1392,6 @@ function FrotaGameMode:BuildAbilityListData()
 
     -- Should we add skill picker?
     if self.pickMode.pickSkills then
-        print('b')
         data.s = {};
         for k,v in pairs(self.vAbList) do
             data.s[v.name] = {
