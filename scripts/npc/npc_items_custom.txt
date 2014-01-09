@@ -1,0 +1,503 @@
+"DOTAAbilities"
+{
+
+//=================================================================================================================
+	// Pudge Wars: Techies Explosive Barrel
+	//=================================================================================================================
+	"item_techies_explosive_barrel"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"242"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_mine"
+		"ItemKillable"					"0"
+
+		 // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+				
+		// Time
+        //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+        // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		"OnSpellStart"
+                {
+				
+						"SpawnUnit"
+						{
+								"UnitName"				"npc_dota_mine"
+								"Target" 				"POINT"
+								"UnitCount"				"1"	
+								"OnSpawn"
+								{
+									"ApplyModifier"
+									{
+										"Target"			"TARGET"
+										"ModifierName"		"modifier_invisible"
+									}
+									"ApplyModifier"
+									{
+										"Target"			"TARGET"
+										"ModifierName"		"modifier_mine_stunned"
+									}
+								
+								}
+						}
+						
+				
+						
+				}
+				
+		"Modifiers"
+		{
+			"modifier_mine_stunned"
+			{
+				"Hidden"		"1"
+			"States"
+				{
+					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	
+	
+	//=================================================================================================================
+	// Ricochet Turbine
+	//=================================================================================================================
+	"item_ricochet_turbine"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1013"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_ricochet_turbine"
+		"ItemKillable"					"0"
+
+		 // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+				
+		// Time
+        //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+        // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	}
+	
+	//=================================================================================================================
+	// Phantom Lance
+	//=================================================================================================================
+	"item_phantom_lance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"244"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_phantom_lance"
+		"ItemKillable"					"0"
+
+		 // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+				
+		// Time
+        //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+        // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	}
+	
+	//=================================================================================================================
+	// Naix Jaws
+	//=================================================================================================================
+	"item_naix_jaw"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"245"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_naix_jaw"
+		"ItemKillable"					"0"
+
+		 // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+				
+		// Time
+        //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+        // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	}
+	
+		//=================================================================================================================
+	// Earthshaker Totem
+	//=================================================================================================================
+	"item_earthshaker_totem"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"246"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_earthshaker_totem"
+		"ItemKillable"					"0"
+
+		 // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+				
+		// Time
+        //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+        // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		
+		
+		"OnSpellStart"
+                {
+				
+						"SpawnUnit"
+						{
+								"UnitName"				"npc_pudge_wars_barrier"
+								"Target" 				"POINT"
+								"UnitCount"				"1"	
+						
+						}
+						
+				
+						
+				}
+
+	}
+			//=================================================================================================================
+	// Barathrum Lantern
+	//=================================================================================================================
+	"item_barathrum_lantern"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"247"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_barathrum_lantern"
+		"ItemKillable"					"0"
+
+		 // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+				
+		// Time
+        //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+        // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	}
+	
+		//=================================================================================================================
+	// Lycan Paw
+	//=================================================================================================================
+	"item_lycan_paw"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"248"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_lycan_paw"
+		"ItemKillable"					"0"
+
+		 // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+				
+		// Time
+        //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+        // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	}
+	
+		//=================================================================================================================
+	// Strygwyr Claw
+	//=================================================================================================================
+	"item_strygwyr_claw"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"249"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_strygwyr_claw"
+		"ItemKillable"					"0"
+
+		 // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+				
+		// Time
+        //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+        // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	}
+	
+		
+	//=================================================================================================================
+	// Tiny Arm
+	//=================================================================================================================
+	"item_tiny_arm"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1014"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"tiny_toss"
+		"AbilityTextureName"			"item_tiny_arm"
+		
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"5107"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_RUNE_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1300"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"9"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120 120 120 120"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.25"	// generally used for damage only
+
+		
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"1.0 1.0 1.0 1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"grab_radius"			"250 250 250 250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"275 275 275 275"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_pct"		"20 20 20 20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"grow_bonus_damage_pct"		"35 50 65 80"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_range"		"1500"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"toss_damage"				"75 150 225 300"
+			}
+
+		}
+
+	}
+	
+	//=================================================================================================================
+	// Grappling Hook
+	//=================================================================================================================
+	"item_grappling_hook"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1015"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_grappling_hook"
+		"ItemKillable"					"0"
+
+		 // Casting
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityCastRange"       "1200"
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastAnimation"  "pudge_meat_hook"
+				"AbilityCastAnimation"  "pudge_meat_hook"
+				
+		// Time
+        //-------------------------------------------------------------------------------------------------------------
+                "AbilityCooldown"        "1"
+
+        // Cost
+                //-------------------------------------------------------------------------------------------------------------
+                "AbilityManaCost"        "0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"90"
+		"ItemShopTags"					"mine"
+		"ItemQuality"					"rare"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+	}
+	
+}
