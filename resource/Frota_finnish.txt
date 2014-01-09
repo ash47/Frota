@@ -36,7 +36,8 @@
                 // Sunstrike Wars
                 "afs_name_sunstrikewars"        "Sun Strike Sota"
                 "afs_des_sunstrikewars"         "Yksi syntyvistä pelaajista saa Sun Striken ja hänen on tapettava kaikki muut pelaajat sillä."
- 
+                
+                // Sunstrike Wars
                 "afs_name_pureskill"            "Täysin Taidolla"
                 "afs_des_pureskill"             "Pelaa Miranalla skewerillä, arrowilla, meat hookilla sekä ice shardilla."
                 
