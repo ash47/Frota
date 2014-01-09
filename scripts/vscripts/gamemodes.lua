@@ -41,7 +41,7 @@
         - "teamnumber"      "short"
     - dota_courier_respawned
         - "teamnumber"      "short"
-    - "dota_courier_lost"
+    - dota_courier_lost
         - "teamnumber"      "short"
 ]]
 

@@ -129,7 +129,7 @@ function FrotaGameMode:InitGameMode()
     self:ListenToEvent('dota_super_creep')
     self:ListenToEvent('dota_glyph_used')
     self:ListenToEvent('dota_courier_respawned')
-    self:ListenToEvent('"dota_courier_lost"')
+    self:ListenToEvent('dota_courier_lost')
 
 
 

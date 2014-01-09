@@ -82,6 +82,14 @@ Mod events are all in the form of (frota, keys), you can find the arguments belo
  - dota_item_picked_up
   - "itemname"        "string"
   - "PlayerID"        "short"
+ - dota_super_creep
+  - "teamnumber"      "short"
+ - dota_glyph_used
+  - "teamnumber"      "short"
+ - dota_courier_respawned
+  - "teamnumber"      "short"
+ - dota_courier_lost
+  - "teamnumber"      "short"
 
 ###Translations###
  - Please make a pull request if you want to update translations
