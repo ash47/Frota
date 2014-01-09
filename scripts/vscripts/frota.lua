@@ -375,20 +375,23 @@ function FrotaGameMode:OnEntityKilled(keys)
         -- Fire onHeroKilled event
         self:FireEvent('onHeroKilled', killedUnit, killerEntity)
 
-        -- Respawn the dead guy after a delay
-        self:CreateTimer('respawn_hero_'..killedUnit:GetPlayerID(), {
-            endTime = Time() + (self.gamemodeOptions.respawnDelay or 1),
-            callback = function(frota, args)
-                -- Make sure we are still playing
-                if frota.currentState == STATE_PLAYING then
-                    -- Validate the unit
-                    if killedUnit then
-                        -- Respawn the dead guy
-                        killedUnit:RespawnHero(false, false, false)
+        -- Only respawn if delay > 0
+        if (self.gamemodeOptions.respawnDelay or 0) > 0 then
+            -- Respawn the dead guy after a delay
+            self:CreateTimer('respawn_hero_'..killedUnit:GetPlayerID(), {
+                endTime = Time() + (self.gamemodeOptions.respawnDelay),
+                callback = function(frota, args)
+                    -- Make sure we are still playing
+                    if frota.currentState == STATE_PLAYING then
+                        -- Validate the unit
+                        if killedUnit then
+                            -- Respawn the dead guy
+                            killedUnit:RespawnHero(false, false, false)
+                        end
                     end
                 end
-            end
-        })
+            })
+        end
 
         -- Check if point score
         if not self.gamemodeOptions.killsScore then return end
