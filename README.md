@@ -53,6 +53,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - **onHeroKilled(frota, killedUnit, killerEntity)**: A player was killed by something (note: killerEntity could be null)
  - **onThink(frota, dt)**: Runs ~every 0.1 seconds, dt is the time since the last think, should be around 0.1 of a second
  - **onGameEnd(frota)**: Runs when the game mode finishes, you can do cleanup here
+ - **CleanupPlayer(frota, leavingPly)**: A player is about to leave and be cleaned up
+ - **NewPlayer(frota, ply)**: A new player has connected, and been assigned their hero
 
 ###Mod Events###
 Mod events are all in the form of (frota, keys), you can find the arguments below via keys: keys.PlayerID

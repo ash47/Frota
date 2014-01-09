@@ -340,6 +340,9 @@ function FrotaGameMode:AutoAssignPlayer(keys)
                 -- Check if we need to assign a hero
                 self:FireEvent('assignHero', ply)
             end
+
+            -- Fire new player event
+            self:FireEvent('NewPlayer', ply)
         end
     })
 end
@@ -349,6 +352,9 @@ function FrotaGameMode:CleanupPlayer(keys)
     -- Grab and validate the leaver
     local leavingPly = self.vUserIDMap[keys.userid];
     if not leavingPly then return end
+
+    -- Fire event
+    self:FireEvent('CleanupPlayer', leavingPly)
 
     -- Remove all Heroes owned by this player
     for k,v in pairs(Entities:FindAllByClassname('npc_dota_hero_*')) do

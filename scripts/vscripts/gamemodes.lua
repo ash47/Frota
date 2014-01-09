@@ -7,6 +7,8 @@
     - onHeroKilled(frota, killedUnit, killerEntity): A player was killed by something (note: killerEntity could be null)
     - onThink(frota, dt): Runs ~every 0.1 seconds, dt is the time since the last think, should be around 0.1 of a second
     - onGameEnd(frota): Runs when the game mode finishes, you can do cleanup here
+    - CleanupPlayer(frota, leavingPly): A player is about to leave and be cleaned up
+    - NewPlayer(frota, ply): A new player has connected, and been assigned their hero
 
     MOD EVENTS -- Mod events are all in the form of (frota, keys), you can find the arguments below via keys: keys.PlayerID
 
@@ -227,7 +229,7 @@ RegisterGamemode('pudgewars', {
     }
 })
 
---Mirana Wars or something like that
+-- Mirana Wars or something like that
 RegisterGamemode('pureskill', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_BOTH,
@@ -297,47 +299,4 @@ RegisterGamemode('pureskill', {
         -- Respawn delay
         respawnDelay = 3
     }
-})]]
-
---[[RegisterGamemode('oddball', {
-    -- Gamemode only has a gameplay component
-    sort = GAMEMODE_BOTH,
-        --gemisgive=0
-    -- Function to give out heroes
-    assignHero = function(frota, ply)
-        -- Grab hero
-        local playerID = ply:GetPlayerID()
-        local hero = Players:GetSelectedHeroEntity(playerID)
-
-        -- Give boots
-        hero:AddItem(CreateItem('item_power_treads', hero, hero))
-    end,
-
-    -- A list of options for fast gameplay stuff
-    options = {
-        -- Kills give team points
-        killsScore = true,
-
-        -- Score Limit
-        scoreLimit = 1020,
-
-        -- Enable scores
-        useScores = true,
-
-        -- Respawn delay
-        respawnDelay = 3
-    },
-
---onThink(frota, dt)=function(ply, frota)
-
-        onGameStart = function(frota)
-            frota:CreateTimer('oddball_create_timer', {
-                endTime = Time() + 10,  -- Run 10 seconds from now
-                callback = function(frota, args)
-                    print('code was run!')
-                end
-            })
-        end
-
-
 })]]
