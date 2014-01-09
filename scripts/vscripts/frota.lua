@@ -1132,8 +1132,8 @@ end
 
 -- Ends the current game, resetting to the voting stage
 function FrotaGameMode:EndGamemode()
-    -- Remove all timers
-    self.timers = {}
+    -- Cleanup
+    self:CleanupEverything()
 
     -- Fire start event
     self:FireEvent('onGameEnd')
@@ -1237,11 +1237,9 @@ function FrotaGameMode:LoadGamemode(pickMode, playMode)
     end
 end
 
-function FrotaGameMode:StartGame()
-    -- Cleanup time
-
-    -- Remove picking timer
-    self:RemoveTimer('pickTimer')
+function FrotaGameMode:CleanupEverything()
+    -- Remove all timers
+    self.timers = {}
 
     -- Remove all NPCs
     for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
@@ -1272,7 +1270,19 @@ function FrotaGameMode:StartGame()
             -- Assign them a hero
             self:FireEvent('assignHero', ply)
         end
+
+        -- Set buyback state
+        Players:SetBuybackCooldownTime(i, 0)
+        Players:SetBuybackGoldLimitTime(i, 0)
+        Players:ResetBuybackCostTime(i)
     end
+
+
+end
+
+function FrotaGameMode:StartGame()
+    -- Cleanup time
+    self:CleanupEverything()
 
     -- Store options
     self.gamemodeOptions = (self.playMode and self.playMode.options) or (self.pickMode and self.pickMode.options) or {}

@@ -3,7 +3,8 @@
     - onGameStart(frota): When the game actually starts
     - assignHero(frota, ply): A player needs a hero to be assigned
     - onHeroKilled(frota, killedUnit, killerEntity): A player was killed by something (note: killerEntity could be null)
-    - onThink(frota, dt) -- dt is the time since the last think, should be around 0.1 of a second
+    - onThink(frota, dt): Runs ~every 0.1 seconds, dt is the time since the last think, should be around 0.1 of a second
+    - onGameEnd(frota): Runs when the game mode finishes, you can do cleanup here
 ]]
 
 -- Table to store all the diffrent gamemodes
