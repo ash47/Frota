@@ -211,48 +211,50 @@ function FrotaGameMode:RegisterCommands()
         -- Make sure a version was parsed
         version = version or 'Unknown'
 
-        -- Load this client's version
-        if version ~= self.frotaVersion then
-            local cmdPlayer = Convars:GetCommandClient()
-            if cmdPlayer then
-                local playerID = cmdPlayer:GetPlayerID()
-                if playerID ~= nil and playerID ~= -1 then
+        local cmdPlayer = Convars:GetCommandClient()
+        if cmdPlayer then
+            local playerID = cmdPlayer:GetPlayerID()
+            if playerID ~= nil and playerID ~= -1 then
+                -- Make sure we have a request table
+                self.stateRequestData = self.stateRequestData or {}
+
+                -- Check if we recently fired this
+                if (self.stateRequestData['all'] or Time()) > Time() then return end
+                self.stateRequestData['all'] = Time() + 3
+
+                -- Check if we recently fired this
+                if (self.stateRequestData[playerID] or Time()) > Time() then return end
+                self.stateRequestData[playerID] = Time() + 10
+
+                local data = {}
+
+                for i=0, MAX_PLAYERS-1 do
+                    local steamID = Players:GetSteamAccountID(i)
+
+                    if steamID > 0 then
+                        data[i] = steamID
+                    end
+                end
+
+                -- Fire steamids
+                FireGameEvent('afs_steam_ids', {
+                    d = JSON:encode(data)
+                })
+
+                -- Send out state info
+                FireGameEvent('afs_initial_state', {
+                    nState = self.currentState,
+                    d = self:GetStateData()
+                })
+
+                -- Validate version
+                if version ~= self.frotaVersion and (Time() > self.stateRequestData['v'..playerID] or 0) then
+                    self.stateRequestData[v..playerID] = Time() + 60
                     Say(cmdPlayer, 'I have frota version '..version..' and the server has version '..self.frotaVersion, false)
                 end
             end
         end
-
-        local data = {}
-
-        for i=0, MAX_PLAYERS-1 do
-            local steamID = Players:GetSteamAccountID(i)
-
-            if steamID > 0 then
-                data[i] = steamID
-            end
-        end
-
-        -- Check if we recently fired this
-        if (self.lastRequestFire or Time()) > Time() then return end
-        self.lastRequestFire = Time() + 1
-
-        -- Fire steamids
-        FireGameEvent('afs_steam_ids', {
-            d = JSON:encode(data)
-        })
-
-        -- Send out state info
-        FireGameEvent('afs_initial_state', {
-            nState = self.currentState,
-            d = self:GetStateData()
-        })
     end, 'Client requested the current state', 0)
-
-    -- When a user toggles ready state
-    --[[Convars:RegisterCommand( "afs_force_start", function(name, skillName, slotNumber)
-        -- Start the game
-        self:StartGame()
-    end, "Start the game", 0 )]]
 end
 
 function FrotaGameMode:CreateTimer(name, args)
@@ -340,7 +342,9 @@ function FrotaGameMode:AutoAssignPlayer(keys)
             -- Check if we are in a game
             if self.currentState == STATE_PLAYING then
                 -- Check if we need to assign a hero
-                self:FireEvent('assignHero', ply)
+                if Players:GetSelectedHeroEntity(playerID) then
+                    self:FireEvent('assignHero', ply)
+                end
             end
 
             -- Fire new player event
@@ -1317,8 +1321,10 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
         if ply then
             -- Check if we should touch heroes
             if not leaveHeroes then
-                -- Assign them a hero
-                self:FireEvent('assignHero', ply)
+                if Players:GetSelectedHeroEntity(i) then
+                    -- Assign them a hero
+                    self:FireEvent('assignHero', ply)
+                end
             end
 
             -- Set buyback state
