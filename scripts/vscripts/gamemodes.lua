@@ -110,7 +110,7 @@ RegisterGamemode('allpick', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        ply:ReplaceHeroWith(build.hero, 100000, 32400)
+        ply:ReplaceHeroWith(build.hero, 2500, 2600)
     end,
 })
 
@@ -129,7 +129,7 @@ RegisterGamemode('lod', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        ply:ReplaceHeroWith(build.hero, 100000, 32400)
+        ply:ReplaceHeroWith(build.hero, 2500, 2600)
 
         local hero = Players:GetSelectedHeroEntity(playerID)
 
@@ -149,7 +149,7 @@ RegisterGamemode('romg', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        ply:ReplaceHeroWith(frota:ChooseRandomHero(), 100000, 32400)
+        ply:ReplaceHeroWith(frota:ChooseRandomHero(), 2500, 2600)
 
         local hero = Players:GetSelectedHeroEntity(playerID)
 
@@ -197,7 +197,7 @@ RegisterGamemode('pudgewars', {
         local hookSkill = 'pudge_meat_hook'
 
         -- Change heroes
-        ply:ReplaceHeroWith('npc_dota_hero_pudge', 100000, 32400)
+        ply:ReplaceHeroWith('npc_dota_hero_pudge', 2500, 2600)
 
         local playerID = ply:GetPlayerID()
         local hero = Players:GetSelectedHeroEntity(playerID)
@@ -237,7 +237,7 @@ RegisterGamemode('pureskill', {
     -- Function to give out heroes
     assignHero = function(frota, ply)
         -- Change heroes
-        ply:ReplaceHeroWith('npc_dota_hero_pudge', 100000, 32400)
+        ply:ReplaceHeroWith('npc_dota_hero_pudge', 2500, 2600)
 
         local playerID = ply:GetPlayerID()
         local hero = Players:GetSelectedHeroEntity(playerID)
@@ -282,7 +282,7 @@ RegisterGamemode('pureskill', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        ply:ReplaceHeroWith(build.hero, 100000, 32400)
+        ply:ReplaceHeroWith(build.hero, 2500, 2600)
     end,
 
     -- A list of options for fast gameplay stuff

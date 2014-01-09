@@ -5,7 +5,7 @@ RegisterGamemode('tinywars', {
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
-        ply:ReplaceHeroWith('npc_dota_hero_tiny', 100000, 32400)
+        ply:ReplaceHeroWith('npc_dota_hero_tiny', 2500, 2600)
     end,
 
     -- A list of options for fast gameplay stuff
