@@ -233,7 +233,7 @@ function FrotaGameMode:RegisterCommands()
         end
 
         -- Check if we recently fired this
-        if self.lastRequestFire > Time() then return end
+        if (self.lastRequestFire or Time()) > Time() then return end
         self.lastRequestFire = Time() + 1
 
         -- Fire steamids
