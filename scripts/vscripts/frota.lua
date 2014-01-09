@@ -160,7 +160,13 @@ function FrotaGameMode:RegisterCommands()
                 return
             end
         end
-    end, 'A user tried to put a skill into a slot', 0 )
+    end, 'A user tried to put a skill into a slot', 0)
+
+    -- End Gamemode
+    Convars:RegisterCommand('endgamemode', function(name, skillName, slotNumber)
+        -- End the current gamemode
+        self:EndGamemode()
+    end, 'Ends the current game.', FCVAR_CHEAT)
 
     -- When a user tries to change heroes
     Convars:RegisterCommand('afs_hero', function(name, heroName)
