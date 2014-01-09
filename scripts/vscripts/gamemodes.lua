@@ -59,7 +59,7 @@ RegisterGamemode('allpick', {
     pickHero = true,
 
     -- Function to give out heroes
-    assignHero = function(ply, frota)
+    assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
         local build = frota.selectedBuilds[playerID]
 
@@ -163,6 +163,8 @@ RegisterGamemode('pudgewars', {
             [3] = 'magnataur_skewer',
             [4] = 'tusk_ice_shards'
         })
+
+        hero:__KeyValueFromInt('AbilityLayout', 6)
     end,
 
     -- A list of options for fast gameplay stuff
@@ -276,4 +278,47 @@ RegisterGamemode('pureskill', {
         -- Respawn delay
         respawnDelay = 3
     }
+})]]
+
+--[[RegisterGamemode('oddball', {
+    -- Gamemode only has a gameplay component
+    sort = GAMEMODE_BOTH,
+        --gemisgive=0
+    -- Function to give out heroes
+    assignHero = function(frota, ply)
+        -- Grab hero
+        local playerID = ply:GetPlayerID()
+        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Give boots
+        hero:AddItem(CreateItem('item_power_treads', hero, hero))
+    end,
+
+    -- A list of options for fast gameplay stuff
+    options = {
+        -- Kills give team points
+        killsScore = true,
+
+        -- Score Limit
+        scoreLimit = 1020,
+
+        -- Enable scores
+        useScores = true,
+
+        -- Respawn delay
+        respawnDelay = 3
+    },
+
+--onThink(frota, dt)=function(ply, frota)
+
+        onGameStart = function(frota)
+            frota:CreateTimer('oddball_create_timer', {
+                endTime = Time() + 10,  -- Run 10 seconds from now
+                callback = function(frota, args)
+                    print('code was run!')
+                end
+            })
+        end
+
+
 })]]
