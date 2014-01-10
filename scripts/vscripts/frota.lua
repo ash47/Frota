@@ -20,7 +20,10 @@ GAMEMODE_ADDON = 4  -- An addon such as Lucky Items or CSP
 
 -- Vote types
 VOTE_SORT_SINGLE = 0    -- A person can vote for only one option
-VOTE_SORT_MULTI = 1     -- A person votes yes or no for many options
+VOTE_SORT_OPTIONS = 1   -- A person votes yes or no for many options
+
+VOTE_SORT_YESNO = 11    -- A yes/no option
+VOTE_SORT_RANGE = 12    -- A range option
 
 -- Amount of time to pick skills
 PICKING_TIME = 60 * 2   -- 2 minutes tops
@@ -964,13 +967,39 @@ function FrotaGameMode:CreateVote(args)
         onFinish = args.onFinish
     }
 
+    local totalChoices = 0
+
     -- Store vote choices, register handles
     for k, v in pairs(args.options) do
+        -- Increase the total number of choices
+        totalChoices = totalChoices + 1
+
+        -- Store this vote
         self.currentVote.options[k] = {
             votes = {},
             des = v,
             count = 0
         }
+    end
+
+    -- Check if this is a single vote
+    if args.sort == VOTE_SORT_SINGLE then
+        -- Check if there is only one choice (or none)
+        if totalChoices <= 1 then
+            local winners = {}
+            for k,v in pairs(self.currentVote.options) do
+                table.insert(winners, k)
+            end
+
+            -- Remove the current vote
+            self.currentVote = nil
+
+            -- Run the callback
+            args.onFinish(winners)
+
+            -- Done
+            return
+        end
     end
 
     -- Create a timer

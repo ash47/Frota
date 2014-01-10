@@ -184,6 +184,15 @@ RegisterGamemode('arena', {
 
         -- Respawn delay
         respawnDelay = 3
+    },
+
+    voteOptions = {
+        scoreLimit = {
+            sort = VOTE_SORT_RANGE,
+            min = 5,
+            max = 25,
+            def = 10
+        }
     }
 })
 
