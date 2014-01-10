@@ -1,6 +1,7 @@
 package {
     import flash.display.*;
     import flash.events.*;
+    import fl.events.SliderEvent;
     import fl.containers.ScrollPane;
     import fl.controls.ScrollPolicy;
     import fl.controls.Button;
@@ -95,6 +96,13 @@ package {
         // This is for toggling input on text fields
         private var bGotInput = false;
 
+        // Vote types
+        public static var VOTE_SORT_SINGLE = 0;
+        public static var VOTE_SORT_OPTIONS = 1;
+
+        public static var VOTE_SORT_YESNO = 11;
+        public static var VOTE_SORT_RANGE = 12;
+
         // This will contain movieclips and stuff that needs to be cleaned up
         private var stateCleanup = new Array(); // Generic stuff that can be removed
         private var stateCleanupSpecial = {};   // Specific things that can be removed
@@ -129,7 +137,9 @@ package {
         // Search related
         private var lastSearchTerm = "";
 
-        public function frota() {}
+        public function frota() {
+
+        }
 
         public function onLoaded() : void {
             // Store shortcut functions
@@ -819,6 +829,16 @@ package {
             this.gameAPI.SendServerCommand("afs_vote \""+vote.optionName+"\"");
         }
 
+        public function votePressedYes(e:Event) {
+            var vote = e.currentTarget.parent;
+            this.gameAPI.SendServerCommand("afs_vote \""+vote.optionName+"\" \"1\"");
+        }
+
+        public function votePressedNo(e:Event) {
+            var vote = e.currentTarget.parent;
+            this.gameAPI.SendServerCommand("afs_vote \""+vote.optionName+"\" \"0\"");
+        }
+
         public function skillClicked(e:Event) {
             if(selectedSkill != null) {
                 removeChild(selectedSkill);
@@ -1322,6 +1342,8 @@ package {
         }
 
         public function BuildVoteScreen(data) {
+            var name:String, vote, voteInfo;
+
             // Create a new panel for the skills
             newPanel();
 
@@ -1334,28 +1356,87 @@ package {
             // This will store all the vote panels
             voteHolder = {};
 
-            // Fill it with vote options
-            for(var name:String in data.options) {
-                var voteInfo = data.options[name];
+            if(data.sort == VOTE_SORT_SINGLE) {
+                // Fill it with vote options
+                for(name in data.options) {
+                    voteInfo = data.options[name];
 
-                // Create vote panel
-                var vote = new VoteButton(name, voteInfo.des, voteInfo.count);
-                addPanelChild(vote);
-                vote.x = xx;
-                vote.y = yy;
+                    // Create vote panel
+                    vote = new VoteButton(name, voteInfo.des, voteInfo.count);
+                    addPanelChild(vote);
+                    vote.x = xx;
+                    vote.y = yy;
 
-                // Listen to button press
-                vote.Button.addEventListener(MouseEvent.CLICK, this.votePressed, false, 0, true);
+                    // Listen to button press
+                    vote.Button.addEventListener(MouseEvent.CLICK, this.votePressed, false, 0, true);
 
-                // Store this panel
-                voteHolder[name] = vote;
+                    // Store this panel
+                    voteHolder[name] = vote;
 
-                // Move the next panel down
-                yy = yy + voteHeight + padding;
+                    // Move the next panel down
+                    yy = yy + voteHeight + padding;
+                }
+            } else if(data.sort == VOTE_SORT_OPTIONS) {
+                // Fill it with vote options
+                for(name in data.options) {
+                    voteInfo = data.options[name];
+
+                    if(voteInfo.o.s == VOTE_SORT_YESNO) {
+                        // Create vote panel
+                        vote = new VoteButtonYesNo(name, voteInfo.o.d, voteInfo.count);
+                        addPanelChild(vote);
+                        vote.x = xx;
+                        vote.y = yy;
+
+                        // Listen to button press
+                        vote.ButtonYes.addEventListener(MouseEvent.CLICK, this.votePressedYes, false, 0, true);
+                        vote.ButtonNo.addEventListener(MouseEvent.CLICK, this.votePressedNo, false, 0, true);
+
+                        // Store this panel
+                        voteHolder[name] = vote;
+                    } else if(voteInfo.o.s == VOTE_SORT_RANGE) {
+                        // Create vote panel
+                        vote = new VoteButtonSlider(name, voteInfo.o.d, voteInfo.count, voteInfo.o.min, voteInfo.o.max, voteInfo.o.tick, voteInfo.o.step, voteInfo.o.def);
+                        addPanelChild(vote);
+                        vote.x = xx;
+                        vote.y = yy;
+
+                        // Listen to button press
+                        vote.Slider.addEventListener(SliderEvent.THUMB_RELEASE, this.voteSliderReleased, false, 0, true);
+                        vote.Stepper.addEventListener(Event.CHANGE, this.voteStepperChanged, false, 0, true);
+
+                        // Store this panel
+                        voteHolder[name] = vote;
+                    }
+
+
+                    // Move the next panel down
+                    yy = yy + voteHeight + padding;
+                }
             }
 
             // Update the scrollbar
             updatePanel();
+        }
+
+        public function voteSliderReleased(e:SliderEvent) {
+            this.updateVoteSliderValue(e.currentTarget.parent);
+        }
+
+        public function voteStepperChanged(e:Event) {
+            this.updateVoteSliderValue(e.target.parent);
+        }
+
+        public function updateVoteSliderValue(vote) {
+            // Grab the most up to date value
+            var v = vote.Slider.value;
+
+            // Check if the value even changed
+            if(v == vote.lastValue) return;
+            vote.lastValue = v;
+
+            // Tell the server
+            this.gameAPI.SendServerCommand("afs_vote \""+vote.optionName+"\" \""+v+"\"");
         }
 
         // Makes this movieclip draggable

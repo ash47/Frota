@@ -91,6 +91,20 @@ function GetPlayingGamemodes()
     return modes
 end
 
+-- Gets all the addons
+function GetAddonGamemodes()
+    local modes = {}
+
+    -- Build a list of picking gamemodes
+    for k,v in pairs(gamemodes.g) do
+        if v.sort == GAMEMODE_ADDON then
+            table.insert(modes, k)
+        end
+    end
+
+    return modes
+end
+
 -- Gets the table with info on a gamemode
 function GetGamemode(name)
     return gamemodes.g[name]
@@ -176,9 +190,6 @@ RegisterGamemode('arena', {
         -- Kills give team points
         killsScore = true,
 
-        -- Score Limit
-        scoreLimit = 10,
-
         -- Enable scores
         useScores = true,
 
@@ -187,13 +198,36 @@ RegisterGamemode('arena', {
     },
 
     voteOptions = {
+        -- Score limit vote
         scoreLimit = {
-            sort = VOTE_SORT_RANGE,
+            -- Range based
+            s = VOTE_SORT_RANGE,
+
+            -- Minimal possible value
             min = 5,
+
+            -- Maximal possible value
             max = 25,
-            def = 10
+
+            -- Default vaule (if no one votes)
+            def = 10,
+
+            -- Slider tick interval
+            tick = 1,
+
+            -- Slider step interval
+            step = 1
         }
-    }
+    },
+
+    onGameStart = function(frota)
+        -- Grab options
+        local options = frota:GetOptions()
+
+        print('score limit: '..options.scoreLimit)
+        -- Set the score limit
+        frota:SetScoreLimit(options.scoreLimit)
+    end
 })
 
 -- A Pudge Wars Type Gamemode
@@ -282,6 +316,42 @@ RegisterGamemode('pureskill', {
     }
 })
 
+-- Dev Plugins
+--[[RegisterGamemode('test1', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_ADDON,
+
+    voteOptions = {
+        -- Score limit vote
+        someOption = {
+            -- Range based
+            s = VOTE_SORT_RANGE,
+
+            -- Minimal possible value
+            min = 50,
+
+            -- Maximal possible value
+            max = 250,
+
+            -- Default vaule (if no one votes)
+            def = 90,
+
+            -- Slider tick interval
+            tick = 1,
+
+            -- Slider step interval
+            step = 1
+        }
+    }
+})
+RegisterGamemode('test2', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_ADDON,
+
+    onGameStart = function(frota)
+        print('Game started, called via test2!')
+    end
+})]]
 
 -- Not done yet
 --[[RegisterGamemode('sunstrikewars', {

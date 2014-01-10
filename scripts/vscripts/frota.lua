@@ -46,56 +46,6 @@ function FrotaGameMode:new (o)
     return o
 end
 
-function FrotaGameMode:ResetBuilds()
-    -- Store the default axe build for each player
-    self.selectedBuilds = {}
-    for i = 0,MAX_PLAYERS-1 do
-        self.selectedBuilds[i] = {
-            hero = 'npc_dota_hero_axe',
-            skills = {
-                [1] = 'axe_berserkers_call',
-                [2] = 'axe_battle_hunger',
-                [3] = 'axe_counter_helix',
-                [4] = 'axe_culling_blade'
-            },
-            ready = false
-        }
-    end
-end
-
-function FrotaGameMode:_SetInitialValues()
-    -- Change random seed
-    local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
-    math.randomseed(tonumber(timeTxt))
-
-    -- Load ability List
-    self:LoadAbilityList()
-
-    -- Timers
-    self.timers = {}
-
-    -- Voting thinking
-    self.startedInitialVote = false
-    self.thinkState = Dynamic_Wrap( FrotaGameMode, '_thinkState_Voting' )
-
-    -- Stores the current skill list for each hero
-    self.currentSkillList = {}
-
-    -- Reset Builds
-    self:ResetBuilds()
-
-    -- Options
-    self.gamemodeOptions = {}
-
-    -- Scores
-    self.scoreDire = 0
-    self.scoreRadiant = 0
-
-    -- The state of the gane
-    self.currentState = STATE_INIT;
-    self:ChangeStateData({});
-end
-
 function FrotaGameMode:InitGameMode()
     -- Load version
     self.frotaVersion = LoadKeyValues("scripts/version.txt").version
@@ -148,7 +98,40 @@ function FrotaGameMode:InitGameMode()
     -- Precache everything
     print('\n\nprecaching:')
     PrecacheUnit('npc_precache_everything')
-    print('done!\n\n')
+    print('done precaching!\n\n')
+end
+
+function FrotaGameMode:_SetInitialValues()
+    -- Change random seed
+    local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
+    math.randomseed(tonumber(timeTxt))
+
+    -- Load ability List
+    self:LoadAbilityList()
+
+    -- Timers
+    self.timers = {}
+
+    -- Voting thinking
+    self.startedInitialVote = false
+    self.thinkState = Dynamic_Wrap( FrotaGameMode, '_thinkState_Voting' )
+
+    -- Stores the current skill list for each hero
+    self.currentSkillList = {}
+
+    -- Reset Builds
+    self:ResetBuilds()
+
+    -- Options
+    self.gamemodeOptions = {}
+
+    -- Scores
+    self.scoreDire = 0
+    self.scoreRadiant = 0
+
+    -- The state of the gane
+    self.currentState = STATE_INIT;
+    self:ChangeStateData({});
 end
 
 function FrotaGameMode:RegisterCommands()
@@ -263,6 +246,23 @@ function FrotaGameMode:RegisterCommands()
             end
         end
     end, 'Client requested the current state', 0)
+end
+
+function FrotaGameMode:ResetBuilds()
+    -- Store the default axe build for each player
+    self.selectedBuilds = {}
+    for i = 0,MAX_PLAYERS-1 do
+        self.selectedBuilds[i] = {
+            hero = 'npc_dota_hero_axe',
+            skills = {
+                [1] = 'axe_berserkers_call',
+                [2] = 'axe_battle_hunger',
+                [3] = 'axe_counter_helix',
+                [4] = 'axe_culling_blade'
+            },
+            ready = false
+        }
+    end
 end
 
 function FrotaGameMode:CreateTimer(name, args)
@@ -967,23 +967,22 @@ function FrotaGameMode:CreateVote(args)
         onFinish = args.onFinish
     }
 
-    local totalChoices = 0
-
-    -- Store vote choices, register handles
-    for k, v in pairs(args.options) do
-        -- Increase the total number of choices
-        totalChoices = totalChoices + 1
-
-        -- Store this vote
-        self.currentVote.options[k] = {
-            votes = {},
-            des = v,
-            count = 0
-        }
-    end
-
-    -- Check if this is a single vote
     if args.sort == VOTE_SORT_SINGLE then
+        local totalChoices = 0
+
+        -- Store vote choices, register handles
+        for k, v in pairs(args.options) do
+            -- Increase the total number of choices
+            totalChoices = totalChoices + 1
+
+            -- Store this vote
+            self.currentVote.options[k] = {
+                votes = {},
+                des = v,
+                count = 0
+            }
+        end
+
         -- Check if there is only one choice (or none)
         if totalChoices <= 1 then
             local winners = {}
@@ -1000,6 +999,42 @@ function FrotaGameMode:CreateVote(args)
             -- Done
             return
         end
+    elseif args.sort == VOTE_SORT_OPTIONS then
+        local totalChoices = 0
+
+        -- Store vote choices, register handles
+        for k, v in pairs(args.options) do
+            -- Increase the number of choices
+            totalChoices = totalChoices+1
+
+            -- Store this vote
+            self.currentVote.options[k] = {
+                votes = {},
+                o = v,
+                count = 0
+            }
+
+            -- Change count if this is a ranged based vote
+            if v.s == VOTE_SORT_RANGE then
+                -- Set the count to be the default value
+                self.currentVote.options[k].count = v.def
+            end
+        end
+
+        -- Check if there is no options
+        if totalChoices <= 0 then
+            -- Remove the current vote
+            self.currentVote = nil
+
+            -- Run the callback
+            args.onFinish({})
+
+            -- Done
+            return
+        end
+    else
+        print('\nINVALID VOTE CREATED!\n')
+        return
     end
 
     -- Create a timer
@@ -1025,9 +1060,30 @@ function FrotaGameMode:CreateVote(args)
                             table.insert(winners, k)
                         end
                     end
+                elseif cv.sort == VOTE_SORT_OPTIONS then
+                    for k,v in pairs(cv.options) do
+                        -- Check what sort this vote option is
+                        if v.o.s == VOTE_SORT_YESNO then
+                            -- Check the vote count
+                            if v.count == 0 then
+                                -- Draw, give the default
+                                winners[k] = v.o.def
+                            elseif v.count > 0 then
+                                -- Majority votes yes
+                                winners[k] = true
+                            else
+                                -- Majority votes no
+                                winners[k] = false
+                            end
+                        elseif v.o.s == VOTE_SORT_RANGE then
+                            -- The median is stored as the count
+                            winners[k] = v.count
+                        end
+                    end
                 else
-                    -- implement this
-
+                    print('INVALID VOTE ENDED!')
+                    frota.currentVote = nil
+                    return
                 end
 
                 -- Remove the active vote
@@ -1049,6 +1105,9 @@ function FrotaGameMode:CastVote(playerID, vote, mutli)
     -- Make sure there is a vote active
     if (not self.currentVote) or (self.currentState ~= STATE_VOTING) then return end
 
+    -- Make sure multi is a number
+    mutli = tonumber(mutli or 0)
+
     -- Validate vote option
     local usersChoice = self.currentVote.options[vote]
     if not usersChoice then return end
@@ -1065,19 +1124,53 @@ function FrotaGameMode:CastVote(playerID, vote, mutli)
         -- Add their new vote
         usersChoice.votes[playerID] = 1
         usersChoice.count = usersChoice.count + 1
-    else
-        -- Adjust this user's vote
-        if mutli then
-            if usersChoice.votes[playerID] == 0 then
-                usersChoice.votes[playerID] = 1
-                usersChoice.count = usersChoice.count + 1
+    elseif self.currentVote.sort == VOTE_SORT_OPTIONS then
+        if usersChoice.o.s == VOTE_SORT_YESNO then
+            -- Yes/No votes
+            if usersChoice.votes[playerID] == nil then
+                if mutli == 1 then
+                    usersChoice.votes[playerID] = 1
+                    usersChoice.count = usersChoice.count + 1
+                else
+                    usersChoice.votes[playerID] = 0
+                    usersChoice.count = usersChoice.count - 1
+                end
+            else
+                -- Adjust this user's vote
+                if mutli == 1 then
+                    if usersChoice.votes[playerID] == 0 then
+                        usersChoice.votes[playerID] = 1
+                        usersChoice.count = usersChoice.count + 2
+                    end
+                else
+                    if usersChoice.votes[playerID] == 1 then
+                        usersChoice.votes[playerID] = 0
+                        usersChoice.count = usersChoice.count - 2
+                    end
+                end
             end
-        else
-            if usersChoice.votes[playerID] == 1 then
-                usersChoice.votes[playerID] = 0
-                usersChoice.count = usersChoice.count - 1
+        elseif usersChoice.o.s == VOTE_SORT_RANGE then
+            -- Range based votes
+            usersChoice.votes[playerID] = mutli
+
+            local votes = {}
+            for k, v in pairs(usersChoice.votes) do
+                table.insert(votes, v)
+            end
+
+            -- Sort it
+            table.sort(votes)
+
+            -- Change the current count
+            if math.mod(#votes, 2) == 0 then
+                usersChoice.count = math.floor(((votes[#votes/2]+votes[#votes/2+1])/2+0.5))
+            else
+                usersChoice.count = votes[math.ceil(#votes/2)]
             end
         end
+    else
+        print('USER TRIED TO VOTE IN AN INVALID VOTE!!!')
+        return
     end
 
     -- Update data on this vote
@@ -1098,21 +1191,6 @@ function FrotaGameMode:BuildVoteData()
     return data
 end
 
---[[function FrotaGameMode:BuildVoteData()
-    if not self.currentVote then return "" end
-
-    local str = self.currentVote.endTime.."::"..self.currentVote.sort.."::"..self.currentVote.duration.."||"
-
-    for k,v in pairs(self.currentVote.options) do
-        str = str..k.."::"..v.des.."::"..v.count..":::"
-    end
-
-    -- Remove ending :::
-    str = string.sub(str, 1, -4)
-
-    return str
-end]]
-
 function FrotaGameMode:SendVoteStatus()
     local cv = self.currentVote
     if not cv then return end
@@ -1121,42 +1199,6 @@ function FrotaGameMode:SendVoteStatus()
         d = JSON:encode(cv.options)
     })
 end
---[[function FrotaGameMode:SendVoteStatus()
-    local cv = self.currentVote
-    if not cv then return end
-
-    local str = ""
-
-    if cv.sort == VOTE_SORT_SINGLE then
-        -- Workout how many people voted
-        local totalVotes = 0
-        for k,v in pairs(cv.options) do
-            totalVotes = totalVotes + v.count
-        end
-
-        -- Fix divide by 0 error
-        if totalVotes == 0 then
-            totalVotes = 1
-        end
-
-        -- Print percentages
-        for k,v in pairs(cv.options) do
-            str = str..k.."::"..math.floor(v.count/totalVotes*100).."%:::"
-        end
-    else
-        -- This needs fixing
-        for k,v in pairs(cv.options) do
-            str = str..k.."::"..v.count.."%:::"
-        end
-    end
-
-    -- Remove ending :::
-    str = string.sub(str, 1, -4)
-
-    FireGameEvent("afs_vote_status", {
-        d = str
-    })
-end]]
 
 function FrotaGameMode:_thinkState_Voting(dt)
     if GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME then
@@ -1189,10 +1231,6 @@ function FrotaGameMode:_thinkState_Voting(dt)
 end
 
 function FrotaGameMode:_thinkState_Picking(dt)
-    -- Check if picking has gone on for too long
-    --[[if Time() > self.pickingOverTime then
-        self:StartGame()
-    end]]
 end
 
 -- Nothing is happening
@@ -1251,10 +1289,10 @@ function FrotaGameMode:VoteForGamemode()
             local mode = string.sub(winners[math.random(1, #winners)], 11)
 
             -- Grab the mode
-            local pickMode = GetGamemode(mode)
+            self.toLoadPickMode = GetGamemode(mode)
 
             -- Check if it was a picking gamemode
-            if pickMode.sort == GAMEMODE_PICK then
+            if self.toLoadPickMode.sort == GAMEMODE_PICK then
                 -- We need a gameplay gamemode now
 
                 -- Grab all the gamemodes the require picking
@@ -1265,7 +1303,7 @@ function FrotaGameMode:VoteForGamemode()
                     options['#afs_name_'..v] = '#afs_des_'..v
                 end
 
-                -- Vote for the gameplau section
+                -- Vote for the gameplay section
                 self:CreateVote({
                     sort = VOTE_SORT_SINGLE,
                     options = options,
@@ -1275,36 +1313,150 @@ function FrotaGameMode:VoteForGamemode()
                         local mode = string.sub(winners[math.random(1, #winners)], 11)
 
                         -- Grab the mode
-                        local playMode = GetGamemode(mode)
+                        self.toLoadPlayMode = GetGamemode(mode)
+
+                        -- Vote for addons
+                        self:VoteForAddons()
 
                         -- Load this gamemode up
-                        self:LoadGamemode(pickMode, playMode)
+                        --self:LoadGamemode(self.toLoadPickMode, self.toLoadPlayMode)
                     end
                 })
             else
+                -- Vote for addons
+                self:VoteForAddons()
+
                 -- We must have gotten someone we can just run
-                self:LoadGamemode(pickMode)
+                --self:LoadGamemode(self.toLoadPickMode)
             end
         end
     })
 end
 
+function FrotaGameMode:VoteForAddons()
+    -- Grab all the addon gamemodes
+    local modes = GetAddonGamemodes()
+
+    local options = {}
+    for k, v in pairs(modes) do
+        options['#afs_name_'..v] = {
+            d = '#afs_des_'..v,
+            s = VOTE_SORT_YESNO,
+            def = false
+        }
+    end
+
+    -- Vote for the gameplay section
+    self:CreateVote({
+        sort = VOTE_SORT_OPTIONS,
+        options = options,
+        duration = 10,
+        onFinish = function(winners)
+            self.loadedAddons = {}
+
+            for k,v in pairs(winners) do
+                -- Check if a plugin was meant to be loaded
+                if v then
+                    local mode = string.sub(k, 11)
+                    table.insert(self.loadedAddons, GetGamemode(mode))
+                end
+            end
+
+            -- Vote for options
+            self:VoteForOptions()
+        end
+    })
+end
+
+function FrotaGameMode:VoteForOptions()
+    local options = {}
+
+    local function buildOptions(t)
+        -- Check if the table exists, and if it has vote options
+        if t and t.voteOptions then
+            for k, v in pairs(t.voteOptions) do
+                -- Store the option
+                options['#afs_o_'..k] = v
+
+                -- Add a description if there is none
+                options['#afs_o_'..k].d = options['#afs_o_'..k].d or '#afs_od_'..k
+            end
+        end
+    end
+
+    -- Build options
+    buildOptions(self.toLoadPickMode)
+    buildOptions(self.toLoadPlayMode)
+
+    -- Build all the options for each addon
+    for k, v in pairs(self.loadedAddons or {}) do
+        buildOptions(v)
+    end
+
+    -- Vote for options
+    self:CreateVote({
+        sort = VOTE_SORT_OPTIONS,
+        options = options,
+        duration = 15,
+        onFinish = function(winners)
+            local realWinners = {}
+            for k, v in pairs(winners) do
+                realWinners[string.sub(k, 8)] = v
+            end
+
+            -- Store the options
+            self.gamemodeVoteOptions = realWinners
+
+            -- Load up the gamemode
+            self:LoadGamemode()
+        end
+    })
+end
+
+-- Returns a table with all the options in it
+function FrotaGameMode:GetOptions()
+    return self.gamemodeVoteOptions or {}
+end
+
+-- Sets the score limit
+function FrotaGameMode:SetScoreLimit(limit)
+    -- Make sure we have gamemode options
+    self.gamemodeOptions = self.gamemodeOptions or {}
+
+    -- Set the score limit
+    self.gamemodeOptions.scoreLimit = limit
+
+    print('Score limit set to '..limit)
+end
+
 function FrotaGameMode:FireEvent(name, ...)
-    local e = (self.pickMode and self.pickMode[name])
+    local e
+
+    -- Pick mode events
+    e = (self.pickMode and self.pickMode[name])
     if e then
         e(self, ...)
     end
 
-    local e = (self.playMode and self.playMode[name])
+    -- Play mode events
+    e = (self.playMode and self.playMode[name])
     if e then
         e(self, ...)
+    end
+
+    -- Addon events
+    for k, v in pairs(self.loadedAddons or {}) do
+        e = v[name]
+        if e then
+            e(self, ...)
+        end
     end
 end
 
-function FrotaGameMode:LoadGamemode(pickMode, playMode)
+function FrotaGameMode:LoadGamemode()
     -- Store the modes
-    self.pickMode = pickMode
-    self.playMode = playMode
+    self.pickMode = self.toLoadPickMode
+    self.playMode = self.toLoadPlayMode
 
     -- Fire event
     self:FireEvent('onPickingStart')
