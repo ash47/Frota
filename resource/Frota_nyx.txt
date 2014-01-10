@@ -1,0 +1,66 @@
+"lang"
+{
+        "Language"                "Nyx"
+        "Tokens"
+        {
+                // Name of the game
+                "game_mode_15"                  "NYX"
+
+                // Toggle ready state
+                "afs_toggle_ready"              "Nyx Nyx"
+
+                // All Pick
+                "afs_name_allpick"              "Nyx Nyyx"
+                "afs_des_allpick"               "Nyx nyx nyx nyx nyx nyxyx."
+
+                // Legends of Dota
+                "afs_name_lod"                  "NyxNyx Nyx NyxNyx"
+                "afs_des_lod"                   "Nyx nyx nyx nyx nyx nyx."
+
+                // Random OMG
+                "afs_name_romg"                 "NyxNyx NYX NYX NYX"
+                "afs_des_romg"                  "Nyx nyx nyxnyx nyxnyx, nnyyyx nyxnyx nyxnyx nyx nyx nyxNyx nyx."
+
+                // PvP Arena
+                "afs_name_arena"                "Nyx y Nyx NyxNyxNyx"
+                "afs_des_arena"                 "Nyx nyxnyx nyx y nyx nyxnyxnyx nyx."
+
+                // Pudge Wars
+                "afs_name_pudgewars"            "Nyxx Nyx"
+                "afs_des_pudgewars"             "Nyx nyx Nyxx, nnyx nyx nyx nnYx nyx nyx."
+
+                // Tiny Wars
+                "afs_name_tinywars"            "NyxX Nyx"
+                "afs_des_tinywars"             "Nyx nyx NyxX, nnyx nyx nyx nnYx nyx nyx."
+
+                // Sunstrike Wars
+                "afs_name_sunstrikewars"        "Nyx Nyx Nyx"
+                "afs_des_sunstrikewars"         "Nnyx nyx nyx nyx Nyx Nyx nyx nyx nyx nyx nyx nyx nyx nyx nyx nyx ."
+
+                // Pure Skill
+                "afs_name_pureskill"            "Nyx Nyx"
+                "afs_des_pureskill"             "Nyx xyx NyxXx nyx nyxnyx, nyxnyx, nyx nyx, nyx nyx nyx."
+
+                // Vote related
+                "afs_seconds_remaining"         "Nyx"
+                "afs_second_remaining"          "Nyx"
+                "afs_vote_ends_in"              "Nyx nyx nyx"
+
+                // Picking related
+                "afs_picking_timer"             "Nyxnyx nyx nyx"
+                "afs_tab_pick_skills"           "Nyx Nyx"
+                "afs_tab_pick_hero"             "Nyx Nyxnyx"
+
+                // Unit Names
+                "npc_dota_mine"                                                        "Nyxnyxnyx Nyx"
+
+                // Ability Names
+                "DOTA_Tooltip_Ability_pudge_place_mine"                                "Nyx Nyx"
+                "DOTA_Tooltip_Ability_pudge_place_mine_description"                "Nyxnyx nyx nyxnyxnyx nyx nyx nyxnyx nyx nyx nyxnyx nyx nyx nyxnyxnyx nyx nyx nyxnyxnyx nyx nyx nyx."
+                "DOTA_Tooltip_Ability_mine_explosion"                                "Nyxnyx"
+                "DOTA_Tooltip_Ability_mine_explosion_description"                "Nyx nyxnyxnyx nyx nyx nyxnyx nyx nyx nyxnyxnyx nyx nyx nyx."
+
+                // Modifier Names
+                "DOTA_Tooltip_aura_health_regen"                                "Nyxnyxnyx Nyxnyx"
+        }
+}
