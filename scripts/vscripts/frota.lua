@@ -352,6 +352,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
                 -- Check if we need to assign a hero
                 if IsValidEntity(Players:GetSelectedHeroEntity(playerID)) then
                     self:FireEvent('assignHero', ply)
+                    self:FireEvent('onHeroSpawned', Players:GetSelectedHeroEntity(playerID))
                 end
             end
 
@@ -534,14 +535,6 @@ function FrotaGameMode:LoadAbilityList()
                 -- Attempt to find the owning hero of this ability
                 local heroOwner = self:FindHeroOwner(kk)
 
-                -- Check if the owner was found
-                if heroOwner ~= '' then
-                    --print('precache: '..heroOwner)
-                    --local heroOwner = FindHeroOwner()
-                    --local unit = CreateUnitByName(heroOwner, Vec3(0,0,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-                    --UTIL_RemoveImmediate(unit)
-                end
-
                 -- Store this skill
                 table.insert(self.vAbList, {
                     name = kk,
@@ -559,8 +552,6 @@ function FrotaGameMode:LoadAbilityList()
             end
         end
     end
-
-    --PrintTable(self.vAbList)
 end
 
 function FrotaGameMode:GetRandomAbility(sort)
@@ -624,9 +615,6 @@ function FrotaGameMode:ApplyBuild(hero, build)
 
     -- Give all the abilities in this build
     for k,v in ipairs(build) do
-        -- Preache ability
-        self:PrecacheSkill(v)
-
         -- Add to build
         hero:AddAbility(v)
         self.currentSkillList[hero][k] = v
@@ -657,9 +645,6 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot, dontSlotIt)
     end
 
     if not dontSlotIt then
-        -- Preache the new skill
-        self:PrecacheSkill(skillName)
-
         -- Update build
         self.selectedBuilds[playerID].skills[skillSlot] = skillName
 
@@ -1397,7 +1382,7 @@ function FrotaGameMode:VoteForOptions()
     self:CreateVote({
         sort = VOTE_SORT_OPTIONS,
         options = options,
-        duration = 15,
+        duration = 10,
         onFinish = function(winners)
             local realWinners = {}
             for k, v in pairs(winners) do
@@ -1425,8 +1410,6 @@ function FrotaGameMode:SetScoreLimit(limit)
 
     -- Set the score limit
     self.gamemodeOptions.scoreLimit = limit
-
-    print('Score limit set to '..limit)
 end
 
 function FrotaGameMode:FireEvent(name, ...)
@@ -1514,6 +1497,7 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
                 if IsValidEntity(Players:GetSelectedHeroEntity(i)) then
                     -- Assign them a hero
                     self:FireEvent('assignHero', ply)
+                    self:FireEvent('onHeroSpawned', Players:GetSelectedHeroEntity(i))
                 end
             end
 
@@ -1602,23 +1586,7 @@ function FrotaGameMode:BuildAbilityListData()
 end
 
 function FrotaGameMode:PrecacheSkill(skillName)
-    --[[PrecacheEntityFromTable({
-        classname = skillName
-    })]]
-
-    -- Don't precache
-    if 1 == 1 then return end
-
-    local heroOwner = self:FindHeroOwner(skillName)
-    --local unit = CreateUnitByName(heroOwner, Vec3(0,0,0), true, nil, nil, DOTA_TEAM_BADGUYS)
-    --UTIL_RemoveImmediate(unit)
-    --print("created a "..heroOwner)
-    if heroOwner then
-        PrecacheUnit(heroOwner)
-        print('precached '..skillName)
-    else
-        print('FAILED TO PRECACHE '..skillName)
-    end
+    return
 end
 
 EntityFramework:RegisterScriptClass( FrotaGameMode )

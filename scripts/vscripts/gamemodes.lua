@@ -204,16 +204,16 @@ RegisterGamemode('arena', {
             s = VOTE_SORT_RANGE,
 
             -- Minimal possible value
-            min = 5,
+            min = 1,
 
             -- Maximal possible value
-            max = 25,
+            max = 50,
 
             -- Default vaule (if no one votes)
             def = 10,
 
             -- Slider tick interval
-            tick = 1,
+            tick = 10,
 
             -- Slider step interval
             step = 1
@@ -224,7 +224,6 @@ RegisterGamemode('arena', {
         -- Grab options
         local options = frota:GetOptions()
 
-        print('score limit: '..options.scoreLimit)
         -- Set the score limit
         frota:SetScoreLimit(options.scoreLimit)
     end
@@ -285,12 +284,6 @@ RegisterGamemode('pureskill', {
         local playerID = ply:GetPlayerID()
         local hero = Players:GetSelectedHeroEntity(playerID)
 
-        -- Precache skills
-        frota:PrecacheSkill('mirana_arrow')
-        frota:PrecacheSkill('magnataur_skewer')
-        frota:PrecacheSkill('tusk_ice_shards')
-        frota:PrecacheSkill('meat_hook')
-
         -- Apply the build
         frota:ApplyBuild(hero, {
             [1] = 'pure_skill_meat_hook',
@@ -305,51 +298,62 @@ RegisterGamemode('pureskill', {
         -- Kills give team points
         killsScore = true,
 
-        -- Score Limit
-        scoreLimit = 10,
-
         -- Enable scores
         useScores = true,
 
         -- Respawn delay
         respawnDelay = 3
-    }
-})
-
--- Dev Plugins
---[[RegisterGamemode('test1', {
-    -- This gamemode is only for picking
-    sort = GAMEMODE_ADDON,
+    },
 
     voteOptions = {
         -- Score limit vote
-        someOption = {
+        scoreLimit = {
             -- Range based
             s = VOTE_SORT_RANGE,
 
             -- Minimal possible value
-            min = 50,
+            min = 1,
 
             -- Maximal possible value
-            max = 250,
+            max = 50,
 
             -- Default vaule (if no one votes)
-            def = 90,
+            def = 10,
 
             -- Slider tick interval
-            tick = 1,
+            tick = 10,
 
             -- Slider step interval
             step = 1
         }
-    }
+    },
+
+    onGameStart = function(frota)
+        -- Grab options
+        local options = frota:GetOptions()
+
+        -- Set the score limit
+        frota:SetScoreLimit(options.scoreLimit)
+    end
 })
-RegisterGamemode('test2', {
+
+-- Addon plugins
+--[[RegisterGamemode('unlimitedMana', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
-    onGameStart = function(frota)
-        print('Game started, called via test2!')
+    onHeroSpawned = function(frota, hero)
+        -- Remove old ability if it exsists
+        if hero:HasAbility('forest_troll_high_priest_mana_aura') then
+            hero:RemoveAbility('forest_troll_high_priest_mana_aura')
+        end
+
+        -- Add mana regen
+        hero:AddAbility('forest_troll_high_priest_mana_aura')
+
+        -- Set it to level 1
+        local ab = hero:FindAbilityByName('forest_troll_high_priest_mana_aura')
+        ab:SetLevel(1)
     end
 })]]
 
