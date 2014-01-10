@@ -1,6 +1,6 @@
 "lang"
 {
-        "Language"                "Portuguese"
+        "Language"                "Brazilian Portuguese"
         "Tokens"
         {
                 // Name of the game
@@ -10,16 +10,16 @@
                 "afs_toggle_ready"              "Preparado"
 
                 // All Pick
-                "afs_name_allpick"              "Todos Escolhem"
-                "afs_des_allpick"               "Escolha dentro de um grupo de heroís."
+                "afs_name_allpick"              "Escolha Livre"
+                "afs_des_allpick"               "Escolha dentro de um grupo de heróis."
 
                 // Legends of Dota
-                "afs_name_lod"                  "Lendas de Dota
-                "afs_des_lod"                   "Escolha suas habilidades e seu heroí."
+                "afs_name_lod"                  "Lendas de Dota"
+                "afs_des_lod"                   "Escolha suas habilidades e seu herói."
 
                 // Random OMG
                 "afs_name_romg"                 "OMG Aleatório"
-                "afs_des_romg"                  "Obtenha um heroí aleatório, 3 habilidades aleatórias e um ultimate aleatório."
+                "afs_des_romg"                  "Obtenha um herói aleatório, 3 habilidades aleatórias e um ultimate aleatório."
 
                 // PvP Arena
                 "afs_name_arena"                "Arena PvP"
@@ -27,40 +27,40 @@
 
                 // Pudge Wars
                 "afs_name_pudgewars"            "Guerra de Pudge"
-                "afs_des_pudgewars"             "Jogue de Pudge, o primeiro time a obter 10 kills ganha."
+                "afs_des_pudgewars"             "Jogue de Pudge, o primeiro time a causar 10 mortes ganha."
 
                 // Tiny Wars
                 "afs_name_tinywars"            "Guerra de Tiny"
-                "afs_des_tinywars"             "Jogue de Tiny, o primeiro time a obter 10 kills ganha."
-
-               // Pure Skill
-                "afs_name_pureskill"            "Habilidade Pura"
-                "afs_des_pureskill"             "Jogue de mirana com skewer, arrow, meat hook e ice shards."
+                "afs_des_tinywars"             "Jogue de Tiny, o primeiro time a causar 10 mortes ganha."
                 
                 // Sunstrike Wars
                 "afs_name_sunstrikewars"        "Guerra de Sun Strike"
-                "afs_des_sunstrikewars"         "Um jogador nasce com a habilidade Sun Strike e tem que matar todos os outros jogadores ."
+                "afs_des_sunstrikewars"         "Um jogador nasce com a habilidade Raio Solar(Sun Strike) e tem que matar todos os outros jogadores."
 
+               // Pure Skill
+                "afs_name_pureskill"            "Habilidade Pura"
+                "afs_des_pureskill"             "Jogue de Mirana com as habilidades Empalar(Skewer), Flecha Sagrada(Sacred Arrow), Gancho de Carne(Meat Hook) e Fragmentos de Gelo(Ice Shards)."
+                
                 // Vote related
                 "afs_seconds_remaining"         "Segundos"
-                "afs_second_remaining"          "Segundos"
-                "afs_vote_ends_in"              "O voto acaba em"
+                "afs_second_remaining"          "Segundo"
+                "afs_vote_ends_in"              "O voto acabará em"
 
                 // Picking related
                 "afs_picking_timer"             "A escolha acaba em"
                 "afs_tab_pick_skills"           "Escolha Habilidades"
-                "afs_tab_pick_hero"             "Escolha Heroís"
+                "afs_tab_pick_hero"             "Escolha o Herói"
                 
                 // Unit Names
                 "npc_dota_mine"                                                        "Mina Explosiva"
                                 
                 // Ability Names
                 "DOTA_Tooltip_Ability_pudge_place_mine"                                "Armar Mina"
-                "DOTA_Tooltip_Ability_pudge_place_mine_description"                "Arma uma mina explosiva que explode e da dano em uma area em volta dela quando um inimigo se aproxima muito."
+                "DOTA_Tooltip_Ability_pudge_place_mine_description"                "Arma uma mina explosiva que explode e causa dano em seu redor quando um inimigo se aproxima muito."
                 "DOTA_Tooltip_Ability_mine_explosion"                                "Explodir"
                 "DOTA_Tooltip_Ability_mine_explosion_description"                "A mina explosiva é ativada quando um inimigo se aproxima."
                                 
                 // Modifier Names
-                "DOTA_Tooltip_aura_health_regen"                                "Area Explosiva"
+                "DOTA_Tooltip_aura_health_regen"                                "Área Explosiva"
         }
 }

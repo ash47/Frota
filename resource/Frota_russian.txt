@@ -50,5 +50,18 @@
                 "afs_picking_timer" "Выбор закончится через"
                 "afs_tab_pick_skills" "Выберите умения"
                 "afs_tab_pick_hero" "Выберите героя"
+                
+                
+                // Unit Names
+                "npc_dota_mine"                                                        "Мина"
+
+                // Ability Names
+                "DOTA_Tooltip_Ability_pudge_place_mine"                                "Установить мину"
+                "DOTA_Tooltip_Ability_pudge_place_mine_description"                "Установите бомбу, и когда она взорвется, она нанесет урон всем стоящим поблизости врагам."
+                "DOTA_Tooltip_Ability_mine_explosion"                                "Взорвать"
+                "DOTA_Tooltip_Ability_mine_explosion_description"                "Взрыв наступает когда приближающиеся враги наступают на нее."
+
+                // Modifier Names
+                "DOTA_Tooltip_aura_health_regen"                                "Радиус взрыва"
         }
 }

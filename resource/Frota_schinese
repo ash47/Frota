@@ -1,0 +1,66 @@
+"lang"
+{
+	"Language"		"schinese"
+	"Tokens"
+	{
+                // Name of the game
+                "game_mode_15"                  "FROTA"
+
+                // Toggle ready state
+                "afs_toggle_ready"              "选择完毕"
+
+                // All Pick
+                "afs_name_allpick"              "全阵营选择"
+                "afs_des_allpick"               "从大部分英雄中选取"
+
+                // Legends of Dota
+                "afs_name_lod"                  "Legends of dota"
+                "afs_des_lod"                   "选择你的技能和英雄。"
+
+                // Random OMG
+                "afs_name_romg"                 "随机OMG"
+                "afs_des_romg"                  "获得一个随机英雄，三个随机技能以及一个随机大招。"
+
+                // PvP Arena
+                "afs_name_arena"                "PvP竞技场"
+                "afs_des_arena"                 "简易的PvP竞技场模式。"
+
+                // Pudge Wars
+                "afs_name_pudgewars"            "钩肥大战"
+                "afs_des_pudgewars"             "扮演帕吉，抢先杀死10人的队伍获胜。"
+
+                // Tiny Wars
+                "afs_name_tinywars"            "小小大战"
+                "afs_des_tinywars"             "扮演小小，抢先杀死10人的队伍获胜。"
+
+                // Sunstrike Wars
+                "afs_name_sunstrikewars"        "天火大战"
+                "afs_des_sunstrikewars"         "一玩家将带有阳炎冲击技能，用该技能杀死其他所有玩家来取得胜利。"
+
+                // Pure Skill
+                "afs_name_pureskill"            "纯技能"
+                "afs_des_pureskill"             "扮演米拉娜，拥有裂地尖刺、月神之箭、肉钩 以及 寒冰碎片 技能。"
+
+                // Vote related
+                "afs_seconds_remaining"         "秒后结束"
+                "afs_second_remaining"          "秒后结束"
+                "afs_vote_ends_in"              "投票将在"
+
+                // Picking related
+                "afs_picking_timer"             "挑选将在"
+                "afs_tab_pick_skills"           "挑选技能"
+                "afs_tab_pick_hero"             "挑选英雄"
+
+		// Unit Names
+		"npc_dota_mine"							"易爆地雷"
+
+		// Ability Names
+		"DOTA_Tooltip_Ability_pudge_place_mine"				"放置地雷"
+		"DOTA_Tooltip_Ability_pudge_place_mine_description"		"放置一枚易爆地雷，当敌方接近时爆炸并给予范围伤害。"
+		"DOTA_Tooltip_Ability_mine_explosion"				"爆炸"
+		"DOTA_Tooltip_Ability_mine_explosion_description"		"易爆地雷会在敌方接近时被引爆。"
+
+		// Modifier Names
+		"DOTA_Tooltip_aura_health_regen"				"爆炸区域"
+	}
+}
