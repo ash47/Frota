@@ -83,13 +83,13 @@ function FrotaGameMode:InitGameMode()
     self:ListenToEvent('dota_courier_respawned')
     self:ListenToEvent('dota_courier_lost')
 
+    -- userID map
+    self.vUserIDMap = {}
+
     -- Load initital Values
     self:_SetInitialValues()
 
     Convars:SetBool('dota_suppress_invalid_orders', true)
-
-    -- userID map
-    self.vUserIDMap = {}
 
     -- Start thinkers
     self._scriptBind:BeginThink('FrotaTimers', Dynamic_Wrap(FrotaGameMode, 'ThinkTimers'), 0.1)
@@ -178,7 +178,7 @@ function FrotaGameMode:RegisterCommands()
         local cmdPlayer = Convars:GetCommandClient()
         if cmdPlayer then
             local playerID = cmdPlayer:GetPlayerID()
-            if playerID >= 0 and playerID < MAX_PLAYERS then
+            if self:IsValidPlayerID(playerID) then
                 self:ToggleReadyState(playerID)
                 return
             end
@@ -219,13 +219,13 @@ function FrotaGameMode:RegisterCommands()
 
                 local data = {}
 
-                for i=0, MAX_PLAYERS-1 do
-                    local steamID = Players:GetSteamAccountID(i)
+                self:LoopOverPlayers(function(ply, playerID)
+                    local steamID = Players:GetSteamAccountID(playerID)
 
                     if steamID > 0 then
-                        data[i] = steamID
+                        data[playerID] = steamID
                     end
-                end
+                end)
 
                 -- Fire steamids
                 FireGameEvent('afs_steam_ids', {
@@ -248,21 +248,71 @@ function FrotaGameMode:RegisterCommands()
     end, 'Client requested the current state', 0)
 end
 
+-- Loops over all players, return true to stop the loop
+function FrotaGameMode:LoopOverPlayers(callback)
+    for k, v in pairs(self.vUserIDMap) do
+        -- Validate the player
+        if IsValidEntity(v) then
+            -- Run the callback
+            if callback(v, v:GetPlayerID()) then
+                break
+            end
+        end
+    end
+end
+
+function FrotaGameMode:IsValidPlayerID(checkPlayerID)
+    local isValid = false
+    self:LoopOverPlayers(function(ply, playerID)
+        if playerID == checkPlayerID then
+            isValid = true
+            return true
+        end
+    end)
+
+    return isValid
+end
+
+function FrotaGameMode:GetPlayerList()
+    local plyList = {}
+
+    self:LoopOverPlayers(function(ply, playerID)
+        table.insert(plyList, ply)
+    end)
+
+    return plyList
+end
+
+function FrotaGameMode:GetRandomPlayer()
+    local plyList = self:GetPlayerList()
+
+    if #plyList == 0 then
+        return nil
+    else
+        return plyList[math.random(1, #plyList)]
+    end
+end
+
 function FrotaGameMode:ResetBuilds()
     -- Store the default axe build for each player
     self.selectedBuilds = {}
-    for i = 0,MAX_PLAYERS-1 do
-        self.selectedBuilds[i] = {
-            hero = 'npc_dota_hero_axe',
-            skills = {
-                [1] = 'axe_berserkers_call',
-                [2] = 'axe_battle_hunger',
-                [3] = 'axe_counter_helix',
-                [4] = 'axe_culling_blade'
-            },
-            ready = false
-        }
-    end
+
+    self:LoopOverPlayers(function(ply, playerID)
+        self.selectedBuilds[playerID] = self:GetDefaultBuild()
+    end)
+end
+
+function FrotaGameMode:GetDefaultBuild()
+    return {
+        hero = 'npc_dota_hero_axe',
+        skills = {
+            [1] = 'axe_berserkers_call',
+            [2] = 'axe_battle_hunger',
+            [3] = 'axe_counter_helix',
+            [4] = 'axe_culling_blade'
+        },
+        ready = false
+    }
 end
 
 function FrotaGameMode:CreateTimer(name, args)
@@ -313,9 +363,9 @@ function FrotaGameMode:AutoAssignPlayer(keys)
         [DOTA_TEAM_BADGUYS] = 0
     }
 
-    for i=0,MAX_PLAYERS-1 do
-        if Players:GetPlayer(i) then
-            local ply = Players:GetPlayer(i)
+    self:LoopOverPlayers(function(ply, playerID)
+        if Players:GetPlayer(playerID) then
+            local ply = Players:GetPlayer(playerID)
             if ply then
                 -- Grab the players team
                 local team = ply:GetTeam()
@@ -324,7 +374,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
                 teamSize[team] = (teamSize[team] or 0) + 1
             end
         end
-    end
+    end)
 
     if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then
         ply:SetTeam(DOTA_TEAM_BADGUYS)
@@ -340,6 +390,8 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
     -- Store into our map
     self.vUserIDMap[keys.userid] = ply
+
+    self.selectedBuilds[playerID] = self:GetDefaultBuild()
 
     -- Autoassign player
     self:CreateTimer('assign_player_'..entIndex, {
@@ -388,12 +440,15 @@ function FrotaGameMode:CleanupPlayer(keys)
     self:CreateTimer('cleanup_player_'..keys.userid, {
         endTime = Time() + 1,
         callback = function(frota, args)
+            local foundSomeone = false
+
             -- Check if there are any players connected
-            for i=0, MAX_PLAYERS-1 do
-                local ply = Players:GetPlayer(i)
-                if ply then
-                    return
-                end
+            self:LoopOverPlayers(function(ply, playerID)
+                foundSomeone = true
+            end)
+
+            if foundSomeone then
+                return
             end
 
             -- No players are in, reset to initial vote
@@ -603,7 +658,7 @@ end
 function FrotaGameMode:ApplyBuild(hero, build)
     -- Grab playerID
     local playerID = hero:GetPlayerID()
-    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
+    if not self:IsValidPlayerID(playerID) then
         return
     end
 
@@ -624,7 +679,7 @@ end
 function FrotaGameMode:LoadBuildFromHero(hero)
     -- Grab playerID
     local playerID = hero:GetPlayerID()
-    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
+    if not self:IsValidPlayerID(playerID) then
         return
     end
 
@@ -640,7 +695,7 @@ function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot, dontSlotIt)
 
     -- Grab playerID
     local playerID = hero:GetPlayerID()
-    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
+    if not self:IsValidPlayerID(playerID) then
         return
     end
 
@@ -671,7 +726,7 @@ function FrotaGameMode:SelectHero(ply, heroName, dontChangeNow)
 
     -- Grab playerID
     local playerID = ply:GetPlayerID()
-    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
+    if not self:IsValidPlayerID(playerID) then
         return
     end
 
@@ -707,7 +762,7 @@ end
 
 function FrotaGameMode:ToggleReadyState(playerID)
     -- Validate playerID
-    if(playerID < 0 or playerID > MAX_PLAYERS-1) then
+    if not self:IsValidPlayerID(playerID) then
         return
     end
 
@@ -716,12 +771,12 @@ function FrotaGameMode:ToggleReadyState(playerID)
 
     -- Check if everyone is ready
     local allReady = true
-    for i=0,MAX_PLAYERS-1 do
-        if Players:GetPlayer(i) and (not self.selectedBuilds[i].ready) then
+    self:LoopOverPlayers(function(ply, playerID)
+        if Players:GetPlayer(playerID) and (not self.selectedBuilds[playerID].ready) then
             allReady = false
-            break
+            return true
         end
-    end
+    end)
 
     if allReady then
         -- Start the game
@@ -859,13 +914,13 @@ function FrotaGameMode:_RestartGame()
     end
 
     -- Reset Players
-    for playerID = 0, MAX_PLAYERS-1 do
+    self:LoopOverPlayers(function(ply, playerID)
         Players:SetGold( playerID, STARTING_GOLD, false )
         Players:SetGold( playerID, 0, true )
         Players:SetBuybackCooldownTime( playerID, 0 )
         Players:SetBuybackGoldLimitTime( playerID, 0 )
         Players:ResetBuybackCostTime( playerID )
-    end
+    end)
 
     -- Set initial Values again
     self:_SetInitialValues()
@@ -902,25 +957,6 @@ function FrotaGameMode:Think()
         self._scriptBind:EndThink( "GameThink" )
         return
     end
-
-    -- Hero Selection Screen Bypass
-    --[[if GameRules:State_Get() >= DOTA_GAMERULES_STATE_HERO_SELECTION then
-        for i=0,MAX_PLAYERS-1 do
-            if Players:IsValidPlayer(i) and not Players:GetSelectedHeroEntity(i) then
-                -- Grab the player and create them a default hero
-                local ply = Players:GetPlayer(i)
-                if ply then
-                    CreateHeroForPlayer('npc_dota_hero_axe', ply)
-
-                    -- Check if we are in a game
-                    if self.currentState == STATE_PLAYING then
-                        -- Check if we need to assign a hero
-                        self:FireEvent('heroAssign', ply)
-                    end
-                end
-            end
-        end
-    end]]
 
     -- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
     local now = GameRules:GetGameTime()
@@ -1196,11 +1232,9 @@ function FrotaGameMode:_thinkState_Voting(dt)
         local totalPlayers = 0
 
         -- Check how many players are in
-        for i=0, MAX_PLAYERS-1 do
-            if Players:GetPlayer(i) then
-                totalPlayers = totalPlayers + 1
-            end
-        end
+        self:LoopOverPlayers(function(ply, playerID)
+            totalPlayers = totalPlayers + 1
+        end)
 
         -- Ensure we have at least one player
         if totalPlayers <= 0 then
@@ -1229,13 +1263,9 @@ end
 -- Resets everyone's hero to axe
 function FrotaGameMode:ResetAllHeroes()
     -- Replace all player's heroes, and then stun them
-    for i=0, MAX_PLAYERS-1 do
-        local ply = Players:GetPlayer(i)
-        if ply then
-            -- Give default hero
-            ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0)
-        end
-    end
+    self:LoopOverPlayers(function(ply, playerID)
+        ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0)
+    end)
 end
 
 -- Ends the current game, resetting to the voting stage
@@ -1252,9 +1282,9 @@ end
 
 function FrotaGameMode:VoteForGamemode()
     -- Reset ready status
-    for i = 0,MAX_PLAYERS-1 do
-        self.selectedBuilds[i].ready = false
-    end
+    self:LoopOverPlayers(function(ply, playerID)
+        self.selectedBuilds[playerID].ready = false
+    end)
 
     -- Grab all the gamemodes the require picking
     local modes = GetPickingGamemodes()
@@ -1487,26 +1517,21 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
     end
 
     -- Loop over every player
-    for i=0,MAX_PLAYERS-1 do
-        local ply = Players:GetPlayer(i)
-
-        -- Check if they are in
-        if ply then
-            -- Check if we should touch heroes
-            if not leaveHeroes then
-                if IsValidEntity(Players:GetSelectedHeroEntity(i)) then
-                    -- Assign them a hero
-                    self:FireEvent('assignHero', ply)
-                    self:FireEvent('onHeroSpawned', Players:GetSelectedHeroEntity(i))
-                end
+    self:LoopOverPlayers(function(ply, playerID)
+        -- Check if we should touch heroes
+        if not leaveHeroes then
+            if IsValidEntity(Players:GetSelectedHeroEntity(playerID)) then
+                -- Assign them a hero
+                self:FireEvent('assignHero', ply)
+                self:FireEvent('onHeroSpawned', Players:GetSelectedHeroEntity(playerID))
             end
-
-            -- Set buyback state
-            Players:SetBuybackCooldownTime(i, 0)
-            Players:SetBuybackGoldLimitTime(i, 0)
-            Players:ResetBuybackCostTime(i)
         end
-    end
+
+        -- Set buyback state
+        Players:SetBuybackCooldownTime(playerID, 0)
+        Players:SetBuybackGoldLimitTime(playerID, 0)
+        Players:ResetBuybackCostTime(playerID)
+    end)
 end
 
 function FrotaGameMode:StartGame()
@@ -1530,32 +1555,32 @@ end
 function FrotaGameMode:BuildBuildsData()
     local data = {}
 
-    -- Build list of builds
-    for i = 0,MAX_PLAYERS-1 do
-        local v = self.selectedBuilds[i]
+    self:LoopOverPlayers(function(ply, playerID)
+        local v = self.selectedBuilds[playerID]
+        if v then
+            -- Convert ready bool into a number
+            local ready = 0
+            if v.ready then
+                ready = 1
+            end
 
-        -- Convert ready bool into a number
-        local ready = 0
-        if v.ready then
-            ready = 1
+            data[playerID] = {
+                r = ready,
+                h = v.hero,
+                s = {}
+            }
+
+            -- Add hero and ready state
+            local sBuild = v.hero..'::'..ready
+
+            -- Add all skills
+            local j = 0
+            for kk, vv in ipairs(v.skills) do
+                data[playerID].s[j] = vv
+                j = j + 1
+            end
         end
-
-        data[i] = {
-            r = ready,
-            h = v.hero,
-            s = {}
-        }
-
-        -- Add hero and ready state
-        local sBuild = v.hero..'::'..ready
-
-        -- Add all skills
-        local j = 0
-        for kk, vv in ipairs(v.skills) do
-            data[i].s[j] = vv
-            j = j + 1
-        end
-    end
+    end)
 
     return data
 end

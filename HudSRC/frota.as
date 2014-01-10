@@ -545,7 +545,7 @@ package {
         }
 
         public function updateBuildData(data) {
-            var skill, i:Number, j:Number, skillName:String;
+            var skill, i:Number, j:Number, skillName:String, iString;
 
             // Clear out current builds
             pickingData.builds = data;
@@ -556,7 +556,7 @@ package {
             // Grab playerID to build skill list
             var playerID = globals.Players.GetLocalPlayer();
 
-            if(playerID >= 0 && playerID <= 9) {
+            if(playerID >= 0) {
                 // Update our local skill list
                 localSkills = pickingData.builds[playerID].s;
             }
@@ -580,43 +580,104 @@ package {
                 }
             }
 
-            // The last set that is visible
-            var lastVisible = 0;
-
             // Side icons
-            for(i=0; i<10; i++) {
-                var build = pickingData.builds[i];
-                if(build) {
-                    var shouldDisplay = (globals.Players.GetPlayerHeroEntityIndex(i) != -1);
+            for(i=0; i<64; i++) {
+                updateBuild(i);
+            }
+        }
 
-                    if(shouldDisplay) lastVisible = i;
+        public function updateBuild(i) {
+            var skill, j:Number, skillName:String, yyy:Number;
+            var xx = maxStageWidth - sideTotalWidth;;
+            var yy = 64;
 
-                    // Update Hero Image
-                    skill = getSpecial('hero_'+i);
+            // Grab and validate the build
+            var build = pickingData.builds[i];
+            if(build) {
+                // Check if we should show these stats
+                var shouldDisplay = (globals.Players.GetPlayerHeroEntityIndex(i) != -1);
+
+                // Workout the y position
+                yyy = yy + i*(iconMiniSize + sidePaddingY);
+
+                // Ready state
+                skill = getSpecial('ready_'+i);
+                if(skill) {
+                    skill.visible = shouldDisplay && build.r;
+                } else {
+                    skill = new MovieClip();
+                    autoCleanupSpecial(skill, 'ready_'+i);
+                    skill.x = xx;
+                    skill.y = yyy;
+                    skill.visible = shouldDisplay && build.r;
+                    Globals.instance.LoadImage('images/hud/tick.png', skill, false);
+                    skill.scaleX = 0.5;
+                    skill.scaleY = 0.5;
+                }
+
+                xx += iconMiniSize + sidePaddingX;
+
+                // User's Steam Picture
+                skill = getSpecial('avatar_'+i);
+                if(skill) {
+                    skill.visible = shouldDisplay;
+                } else {
+                    skill = new MovieClip();
+                    autoCleanupSpecial(skill, 'avatar_'+i);
+                    skill.x = xx;
+                    skill.y = yyy;
+                    skill.visible = shouldDisplay;
+                    Globals.instance.LoadImage('img://[M' + this.steamIDs[i] + ']', skill, false);
+                    skill.scaleX = 16/avatarSize;
+                    skill.scaleY = 16/avatarSize;
+                }
+
+                xx += iconMiniSize + sidePaddingX;
+
+                // Create hero image thingo
+                skill = getSpecial('hero_'+i);
+                if(skill) {
+                    skill.UpdateHero(build.h);
+                    skill.visible = shouldDisplay;
+                } else {
+                    var heroIcon = new HeroDisplayMini(build.h);
+                    autoCleanupSpecial(heroIcon, 'hero_'+i);
+                    heroIcon.x = xx;
+                    heroIcon.y = yyy;
+                    heroIcon.visible = shouldDisplay;
+                    dragMakeValidFrom(heroIcon);
+                }
+
+                xx += 128/4.5 + sidePaddingX;
+
+                // Loop over all the skills in the build
+                for(j=0; j<maxSkills; j++) {
+                    // Grab name of this skill
+                    skillName = build.s[j];
+                    if(!skillName) skillName = 'doom_bringer_empty1';
+
+                    // Try to find this skill
+                    skill = getSpecial('skill_'+i+'_'+j);
                     if(skill) {
-                        skill.UpdateHero(build.h);
+                        // Found it, update it
+                        skill.UpdateSkill(skillName);
                         skill.visible = shouldDisplay;
-                    }
+                    } else {
+                        // Create a mini skill icon for it
+                        skill = new SkillMini(skillName);
+                        autoCleanupSpecial(skill, 'skill_'+i+'_'+j);
+                        skill.x = xx;
+                        skill.y = yyy;
+                        skill.visible = shouldDisplay;
 
-                    // Update ready state
-                    skill = getSpecial('ready_'+i);
-                    if(skill) skill.visible = shouldDisplay && build.r;
+                        // Allow dragging from this
+                        dragMakeValidFrom(skill);
 
-                    // Update steam avatar
-                    skill = getSpecial('avatar_'+i);
-                    if(skill) skill.visible = shouldDisplay;
+                        // Make it display info
+                        skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver, false, 0, true);
+                        skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut, false, 0, true);
 
-                    for(j=0; j<maxSkills; j++) {
-                        skill = getSpecial('skill_'+i+'_'+j);
-                        if(skill) {
-                            // Grab name of this skill
-                            skillName = build.s[j];
-                            if(!skillName) skillName = 'doom_bringer_empty1';
-
-                            // Found it, update it
-                            skill.UpdateSkill(skillName);
-                            skill.visible = shouldDisplay;
-                        }
+                        xx += iconMiniSize + sidePaddingX;
                     }
                 }
             }
@@ -1031,7 +1092,7 @@ package {
         }
 
         public function BuildPickingScreen() {
-            var skill:MovieClip, hero:MovieClip, btn, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, heroName:String, sx:Number, sy:Number, xx:Number, yy:Number;
+            var skill:MovieClip, hero:MovieClip, btn, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, heroName:String, sx:Number, sy:Number, xx:Number, yy:Number, iString;
 
             // Reset the current picker tabs
             this.pickerTabs = {}
@@ -1195,7 +1256,7 @@ package {
             // Grab playerID to build skill list
             var playerID = globals.Players.GetLocalPlayer();
 
-            if(playerID >= 0 && playerID <= 9) {
+            if(playerID >= 0) {
                 // Update our local skill list
                 localSkills = pickingData.builds[playerID].s;
             }
@@ -1250,83 +1311,12 @@ package {
             xx = sx;
             yy = sy;
 
-            // Grab total players
-            var totalPlayers = globals.Players.GetMaxPlayers();
-
-            var lastVisible = 0;
-
-            // Loop over all 10 builds
-            for(i=0; i<10; i++) {
-                // Grab and validate the build
-                var build = pickingData.builds[i];
-                if(build) {
-                    // Check if we should show these stats
-                    var shouldDisplay = (globals.Players.GetPlayerHeroEntityIndex(i) != -1);
-
-                    // If so, store this as the last visible
-                    if(shouldDisplay) lastVisible = i;
-
-                    // Ready state
-                    skill = new MovieClip();
-                    autoCleanupSpecial(skill, 'ready_'+i);
-                    skill.x = xx;
-                    skill.y = yy;
-                    skill.visible = shouldDisplay && build.r;
-                    Globals.instance.LoadImage('images/hud/tick.png', skill, false);
-                    skill.scaleX = 0.5;
-                    skill.scaleY = 0.5;
-
-                    xx += iconMiniSize + sidePaddingX;
-
-                    // User's Steam Picture
-                    skill = new MovieClip();
-                    autoCleanupSpecial(skill, 'avatar_'+i);
-                    skill.x = xx;
-                    skill.y = yy;
-                    skill.visible = shouldDisplay;
-                    Globals.instance.LoadImage('img://[M' + this.steamIDs[i] + ']', skill, false);
-                    skill.scaleX = 16/avatarSize;
-                    skill.scaleY = 16/avatarSize;
-
-                    xx += iconMiniSize + sidePaddingX;
-
-                    // Create hero image thingo
-                    var heroIcon = new HeroDisplayMini(build.h);
-                    autoCleanupSpecial(heroIcon, 'hero_'+i);
-                    heroIcon.x = xx;
-                    heroIcon.y = yy;
-                    heroIcon.visible = shouldDisplay;
-                    dragMakeValidFrom(heroIcon);
-
-                    xx += 128/4.5 + sidePaddingX;
-
-                    // Loop over all the skills in the build
-                    for(j=0; j<maxSkills; j++) {
-                        // Grab name of this skill
-                        skillName = build.s[j];
-                        if(!skillName) skillName = 'doom_bringer_empty1';
-
-                        // Create a mini skill icon for it
-                        skill = new SkillMini(skillName);
-                        autoCleanupSpecial(skill, 'skill_'+i+'_'+j);
-                        skill.x = xx;
-                        skill.y = yy;
-                        skill.visible = shouldDisplay;
-
-                        // Allow dragging from this
-                        dragMakeValidFrom(skill);
-
-                        // Make it display info
-                        skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver, false, 0, true);
-                        skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut, false, 0, true);
-
-                        xx += iconMiniSize + sidePaddingX;
-                    }
-                }
-
-                xx = sx;
-                yy += iconMiniSize + sidePaddingY;
+            // Loop over all builds
+            for(i=0; i<64; i++) {
+                updateBuild(i);
             }
+
+            yy = yy + 24 * (iconMiniSize + sidePaddingY);
 
             // Add ready button
             var readyButton = new Button();
