@@ -1296,20 +1296,23 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
 
     -- Remove all NPCs
     for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
-        -- Check if it's a h ero
-        if v:IsRealHero() then
-            -- Check if it has a player
-            local playerID = v:GetPlayerID()
-            local ply = Players:GetPlayer(playerID)
-            if ply then
-                -- Yes, replace this player's hero for axe
-                ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0)
+        -- Validate entity
+        if IsValidEntity(v) then
+            -- Check if it's a h ero
+            if v:IsRealHero() then
+                -- Check if it has a player
+                local playerID = v:GetPlayerID()
+                local ply = Players:GetPlayer(playerID)
+                if ply then
+                    -- Yes, replace this player's hero for axe
+                    ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0)
+                else
+                    -- Nope, remove it
+                    v:Remove()
+                end
             else
-                -- Nope, remove it
                 v:Remove()
             end
-        else
-            v:Remove()
         end
     end
 
