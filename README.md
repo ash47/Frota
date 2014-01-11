@@ -13,12 +13,6 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - There is a fully working drag and drop, hero selector
  - **Random OMG**
   - Seems to work, you get a random hero, 3 skills and an ult
-
-###Gameplay Gamemodes###
- - **PvP Arena**
-  - A PvP arena game mode
-
-###Picking + Gameplay Gamemodes###
  - **Pure Skill**
   - Play as pudge with meat hook, sacred arrow, skewer and ice shards, each spell has no mana cost!
   - Custom hook related stuff is slowly being added, as well as upgrades
@@ -26,10 +20,16 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - You get 4 spells with no mana cost to wreck havok.
  - **Puck Wars**
   - Play as Puck, most of Puck's spells have no mana cost.
- - **Rabbits VS Sheep**
-  - Rabbits VS Sheep
  - **Tiny Wars**
   - Players spawn as tiny, all of his spells have no mana cost.
+
+###Gameplay Gamemodes###
+ - **PvP Arena**
+  - A PvP arena game mode
+
+###Picking + Gameplay Gamemodes###
+ - **Rabbits VS Sheep**
+  - Rabbits VS Sheep
  - **Warlocks**
   - Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell.
 
