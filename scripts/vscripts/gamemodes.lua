@@ -150,6 +150,12 @@ RegisterGamemode('lod', {
         -- Change skills
         frota:ApplyBuild(hero)
     end,
+
+    -- DM Mode changed our hero
+    dmNewHero = function(frota, hero)
+        -- Change skills
+        frota:ApplyBuild(hero)
+    end
 })
 
 -- Random OMG
@@ -159,25 +165,32 @@ RegisterGamemode('romg', {
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
-        local playerID = ply:GetPlayerID()
-        local build = frota.selectedBuilds[playerID]
-
         -- Change hero
         ply:ReplaceHeroWith(frota:ChooseRandomHero(), 2500, 2600)
 
+        -- Grab hero
+        local playerID = ply:GetPlayerID()
         local hero = Players:GetSelectedHeroEntity(playerID)
 
-        -- Make a random build
-        frota:SetBuildSkills(playerID, {
+        -- Change skills
+        frota:ApplyBuild(hero, {
             [1] = frota:GetRandomAbility(),
             [2] = frota:GetRandomAbility(),
             [3] = frota:GetRandomAbility(),
             [4] = frota:GetRandomAbility('Ults')
         })
-
-        -- Change skills
-        frota:ApplyBuild(hero)
     end,
+
+    -- DM Mode changed our hero
+    dmNewHero = function(frota, hero)
+        -- Change skills
+        frota:ApplyBuild(hero, {
+            [1] = frota:GetRandomAbility(),
+            [2] = frota:GetRandomAbility(),
+            [3] = frota:GetRandomAbility(),
+            [4] = frota:GetRandomAbility('Ults')
+        })
+    end
 })
 
 -- Standard Arena PvP
@@ -251,47 +264,15 @@ RegisterGamemode('pureskill', {
         })
     end,
 
-    -- A list of options for fast gameplay stuff
-    options = {
-        -- Kills give team points
-        killsScore = true,
-
-        -- Enable scores
-        useScores = true,
-
-        -- Respawn delay
-        respawnDelay = 3
-    },
-
-    voteOptions = {
-        -- Score limit vote
-        scoreLimit = {
-            -- Range based
-            s = VOTE_SORT_RANGE,
-
-            -- Minimal possible value
-            min = 1,
-
-            -- Maximal possible value
-            max = 50,
-
-            -- Default vaule (if no one votes)
-            def = 10,
-
-            -- Slider tick interval
-            tick = 10,
-
-            -- Slider step interval
-            step = 1
-        }
-    },
-
-    onGameStart = function(frota)
-        -- Grab options
-        local options = frota:GetOptions()
-
-        -- Set the score limit
-        frota:SetScoreLimit(options.scoreLimit)
+    -- DM Mode changed our hero
+    dmNewHero = function(frota, hero)
+        -- Change skills
+        frota:ApplyBuild(hero, {
+            [1] = 'pure_skill_meat_hook',
+            [2] = 'pure_skill_mirana_arrow',
+            [3] = 'pure_skill_magnataur_skewer',
+            [4] = 'pure_skill_tusk_ice_shards'
+        })
     end
 })
 
@@ -358,6 +339,26 @@ RegisterGamemode('noBuying', {
                         break
                     end
                 end
+            end
+        end
+    end
+})
+
+-- DM Mode
+RegisterGamemode('dmMode', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_ADDON,
+
+    -- When players are given a new hero
+    onHeroKilled = function(frota, killedUnit, killerEntity)
+        if IsValidEntity(killedUnit) then
+            -- Change their hero
+            local newHero = frota:ChangeHero(killedUnit, frota:ChooseRandomHero())
+
+            -- Make sure the hero change worked
+            if IsValidEntity(newHero) then
+                -- Fire the new hero event
+                frota:FireEvent('dmNewHero', newHero)
             end
         end
     end

@@ -17,6 +17,11 @@ RegisterGamemode('warlocks', {
     -- Gamemode covers picking and playing
     sort = GAMEMODE_BOTH,
 
+    -- List of addons to ignore
+    ignoreAddons = {
+        dmMode = true
+    },
+
     -- Function to give out heroes
     assignHero = function(frota, ply)
 
@@ -25,10 +30,10 @@ RegisterGamemode('warlocks', {
 
         local playerID = ply:GetPlayerID()
         local hero = Players:GetSelectedHeroEntity(playerID)
-		
+
 		playerList[playerID] = hero
 		print("Warlocks: Adding player, ("..playerID..") to playerList.")
-		
+
         -- Give blinkdagger
         --hero:AddItem(CreateItem('item_blink', hero, hero))
 
@@ -42,7 +47,7 @@ RegisterGamemode('warlocks', {
 
         hero:__KeyValueFromInt('AbilityLayout', 4)
     end,
-	
+
 	onGameStart = function(frota)
 		print("onGameStart has fired!")
 		frota:CreateTimer('warlocks_countdown_timer', {
@@ -55,49 +60,49 @@ RegisterGamemode('warlocks', {
 		playerList = {}
 		--frota._scriptBind:BeginThink('WarlockCounterThink', 'counterThink', 0.5)
 	end,
-		
+
 	dota_player_used_ability = function(frota, keys)
 		PrintTable(keys)
 	end,
-		
+
 	CleanupPlayer = function(frota, leavingPly)
         local playerID = ply:GetPlayerID()
 		print("Warlocks: Removing disconnected player, ("..playerID..") from playerList.")
 		table.remove(playerList, playerID)
 	end,
-	
+
 	onThink = function(frota, dt)
 		--print("onThink has fired!", dt)
 		counterThink()
 	end,
-	
+
 	onGameEnd = function(frota)
 		print("onGameEnd has fired!")
 		frota._scriptBind:EndThink('WarlockCounterThink')
 		Convars:SetFloat("dota_all_vision", 0.0)
 	end,
-	
+
 	onHeroKilled = function(frota, killedUnit, killerEntity)
 		local killedPlayerID = killedUnit:GetPlayerID()
 		print("onHeroKilled has fired!")
 		print("Warlocks: Removing killed player, ("..killedPlayerID..") from playerList.")
 		table.remove(playerList, killedPlayerID)
-		
-		
+
+
 		if(#playerList <= 1) then
 			print(#playerList,"is the number of players in playerList.")
 			frota:EndGamemode()
 			return
 		end --You are the one and only.
-		
-		
+
+
 		frota:CreateTimer('warlocks_countdown_timer', {
 			endTime = Time() + 5,  -- Run 5 seconds from now
 			callback = function(frota, args)
 				__selectRandomWarlock()
 			end
 		})
-		
+
 	end,
 
     -- A list of options for fast gameplay stuff
@@ -141,7 +146,7 @@ function unstableSpellOnSpellStart(keys)
 	if target == nil then
 		return
 	end
-	
+
 	removeHolder(caster)
 	setHolder(target)
 end
@@ -150,7 +155,7 @@ function setHolder(hero)
 	hero:FindAbilityByName(unstableSkill):SetLevel(1)
 	previousHolder = currentHolder
 	currentHolder = hero
-	
+
 	createCounter()
 end
 

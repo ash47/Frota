@@ -507,9 +507,6 @@ function FrotaGameMode:OnEntityKilled(keys)
         -- Make sure we are playing
         if self.currentState ~= STATE_PLAYING then return end
 
-        -- Fire onHeroKilled event
-        self:FireEvent('onHeroKilled', killedUnit, killerEntity)
-
         -- Only respawn if delay > 0
         if (self.gamemodeOptions.respawnDelay or 0) > 0 then
             -- Respawn the dead guy after a delay
@@ -531,36 +528,21 @@ function FrotaGameMode:OnEntityKilled(keys)
         -- Check if point score
         if not self.gamemodeOptions.killsScore then return end
 
-        local winner = -1
-
-        -- Decide who to give a point to
+        -- Add points
         local team = killedUnit:GetTeam()
         if team == DOTA_TEAM_GOODGUYS then
             -- Add to the points
             self.scoreDire = self.scoreDire + 1
-
-            -- Check if the game was won
-            if self.scoreDire == (self.gamemodeOptions.scoreLimit or -1) then
-                winner = DOTA_TEAM_BADGUYS
-            end
         else
             -- Add to the points
             self.scoreRadiant = self.scoreRadiant + 1
-
-            -- Check if the game was won
-            if self.scoreRadiant == (self.gamemodeOptions.scoreLimit or -1) then
-                winner = DOTA_TEAM_GOODGUYS
-            end
         end
 
         -- Update the scores
         self:UpdateScoreData()
 
-        -- Check if there was a winner
-        if winner ~= -1 then
-            -- Reset back to gamemode voting
-            self:EndGamemode()
-        end
+        -- Fire onHeroKilled event
+        self:FireEvent('onHeroKilled', killedUnit, killerEntity)
     end
 end
 
@@ -696,6 +678,70 @@ function FrotaGameMode:ApplyBuild(hero, build)
         -- Add to build
         hero:AddAbility(v)
         self.currentSkillList[hero][k] = v
+    end
+end
+
+function FrotaGameMode:ChangeHero(hero, newHeroName)
+    local playerID = hero:GetPlayerID()
+    local ply = Players:GetPlayer(playerID)
+    if ply then
+        -- Grab info
+        local exp = hero:GetCurrentXP()
+        local gold = hero:GetGold()
+
+        local slots = {}
+        for i=0, 11 do
+            local item = hero:GetItemInSlot(i)
+                if item then
+                local purchaser = -1
+                if item:GetPurchaser() ~= hero then
+                    purchaser = item:GetPurchaser()
+                end
+
+                slots[i] = {
+                    purchaser = purchaser,
+                    purchaseTime = item:GetPurchaseTime(),
+                    currentCharges = item:GetCurrentCharges(),
+                    StacksWithOtherOwners = item:StacksWithOtherOwners(),
+                    sort = item:GetAbilityName()
+                }
+            end
+        end
+
+        -- Replace the hero
+        ply:ReplaceHeroWith(newHeroName, gold, exp)
+
+        -- Grab their new hero
+        local newHero = Players:GetSelectedHeroEntity(playerID)
+        if newHero then
+            local blockers = {}
+
+            -- Give items
+            for i=0, 11 do
+                local item = slots[i]
+                if item then
+                    local p = (item.purchaser == -1 and newHero) or item.purchaser
+                    local it = CreateItem(item.sort, p, p)
+                    it:SetPurchaseTime(item.purchaseTime)
+                    it:SetCurrentCharges(item.currentCharges)
+                    it:SetStacksWithOtherOwners(item.StacksWithOtherOwners)
+                    newHero:AddItem(it)
+                else
+                    local it = CreateItem('item_blink', newHero, newHero)
+                    newHero:AddItem(it)
+                    table.insert(blockers, it)
+                end
+            end
+
+            -- Remove blocks
+            for k,v in pairs(blockers) do
+                -- Remove this blocker
+                v:Remove()
+            end
+
+            -- Return their new hero
+            return newHero
+        end
     end
 end
 
@@ -843,11 +889,23 @@ function FrotaGameMode:UpdateTimerData()
 end
 
 function FrotaGameMode:UpdateScoreData()
-    -- Change the state data
-    self:ChangeStateData(self.currentStateDataRaw)
-
     -- Check if this gamemode uses scores
     if self.gamemodeOptions.useScores then
+        local winner = -1
+
+        -- Check if the game was won
+        if self.scoreDire == (self.gamemodeOptions.scoreLimit or -1) then
+            winner = DOTA_TEAM_BADGUYS
+        elseif self.scoreRadiant == (self.gamemodeOptions.scoreLimit or -1) then
+            winner = DOTA_TEAM_GOODGUYS
+        end
+
+        -- Check if there was a winner
+        if winner ~= -1 then
+            -- Reset back to gamemode voting
+            self:EndGamemode()
+        end
+
         -- Update clients
         FireGameEvent("afs_score_update", {
             d = JSON:encode({
@@ -1314,6 +1372,10 @@ function FrotaGameMode:VoteForGamemode()
         options['#afs_name_'..v] = '#afs_des_'..v
     end
 
+    -- Reset the loaders
+    self.toLoadPickMode = {}
+    self.toLoadPlayMode = {}
+
     -- Create a vote for the game mode
     self:CreateVote({
         sort = VOTE_SORT_SINGLE,
@@ -1352,33 +1414,48 @@ function FrotaGameMode:VoteForGamemode()
 
                         -- Vote for addons
                         self:VoteForAddons()
-
-                        -- Load this gamemode up
-                        --self:LoadGamemode(self.toLoadPickMode, self.toLoadPlayMode)
                     end
                 })
             else
                 -- Vote for addons
                 self:VoteForAddons()
-
-                -- We must have gotten someone we can just run
-                --self:LoadGamemode(self.toLoadPickMode)
             end
         end
     })
 end
 
 function FrotaGameMode:VoteForAddons()
+    -- Build list of incompatble addons
+    local incom = {}
+
+    if self.toLoadPickMode then
+        for k,v in pairs(self.toLoadPickMode.ignoreAddons or {}) do
+            if v then
+                incom[k] = true
+            end
+        end
+    end
+
+    if self.toLoadPlayMode then
+        for k,v in pairs(self.toLoadPlayMode.ignoreAddons or {}) do
+            if v then
+                incom[k] = true
+            end
+        end
+    end
+
     -- Grab all the addon gamemodes
     local modes = GetAddonGamemodes()
 
     local options = {}
     for k, v in pairs(modes) do
-        options['#afs_name_'..v] = {
-            d = '#afs_des_'..v,
-            s = VOTE_SORT_YESNO,
-            def = false
-        }
+        if not incom[v] then
+            options['#afs_name_'..v] = {
+                d = '#afs_des_'..v,
+                s = VOTE_SORT_YESNO,
+                def = false
+            }
+        end
     end
 
     -- Vote for the gameplay section
