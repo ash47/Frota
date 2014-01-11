@@ -338,18 +338,40 @@ RegisterGamemode('pureskill', {
 })
 
 -- Addon plugins
+
+-- WTF Mode
 RegisterGamemode('wtf', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
+    -- When the game starts
     onGameStart = function(frota)
         -- Enable WTF
         Convars:SetBool('dota_ability_debug', true)
     end,
 
+    -- When the game ends
     onGameEnd = function(frota)
         -- Disable WTF
         Convars:SetBool('dota_ability_debug', false)
+    end
+})
+
+-- Free Blink Dagger
+RegisterGamemode('freeBlinkDagger', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_ADDON,
+
+    -- When players are given a new hero
+    assignHero = function(frota, ply)
+        local playerID = ply:GetPlayerID()
+        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Make sure they have a hero
+        if hero then
+            -- Give them a blink dagger
+            hero:AddItem(CreateItem('item_blink', hero, hero))
+        end
     end
 })
 
