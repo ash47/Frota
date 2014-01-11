@@ -28,8 +28,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - A PvP arena game mode
 
 ###Picking + Gameplay Gamemodes###
- - **Rabbits VS Sheep**
-  - Rabbits VS Sheep
+ - **Rabbits vs. Sheep**
+  - What does the Rabbit say?
  - **Warlocks**
   - Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell.
 
@@ -40,6 +40,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Everyone will spawn with a free blink dagger.
  - **No Buying**
   - Items can't be bought from the shop.
+ - **DM Mode**
+  - Every time you die, you respawn as a new hero!
 
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
