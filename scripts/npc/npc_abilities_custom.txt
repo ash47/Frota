@@ -983,4 +983,302 @@
 			}
 		}
 	}
+	//=================================================================================================================
+	// Warlocks: Unstable Spell
+	//=================================================================================================================
+	"warlocks_unstable_spell"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ENEMIES"
+		"AbilityTextureName"		"warlocks_unstable_spell"
+		"MaxLevel"					"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"		"0"     
+
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"		"1"
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"		"0"
+		
+		"precache"
+		{
+			"particlefile" "particles/units/heroes/hero_alchemist.pcf"
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"TARGET"
+				"ScriptFile"			"scripts/vscripts/gamemodes/warlocks.lua"
+				"Function"				"unstableSpellOnSpellStart"
+			}
+
+			
+			"FireSound"
+			{
+				"EffectName"			"hero_Crystal.freezingField.explosion"
+				"Target"				"CASTER"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		
+		}
+	}
+
+	//=================================================================================================================
+	// Warlocks: Novice Jaunt
+	//=================================================================================================================
+	"warlocks_novice_jaunt"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"             "queenofpain_blink"
+		//"BaseClass"             "ability_datadriven"
+		"AbilityType"			"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"        "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE "
+		"AbilityTextureName"		"warlocks_novice_jaunt"
+		"MaxLevel"					"3"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"		"800"
+		"AbilityCastPoint"       "0.33 0.27 0.22"     
+
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"        "5 4 3"
+		
+		"precache"
+		{
+			"particlefile"				"particles/units/heroes/hero_morphling.pcf"
+		}
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
+
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"Target"					"POINT"
+				"EffectName"				"morphling_waveform"
+				"MoveSpeed"				"900"
+				"StartRadius"				"100"
+				"EndRadius"				"100"
+				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"TargetTypes"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+				"TargetFlags"				"DOTA_UNIT_TARGET_FLAG_NONE"
+				"HasFrontalCone"		"0"
+				"StartPosition"			"attach_attack2"
+				"FixedDistance"			"600"
+			}
+			"FireSound"
+			{
+				"EffectName"				"Ability.GushCast"
+			}
+			
+			//"MoveUnit"
+			//{
+			//	"Target"				"CASTER"
+			//	"Target"				"POINT"
+			//}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"false"
+	
+			"Stun"
+			{
+				"Target"				"TARGET"
+				"Duration"				"0.5"
+			}
+
+			"FireSound"
+			{
+				"EffectName"			"Ability.GushCast"
+			}
+		}
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blink_range"			"600 700 800"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_blink_range"		"200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Warlocks: Novice Hex
+	//=================================================================================================================
+	"warlocks_novice_hex"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"             "ability_datadriven"
+		"AbilityType"			"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"        "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ENEMIES"
+		"AbilityTextureName"		"warlocks_novice_hex"
+		"MaxLevel"					"3"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"       "0.33 0.27 0.22"     
+
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"        "8 5 3"
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
+
+		"OnSpellStart"
+		{
+			"Random"
+			{
+				"Chance" "%hex_chance"
+				//"PseudoRandom" "DOTA_PSEUDO_RANDOM_ITEM_MKB"
+				"OnSuccess"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName" "modifier_warlocks_novice_hex"
+						"Target" "TARGET"
+					}	
+					"FireSound"
+					{
+						"EffectName" "General.Chicken"
+					}
+				}
+				"OnFailure"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName" "modifier_warlocks_novice_hex"
+						"Target" "CASTER"
+					}	
+					"FireSound"
+					{
+						"EffectName" "General.Chicken"
+					}
+				}
+			}
+		}
+		
+		// Modifiers
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_warlocks_novice_hex"
+			{
+				"EffectName"									 "shadowshaman_voodoo"
+				"ModelName"									 "models/props_gameplay/chicken.mdl"
+				"Duration"										 "%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"	"%movespeed"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MUTED"			    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"           "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_PASSIVES_DISABLED"  "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_BLOCK_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_EVADE_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_HEXED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed"					"100 100 100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"1.0 2.0 3.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hex_chance"			"50 60 80"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Warlocks: Novice Ethereal
+	//=================================================================================================================
+	"warlocks_novice_ethereal"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"             "ability_datadriven"
+		"AbilityType"			"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"        "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE "
+		"AbilityTextureName"		"warlocks_novice_ethereal"
+		"MaxLevel"					"3"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"       "0"     
+
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"        "8a"
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
+
+		"OnSpellStart"
+		{
+				
+		}	
+	}
 }
