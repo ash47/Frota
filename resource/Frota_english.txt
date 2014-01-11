@@ -1,8 +1,8 @@
-﻿"lang"
+"lang"
 {
-	"Language"		"English"
-	"Tokens"
-	{
+    "Language"      "English"
+    "Tokens"
+    {
                 // Name of the game
                 "game_mode_15"                  "FROTA"
 
@@ -24,8 +24,8 @@
                 // PvP Arena
                 "afs_name_arena"                "PvP Arena"
                 "afs_des_arena"                 "A simple PvP arena mode."
-		"afs_o_scoreLimit"		"Score Limit"
-		"afs_od_scoreLimit"		"The amount of kills a team needs to win."
+                "afs_o_scoreLimit"      "Score Limit"
+                "afs_od_scoreLimit"     "The amount of kills a team needs to win."
 
                 // Pudge Wars
                 "afs_name_pudgewars"            "Pudge Wars"
@@ -56,7 +56,7 @@
                 "afs_tab_pick_skills"           "Pick Skills"
                 "afs_tab_pick_hero"             "Pick Hero"
 
-		// Invoker Wars
+        // Invoker Wars
                 "afs_name_INVOKERWARZ"          "Invoker Wars"
                 "afs_des_INVOKERWARZ"           "You're a bloody wizard 'Arry."
 
@@ -64,56 +64,56 @@
                 "afs_name_puckwars"             "Puck Wars"
                 "afs_des_puckwars"              "Play as puck >_>"
 
-		"DOTA_Tooltip_ability_invoker_wars_sun_strike"									"Sun Strike"
-		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"						"Sends a catastrophic ray of fierce energy from the sun at any targeted location, incinerating all enemies standing beneath it once it reaches the Earth. Damage is spread evenly over all enemies hit."
-		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Lore"								"Harlek's Incantation of Incineration."
-		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"								"Gives vision of the target area before the strike."
-		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note1"								"You gain experience with kills made from Sun Strike, even if made from outside of the 1200 experience range."
-		"DOTA_Tooltip_ability_invoker_wars_sun_strike_area_of_effect"					"RADIUS:"
-		"DOTA_Tooltip_ability_invoker_wars_sun_strike_delay"								"DELAY:"
-		"DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"							"DAMAGE:"
+        "DOTA_Tooltip_ability_invoker_wars_sun_strike"                                  "Sun Strike"
+        "DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"                      "Sends a catastrophic ray of fierce energy from the sun at any targeted location, incinerating all enemies standing beneath it once it reaches the Earth. Damage is spread evenly over all enemies hit."
+        "DOTA_Tooltip_ability_invoker_wars_sun_strike_Lore"                             "Harlek's Incantation of Incineration."
+        "DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"                                "Gives vision of the target area before the strike."
+        "DOTA_Tooltip_ability_invoker_wars_sun_strike_Note1"                                "You gain experience with kills made from Sun Strike, even if made from outside of the 1200 experience range."
+        "DOTA_Tooltip_ability_invoker_wars_sun_strike_area_of_effect"                   "RADIUS:"
+        "DOTA_Tooltip_ability_invoker_wars_sun_strike_delay"                                "DELAY:"
+        "DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"                           "DAMAGE:"
 
-		"DOTA_Tooltip_ability_invoker_wars_deafening_blast"								"Deafening Blast"
-		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"					"Invoker unleashes a mighty sonic wave in front of him, dealing damage to any enemy unit it collides with."
-		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"						"Buluphont's Aureal Incapacitator."
-		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Note0"						"This skill interrupts channeling abilities."
-		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"						"DAMAGE:"
-		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"			"KNOCKBACK DURATION:"
-		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"				"DISARM DURATION:"
+        "DOTA_Tooltip_ability_invoker_wars_deafening_blast"                             "Deafening Blast"
+        "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"                 "Invoker unleashes a mighty sonic wave in front of him, dealing damage to any enemy unit it collides with."
+        "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"                        "Buluphont's Aureal Incapacitator."
+        "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Note0"                       "This skill interrupts channeling abilities."
+        "DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"                      "DAMAGE:"
+        "DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"          "KNOCKBACK DURATION:"
+        "DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"             "DISARM DURATION:"
 
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor"									"Meat Ball"
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"						"Invoker pulls a flaming meat ball from space onto the targeted location. Upon landing, the meteor rolls forward, constantly dealing damage based on the level, and rolling further based on the level. Units hit by the meteor will also be set on fire for a short time, receiving additional damage based on the level."
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"							"Tarak's Descent of Fire."
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"							"Deals main damage to enemy units under meteor every 0.5 seconds and burns enemies for smaller damage over 3 seconds."
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note1"							"The meteor moves at a speed of 300."
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_land_time"						"LAND TIME:"
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_travel_distance"					"TRAVEL DISTANCE:"
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_area_of_effect"					"RADIUS:"
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"					"DAMAGE TICK:"
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"						"DAMAGE:"
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_duration"					"BURN TIME:"
-		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_dps"						"BURN DPS:"
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor"                                    "Meat Ball"
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "Invoker pulls a flaming meat ball from space onto the targeted location. Upon landing, the meteor rolls forward, constantly dealing damage based on the level, and rolling further based on the level. Units hit by the meteor will also be set on fire for a short time, receiving additional damage based on the level."
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "Tarak's Descent of Fire."
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "Deals main damage to enemy units under meteor every 0.5 seconds and burns enemies for smaller damage over 3 seconds."
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note1"                          "The meteor moves at a speed of 300."
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_land_time"                      "LAND TIME:"
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_travel_distance"                    "TRAVEL DISTANCE:"
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_area_of_effect"                 "RADIUS:"
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"                    "DAMAGE TICK:"
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"                        "DAMAGE:"
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_duration"                  "BURN TIME:"
+        "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_dps"                       "BURN DPS:"
 
-		"DOTA_Tooltip_ability_invoker_wars_leap"												"Shitty Wizard's Leap"
-		"DOTA_Tooltip_ability_invoker_wars_leap_Description"									"Invoker leaps forward into battle, empowering allied units with a ferocious honk upon landing, granting attack and movement speed. Speed bonus lasts 10 seconds."
-		"DOTA_Tooltip_ability_invoker_wars_leap_Lore"											"Both friend and foe alike recognize Invoker's iconic Shitty Wizard in the heat of battle."
-		"DOTA_Tooltip_ability_invoker_wars_leap_Note0"										"You can use Leap to dodge incoming projectiles."
-		"DOTA_Tooltip_ability_invoker_wars_leap_leap_distance"								"DISTANCE:"
-		"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus"								"%MOVEMENT BONUS:"
-		"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus_as"							"ATTACK SPEED BONUS:"
+        "DOTA_Tooltip_ability_invoker_wars_leap"                                                "Shitty Wizard's Leap"
+        "DOTA_Tooltip_ability_invoker_wars_leap_Description"                                    "Invoker leaps forward into battle, empowering allied units with a ferocious honk upon landing, granting attack and movement speed. Speed bonus lasts 10 seconds."
+        "DOTA_Tooltip_ability_invoker_wars_leap_Lore"                                           "Both friend and foe alike recognize Invoker's iconic Shitty Wizard in the heat of battle."
+        "DOTA_Tooltip_ability_invoker_wars_leap_Note0"                                      "You can use Leap to dodge incoming projectiles."
+        "DOTA_Tooltip_ability_invoker_wars_leap_leap_distance"                              "DISTANCE:"
+        "DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus"                                "%MOVEMENT BONUS:"
+        "DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus_as"                         "ATTACK SPEED BONUS:"
 
-		// Warlocks
-		"afs_name_warlocks"            "Warlocks"
-		"afs_des_warlocks"             "Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell."
+        // Warlocks
+        "afs_name_warlocks"            "Warlocks"
+        "afs_des_warlocks"             "Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell."
 
-		"DOTA_Tooltip_Ability_warlocks_unstable_spell"		"Unstable Spell"
-		"DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"		"You know, this does not look very safe? Stable? I dunno.. maybe throw it at some unlucky bastard? It's best you don't stick around to see  the results."
-		"DOTA_Tooltip_Ability_warlocks_novice_jaunt"		"Novice Jaunt"
-		"DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"		"You can manage to jaunt, but not far."
-		"DOTA_Tooltip_Ability_warlocks_novice_hex"		"Novice Hex"
-		"DOTA_Tooltip_Ability_warlocks_novice_hex_Description"		"You got about a 50/50 shot as hexing yourself."
-		"DOTA_Tooltip_Ability_warlocks_novice_ethereal"		"Novice Ethereal"
-		"DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"		"Ethereal yourself, your friend, your instructor; It don't matter but whomever gets it better watch out for spells."
+        "DOTA_Tooltip_Ability_warlocks_unstable_spell"      "Unstable Spell"
+        "DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "You know, this does not look very safe? Stable? I dunno.. maybe throw it at some unlucky bastard? It's best you don't stick around to see  the results."
+        "DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Novice Jaunt"
+        "DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "You can manage to jaunt, but not far."
+        "DOTA_Tooltip_Ability_warlocks_novice_hex"      "Novice Hex"
+        "DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "You got about a 50/50 shot as hexing yourself."
+        "DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Novice Ethereal"
+        "DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Ethereal yourself, your friend, your instructor; It don't matter but whomever gets it better watch out for spells."
 
-	}
+    }
 }
