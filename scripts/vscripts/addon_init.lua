@@ -17,5 +17,6 @@ require('gamemodes')
 require('gamemodes/tinywars')
 require('gamemodes/warlocks')
 require('gamemodes/invokerwars')
+require('gamemodes/puckwars')
 
 print("\n\nDone Loading!\n\n")
