@@ -111,6 +111,10 @@
                 "afs_name_rvs"            "Conejos contra Ovejas"
 
                 "afs_des_rvs"             "¿Que dice el conejo?"
+                
+                // Fat-o-Meter
+                "afs_name_fatometer"                        "Fat-o-Meter"
+                "afs_des_fatometer"                                "Cada vez que un héroe mata un creep o otro héroe,crece un poco."
 
 
 
