@@ -414,8 +414,6 @@ function FrotaGameMode:AutoAssignPlayer(keys)
         hero:Remove()
     end
 
-    print('playerID = '..playerID..', userid = '..keys.userid)
-
     -- Store into our map
     self.vUserIDMap[keys.userid] = ply
 
