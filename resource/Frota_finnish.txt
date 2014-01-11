@@ -24,7 +24,9 @@
                 // PvP Arena
                 "afs_name_arena"                "PvP Areena"
                 "afs_des_arena"                 "Yksinkertainen PvP-areena pelimuoto."
- 
+                "afs_o_scoreLimit"               "Pisteraja"
+                "afs_od_scoreLimit"               "Tappomäärä joka vaaditaan voittamiseen."
+                
                 // Pudge Wars
                 "afs_name_pudgewars"            "Pudge Sota"
                 "afs_des_pudgewars"             "Pelaa Pudgena, ensimmäinen tiimi 10:llä tapolla voittaa."
@@ -36,7 +38,8 @@
                 // Sunstrike Wars
                 "afs_name_sunstrikewars"        "Sun Strike Sota"
                 "afs_des_sunstrikewars"         "Yksi syntyvistä pelaajista saa Sun Striken ja hänen on tapettava kaikki muut pelaajat sillä."
- 
+                
+                // Pure Skill
                 "afs_name_pureskill"            "Täysin Taidolla"
                 "afs_des_pureskill"             "Pelaa Miranalla skewerillä, arrowilla, meat hookilla sekä ice shardilla."
                 
@@ -44,7 +47,10 @@
                 "afs_seconds_remaining"         "sekunnissa"
                 "afs_second_remaining"          "sekunti"
                 "afs_vote_ends_in"              "Äänestys loppuu"
- 
+                "afs_cast_vote"                 "Äänestä"          // The text on the vote button
+                "afs_vote_yes"                  "Kyllä"           // Vote yes button
+                "afs_vote_no"                   "Ei"            // Vote no button
+                
                 // Picking related
                 "afs_picking_timer"             "Valitseminen loppuu"
                 "afs_tab_pick_skills"           "Valitse kyvyt"

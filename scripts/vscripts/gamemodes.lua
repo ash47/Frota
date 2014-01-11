@@ -91,6 +91,20 @@ function GetPlayingGamemodes()
     return modes
 end
 
+-- Gets all the addons
+function GetAddonGamemodes()
+    local modes = {}
+
+    -- Build a list of picking gamemodes
+    for k,v in pairs(gamemodes.g) do
+        if v.sort == GAMEMODE_ADDON then
+            table.insert(modes, k)
+        end
+    end
+
+    return modes
+end
+
 -- Gets the table with info on a gamemode
 function GetGamemode(name)
     return gamemodes.g[name]
@@ -176,19 +190,47 @@ RegisterGamemode('arena', {
         -- Kills give team points
         killsScore = true,
 
-        -- Score Limit
-        scoreLimit = 10,
-
         -- Enable scores
         useScores = true,
 
         -- Respawn delay
         respawnDelay = 3
-    }
+    },
+
+    voteOptions = {
+        -- Score limit vote
+        scoreLimit = {
+            -- Range based
+            s = VOTE_SORT_RANGE,
+
+            -- Minimal possible value
+            min = 1,
+
+            -- Maximal possible value
+            max = 50,
+
+            -- Default vaule (if no one votes)
+            def = 10,
+
+            -- Slider tick interval
+            tick = 10,
+
+            -- Slider step interval
+            step = 1
+        }
+    },
+
+    onGameStart = function(frota)
+        -- Grab options
+        local options = frota:GetOptions()
+
+        -- Set the score limit
+        frota:SetScoreLimit(options.scoreLimit)
+    end
 })
 
 -- A Pudge Wars Type Gamemode
-RegisterGamemode('pudgewars', {
+--[[RegisterGamemode('pudgewars', {
     -- Gamemode covers picking and playing
     sort = GAMEMODE_BOTH,
 
@@ -204,10 +246,10 @@ RegisterGamemode('pudgewars', {
 
         -- Apply the build
         frota:ApplyBuild(hero, {
-            [1] = hookSkill,
-            [2] = 'mirana_arrow',
-            [3] = 'magnataur_skewer',
-            [4] = 'tusk_ice_shards'
+            [1] = 'pure_skill_meat_hook',
+            [2] = 'pure_skill_mirana_arrow',
+            [3] = 'pure_skill_magnataur_skewer',
+            [4] = 'pure_skill_tusk_ice_shards'
         })
 
         hero:__KeyValueFromInt('AbilityLayout', 6)
@@ -227,7 +269,7 @@ RegisterGamemode('pudgewars', {
         -- Respawn delay
         respawnDelay = 3
     }
-})
+})]]
 
 -- Mirana Wars or something like that
 RegisterGamemode('pureskill', {
@@ -244,10 +286,10 @@ RegisterGamemode('pureskill', {
 
         -- Apply the build
         frota:ApplyBuild(hero, {
-            [1] = 'magnataur_skewer',
-            [2] = 'mirana_arrow',
-            [3] = 'pudge_meat_hook',
-            [4] = 'tusk_ice_shards'
+            [1] = 'pure_skill_meat_hook',
+            [2] = 'pure_skill_mirana_arrow',
+            [3] = 'pure_skill_magnataur_skewer',
+            [4] = 'pure_skill_tusk_ice_shards'
         })
     end,
 
@@ -256,17 +298,64 @@ RegisterGamemode('pureskill', {
         -- Kills give team points
         killsScore = true,
 
-        -- Score Limit
-        scoreLimit = 10,
-
         -- Enable scores
         useScores = true,
 
         -- Respawn delay
         respawnDelay = 3
-    }
+    },
+
+    voteOptions = {
+        -- Score limit vote
+        scoreLimit = {
+            -- Range based
+            s = VOTE_SORT_RANGE,
+
+            -- Minimal possible value
+            min = 1,
+
+            -- Maximal possible value
+            max = 50,
+
+            -- Default vaule (if no one votes)
+            def = 10,
+
+            -- Slider tick interval
+            tick = 10,
+
+            -- Slider step interval
+            step = 1
+        }
+    },
+
+    onGameStart = function(frota)
+        -- Grab options
+        local options = frota:GetOptions()
+
+        -- Set the score limit
+        frota:SetScoreLimit(options.scoreLimit)
+    end
 })
 
+-- Addon plugins
+--[[RegisterGamemode('unlimitedMana', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_ADDON,
+
+    onHeroSpawned = function(frota, hero)
+        -- Remove old ability if it exsists
+        if hero:HasAbility('forest_troll_high_priest_mana_aura') then
+            hero:RemoveAbility('forest_troll_high_priest_mana_aura')
+        end
+
+        -- Add mana regen
+        hero:AddAbility('forest_troll_high_priest_mana_aura')
+
+        -- Set it to level 1
+        local ab = hero:FindAbilityByName('forest_troll_high_priest_mana_aura')
+        ab:SetLevel(1)
+    end
+})]]
 
 -- Not done yet
 --[[RegisterGamemode('sunstrikewars', {

@@ -15,5 +15,6 @@ require('gamemodes')
 
 -- Include gamemodes
 require('gamemodes/tinywars')
+require('gamemodes/invokerwars')
 
 print("\n\nDone Loading!\n\n")

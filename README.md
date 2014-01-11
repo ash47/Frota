@@ -109,6 +109,7 @@ Mod events are all in the form of (frota, keys), you can find the arguments belo
  - Spanish by JosDW
  - Portuguese by Kobb
  - Finnish by SQL
+ - Chinese by cs-italy
 
 ###Maps###
  - riverofsouls by Z-Machine

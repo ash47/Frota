@@ -1,6 +1,7 @@
 package {
     import flash.display.*;
     import flash.events.*;
+    import fl.events.SliderEvent;
     import fl.containers.ScrollPane;
     import fl.controls.ScrollPolicy;
     import fl.controls.Button;
@@ -95,6 +96,13 @@ package {
         // This is for toggling input on text fields
         private var bGotInput = false;
 
+        // Vote types
+        public static var VOTE_SORT_SINGLE = 0;
+        public static var VOTE_SORT_OPTIONS = 1;
+
+        public static var VOTE_SORT_YESNO = 11;
+        public static var VOTE_SORT_RANGE = 12;
+
         // This will contain movieclips and stuff that needs to be cleaned up
         private var stateCleanup = new Array(); // Generic stuff that can be removed
         private var stateCleanupSpecial = {};   // Specific things that can be removed
@@ -118,8 +126,9 @@ package {
         public var lastStateData;
 
         // Update related
-        public var lastUpdate = 0;
-        public var lastUpdateCheck = 0;
+        public var lastUpdate:Number = 0;
+        public var lastUpdateCheck:Number = 0;
+        public var lastProcessed:Number = 0;
 
         // Picker screen stuff
         private var currentPickerTab = TAB_SKILL_PICKER;
@@ -128,7 +137,9 @@ package {
         // Search related
         private var lastSearchTerm = "";
 
-        public function frota() {}
+        public function frota() {
+
+        }
 
         public function onLoaded() : void {
             // Store shortcut functions
@@ -180,6 +191,9 @@ package {
             // Give the new shop a graphic
             Globals.instance.LoadAbilityImage('antimage_spell_shield', newShop);*/
 
+            // Make the panel null
+            this.contentPanelHolder = null;
+
             // Hook game events
             this.gameAPI.SubscribeToGameEvent("hero_picker_hidden", this.requestCurrentState);
             this.gameAPI.SubscribeToGameEvent("afs_initial_state", this.receiveInitialState);
@@ -205,18 +219,10 @@ package {
             Globals.instance.GameInterface.AddMouseInputConsumer();
 
             // Update checker (the hud can be disabled, and miss events, this fixes that)
-            lastUpdateCheck = this.globals.Game.Time();
-            var timer:Timer = new Timer(1000);
-            timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
-                // Check if too much time has passed
-                if(globals.Game.Time() - lastUpdateCheck > 2) {
-                    requestCurrentStateInsant();
-                }
-
-                // Update when we last checked for updates
-                lastUpdateCheck = globals.Game.Time();
-            });
-            timer.start();
+            this.lastUpdateCheck = this.globals.Game.Time()+5;
+            var updateTimer:Timer = new Timer(1000);
+            updateTimer.addEventListener(TimerEvent.TIMER, TimerCheckForUpdates, false, 0, true);
+            updateTimer.start();
 
 
             // Text input
@@ -229,6 +235,20 @@ package {
 
             a.addEventListener(FocusHandlerEvent.FOCUS_IN, inputBoxGainFocus, false, 0, true);
             a.addEventListener(FocusHandlerEvent.FOCUS_OUT, inputBoxLoseFocus, false, 0, true);*/
+        }
+
+        public function TimerCheckForUpdates(e:TimerEvent) {
+            if(stage) {
+                // Check if too much time has passed
+                if(globals.Game.Time() - lastUpdateCheck > 2) {
+                    requestCurrentStateInsant();
+                }
+
+                // Update when we last checked for updates
+                lastUpdateCheck = globals.Game.Time();
+            } else {
+                e.target.stop();
+            }
         }
 
         // Instantly ask for the current state
@@ -254,8 +274,10 @@ package {
             // Request the current game state (after a delay)
             var timer:Timer = new Timer(1000, 1);
             timer.addEventListener(TimerEvent.TIMER, function(e:TimerEvent) {
-                // Ask for the current state
-                requestCurrentStateInsant();
+                if(stage) {
+                    // Ask for the current state
+                    requestCurrentStateInsant();
+                }
             });
             timer.start();
         }
@@ -370,6 +392,12 @@ package {
         }
 
         public function processState(args:Object) {
+            // Store the last update
+            lastUpdateCheck = globals.Game.Time();
+
+            if(globals.Game.Time() < lastProcessed) return;
+            lastProcessed = globals.Game.Time()+0.1;
+
             // Cleanup anything from old states
             cleanHud();
 
@@ -517,7 +545,7 @@ package {
         }
 
         public function updateBuildData(data) {
-            var skill, i:Number, j:Number, skillName:String;
+            var skill, i:Number, j:Number, skillName:String, iString;
 
             // Clear out current builds
             pickingData.builds = data;
@@ -528,7 +556,7 @@ package {
             // Grab playerID to build skill list
             var playerID = globals.Players.GetLocalPlayer();
 
-            if(playerID >= 0 && playerID <= 9) {
+            if(playerID >= 0) {
                 // Update our local skill list
                 localSkills = pickingData.builds[playerID].s;
             }
@@ -552,43 +580,104 @@ package {
                 }
             }
 
-            // The last set that is visible
-            var lastVisible = 0;
-
             // Side icons
-            for(i=0; i<10; i++) {
-                var build = pickingData.builds[i];
-                if(build) {
-                    var shouldDisplay = (globals.Players.GetPlayerHeroEntityIndex(i) != -1);
+            for(i=0; i<64; i++) {
+                updateBuild(i);
+            }
+        }
 
-                    if(shouldDisplay) lastVisible = i;
+        public function updateBuild(i) {
+            var skill, j:Number, skillName:String, yyy:Number;
+            var xx = maxStageWidth - sideTotalWidth;;
+            var yy = 64;
 
-                    // Update Hero Image
-                    skill = getSpecial('hero_'+i);
+            // Grab and validate the build
+            var build = pickingData.builds[i];
+            if(build) {
+                // Check if we should show these stats
+                var shouldDisplay = (globals.Players.GetPlayerHeroEntityIndex(i) != -1);
+
+                // Workout the y position
+                yyy = yy + i*(iconMiniSize + sidePaddingY);
+
+                // Ready state
+                skill = getSpecial('ready_'+i);
+                if(skill) {
+                    skill.visible = shouldDisplay && build.r;
+                } else {
+                    skill = new MovieClip();
+                    autoCleanupSpecial(skill, 'ready_'+i);
+                    skill.x = xx;
+                    skill.y = yyy;
+                    skill.visible = shouldDisplay && build.r;
+                    Globals.instance.LoadImage('images/hud/tick.png', skill, false);
+                    skill.scaleX = 0.5;
+                    skill.scaleY = 0.5;
+                }
+
+                xx += iconMiniSize + sidePaddingX;
+
+                // User's Steam Picture
+                skill = getSpecial('avatar_'+i);
+                if(skill) {
+                    skill.visible = shouldDisplay;
+                } else {
+                    skill = new MovieClip();
+                    autoCleanupSpecial(skill, 'avatar_'+i);
+                    skill.x = xx;
+                    skill.y = yyy;
+                    skill.visible = shouldDisplay;
+                    Globals.instance.LoadImage('img://[M' + this.steamIDs[i] + ']', skill, false);
+                    skill.scaleX = 16/avatarSize;
+                    skill.scaleY = 16/avatarSize;
+                }
+
+                xx += iconMiniSize + sidePaddingX;
+
+                // Create hero image thingo
+                skill = getSpecial('hero_'+i);
+                if(skill) {
+                    skill.UpdateHero(build.h);
+                    skill.visible = shouldDisplay;
+                } else {
+                    var heroIcon = new HeroDisplayMini(build.h);
+                    autoCleanupSpecial(heroIcon, 'hero_'+i);
+                    heroIcon.x = xx;
+                    heroIcon.y = yyy;
+                    heroIcon.visible = shouldDisplay;
+                    dragMakeValidFrom(heroIcon);
+                }
+
+                xx += 128/4.5 + sidePaddingX;
+
+                // Loop over all the skills in the build
+                for(j=0; j<maxSkills; j++) {
+                    // Grab name of this skill
+                    skillName = build.s[j];
+                    if(!skillName) skillName = 'doom_bringer_empty1';
+
+                    // Try to find this skill
+                    skill = getSpecial('skill_'+i+'_'+j);
                     if(skill) {
-                        skill.UpdateHero(build.h);
+                        // Found it, update it
+                        skill.UpdateSkill(skillName);
                         skill.visible = shouldDisplay;
-                    }
+                    } else {
+                        // Create a mini skill icon for it
+                        skill = new SkillMini(skillName);
+                        autoCleanupSpecial(skill, 'skill_'+i+'_'+j);
+                        skill.x = xx;
+                        skill.y = yyy;
+                        skill.visible = shouldDisplay;
 
-                    // Update ready state
-                    skill = getSpecial('ready_'+i);
-                    if(skill) skill.visible = shouldDisplay && build.r;
+                        // Allow dragging from this
+                        dragMakeValidFrom(skill);
 
-                    // Update steam avatar
-                    skill = getSpecial('avatar_'+i);
-                    if(skill) skill.visible = shouldDisplay;
+                        // Make it display info
+                        skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver, false, 0, true);
+                        skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut, false, 0, true);
 
-                    for(j=0; j<maxSkills; j++) {
-                        skill = getSpecial('skill_'+i+'_'+j);
-                        if(skill) {
-                            // Grab name of this skill
-                            skillName = build.s[j];
-                            if(!skillName) skillName = 'doom_bringer_empty1';
-
-                            // Found it, update it
-                            skill.UpdateSkill(skillName);
-                            skill.visible = shouldDisplay;
-                        }
+                        xx += iconMiniSize + sidePaddingX;
                     }
                 }
             }
@@ -738,28 +827,28 @@ package {
 
         public function newPanel() : void {
             // Check if we already have a content panel
-            if(contentPanelHolder != null) {
+            if(this.contentPanelHolder != null) {
                 // Remove everything from the content panel
-                while (contentPanelHolder.source.numChildren > 0) {
-                    contentPanelHolder.source.removeChildAt(0);
+                while (this.contentPanelHolder.source.numChildren > 0) {
+                    this.contentPanelHolder.source.removeChildAt(0);
                 }
 
                 // Make it visible
-                contentPanelHolder.visible = true;
+                this.contentPanelHolder.visible = true;
             } else {
                 // Create new content panel
-                contentPanelHolder = new ScrollPane();
-                addChild(contentPanelHolder)
+                this.contentPanelHolder = new ScrollPane();
+                addChild(this.contentPanelHolder)
 
                 // Setup the panel where the icons will go
-                contentPanel = new MovieClip();
-                contentPanelHolder.source = contentPanel;
+                this.contentPanel = new MovieClip();
+                this.contentPanelHolder.source = this.contentPanel;
             }
 
             // Position and size the content panel
-            contentPanelHolder.x = 224;
-            contentPanelHolder.y = 64;
-            contentPanelHolder.setSize(maxStageWidth-sideTotalWidth-sidePaddingX-contentPanelHolder.x-24, maxStageHeight - iconHeight - bottomMargin - 120);
+            this.contentPanelHolder.x = 224;
+            this.contentPanelHolder.y = 64;
+            this.contentPanelHolder.setSize(maxStageWidth-sideTotalWidth-sidePaddingX-this.contentPanelHolder.x-24, maxStageHeight - iconHeight - bottomMargin - 120);
 
         }
 
@@ -799,6 +888,16 @@ package {
         public function votePressed(e:Event) {
             var vote = e.currentTarget.parent;
             this.gameAPI.SendServerCommand("afs_vote \""+vote.optionName+"\"");
+        }
+
+        public function votePressedYes(e:Event) {
+            var vote = e.currentTarget.parent;
+            this.gameAPI.SendServerCommand("afs_vote \""+vote.optionName+"\" \"1\"");
+        }
+
+        public function votePressedNo(e:Event) {
+            var vote = e.currentTarget.parent;
+            this.gameAPI.SendServerCommand("afs_vote \""+vote.optionName+"\" \"0\"");
         }
 
         public function skillClicked(e:Event) {
@@ -899,8 +998,6 @@ package {
             if(pickerTabs.skillPickerTab != null) {
                 // Change directly to the tab
                 setPanelTab(pickerTabs.skillPickerTab);
-
-                trace("Clean swap! a");
             } else {
                 // Clean the hud
                 cleanHud();
@@ -918,8 +1015,6 @@ package {
             if(pickerTabs.heroPickerTab != null) {
                 // Change directly to the tab
                 setPanelTab(pickerTabs.heroPickerTab);
-
-                trace("Clean swap! b");
             } else {
                 // Clean the hud
                 cleanHud();
@@ -997,7 +1092,7 @@ package {
         }
 
         public function BuildPickingScreen() {
-            var skill:MovieClip, hero:MovieClip, btn, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, heroName:String, sx:Number, sy:Number, xx:Number, yy:Number;
+            var skill:MovieClip, hero:MovieClip, btn, i:Number, j:Number, xpadding:Number, ypadding:Number, totalWidth:Number, skillName:String, heroName:String, sx:Number, sy:Number, xx:Number, yy:Number, iString;
 
             // Reset the current picker tabs
             this.pickerTabs = {}
@@ -1161,7 +1256,7 @@ package {
             // Grab playerID to build skill list
             var playerID = globals.Players.GetLocalPlayer();
 
-            if(playerID >= 0 && playerID <= 9) {
+            if(playerID >= 0) {
                 // Update our local skill list
                 localSkills = pickingData.builds[playerID].s;
             }
@@ -1216,83 +1311,12 @@ package {
             xx = sx;
             yy = sy;
 
-            // Grab total players
-            var totalPlayers = globals.Players.GetMaxPlayers();
-
-            var lastVisible = 0;
-
-            // Loop over all 10 builds
-            for(i=0; i<10; i++) {
-                // Grab and validate the build
-                var build = pickingData.builds[i];
-                if(build) {
-                    // Check if we should show these stats
-                    var shouldDisplay = (globals.Players.GetPlayerHeroEntityIndex(i) != -1);
-
-                    // If so, store this as the last visible
-                    if(shouldDisplay) lastVisible = i;
-
-                    // Ready state
-                    skill = new MovieClip();
-                    autoCleanupSpecial(skill, 'ready_'+i);
-                    skill.x = xx;
-                    skill.y = yy;
-                    skill.visible = shouldDisplay && build.r;
-                    Globals.instance.LoadImage('images/hud/tick.png', skill, false);
-                    skill.scaleX = 0.5;
-                    skill.scaleY = 0.5;
-
-                    xx += iconMiniSize + sidePaddingX;
-
-                    // User's Steam Picture
-                    skill = new MovieClip();
-                    autoCleanupSpecial(skill, 'avatar_'+i);
-                    skill.x = xx;
-                    skill.y = yy;
-                    skill.visible = shouldDisplay;
-                    Globals.instance.LoadImage('img://[M' + this.steamIDs[i] + ']', skill, false);
-                    skill.scaleX = 16/avatarSize;
-                    skill.scaleY = 16/avatarSize;
-
-                    xx += iconMiniSize + sidePaddingX;
-
-                    // Create hero image thingo
-                    var heroIcon = new HeroDisplayMini(build.h);
-                    autoCleanupSpecial(heroIcon, 'hero_'+i);
-                    heroIcon.x = xx;
-                    heroIcon.y = yy;
-                    heroIcon.visible = shouldDisplay;
-                    dragMakeValidFrom(heroIcon);
-
-                    xx += 128/4.5 + sidePaddingX;
-
-                    // Loop over all the skills in the build
-                    for(j=0; j<maxSkills; j++) {
-                        // Grab name of this skill
-                        skillName = build.s[j];
-                        if(!skillName) skillName = 'doom_bringer_empty1';
-
-                        // Create a mini skill icon for it
-                        skill = new SkillMini(skillName);
-                        autoCleanupSpecial(skill, 'skill_'+i+'_'+j);
-                        skill.x = xx;
-                        skill.y = yy;
-                        skill.visible = shouldDisplay;
-
-                        // Allow dragging from this
-                        dragMakeValidFrom(skill);
-
-                        // Make it display info
-                        skill.addEventListener(MouseEvent.ROLL_OVER, this.onSkillRollOver, false, 0, true);
-                        skill.addEventListener(MouseEvent.ROLL_OUT, this.onSkillRollOut, false, 0, true);
-
-                        xx += iconMiniSize + sidePaddingX;
-                    }
-                }
-
-                xx = sx;
-                yy += iconMiniSize + sidePaddingY;
+            // Loop over all builds
+            for(i=0; i<64; i++) {
+                updateBuild(i);
             }
+
+            yy = yy + 24 * (iconMiniSize + sidePaddingY);
 
             // Add ready button
             var readyButton = new Button();
@@ -1308,6 +1332,8 @@ package {
         }
 
         public function BuildVoteScreen(data) {
+            var name:String, vote, voteInfo;
+
             // Create a new panel for the skills
             newPanel();
 
@@ -1320,28 +1346,87 @@ package {
             // This will store all the vote panels
             voteHolder = {};
 
-            // Fill it with vote options
-            for(var name:String in data.options) {
-                var voteInfo = data.options[name];
+            if(data.sort == VOTE_SORT_SINGLE) {
+                // Fill it with vote options
+                for(name in data.options) {
+                    voteInfo = data.options[name];
 
-                // Create vote panel
-                var vote = new VoteButton(name, voteInfo.des, voteInfo.count);
-                addPanelChild(vote);
-                vote.x = xx;
-                vote.y = yy;
+                    // Create vote panel
+                    vote = new VoteButton(name, voteInfo.des, voteInfo.count);
+                    addPanelChild(vote);
+                    vote.x = xx;
+                    vote.y = yy;
 
-                // Listen to button press
-                vote.Button.addEventListener(MouseEvent.CLICK, this.votePressed, false, 0, true);
+                    // Listen to button press
+                    vote.Button.addEventListener(MouseEvent.CLICK, this.votePressed, false, 0, true);
 
-                // Store this panel
-                voteHolder[name] = vote;
+                    // Store this panel
+                    voteHolder[name] = vote;
 
-                // Move the next panel down
-                yy = yy + voteHeight + padding;
+                    // Move the next panel down
+                    yy = yy + voteHeight + padding;
+                }
+            } else if(data.sort == VOTE_SORT_OPTIONS) {
+                // Fill it with vote options
+                for(name in data.options) {
+                    voteInfo = data.options[name];
+
+                    if(voteInfo.o.s == VOTE_SORT_YESNO) {
+                        // Create vote panel
+                        vote = new VoteButtonYesNo(name, voteInfo.o.d, voteInfo.count);
+                        addPanelChild(vote);
+                        vote.x = xx;
+                        vote.y = yy;
+
+                        // Listen to button press
+                        vote.ButtonYes.addEventListener(MouseEvent.CLICK, this.votePressedYes, false, 0, true);
+                        vote.ButtonNo.addEventListener(MouseEvent.CLICK, this.votePressedNo, false, 0, true);
+
+                        // Store this panel
+                        voteHolder[name] = vote;
+                    } else if(voteInfo.o.s == VOTE_SORT_RANGE) {
+                        // Create vote panel
+                        vote = new VoteButtonSlider(name, voteInfo.o.d, voteInfo.count, voteInfo.o.min, voteInfo.o.max, voteInfo.o.tick, voteInfo.o.step, voteInfo.o.def);
+                        addPanelChild(vote);
+                        vote.x = xx;
+                        vote.y = yy;
+
+                        // Listen to button press
+                        vote.Slider.addEventListener(SliderEvent.THUMB_RELEASE, this.voteSliderReleased, false, 0, true);
+                        vote.Stepper.addEventListener(Event.CHANGE, this.voteStepperChanged, false, 0, true);
+
+                        // Store this panel
+                        voteHolder[name] = vote;
+                    }
+
+
+                    // Move the next panel down
+                    yy = yy + voteHeight + padding;
+                }
             }
 
             // Update the scrollbar
             updatePanel();
+        }
+
+        public function voteSliderReleased(e:SliderEvent) {
+            this.updateVoteSliderValue(e.currentTarget.parent);
+        }
+
+        public function voteStepperChanged(e:Event) {
+            this.updateVoteSliderValue(e.target.parent);
+        }
+
+        public function updateVoteSliderValue(vote) {
+            // Grab the most up to date value
+            var v = vote.Slider.value;
+
+            // Check if the value even changed
+            if(v == vote.lastValue) return;
+            vote.lastValue = v;
+
+            // Tell the server
+            this.gameAPI.SendServerCommand("afs_vote \""+vote.optionName+"\" \""+v+"\"");
         }
 
         // Makes this movieclip draggable

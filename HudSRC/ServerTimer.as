@@ -6,7 +6,6 @@
 	import frota;
 
 	public class ServerTimer extends MovieClip {
-		public var timer:Timer;
 		public var timeLeft:Number;
 		public var text:String;
 		public var removed = false;
@@ -19,20 +18,32 @@
 			this.text = text;
 
 			// Create a timer
-			timer = new Timer(1000, timeLeft);
-			timer.addEventListener(TimerEvent.TIMER, this.UpdateTextField);
+			var timer:Timer = new Timer(1000, timeLeft);
+			timer.addEventListener(TimerEvent.TIMER, this.UpdateTextField, false, 0, true);
 			timer.start();
 
 			// Update the text field
-			this.UpdateTextField(0);
+            textField.text = frota.Translate(this.text)+"\n"+this.timeLeft+" "+frota.Translate("#afs_seconds_remaining");
 		}
 
-		public function UpdateTextField(e) {
+		public function UpdateTextField(e:TimerEvent) {
+            if(!stage) {
+                // Stop timer
+                e.target.stop();
+                return;
+            }
+
 			// Check if this timer has been removed
 			if(this.removed) {
 				// Stop it
-				if(timer) timer.stop();
+				e.target.stop();
 			} else {
+                if(!this.textField) {
+                    this.removed = true;
+                    e.target.stop();
+                    return;
+                }
+
 				// Update timer, with a nice display
                 if(this.timeLeft > 0 && this.timeLeft != 1) {
                     textField.text = frota.Translate(this.text)+"\n"+this.timeLeft+" "+frota.Translate("#afs_seconds_remaining");
@@ -44,7 +55,7 @@
                         this.parent.removeChild(this);
                     } else {
                         // Stop timer
-                        timer.stop();
+                        e.target.stop();
                     }
                 }
 
