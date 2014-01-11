@@ -1348,11 +1348,11 @@ end
 
 -- Ends the current game, resetting to the voting stage
 function FrotaGameMode:EndGamemode()
-    -- Cleanup
-    self:CleanupEverything(true)
-
     -- Fire start event
     self:FireEvent('onGameEnd')
+
+    -- Cleanup
+    self:CleanupEverything(true)
 
     -- Start game mode vote
     self:VoteForGamemode()
