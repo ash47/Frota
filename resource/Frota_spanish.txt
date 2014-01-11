@@ -37,15 +37,34 @@
                 "afs_name_sunstrikewars"        "Guerras de Sunstrike"
                 "afs_des_sunstrikewars"         "Un jugador empieza con Sunstrike y debe matar al resto de jugadores con el."
 				
-				// Pure Skill
+		// Pure Skill
                 "afs_name_pureskill"            "Pura Habilidad"
                 "afs_des_pureskill"             "Juega como mirana con skewer,arrow,meat hook y ice shards."
+                // Invoker Wars
+                "afs_name_INVOKERWARZ"          "Guerras de Invoker"
+                "afs_des_INVOKERWARZ"           "You're a bloody wizard 'Arry."
+                
+                // Puck Wars
+                "afs_name_puckwars"             "Guerras de Puck"
+                "afs_des_puckwars"              "Juega como Puck"
+                
+                // Warlocks
+                "afs_name_warlocks"            "Warlocks"
+                "afs_des_warlocks"             "Juega como un brujo,  blinkeando aleatoriamente al rededor del mapa y juega patata caliente con un hechizo inestable."
+                
+                // RvS
+                "afs_name_rvs"            "Conejos contra Ovejas"
+                "afs_des_rvs"             "¿Que dice el conejo?"
 
 
                 // Vote related
                 "afs_seconds_remaining"         "segundos"
                 "afs_second_remaining"          "segundo"
                 "afs_vote_ends_in"              "El voto acaba en"
+                "afs_cast_vote"                 "Vota"          // The text on the vote button
+                "afs_vote_yes"                  "Sí"           // Vote yes button
+                "afs_vote_no"                   "No"            // Vote no button
+                
 
                 // Picking related
                 "afs_picking_timer"             "El tiempo para escoger acaba en"
@@ -63,5 +82,93 @@
                                 
                 // Modifier Names
                 "DOTA_Tooltip_aura_health_regen"                                "Área explosiva"
+                /////////////////
+                // GAME ADDONS
+                ////////////////
+                
+                // WTF
+                "afs_name_wtf"                  "Modo WTF"
+                "afs_des_wtf"                   "Las habilidades y los items no tienen tiempo de enfriamiento."
+                
+                // Free Blink Dagger
+                "afs_name_freeBlinkDagger"      "Blink Dagger Gratis"
+                "afs_des_freeBlinkDagger"       "Todo el mundo comienza con una Blink Dagger."
+                
+                // No Buying
+                "afs_name_noBuying"                                "Nada de comprar."
+                "afs_des_noBuying"                                "Inhabilita la compra de items."
+                /////////////////
+                // ABILITIES
+                ////////////////
+                
+                // Invoker Wars
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike"                                  "Sun Strike"
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"                      "Lanza un rayo catastrófico de fuerza feroz desde el sol a cualquier localidad seleccionada,incinerando a todos los enemigos que esten debajo de el cuando llegue a la tierra. El daño se divide proporcionalmente entre los enemigos que golpees."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Lore"                             "El hechizo incinerante de Harlek."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"                                "Da visión del terreno seleccionado antes del golpe."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Note1"                                "Ganas experiencia con los asesinatos realizados con sunstrike,aun que fueran realizados fuera del rango de 1200 de experiencia."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_area_of_effect"                   "RADIO:"
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_delay"                                "RETRASO:"
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"                           "DAÑO:"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast"                             "Deafening Blast"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"                 "Invoker desata una potente onda sónica en frente suyo,haciendo daño a cualquier unidad enemiga que sea golpeada por ella."
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"                        "Incapacitador Aúreo de Buluphont."
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Note0"                       "Esta habilidad interrumpe habilidades canalizadas."
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"                      "DAÑO:"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"          "DURACIÓN:"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"             "DURACIÓN DEL DISARM:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor"                                    "Albóndiga"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "Invoker lanza una albóndiga ardiendo desde el espacio hasta la localización escogida.Al caer,el meteoro rueda hacia delante,constantemente haciendo daño dependiendo del nivel,y rodando mas lejos dependiendo del nivel.Las unidades golpeadas por el meteoro tambien arderan por una pequeña duración,recibiendo daño adicional dependiendo en el nivel."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "El descendo de fuego de Tarak."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "Hace el daño principal a las unidades enemigas debajo del meteoro cada 0.5 segundos y les quema por un daño menor durante 3 segundos."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note1"                          "El meteoro se mueve con una velocidad de 300."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_land_time"                      "TIEMPO DE CAIDA:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_travel_distance"                    "DISTANCIA RECORRIDA:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_area_of_effect"                 "RADIO:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"                    "TICK DE DAÑO:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"                        "DAÑO:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_duration"                  "TIEMPO DE QUEMADURAS:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_dps"                       "DPS DE QUEMADURAS:"
+                "DOTA_Tooltip_ability_invoker_wars_leap"                                                "El salto de Shitty Wizard"
+                "DOTA_Tooltip_ability_invoker_wars_leap_Description"                                    "Invoker salta hacia la batalla,empoderando unidades aliadas con un feroz graznido al caer,dando velocidad de ataque y de movimiento. El bonus de velocidad dura 10 segundos."
+                "DOTA_Tooltip_ability_invoker_wars_leap_Lore"                                           "Tanto unidades aliadas como enemigas reconocen el icónico Shitty Wizard de Invoker en el calor de la batalla."
+                "DOTA_Tooltip_ability_invoker_wars_leap_Note0"                                      "Puedes usar Leap para esquivar proyectiles."
+                "DOTA_Tooltip_ability_invoker_wars_leap_leap_distance"                              "DISTANCIA:"
+                "DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus"                                "%MOVEMENT BONUS:"
+                "DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus_as"                         "BONUS DE VELOCIDAD DE ATAQUE:"
+                
+                // Warlocks
+                "DOTA_Tooltip_Ability_warlocks_unstable_spell"      "Habilidad inestable"
+                "DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "Sabes,¿esto no parece muy seguro? ¿Estable? No se... ¿Quizas deberia de tirarselo a un bastardo sin suerte? Es mejor que no te quedes cerca para ver el resultado."
+                "DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Paseo de Novato"
+                "DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "Puedes pasear,pero no muy lejos."
+                "DOTA_Tooltip_Ability_warlocks_novice_hex"      "Hex de Novato"
+                "DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "Tienes cerca de 50% de hacerte Hex a ti mismo."
+                "DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Eterealización de Novato"
+                "DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Hazte etéreo a ti mismo,a tu amigo,a tu instructor;No importa,pero quien sea etéreo debe de tener cuidado con las habilidades."
+                
+                // Lycan Paw
+                "DOTA_Tooltip_Ability_item_lycan_paw"                                        "Patas de Lycan"
+                "DOTA_Tooltip_Ability_item_lycan_paw_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_ability_item_lycan_paw_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
+                "DOTA_Tooltip_ability_item_lycan_paw_item_level"                "NIVEL:"
+                "DOTA_Tooltip_Ability_item_lycan_paw_2"                                        "Patas de Lycan"
+                "DOTA_Tooltip_Ability_item_lycan_paw_2_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_ability_item_lycan_paw_2_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
+                "DOTA_Tooltip_ability_item_lycan_paw_2_item_level"                "NIVEL:"
+                "DOTA_Tooltip_Ability_item_lycan_paw_3"                                        "Patas de Lycan"
+                "DOTA_Tooltip_Ability_item_lycan_paw_3_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_ability_item_lycan_paw_3_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
+                "DOTA_Tooltip_ability_item_lycan_paw_3_item_level"                "NIVEL:"
+                "DOTA_Tooltip_Ability_item_lycan_paw_4"                                        "Patas de Lycan"
+                "DOTA_Tooltip_Ability_item_lycan_paw_4_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_ability_item_lycan_paw_4_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
+                "DOTA_Tooltip_ability_item_lycan_paw_4_item_level"                "NIVEL:"
+                "DOTA_Tooltip_Ability_item_lycan_paw_5"                                        "Patas de Lycan"
+                "DOTA_Tooltip_Ability_item_lycan_paw_5_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
+                "DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_percentage_bonus"        "BONUS DE PORCENTAJE DE VELOCIDAD DE MOVIMIENTO :"
+                "DOTA_Tooltip_ability_item_lycan_paw_5_attackspeed_bonus"                        "BONUS DE VELOCIDAD DE ATAQUE:"
+                "DOTA_Tooltip_ability_item_lycan_paw_5_item_level"                "NIVEL:"    
 	}
 }
