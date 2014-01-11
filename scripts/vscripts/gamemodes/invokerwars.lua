@@ -1,7 +1,7 @@
 -- Invoker Wars
 RegisterGamemode('INVOKERWARZ', {
     -- Gamemode only has a gameplay component
-    sort = GAMEMODE_BOTH,
+    sort = GAMEMODE_PICK,
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
