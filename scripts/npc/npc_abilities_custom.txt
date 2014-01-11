@@ -736,7 +736,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"8"
 		"AbilityManaCost"				"0"
@@ -855,7 +855,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"300"
+		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0"
 		"AbilityCooldown"				"30"
 		"AbilityManaCost"				"0"
@@ -936,11 +936,11 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityCastPoint"				"0.0 0.0 0.0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10 8 6 4"
+		"AbilityCooldown"				"10 8 6"
 		"AbilityDuration"				"10.0"
 
 		// Cost
@@ -954,7 +954,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leap_distance"			"630 720 780 870"
+				"leap_distance"			"630 720 800"
 			}
 			"02"
 			{
@@ -974,12 +974,12 @@
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"leap_speedbonus"	"4 8 12 16"
+				"leap_speedbonus"	"4 8 15"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"leap_speedbonus_as"	"8 16 24 32"
+				"leap_speedbonus_as"	"8 16 28"
 			}
 		}
 	}
