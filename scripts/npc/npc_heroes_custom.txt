@@ -82,4 +82,23 @@
 		"ParticleFile"				"particles/units/heroes/hero_invoker.pcf"
 		"GameSoundsFile"			"scripts/game_sounds_heroes/game_sounds_invoker.txt"
 	}
+	//=================================================================================================================
+	// HERO: Puck
+	//=================================================================================================================
+	"puckwars_npc_dota_hero_puck"												
+	{
+		"override_hero"		"npc_dota_hero_puck"
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityLayout"			"5"
+		"Ability1"				"puck_illusory_orb"							// Ability 1
+		"Ability2"				"puckwars_waning_rift"							// Ability 2
+		"Ability3"				"puckwars_phase_shift"							// Ability 3
+		"Ability4"				"puck_ethereal_jaunt"						// Ability 4
+		"Ability5"				"puckwars_dream_coil"							// Ability 5
+		"Ability6"				"attribute_bonus"							// Ability 6
+	}
+
+	
 }
