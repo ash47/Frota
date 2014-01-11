@@ -1,0 +1,27 @@
+ "MultiBlend"
+{
+	"%keywords" "dota"
+	"%tooltexture" "test/terraintest-1"
+
+	"$basetexture4"		nature/dirt_path004
+	//"$spectexture4"		nature/dirt_path004_spec
+	"$scale4"			2.0
+	"$rotation4"			-10.0
+
+	"$basetexture3"		stone/stone_tile004
+	"$spectexture3"		stone/stone_tile004_spec
+	"$scale3"			1.0
+	"$rotation3"			0.0
+
+	"$basetexture2"		stone/stone_path004
+	"$spectexture2"		stone/stone_path004_spec
+	"$scale2"			1.0
+	"$rotation2 "			-90.0
+
+	"$basetexture"		nature/dirt_path001
+	//"$spectexture"		nature/dirt_path001_spec
+	"$scale"			1.0
+	"$rotation"			0.0
+
+	"$fow" 				"_rt_fog_of_war"
+}
