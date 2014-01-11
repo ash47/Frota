@@ -12,6 +12,4 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
-
-# English Binary Fix
-*.txt set diff
+*.txt   diff=astextplain
