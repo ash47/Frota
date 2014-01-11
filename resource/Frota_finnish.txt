@@ -24,6 +24,8 @@
                 // PvP Arena
                 "afs_name_arena"                "PvP Areena"
                 "afs_des_arena"                 "Yksinkertainen PvP-areena pelimuoto."
+                
+                //Score Limit
                 "afs_o_scoreLimit"               "Pisteraja"
                 "afs_od_scoreLimit"               "Tappomäärä joka vaaditaan voittamiseen."
                 
@@ -43,6 +45,26 @@
                 "afs_name_pureskill"            "Täysin Taidolla"
                 "afs_des_pureskill"             "Pelaa Miranalla skewerillä, arrowilla, meat hookilla sekä ice shardilla."
                 
+                // WTF
+                "afs_name_wtf"                  "WTF Muoto"
+                "afs_des_wtf"                   "Kyvyillä ja tavaroilla ei ole cooldownia tai mana costia."
+                
+                // Free Blink Dagger
+                "afs_name_freeBlinkDagger"      "Ilmainen Blink Dagger"
+                "afs_des_freeBlinkDagger"       "Jokainen saa syntyessään ilmaisen Blink Daggerin."
+                
+                // Invoker Wars
+                "afs_name_INVOKERWARZ"          "Invoker Sota"
+                "afs_des_INVOKERWARZ"           "Olet velho."
+                
+                // Puck Wars
+                "afs_name_puckwars"             "Puck Sota"
+                "afs_des_puckwars"              "Pelaa puckina >_>"
+                
+                // Warlocks
+                "afs_name_warlocks"            "Warlockit"
+                "afs_des_warlocks"             "Pelaa noviisina Warlockina, sattumanvaraisesti blinkkailemassa ympäri tasoa sekä pelaamassa kuumaa perunaa epävakaalla kyvyllä."
+                
                 // Vote related
                 "afs_seconds_remaining"         "sekunnissa"
                 "afs_second_remaining"          "sekunti"
@@ -56,16 +78,74 @@
                 "afs_tab_pick_skills"           "Valitse kyvyt"
                 "afs_tab_pick_hero"             "Valitse sankari"
                 
-                // Unit Names
-                "npc_dota_mine"                                                        "Räjähtävä Miina"
-                                
-                // Ability Names
-                "DOTA_Tooltip_Ability_pudge_place_mine"                                "Sijoita Miina"
-                "DOTA_Tooltip_Ability_pudge_place_mine_description"                "Sijoittaa räjähtävän miinan joka räjähtää sekä tekee vahinkoa alueella kun vihollinen lähestyy sitä."
-                "DOTA_Tooltip_Ability_mine_explosion"                                "Räjäytä"
-                "DOTA_Tooltip_Ability_mine_explosion_description"                "Räjähtävä Miina laukeaa kun vihollinen menee sen lähelle."
-                                
-                // Modifier Names
-                "DOTA_Tooltip_aura_health_regen"                                "Räjähtävä alue"
+                // Invoker Wars
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike"                                  "Sun Strike"
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"                      "Lähettää katastrofaalisen säteen ankaraa energiaa auringosta mihin tahansa valittuun sijaintiin, polttaen kaikki alapuolella olevat kun se saavuttaa Maan. Vahinko leviää tasaisesti kaikkien osuneiden vihollisten kesken."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Lore"                             "Harlekin polttava loitsu."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"                                "Antaa näkymää valitusta alueesta ennen iskua."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Note1"                                "Sinä saat experienceä Sun Strike - tapoista, jopa yli experience-alueen."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_area_of_effect"                   "SÄDE:"
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_delay"                                "VIIVE:"
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"                           "VAHINKO:"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast"                             "Korvia särkevä Räjähdys"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"                 "Invoker vapauttaa mahtavan soonisen aallon eteensä,vahingoittaen jokaista vihollista johon se osuu"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"                        "Buluphontin auditiivinen lamautus"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Note0"                       "Tämä kyky häiritsee kanavoitavia kykyjä."
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"                      "VAHINKO:"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"          "TAKAISINPÄIN POTKAISUN KESTO"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"             "ASEETTOMUUDEN KESTO:
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor"                                    "Lihapulla"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "Invoker päästää liekehtivän lihapullan taivaasta valittuun sijaintiin. Saapuessaan se pyörii eteenpäin, jatkuvasti vahingoittaen vihollisia joihin se osuu."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "Tarakin laskeutunut tuli"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "Deals main damage to enemy units under meteor every 0.5 seconds and burns enemies for smaller damage over 3 seconds."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note1"                          "The meteor moves at a speed of 300."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_land_time"                      "LASKEUTUMISAIKA:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_travel_distance"                    "MATKAN PITUUS:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_area_of_effect"                 "SÄDE:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"                    "VAHINKO TIKITYS:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"                        "VAHINKO:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_duration"                  "POLTTO AIKA:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_dps"                       "POLTTO VAHINKO/SEKUNTI:"
+                "DOTA_Tooltip_ability_invoker_wars_leap"                                                "Paskan Velhon Loikka"
+                "DOTA_Tooltip_ability_invoker_wars_leap_Description"                                    "Invoker loikkaa eteenpäin taisteluun antaen omalle tiimilleen lyönti-sekä juoksu-nopeutta."
+                "DOTA_Tooltip_ability_invoker_wars_leap_Lore"                                           "Sekä ystävä että vihollinen tunnistavat Invokerin ikonisen Shitty Wizardin Taistelun kuumuudessa."
+                "DOTA_Tooltip_ability_invoker_wars_leap_Note0"                                      "Voit loikata väistääksesi saapuvia kappaleita."
+                "DOTA_Tooltip_ability_invoker_wars_leap_leap_distance"                              "MATKA:"
+                "DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus"                                "%JUOKSU-NOPEUS:"
+                "DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus_as"                         "LYÖNTI NOPEUS-BONUS:"
+                
+// Warlocks
+                "DOTA_Tooltip_Ability_warlocks_unstable_spell"      "Epävakaa Kyky"
+                "DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "Tiedäthän, tämä ei näytä kovin turvalliselta? Vakaalta? En tiedä. Voisit heittää sillä jotain epäonnista paskiaista? On parempi ettet jää seuraamaan tulosta..."
+                "DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Noviisi Jaunt"
+                "DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "Voit onnistua Jauntaamaan, mutta et pitkälle."
+                "DOTA_Tooltip_Ability_warlocks_novice_hex"      "Noviisi Hex"
+                "DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "Sinulla on noin 50% mahdollisuus Hexiä itsesi."
+                "DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Noviisi Ethereal"
+                "DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Etherealaa itsesi, ystäväsi, ohjeistajasi; Mutta se joka joutuu Etherealatuksi on parempi varoa kykyjä."
+               
+               // Lycan Paw
+                "DOTA_Tooltip_Ability_item_lycan_paw"                                        "Lycanin Tassut"
+                "DOTA_Tooltip_Ability_item_lycan_paw_description"                "Banehallowin nopeajalkainen henki parantaa Pudgen yleensä säälittävää kävelynopeutta."
+                "DOTA_Tooltip_ability_item_lycan_paw_movespeed_bonus"        "KÄVELYNOPEUS BONUS:"
+                "DOTA_Tooltip_ability_item_lycan_paw_item_level"                "TASO:"
+                "DOTA_Tooltip_Ability_item_lycan_paw_2"                                       "Lycanin Tassut"
+                "DOTA_Tooltip_Ability_item_lycan_paw_2_description"                "Banehallowin nopeajalkainen henki parantaa Pudgen yleensä säälittävää kävelynopeutta."
+                "DOTA_Tooltip_ability_item_lycan_paw_2_movespeed_bonus"        "KÄVELYNOPEUS BONUS:"
+                "DOTA_Tooltip_ability_item_lycan_paw_2_item_level"                "TASO:"
+                "DOTA_Tooltip_Ability_item_lycan_paw_3"                                       "Lycanin Tassut"
+                "DOTA_Tooltip_Ability_item_lycan_paw_3_description"                "Banehallowin nopeajalkainen henki parantaa Pudgen yleensä säälittävää kävelynopeutta."
+                "DOTA_Tooltip_ability_item_lycan_paw_3_movespeed_bonus"        "KÄVELYNOPEUS BONUS:"
+                "DOTA_Tooltip_ability_item_lycan_paw_3_item_level"                "TASO:"
+                "DOTA_Tooltip_Ability_item_lycan_paw_4"                                       "Lycanin Tassut"
+                "DOTA_Tooltip_Ability_item_lycan_paw_4_description"                "Banehallowin nopeajalkainen henki parantaa Pudgen yleensä säälittävää kävelynopeutta."
+                "DOTA_Tooltip_ability_item_lycan_paw_4_movespeed_bonus"        "KÄVELYNOPEUS BONUS:"
+                "DOTA_Tooltip_ability_item_lycan_paw_4_item_level"                "TASO:"
+                "DOTA_Tooltip_Ability_item_lycan_paw_5"                                       "Lycanin Tassut"
+                "DOTA_Tooltip_Ability_item_lycan_paw_5_description"                "Banehallowin nopeajalkainen henki parantaa Pudgen yleensä säälittävää kävelynopeutta."
+                "DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_bonus"        "KÄVELYNOPEUS BONUS:"
+                "DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_percentage_bonus"        "KÄVELYNOPEUDEN PROSENTUAALINEN BONUS:"
+                "DOTA_Tooltip_ability_item_lycan_paw_5_attackspeed_bonus"                        "HYÖKKÄYSNOPEUS-BONUS"
+                "DOTA_Tooltip_ability_item_lycan_paw_5_item_level"                "TASO:"
         }
 }
