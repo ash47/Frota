@@ -50,6 +50,9 @@
         - "entindex_attacker"       "long"
         - "entindex_inflictor"      "long"
         - "damagebits"              "long"
+
+    GAMEMODE FIRED EVENT - Events that are fired from certain gamemodes
+     - dmNewHero(frota, hero): DM Mode has allocated a new hero (hero being the new hero)
 ]]
 
 -- Table to store all the diffrent gamemodes
