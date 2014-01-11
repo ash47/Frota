@@ -140,8 +140,8 @@
                 // Warlocks
                 "DOTA_Tooltip_Ability_warlocks_unstable_spell"      "Habilidad inestable"
                 "DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "Sabes,¿esto no parece muy seguro? ¿Estable? No se... ¿Quizas deberia de tirarselo a un bastardo sin suerte? Es mejor que no te quedes cerca para ver el resultado."
-                "DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Paseo de Novato"
-                "DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "Puedes pasear,pero no muy lejos."
+                "DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Teletransporte de Novato"
+                "DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "Puedes teletransportarte,pero no muy lejos."
                 "DOTA_Tooltip_Ability_warlocks_novice_hex"      "Hex de Novato"
                 "DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "Tienes cerca de 50% de hacerte Hex a ti mismo."
                 "DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Eterealización de Novato"
