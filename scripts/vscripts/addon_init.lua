@@ -20,5 +20,8 @@ require('gamemodes/warlocks')
 require('gamemodes/invokerwars')
 require('gamemodes/puckwars')
 
+-- Include addons
+require('gamemodes/fatometer')
+
 
 print("\n\nDone Loading!\n\n")
