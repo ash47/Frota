@@ -156,6 +156,33 @@ function FrotaGameMode:RegisterCommands()
         self:EndGamemode()
     end, 'Ends the current game.', FCVAR_CHEAT)
 
+    -- Fill server with fake clients
+    Convars:RegisterCommand('fake', function(name, skillName, slotNumber)
+        -- Create fake players
+        SendToServerConsole('dota_create_fake_clients')
+
+        -- Assign the fakers
+        self:CreateTimer('assign_fakes', {
+            endTime = Time(),
+            callback = function(frota, args)
+                for i=0, 9 do
+                    print(i)
+                    local ply = Players:GetPlayer(i)
+                    print(ply)
+                    if Players:IsFakeClient(i) then
+                        print('FOUND A FAKE ONE! '..i)
+                        local ply = Players:GetPlayer(i)
+
+                        self:AutoAssignPlayer({
+                            userid = -(i+1),
+                            index = ply:entindex()-1
+                        })
+                    end
+                end
+            end
+        })
+    end, 'Connects and assigns fake players.', FCVAR_CHEAT)
+
     -- When a user tries to change heroes
     Convars:RegisterCommand('afs_hero', function(name, heroName)
         -- Verify we are in picking mode
@@ -386,6 +413,8 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     if IsValidEntity(hero) then
         hero:Remove()
     end
+
+    print('playerID = '..playerID..', userid = '..keys.userid)
 
     -- Store into our map
     self.vUserIDMap[keys.userid] = ply
