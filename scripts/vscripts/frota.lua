@@ -92,8 +92,7 @@ function FrotaGameMode:InitGameMode()
     Convars:SetBool('dota_suppress_invalid_orders', true)
 
     -- Start thinkers
-    self._scriptBind:BeginThink('FrotaTimers', Dynamic_Wrap(FrotaGameMode, 'ThinkTimers'), 0.1)
-    self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.25)
+    self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.1)
 
     -- Precache everything
     print('\n\nprecaching:')
@@ -926,8 +925,24 @@ function FrotaGameMode:_RestartGame()
     self:_SetInitialValues()
 end
 
--- Deals with timers
-function FrotaGameMode:ThinkTimers()
+function FrotaGameMode:Think()
+    -- If the game's over, it's over.
+    --[[if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
+        self._scriptBind:EndThink( "GameThink" )
+        return
+    end]]
+
+    -- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
+    local now = GameRules:GetGameTime()
+    if self.t0 == nil then
+        self.t0 = now
+    end
+    local dt = now - self.t0
+    self.t0 = now
+
+    -- Run the current think state
+    self:thinkState( dt )
+
     -- Process timers
     for k,v in pairs(self.timers) do
         -- Check if the timer has finished
@@ -949,25 +964,6 @@ function FrotaGameMode:ThinkTimers()
             self:UpdateTimerData()
         end
     end
-end
-
-function FrotaGameMode:Think()
-    -- If the game's over, it's over.
-    if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-        self._scriptBind:EndThink( "GameThink" )
-        return
-    end
-
-    -- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
-    local now = GameRules:GetGameTime()
-    if self.t0 == nil then
-        self.t0 = now
-    end
-    local dt = now - self.t0
-    self.t0 = now
-
-    -- Run the current think state
-    self:thinkState( dt )
 
     -- Fire gamemode thinks
     self:FireEvent('onThink', dt)
