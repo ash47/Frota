@@ -243,7 +243,7 @@
 
                 "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "Invoker lanza una albóndiga ardiendo desde el espacio hasta la localización escogida.Al caer,el meteoro rueda hacia delante,constantemente haciendo daño dependiendo del nivel,y rodando mas lejos dependiendo del nivel.Las unidades golpeadas por el meteoro tambien arderan por una pequeña duración,recibiendo daño adicional dependiendo en el nivel."
 
-                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "El descendo de fuego de Tarak."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "El descenso de fuego de Tarak."
 
                 "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "Hace el daño principal a las unidades enemigas debajo del meteoro cada 0.5 segundos y les quema por un daño menor durante 3 segundos."
 
@@ -373,9 +373,9 @@
 
                 "DOTA_Tooltip_ability_puckwars_dream_coil"                                                                                        "Dream Coil"
 
-                "DOTA_Tooltip_ability_puckwars_dream_coil_Description"                                                                "Crea una espiral de magia inestable que se une a los h�roes enemigos,aturdiendoles por 0.5 segundos y haciendoles da�o.Si el h�roe enemigo estira la espiral moviendose demasiado lejos,es aturdido y recibe da�o otra vez.\n\nUpgradable por Aghanim's Scepter."
+                "DOTA_Tooltip_ability_puckwars_dream_coil_Description"                                                                "Crea una espiral de magia inestable que se une a los hroes enemigos,aturdiendoles por 0.5 segundos y haciendoles daño.Si el héroe enemigo estira la espiral moviendose demasiado lejos,es aturdido y recibe daño otra vez.\n\nUpgradable por Aghanim's Scepter."
 
-                "DOTA_Tooltip_ability_puckwars_dream_coil_Lore"                                                                                "El hada dragón propaga la confusion forzando a sus enemigos a so�ar vividamente sobre su propia mortalidad."
+                "DOTA_Tooltip_ability_puckwars_dream_coil_Lore"                                                                                "El hada dragón propaga la confusion forzando a sus enemigos a soñar vividamente sobre su propia mortalidad."
 
                 "DOTA_Tooltip_ability_puckwars_dream_coil_Note0"                                                                        "El daño principal es bloqueado por Linken's Sphere, pero la unidad todavia sera afectada por la espiral."
 
