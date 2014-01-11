@@ -20,20 +20,17 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - There is a fully working drag and drop, hero selector
  - **Pudge Wars**
   - Players will spawn as pudge if this gamemode is selected
-  - First team to 10 wins
   - Custom hook related stuff is slowly being added, as well as upgrades
  - **Tiny Wars**
   - Players will spawn as tiny if this gamemode is selected
-  - First team to 10 wins
  - **PvP Arena**
-  - A PvP arena game mode, first team to 10 wins
+  - A PvP arena game mode
  - **Random OMG**
   - Seems to work, you get a random hero, 3 skills and an ult
- - **sunstrikewars**
-  - Added header + language files for it
-  - Lots of hooks need to be added before this game mode can be made
- - **pureskill**
-  - An unoffical gamemode: Play as mirana with skewer, arrow, meat hook and ice shards.
+ - **Invoker Wars**
+  - You get 4 spells with no mana cost to wreck havok.
+ - **Pure Skill**
+  - An unoffical gamemode: Play as pudge with meat hook, sacred arrow, skewer and ice shards.
 
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
