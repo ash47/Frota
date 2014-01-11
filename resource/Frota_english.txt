@@ -25,6 +25,7 @@
 		"afs_name_arena"                "PvP Arena"
 		"afs_des_arena"                 "A simple PvP arena mode."
 		
+		// Score Limit
 		"afs_o_scoreLimit"      "Score Limit"
 		"afs_od_scoreLimit"     "The amount of kills a team needs to win."
 		
