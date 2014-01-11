@@ -1,4 +1,4 @@
-��"lang"
+"lang"
 
 {
 
@@ -22,9 +22,9 @@
 
                 // All Pick
 
-                "afs_name_allpick"              "Elecci�n Libre"
+                "afs_name_allpick"              "Elección Libre"
 
-                "afs_des_allpick"               "Cada jugador elige un h�roe entre todos los disponibles."
+                "afs_des_allpick"               "Cada jugador elige un héroe entre todos los disponibles."
 
 
 
@@ -32,7 +32,7 @@
 
                 "afs_name_lod"                  "Leyendas de DotA"
 
-                "afs_des_lod"                   "Escoge tus habilidades y h�roe"
+                "afs_des_lod"                   "Escoge tus habilidades y héroe"
 
 
 
@@ -40,7 +40,7 @@
 
                 "afs_name_romg"                 "OMG Aleatorio"
 
-                "afs_des_romg"                  "Consigue un h�roe aleatorio,tres habilidades aleatorias y una habilidad definitiva aleatoria."
+                "afs_des_romg"                  "Consigue un héroe aleatorio,tres habilidades aleatorias y una habilidad definitiva aleatoria."
 
 
 
@@ -86,7 +86,7 @@
 
                 "afs_name_INVOKERWARZ"          "Guerras de Invoker"
 
-                "afs_des_INVOKERWARZ"           "You're a bloody wizard 'Arry."
+                "afs_des_INVOKERWARZ"           "Eres un jodido mago."
 
                 
 
@@ -102,7 +102,7 @@
 
                 "afs_name_warlocks"            "Warlocks"
 
-                "afs_des_warlocks"             "Juega como un brujo,  blinkeando aleatoriamente al rededor del mapa y juega patata caliente con un hechizo inestable."
+                "afs_des_warlocks"             "Juega como un brujo,  blinkeando aleatoriamente alrededor del mapa y juega patata caliente con un hechizo inestable."
 
                 
 
@@ -110,7 +110,7 @@
 
                 "afs_name_rvs"            "Conejos contra Ovejas"
 
-                "afs_des_rvs"             "�Que dice el conejo?"
+                "afs_des_rvs"             "¿Que dice el conejo?"
 
 
 
@@ -126,7 +126,7 @@
 
                 "afs_cast_vote"                 "Vota"          // The text on the vote button
 
-                "afs_vote_yes"                  "S�"           // Vote yes button
+                "afs_vote_yes"                  "Sí"           // Vote yes button
 
                 "afs_vote_no"                   "No"            // Vote no button
 
@@ -140,7 +140,7 @@
 
                 "afs_tab_pick_skills"           "Escoge habilidades"
 
-                "afs_tab_pick_hero"             "Escoge h����roe"
+                "afs_tab_pick_hero"             "Escoge héroe"
 
 				
 
@@ -154,7 +154,7 @@
 
                 "DOTA_Tooltip_Ability_pudge_place_mine"                                "Poner mina"
 
-                "DOTA_Tooltip_Ability_pudge_place_mine_description"                "Pone una mina explosiva que explota y da�a en un area cuando un enemigo se acerca a ella."
+                "DOTA_Tooltip_Ability_pudge_place_mine_description"                "Pone una mina explosiva que explota y daña en un area cuando un enemigo se acerca a ella."
 
                 "DOTA_Tooltip_Ability_mine_explosion"                                "Explotar"
 
@@ -164,7 +164,7 @@
 
                 // Modifier Names
 
-                "DOTA_Tooltip_aura_health_regen"                                "�rea explosiva"
+                "DOTA_Tooltip_aura_health_regen"                                "Área explosiva"
 
                 /////////////////
 
@@ -211,11 +211,11 @@
 
                 "DOTA_Tooltip_ability_invoker_wars_sun_strike"                                  "Sun Strike"
 
-                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"                      "Lanza un rayo catastr�fico de fuerza feroz desde el sol a cualquier localidad seleccionada,incinerando a todos los enemigos que esten debajo de el cuando llegue a la tierra. El da�o se divide proporcionalmente entre los enemigos que golpees."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"                      "Lanza un rayo catastrófico de fuerza feroz desde el sol a cualquier localidad seleccionada,incinerando a todos los enemigos que esten debajo de el cuando llegue a la tierra. El da�o se divide proporcionalmente entre los enemigos que golpees."
 
                 "DOTA_Tooltip_ability_invoker_wars_sun_strike_Lore"                             "El hechizo incinerante de Harlek."
 
-                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"                                "Da visi�n del terreno seleccionado antes del golpe."
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"                                "Da visión del terreno seleccionado antes del golpe."
 
                 "DOTA_Tooltip_ability_invoker_wars_sun_strike_Note1"                                "Ganas experiencia con los asesinatos realizados con sunstrike,aun que fueran realizados fuera del rango de 1200 de experiencia."
 
@@ -223,29 +223,29 @@
 
                 "DOTA_Tooltip_ability_invoker_wars_sun_strike_delay"                                "RETRASO:"
 
-                "DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"                           "DA�O:"
+                "DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"                           "DAÑO:"
 
                 "DOTA_Tooltip_ability_invoker_wars_deafening_blast"                             "Deafening Blast"
 
-                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"                 "Invoker desata una potente onda s�nica en frente suyo,haciendo da�o a cualquier unidad enemiga que sea golpeada por ella."
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"                 "Invoker desata una potente onda sónica en frente suyo,haciendo daña cualquier unidad enemiga que sea golpeada por ella."
 
-                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"                        "Incapacitador A�reo de Buluphont."
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"                        "Incapacitador Aúreo de Buluphont."
 
                 "DOTA_Tooltip_ability_invoker_wars_deafening_blast_Note0"                       "Esta habilidad interrumpe habilidades canalizadas."
 
-                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"                      "DA�O:"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"                      "DAÑO:"
 
-                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"          "DURACI�N:"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"          "DURACIÓN:"
 
-                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"             "DURACI�N DEL DISARM:"
+                "DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"             "DURACIÓN DEL DISARM:"
 
-                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor"                                    "Alb�ndiga"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor"                                    "AlbÓndiga"
 
-                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "Invoker lanza una alb�ndiga ardiendo desde el espacio hasta la localizaci�n escogida.Al caer,el meteoro rueda hacia delante,constantemente haciendo da�o dependiendo del nivel,y rodando mas lejos dependiendo del nivel.Las unidades golpeadas por el meteoro tambien arderan por una peque�a duraci�n,recibiendo da�o adicional dependiendo en el nivel."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "Invoker lanza una albóndiga ardiendo desde el espacio hasta la localización escogida.Al caer,el meteoro rueda hacia delante,constantemente haciendo daño dependiendo del nivel,y rodando mas lejos dependiendo del nivel.Las unidades golpeadas por el meteoro tambien arderan por una pequeña duración,recibiendo daño adicional dependiendo en el nivel."
 
                 "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "El descendo de fuego de Tarak."
 
-                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "Hace el da�o principal a las unidades enemigas debajo del meteoro cada 0.5 segundos y les quema por un da�o menor durante 3 segundos."
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "Hace el daño principal a las unidades enemigas debajo del meteoro cada 0.5 segundos y les quema por un daño menor durante 3 segundos."
 
                 "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note1"                          "El meteoro se mueve con una velocidad de 300."
 
@@ -255,9 +255,9 @@
 
                 "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_area_of_effect"                 "RADIO:"
 
-                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"                    "TICK DE DA�O:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"                    "TICK DE DAÑO:"
 
-                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"                        "DA�O:"
+                "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"                        "DAÑO:"
 
                 "DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_duration"                  "TIEMPO DE QUEMADURAS:"
 
@@ -267,7 +267,7 @@
 
                 "DOTA_Tooltip_ability_invoker_wars_leap_Description"                                    "Invoker salta hacia la batalla,empoderando unidades aliadas con un feroz graznido al caer,dando velocidad de ataque y de movimiento. El bonus de velocidad dura 10 segundos."
 
-                "DOTA_Tooltip_ability_invoker_wars_leap_Lore"                                           "Tanto unidades aliadas como enemigas reconocen el ic�nico Shitty Wizard de Invoker en el calor de la batalla."
+                "DOTA_Tooltip_ability_invoker_wars_leap_Lore"                                           "Tanto unidades aliadas como enemigas reconocen el icónico Shitty Wizard de Invoker en el calor de la batalla."
 
                 "DOTA_Tooltip_ability_invoker_wars_leap_Note0"                                      "Puedes usar Leap para esquivar proyectiles."
 
@@ -283,7 +283,7 @@
 
                 "DOTA_Tooltip_Ability_warlocks_unstable_spell"      "Habilidad inestable"
 
-                "DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "Sabes,�esto no parece muy seguro? �Estable? No se... �Quizas deberia de tirarselo a un bastardo sin suerte? Es mejor que no te quedes cerca para ver el resultado."
+                "DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "Sabes,¿esto no parece muy seguro? ¿stable? No se... ¿Quizas deberia de tirarselo a un bastardo sin suerte? Es mejor que no te quedes cerca para ver el resultado."
 
                 "DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Teletransporte de Novato"
 
@@ -293,9 +293,9 @@
 
                 "DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "Tienes cerca de 50% de hacerte Hex a ti mismo."
 
-                "DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Eterealizaci�n de Novato"
+                "DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Eterealización de Novato"
 
-                "DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Hazte et�reo a ti mismo,a tu amigo,a tu instructor;No importa,pero quien sea et�reo debe de tener cuidado con las habilidades."
+                "DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Hazte etéreo a ti mismo,a tu amigo,a tu instructor;No importa,pero quien sea etéreo debe de tener cuidado con las habilidades."
 
                 
 
@@ -303,7 +303,7 @@
 
                 "DOTA_Tooltip_Ability_item_lycan_paw"                                        "Patas de Lycan"
 
-                "DOTA_Tooltip_Ability_item_lycan_paw_description"                "El r�pido esp�ritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_Ability_item_lycan_paw_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
 
                 "DOTA_Tooltip_ability_item_lycan_paw_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
 
@@ -311,7 +311,7 @@
 
                 "DOTA_Tooltip_Ability_item_lycan_paw_2"                                        "Patas de Lycan"
 
-                "DOTA_Tooltip_Ability_item_lycan_paw_2_description"                "El r�pido esp�ritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_Ability_item_lycan_paw_2_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge.
 
                 "DOTA_Tooltip_ability_item_lycan_paw_2_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
 
@@ -319,7 +319,7 @@
 
                 "DOTA_Tooltip_Ability_item_lycan_paw_3"                                        "Patas de Lycan"
 
-                "DOTA_Tooltip_Ability_item_lycan_paw_3_description"                "El r�pido esp�ritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_Ability_item_lycan_paw_3_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge.
 
                 "DOTA_Tooltip_ability_item_lycan_paw_3_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
 
@@ -327,7 +327,7 @@
 
                 "DOTA_Tooltip_Ability_item_lycan_paw_4"                                        "Patas de Lycan"
 
-                "DOTA_Tooltip_Ability_item_lycan_paw_4_description"                "El r�pido esp�ritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_Ability_item_lycan_paw_4_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge.
 
                 "DOTA_Tooltip_ability_item_lycan_paw_4_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
 
@@ -335,7 +335,7 @@
 
                 "DOTA_Tooltip_Ability_item_lycan_paw_5"                                        "Patas de Lycan"
 
-                "DOTA_Tooltip_Ability_item_lycan_paw_5_description"                "El r�pido esp�ritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge."
+                "DOTA_Tooltip_Ability_item_lycan_paw_5_description"                "El rápido espíritu de Banehallow empodera la velocidad de movimiento usualmente lenta de Pudge.
 
                 "DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_bonus"        "BONUS DE VELOCIDAD DE MOVIMIENTO:"
 
@@ -349,49 +349,49 @@
 
                 "DOTA_Tooltip_ability_puckwars_waning_rift"                                                                                        "Waning Rift"
 
-                "DOTA_Tooltip_ability_puckwars_waning_rift_Description"                                                                "Puck lanza una onda de polvo de hada que hace da�o y silencia a los enemigos cercanos. "
+                "DOTA_Tooltip_ability_puckwars_waning_rift_Description"                                                                "Puck lanza una onda de polvo de hada que hace daño y silencia a los enemigos cercanos. "
 
-                "DOTA_Tooltip_ability_puckwars_waning_rift_Lore"                                                                        "Con una sorisa traviesa,Puck propaga su polvo encantado que interrumpe el flujo m�gico."
+                "DOTA_Tooltip_ability_puckwars_waning_rift_Lore"                                                                        "Con una sorisa traviesa,Puck propaga su polvo encantado que interrumpe el flujo mágico."
 
                 "DOTA_Tooltip_ability_puckwars_waning_rift_radius"                                                                        "RADIO:"
 
-                "DOTA_Tooltip_ability_puckwars_waning_rift_silence_duration"                                                "DURACI�N:"
+                "DOTA_Tooltip_ability_puckwars_waning_rift_silence_duration"                                                "DURACIÓN:"
 
                 "DOTA_Tooltip_ability_puckwars_phase_shift"                                                                                        "Phase Shift"
 
                 "DOTA_Tooltip_ability_puckwars_phase_shift_Description"                                                                "Puck se desplaza brevemente a otra dimension donde es inmune al dolor."
 
-                "DOTA_Tooltip_ability_puckwars_phase_shift_Lore"                                                                        "Con una broma y un destello,Puck vuelve a la dimensi�n alien de donde vino."
+                "DOTA_Tooltip_ability_puckwars_phase_shift_Lore"                                                                        "Con una broma y un destello,Puck vuelve a la dimensión alien de donde vino."
 
-                "DOTA_Tooltip_ability_puckwars_phase_shift_Note0"                                                                        "Puck mantiene su tama�o de colisi�n durante los efectos de phase shift."
+                "DOTA_Tooltip_ability_puckwars_phase_shift_Note0"                                                                        "Puck mantiene su tamaño de colisión durante los efectos de phase shift."
 
-                "DOTA_Tooltip_ability_puckwars_phase_shift_Note1"                                                                        "Haciendo cualquier acci�n cancela Phase Shift."
+                "DOTA_Tooltip_ability_puckwars_phase_shift_Note1"                                                                        "Hacer cualquier acción cancela Phase Shift."
 
                 "DOTA_Tooltip_ability_puckwars_phase_shift_Note2"                                                                        "Puck es invulnerable durante Phase Shift."
 
-                "DOTA_Tooltip_ability_puckwars_phase_shift_duration"                                                                "DURACI�N:"
+                "DOTA_Tooltip_ability_puckwars_phase_shift_duration"                                                                "DURACIÓN:"
 
                 "DOTA_Tooltip_ability_puckwars_dream_coil"                                                                                        "Dream Coil"
 
                 "DOTA_Tooltip_ability_puckwars_dream_coil_Description"                                                                "Crea una espiral de magia inestable que se une a los h�roes enemigos,aturdiendoles por 0.5 segundos y haciendoles da�o.Si el h�roe enemigo estira la espiral moviendose demasiado lejos,es aturdido y recibe da�o otra vez.\n\nUpgradable por Aghanim's Scepter."
 
-                "DOTA_Tooltip_ability_puckwars_dream_coil_Lore"                                                                                "El hada drag�n propaga la confusion forzando a sus enemigos a so�ar vividamente sobre su propia mortalidad."
+                "DOTA_Tooltip_ability_puckwars_dream_coil_Lore"                                                                                "El hada dragón propaga la confusion forzando a sus enemigos a so�ar vividamente sobre su propia mortalidad."
 
-                "DOTA_Tooltip_ability_puckwars_dream_coil_Note0"                                                                        "El da�o principal es bloqueado por Linken's Sphere, pero la unidad todavia sera afectada por la espiral."
+                "DOTA_Tooltip_ability_puckwars_dream_coil_Note0"                                                                        "El daño principal es bloqueado por Linken's Sphere, pero la unidad todavia sera afectada por la espiral."
 
                 "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_radius"                                                "RADIO DE ROTURA:"
 
                 "DOTA_Tooltip_ability_puckwars_dream_coil_coil_stun_duration"                                                "STUN AL ROMPERSE:"
 
-                "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage"                                                "DA�O AL ROMPERSE:"
+                "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage"                                                "DAÑO AL ROMPERSE:"
 
-                "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration"                                                        "DURACI�N:"
+                "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration"                                                        "DURACIÓN:"
 
-                "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration_scepter"                                        "DURACI�N CON SCEPTER:"
+                "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration_scepter"                                        "DURACIÓN CON SCEPTER:"
 
-                "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage_scepter"                                "DA�O AL ROMPERSE CON SCEPTER:"
+                "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage_scepter"                                "DAÑO AL ROMPERSE CON SCEPTER:"
 
-                "DOTA_Tooltip_ability_puckwars_dream_coil_aghanim_description"                                                "Incrementa la duraci�n y el da�o al romperse."
+                "DOTA_Tooltip_ability_puckwars_dream_coil_aghanim_description"                                                "Incrementa la duración y el daño al romperse."
 
 	}
 
