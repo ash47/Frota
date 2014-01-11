@@ -295,11 +295,7 @@ RegisterGamemode('pureskill', {
     end
 })
 
-<<<<<<< HEAD
--- Addon plugins
-=======
 --[[ Addon plugins ]]--
->>>>>>> upstream/master
 
 -- WTF Mode
 RegisterGamemode('wtf', {
@@ -337,8 +333,6 @@ RegisterGamemode('freeBlinkDagger', {
     end
 })
 
-<<<<<<< HEAD
-=======
 -- No Buying
 RegisterGamemode('noBuying', {
     -- This gamemode is only for picking
@@ -369,7 +363,6 @@ RegisterGamemode('noBuying', {
     end
 })
 
->>>>>>> upstream/master
 --[[RegisterGamemode('unlimitedMana', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
