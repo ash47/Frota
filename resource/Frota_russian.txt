@@ -148,13 +148,13 @@
 
 		// Warlocks
 		"DOTA_Tooltip_Ability_warlocks_unstable_spell"      "Unstable Spell"
-		"DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "Знаешь, это не выглядит безопасно? Как думаешь? Я не знаю... может бросить это в какого-нибудь неудачника? Лучше не тормозить, очень опасно..."
+		"DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "Знаешь, выглядит небезопасно... Как думаешь? Я не знаю... может бросить это в какого-нибудь неудачника? Лучше не тормозить, очень опасно..."
 		"DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Novice Jaunt"
 		"DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "Можешь прогуляться, только недалеко."
 		"DOTA_Tooltip_Ability_warlocks_novice_hex"      "Novice Hex"
 		"DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "Вероятность 50/50 что ты станешь свиньей."
 		"DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Novice Ethereal"
-		"DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Сделай бесплотным себя, друзей, учителя; Неважно кого, но ему лучше остерегаться магии."
+		"DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Сделай бесплотным себя, друзей, тренера; Неважно кого, но ему лучше остерегаться магии."
 
 		// Lycan Paw
 		"DOTA_Tooltip_Ability_item_lycan_paw"					"Lycan's Paws"
