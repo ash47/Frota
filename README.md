@@ -29,11 +29,10 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - A PvP arena game mode, first team to 10 wins
  - **Random OMG**
   - Seems to work, you get a random hero, 3 skills and an ult
- - **sunstrikewars**
-  - Added header + language files for it
-  - Lots of hooks need to be added before this game mode can be made
+ - **Invoker Wars**
+  - You get 4 spells with no mana cost to wreck havok.
  - **pureskill**
-  - An unoffical gamemode: Play as mirana with skewer, arrow, meat hook and ice shards.
+  - An unoffical gamemode: Play as pudge with meat hook, sacred arrow, skewer and ice shards.
 
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
