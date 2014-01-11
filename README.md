@@ -42,6 +42,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Items can't be bought from the shop.
  - **DM Mode**
   - Every time you die, you respawn as a new hero!
+ - **Fat-o-Meter**
+  - Every time a hero kills creep or another hero, he grows a little bit.
 
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
