@@ -274,6 +274,52 @@ RegisterGamemode('pureskill', {
 })
 
 
+RegisterGamemode('eswars', {
+    -- Gamemode only has a gameplay component
+    sort = GAMEMODE_BOTH,
+
+    -- Function to give out heroes
+    assignHero = function(frota, ply)
+        -- Change heroes
+        ply:ReplaceHeroWith('npc_dota_hero_earth_spirit', 2500, 2600)
+
+        local playerID = ply:GetPlayerID()
+        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Precache skills
+        frota:PrecacheSkill('earth_spirit_boulder_smash')
+        frota:PrecacheSkill('earth_spirit_rolling_boulder')
+        frota:PrecacheSkill('earth_spirit_geomagnetic_grip')
+        frota:PrecacheSkill('earth_spirit_stone_caller')
+        frota:PrecacheSkill('earth_spirit_magnetize')
+
+        -- Apply the build
+        frota:ApplyBuild(hero, {
+            [1] = 'pure_skill_earth_spirit_boulder_smash',
+            [2] = 'pure_skill_earth_spirit_rolling_boulder',
+            [3] = 'pure_skill_earth_spirit_geomagnetic_grip',
+            [4] = 'pure_skill_earth_spirit_stone_caller',
+            [5] = 'pure_skill_earth_spirit_magnetize'
+        })
+    end,
+
+    -- A list of options for fast gameplay stuff
+    options = {
+        -- Kills give team points
+        killsScore = true,
+
+        -- Score Limit
+        scoreLimit = 10,
+
+        -- Enable scores
+        useScores = true,
+
+        -- Respawn delay
+        respawnDelay = 3
+    }
+})
+
+
 -- Not done yet
 --[[RegisterGamemode('sunstrikewars', {
     -- Gamemode only has a gameplay component
