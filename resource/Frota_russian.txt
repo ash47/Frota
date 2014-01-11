@@ -202,7 +202,7 @@
         "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage"                                                "УРОН ОТ РАЗРЫВА:"
         "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration"                                                        "ДЛИТЕЛЬНОСТЬ СВЯЗКИ:"
         "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration_scepter"                                        "ДЛИТЕЛЬНОСТЬ СВЯЗКИ С Aghanim's:"
-        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage_scepter"                                ""УРОН ОТ РАЗРЫВА С Aghanim's:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage_scepter"                                "УРОН ОТ РАЗРЫВА С Aghanim's:"
         "DOTA_Tooltip_ability_puckwars_dream_coil_aghanim_description"                                                "Увеличивает урон от разрыва и продолжительность связки."
 
 	}
