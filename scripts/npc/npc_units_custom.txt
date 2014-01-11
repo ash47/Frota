@@ -7,7 +7,7 @@
 // MINE
 //=================================================================================
 	"npc_dota_mine"
-	{										
+	{
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/rattletrap/rattletrap_cog.mdl"	// Model.
@@ -33,13 +33,13 @@
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 		"AttackDamageMin"			"0"			// Damage range min.
-		"AttackDamageMax"			"0"			// Damage range max.	
+		"AttackDamageMax"			"0"			// Damage range max.
 		"AttackRate"				"1.0"		// Speed of attack.
 		"AttackAnimationPoint"		"0.0"		// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
 		"AttackRange"				"0"			// Range within a target can be attacked.
 		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
+		"ProjectileSpeed"			"0"			// Speed of projectile.
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -59,7 +59,7 @@
 		//----------------------------------------------------------------
 		"StatusHealth"				"100"		// Base health.
 		"StatusHealthRegen"			"0.5"		// Health regeneration rate.
-		
+
 		// Vision
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"400"		// Range of vision during day light.
@@ -72,12 +72,12 @@
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	}
-	
+
 	//=================================================================================
 // Pudge Wars: Barrier
 //=================================================================================
 	"npc_pudge_wars_barrier"
-	{										
+	{
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/props_structures/fence001.mdl"	// Model.
@@ -104,13 +104,13 @@
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 		"AttackDamageMin"			"0"			// Damage range min.
-		"AttackDamageMax"			"0"			// Damage range max.	
+		"AttackDamageMax"			"0"			// Damage range max.
 		"AttackRate"				"1.0"		// Speed of attack.
 		"AttackAnimationPoint"		"0.0"		// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
 		"AttackRange"				"0"			// Range within a target can be attacked.
 		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
+		"ProjectileSpeed"			"0"			// Speed of projectile.
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -130,7 +130,7 @@
 		//----------------------------------------------------------------
 		"StatusHealth"				"100"		// Base health.
 		"StatusHealthRegen"			"0.5"		// Health regeneration rate.
-		
+
 		// Vision
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"400"		// Range of vision during day light.
@@ -172,6 +172,7 @@
 			"model"			"models/heroes/rattletrap/rattletrap_cog.mdl"
 			"model"			"models/heroes/furion/treant.mdl"
 			"model"			"models/heroes/nightstalker/nightstalker_night.mdl"
+			"model"			"models/heroes/nightstalker/nightstalker.mdl"
 			"model"			"models/heroes/broodmother/spiderling.mdl"
 			"model"			"models/heroes/weaver/weaver_bug.mdl"
 			"model"			"models/heroes/gyro/gyro_missile.mdl"

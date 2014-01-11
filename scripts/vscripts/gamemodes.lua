@@ -229,52 +229,10 @@ RegisterGamemode('arena', {
     end
 })
 
--- A Pudge Wars Type Gamemode
---[[RegisterGamemode('pudgewars', {
-    -- Gamemode covers picking and playing
-    sort = GAMEMODE_BOTH,
-
-    -- Function to give out heroes
-    assignHero = function(frota, ply)
-        local hookSkill = 'pudge_meat_hook'
-
-        -- Change heroes
-        ply:ReplaceHeroWith('npc_dota_hero_pudge', 2500, 2600)
-
-        local playerID = ply:GetPlayerID()
-        local hero = Players:GetSelectedHeroEntity(playerID)
-
-        -- Apply the build
-        frota:ApplyBuild(hero, {
-            [1] = 'pure_skill_meat_hook',
-            [2] = 'pure_skill_mirana_arrow',
-            [3] = 'pure_skill_magnataur_skewer',
-            [4] = 'pure_skill_tusk_ice_shards'
-        })
-
-        hero:__KeyValueFromInt('AbilityLayout', 6)
-    end,
-
-    -- A list of options for fast gameplay stuff
-    options = {
-        -- Kills give team points
-        killsScore = true,
-
-        -- Score Limit
-        scoreLimit = 10,
-
-        -- Enable scores
-        useScores = true,
-
-        -- Respawn delay
-        respawnDelay = 3
-    }
-})]]
-
 -- Mirana Wars or something like that
 RegisterGamemode('pureskill', {
     -- Gamemode only has a gameplay component
-    sort = GAMEMODE_BOTH,
+    sort = GAMEMODE_PICK,
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
@@ -337,7 +295,74 @@ RegisterGamemode('pureskill', {
     end
 })
 
--- Addon plugins
+--[[ Addon plugins ]]--
+
+-- WTF Mode
+RegisterGamemode('wtf', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_ADDON,
+
+    -- When the game starts
+    onGameStart = function(frota)
+        -- Enable WTF
+        Convars:SetBool('dota_ability_debug', true)
+    end,
+
+    -- When the game ends
+    onGameEnd = function(frota)
+        -- Disable WTF
+        Convars:SetBool('dota_ability_debug', false)
+    end
+})
+
+-- Free Blink Dagger
+RegisterGamemode('freeBlinkDagger', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_ADDON,
+
+    -- When players are given a new hero
+    assignHero = function(frota, ply)
+        local playerID = ply:GetPlayerID()
+        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Make sure they have a hero
+        if hero then
+            -- Give them a blink dagger
+            hero:AddItem(CreateItem('item_blink', hero, hero))
+        end
+    end
+})
+
+-- No Buying
+RegisterGamemode('noBuying', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_ADDON,
+
+    -- When players are given a new hero
+    dota_item_purchased = function(frota, keys)
+        -- Check if this hero exists
+        local hero = Players:GetSelectedHeroEntity(keys.PlayerID)
+        if hero then
+            -- Loop over their items
+            for i=0, 11 do
+                -- See if there is an item in this slot
+                local item = hero:GetItemInSlot(i)
+                if item then
+                    -- See if it was the item that was just bought
+                    if item:GetAbilityName() == keys.itemname then
+                        -- Refund the gold
+                        Players:SetGold(keys.PlayerID, Players:GetUnreliableGold(keys.PlayerID)+keys.itemcost, false)
+
+                        -- Remove the item
+                        item:Remove()
+                        break
+                    end
+                end
+            end
+        end
+    end
+})
+
 --[[RegisterGamemode('unlimitedMana', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
