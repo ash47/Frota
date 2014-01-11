@@ -16,7 +16,8 @@ RegisterGamemode('INVOKERWARZ', {
             [1] = 'invoker_wars_sun_strike',
             [2] = 'invoker_wars_deafening_blast',
             [3] = 'invoker_wars_chaos_meteor',
-            [4] = 'invoker_wars_leap'
+            [4] = 'invoker_wars_leap',
+            [5] = 'attribute_bonus'
         })
     end,
 
