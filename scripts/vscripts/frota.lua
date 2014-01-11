@@ -86,6 +86,9 @@ function FrotaGameMode:InitGameMode()
     -- userID map
     self.vUserIDMap = {}
 
+    -- Active Hero Map
+    self.vActiveHeroMap = {}
+
     -- Load initital Values
     self:_SetInitialValues()
 
@@ -406,7 +409,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     end
 
     local playerID = ply:GetPlayerID()
-    local hero = Players:GetSelectedHeroEntity(playerID)
+    local hero = self:GetActiveHero(playerID)
     if IsValidEntity(hero) then
         hero:Remove()
     end
@@ -420,14 +423,14 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     self:CreateTimer('assign_player_'..entIndex, {
         endTime = Time(),
         callback = function(frota, args)
-            CreateHeroForPlayer('npc_dota_hero_axe', ply)
+            frota:SetActiveHero(CreateHeroForPlayer('npc_dota_hero_axe', ply))
 
             -- Check if we are in a game
             if self.currentState == STATE_PLAYING then
                 -- Check if we need to assign a hero
-                if IsValidEntity(Players:GetSelectedHeroEntity(playerID)) then
+                if IsValidEntity(self:GetActiveHero(playerID)) then
                     self:FireEvent('assignHero', ply)
-                    self:FireEvent('onHeroSpawned', Players:GetSelectedHeroEntity(playerID))
+                    self:FireEvent('onHeroSpawned', self:GetActiveHero(playerID))
                 end
             end
 
@@ -435,6 +438,14 @@ function FrotaGameMode:AutoAssignPlayer(keys)
             self:FireEvent('NewPlayer', ply)
         end
     })
+end
+
+function FrotaGameMode:SetActiveHero(hero)
+    self.vActiveHeroMap[hero:GetPlayerID()] = hero
+end
+
+function FrotaGameMode:GetActiveHero(playerID)
+    return self.vActiveHeroMap[playerID]
 end
 
 -- Cleanup a player when they leave
@@ -692,12 +703,14 @@ function FrotaGameMode:ChangeHero(hero, newHeroName)
         local slots = {}
         for i=0, 11 do
             local item = hero:GetItemInSlot(i)
-                if item then
+            if item then
+                -- Workout purchaser
                 local purchaser = -1
                 if item:GetPurchaser() ~= hero then
                     purchaser = item:GetPurchaser()
                 end
 
+                -- Store the item
                 slots[i] = {
                     purchaser = purchaser,
                     purchaseTime = item:GetPurchaseTime(),
@@ -705,14 +718,17 @@ function FrotaGameMode:ChangeHero(hero, newHeroName)
                     StacksWithOtherOwners = item:StacksWithOtherOwners(),
                     sort = item:GetAbilityName()
                 }
+
+                -- Remove the item
+                item:Remove()
             end
         end
 
         -- Replace the hero
-        ply:ReplaceHeroWith(newHeroName, gold, exp)
+        local newHero = ply:ReplaceHeroWith(newHeroName, gold, exp)
+        self:SetActiveHero(newHero)
 
-        -- Grab their new hero
-        local newHero = Players:GetSelectedHeroEntity(playerID)
+        -- Validate new hero
         if newHero then
             local blockers = {}
 
@@ -804,10 +820,10 @@ function FrotaGameMode:SelectHero(ply, heroName, dontChangeNow)
 
     if not dontChangeNow then
         -- Change hero
-        ply:ReplaceHeroWith(heroName, 0, 0)
+        local hero = ply:ReplaceHeroWith(heroName, 0, 0)
+        self:SetActiveHero(hero)
 
         -- Make sure we have a hero
-        local hero = Players:GetSelectedHeroEntity(playerID)
         if IsValidEntity(hero) then
             -- Check if the user is allowed to pick skills
             if not self.pickMode.pickSkills then
@@ -1342,7 +1358,7 @@ end
 function FrotaGameMode:ResetAllHeroes()
     -- Replace all player's heroes, and then stun them
     self:LoopOverPlayers(function(ply, playerID)
-        ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0)
+        self:SetActiveHero(ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0))
     end)
 end
 
@@ -1596,7 +1612,7 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
                 local ply = Players:GetPlayer(playerID)
                 if ply then
                     -- Yes, replace this player's hero for axe
-                    ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0)
+                    self:SetActiveHero(ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0))
                 else
                     -- Nope, remove it
                     v:Remove()
@@ -1617,10 +1633,10 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
     self:LoopOverPlayers(function(ply, playerID)
         -- Check if we should touch heroes
         if not leaveHeroes then
-            if IsValidEntity(Players:GetSelectedHeroEntity(playerID)) then
+            if IsValidEntity(self:GetActiveHero(playerID)) then
                 -- Assign them a hero
                 self:FireEvent('assignHero', ply)
-                self:FireEvent('onHeroSpawned', Players:GetSelectedHeroEntity(playerID))
+                self:FireEvent('onHeroSpawned', self:GetActiveHero(playerID))
             end
         end
 
