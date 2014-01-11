@@ -11,8 +11,13 @@ RegisterGamemode('INVOKERWARZ', {
         local playerID = ply:GetPlayerID()
         local hero = Players:GetSelectedHeroEntity(playerID)
 
-        -- Apply the build
-        -- frota:LoadBuildFromHero(hero)
+        -- Apply custom invoker skills
+        frota:ApplyBuild(hero, {
+            [1] = 'invoker_wars_sun_strike',
+            [2] = 'invoker_wars_deafening_blast',
+            [3] = 'invoker_wars_chaos_meteor',
+            [4] = 'invoker_wars_leap'
+        })
     end,
 
     -- A list of options for fast gameplay stuff

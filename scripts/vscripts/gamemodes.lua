@@ -338,6 +338,21 @@ RegisterGamemode('pureskill', {
 })
 
 -- Addon plugins
+RegisterGamemode('wtf', {
+    -- This gamemode is only for picking
+    sort = GAMEMODE_ADDON,
+
+    onGameStart = function(frota)
+        -- Enable WTF
+        Convars:SetBool('dota_ability_debug', true)
+    end,
+
+    onGameEnd = function(frota)
+        -- Disable WTF
+        Convars:SetBool('dota_ability_debug', false)
+    end
+})
+
 --[[RegisterGamemode('unlimitedMana', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
