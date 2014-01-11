@@ -52,6 +52,7 @@ RegisterGamemode('warlocks', {
 			end
 		})
 		Convars:SetFloat("dota_all_vision", 1.0)
+		playerList = {}
 		--frota._scriptBind:BeginThink('WarlockCounterThink', 'counterThink', 0.5)
 	end,
 		
@@ -66,7 +67,7 @@ RegisterGamemode('warlocks', {
 	end,
 	
 	onThink = function(frota, dt)
-		print("onThink has fired!", dt)
+		--print("onThink has fired!", dt)
 		counterThink()
 	end,
 	
@@ -83,7 +84,8 @@ RegisterGamemode('warlocks', {
 		table.remove(playerList, killedPlayerID)
 		
 		
-		if(#playerList < 2) then
+		if(#playerList <= 1) then
+			print(#playerList,"is the number of players in playerList.")
 			frota:EndGamemode()
 			return
 		end --You are the one and only.
@@ -119,7 +121,6 @@ function __selectRandomWarlock()
 	--PrintTable(warlocks)
 	for k,v in pairs(warlocks) do
 		if not v:IsAlive() then
-			print("removing dead warlock ("..k,v..") from list")
 			table.remove(warlocks, k)
 		end
 	end
@@ -163,14 +164,15 @@ function createCounter()
 		particleCountdown = nil
 		return
 	end
-	particleCountdown = ParticleManager:CreateParticle( "alchemist_unstable_concoction_timer", PATTACH_OVERHEAD_FOLLOW, currentHolder )
-	ParticleManager:SetParticleControl( particleCountdown, 0, Vec3( 0.0, 0.0, 0.0 ) )
 	if currentTime - math.floor(currentTime) >= 0.5 then
+		particleCountdown = ParticleManager:CreateParticle( "alchemist_unstable_concoction_timer", PATTACH_OVERHEAD_FOLLOW, currentHolder )
 		ParticleManager:SetParticleControl( particleCountdown, 1, Vec3( 0.0, currentTime, 8.0 ) )	-- Shows .5
+		ParticleManager:SetParticleControl( particleCountdown, 2, Vec3( 3.0, 0, 0.0 ) )
 	else
+		particleCountdown = ParticleManager:CreateParticle( "alchemist_unstable_concoction_timer", PATTACH_OVERHEAD_FOLLOW, currentHolder )
 		ParticleManager:SetParticleControl( particleCountdown, 1, Vec3( 0.0, currentTime, 1.0 ) )	-- Shows .0
+		ParticleManager:SetParticleControl( particleCountdown, 2, Vec3( 3.0, 0, 0.0 ) )
 	end
-	ParticleManager:SetParticleControl( particleCountdown, 2, Vec3( 3.0, 0, 0.0 ) )
 	--counterThink()
 end
 
@@ -189,7 +191,7 @@ function counterThink()
 	--if particleCountdown == nil then return end
 	if currentTime == 0 then return end
 	if currentHolder == nil then return end
-	print("counterThink",currentTime)
+	--print("counterThink",currentTime)
 	if currentTime <= 0 then
 		killHolder()
 		if currentTime ~= 0 then
