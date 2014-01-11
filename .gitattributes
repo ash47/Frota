@@ -13,3 +13,7 @@
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
 *.txt   diff=astextplain
+
+#test
+* binary
+*.txt crlf diff
