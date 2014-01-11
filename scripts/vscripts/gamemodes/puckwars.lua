@@ -1,4 +1,4 @@
--- Invoker Wars
+-- Puck Wars
 RegisterGamemode('puckwars', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_BOTH,
