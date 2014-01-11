@@ -166,11 +166,8 @@ function FrotaGameMode:RegisterCommands()
             endTime = Time(),
             callback = function(frota, args)
                 for i=0, 9 do
-                    print(i)
                     local ply = Players:GetPlayer(i)
-                    print(ply)
                     if Players:IsFakeClient(i) then
-                        print('FOUND A FAKE ONE! '..i)
                         local ply = Players:GetPlayer(i)
 
                         self:AutoAssignPlayer({
