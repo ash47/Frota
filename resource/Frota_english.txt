@@ -111,30 +111,8 @@
                 "afs_tab_pick_skills"           "Pick Skills"
 
                 "afs_tab_pick_hero"             "Pick Hero"
-
-
-
-		// Unit Names
-
-		"npc_dota_mine"							"Explosive Mine"
-
-
-
-		// Ability Names
-
-		"DOTA_Tooltip_Ability_pudge_place_mine"				"Place Mine"
-
-		"DOTA_Tooltip_Ability_pudge_place_mine_description"		"Places an explosive mine that explodes and deals damage in an area when an enemy comes near it."
-
-		"DOTA_Tooltip_Ability_mine_explosion"				"Explode"
-
-		"DOTA_Tooltip_Ability_mine_explosion_description"		"The explosive mine is triggered when an enemy comes near it."
-
-
-
-		// Modifier Names
-
-		"DOTA_Tooltip_aura_health_regen"				"Explosive Area"
+                
+                
 
 		// Invoker Wars
         	"afs_name_INVOKERWARZ"            "Invoker Wars"
