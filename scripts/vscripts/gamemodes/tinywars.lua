@@ -6,10 +6,8 @@ RegisterGamemode('tinywars', {
     -- Function to give out heroes
     assignHero = function(frota, ply)
         -- Change heroes
-        ply:ReplaceHeroWith('npc_dota_hero_tiny', 2500, 2600)
-
-		local playerID = ply:GetPlayerID()
-        local hero = Players:GetSelectedHeroEntity(playerID)
+        local hero = ply:ReplaceHeroWith('npc_dota_hero_tiny', 2500, 2600)
+        frota:SetActiveHero(hero)
 
 		-- Apply the build
         frota:ApplyBuild(hero, {

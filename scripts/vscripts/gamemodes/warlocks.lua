@@ -24,12 +24,11 @@ RegisterGamemode('warlocks', {
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
+        local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        ply:ReplaceHeroWith(warlockHero, 0, 0)
-
-        local playerID = ply:GetPlayerID()
-        local hero = Players:GetSelectedHeroEntity(playerID)
+        local hero = ply:ReplaceHeroWith(warlockHero, 0, 0)
+        frota:SetActiveHero(hero)
 
 		playerList[playerID] = hero
 		print("Warlocks: Adding player, ("..playerID..") to playerList.")
