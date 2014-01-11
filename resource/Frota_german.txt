@@ -24,10 +24,36 @@
                 // PvP Arena
                 "afs_name_arena"                "PvP Arena"
                 "afs_des_arena"                 "Eine einfache PvP Arena."
-
+				"afs_o_scoreLimit" 			    "Punktelimit"
+                "afs_od_scoreLimit"  		    "Die Anzahl der Kills die benötigt wird um zu gewinnen"
+ 
                 // Pudge Wars
                 "afs_name_pudgewars"            "Pudge Wars"
                 "afs_des_pudgewars"             "Spiele Pudge - das Team mit 10 Kills gewinnt."
+				
+				// Pudge Wars Items
+				"DOTA_Tooltip_Ability_item_lycan_paw"					"Lycan's paws"
+		        "DOTA_Tooltip_Ability_item_lycan_paw_description"		"Der schnellfüßige Geist von Banehallow verbessert Pudge's träge Beweung."
+		        "DOTA_Tooltip_ability_item_lycan_paw_movespeed_bonus"	"BEWEGUNGSBONUS:"
+	        	"DOTA_Tooltip_ability_item_lycan_paw_item_level"		"LEVEL:"
+	        	"DOTA_Tooltip_Ability_item_lycan_paw_2"					"Lycan's Paws"
+	        	"DOTA_Tooltip_Ability_item_lycan_paw_2_description"		"Der schnellfüßige Geist von Banehallow verbessert Pudge's träge Beweung."
+	        	"DOTA_Tooltip_ability_item_lycan_paw_2_movespeed_bonus"	"BEWEGUNGSBONUS:"
+	        	"DOTA_Tooltip_ability_item_lycan_paw_2_item_level"		"LEVEL:"
+	        	"DOTA_Tooltip_Ability_item_lycan_paw_3"					"Lycan's Paws"
+        		"DOTA_Tooltip_Ability_item_lycan_paw_3_description"		"Der schnellfüßige Geist von Banehallow verbessert Pudge's träge Beweung."
+        		"DOTA_Tooltip_ability_item_lycan_paw_3_movespeed_bonus"	"BEWEGUNGSBONUS:"
+		        "DOTA_Tooltip_ability_item_lycan_paw_3_item_level"		"LEVEL:"
+        		"DOTA_Tooltip_Ability_item_lycan_paw_4"					"Lycan's Paws"
+        		"DOTA_Tooltip_Ability_item_lycan_paw_4_description"		"Der schnellfüßige Geist von Banehallow verbessert Pudge's träge Beweung."
+	        	"DOTA_Tooltip_ability_item_lycan_paw_4_movespeed_bonus"	"BEWEGUNGSBONUS:"
+	        	"DOTA_Tooltip_ability_item_lycan_paw_4_item_level"		"LEVEL:"
+	        	"DOTA_Tooltip_Ability_item_lycan_paw_5"					"Lycan's Paws"
+	        	"DOTA_Tooltip_Ability_item_lycan_paw_5_description"		"Der schnellfüßige Geist von Banehallow verbessert Pudge's träge Beweung."
+	        	"DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_bonus"	"BEWEGUNGSBONUS:"
+	        	"DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_percentage_bonus"	"PROZENTUALER BEWEGUNGSBONUS:"
+	        	"DOTA_Tooltip_ability_item_lycan_paw_5_attackspeed_bonus"			"ANGRIFFSTEMPO-BONUS:"
+	        	"DOTA_Tooltip_ability_item_lycan_paw_5_item_level"		"LEVEL:"
 
                 // Tiny Wars
                 "afs_name_tinywars"            "Tiny Wars"
@@ -36,15 +62,98 @@
                 // Sunstrike Wars
                 "afs_name_sunstrikewars"        "Sun Strike Wars"
                 "afs_des_sunstrikewars"         "Ein Spieler hat Sunstrike und muss alle andere Spieler töten."
+				
+				 // Rabbit vs Sheep
+                "afs_name_rvs"       			"Hasen gegen Schafe"
+                "afs_des_rvs"         			"Sobald ihr einen Creep tötet hat euer gegner 2 zu töten - Das Team welches am besten verteidigt gewinnt."
+				
+				// Pure Skill
+                "afs_name_pureskill"            "Pure Skill"
+                "afs_des_pureskill"             "Spiele als Mirana mit 'Skewer', 'Sacred Arrow', 'Meat hook' und 'Ice shards'."
 
                 // Vote related
                 "afs_seconds_remaining"         "Sekunden"
                 "afs_second_remaining"          "Sekunde"
-                "afs_vote_ends_in"              "Voting endet in"
+                "afs_vote_ends_in"              "Wahl endet in"
+				"afs_cast_vote"                 "Wählen"          // The text on the vote button
+                "afs_vote_yes"                  "Ja"           // Vote yes button
+                "afs_vote_no"                   "Nein"            // Vote no button
 
                 // Picking related
                 "afs_picking_timer"             "Auswahl endet in"
                 "afs_tab_pick_skills"           "Wähle Skills aus"
                 "afs_tab_pick_hero"             "Wähle einen Helden aus"
-        }
+				
+				// WTF
+                "afs_name_wtf"                  "WTF Modus"
+                "afs_des_wtf"                   "Skills und Items haben keine Abklingzeit oder Manakosten"
+
+                // Free Blink Dagger
+                "afs_name_freeBlinkDagger"      "Gratis Blink Dagger"
+                "afs_des_freeBlinkDagger"       "Jeder bekommt beim Start einen Blink Dagger zugesteckt"
+				
+				// Invoker Wars
+                "afs_name_INVOKERWARZ"          "Invoker Wars"
+                "afs_des_INVOKERWARZ"           "Beweise dein können mit dem mächtigen Zauberer"
+				
+				// Zauber für Invoker Wars
+				"DOTA_Tooltip_ability_invoker_wars_sun_strike"                                  "Sun Strike"
+				"DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"                      "Feuert einen verheerenden Energiestrahl von der Sonne zu einem beliebigen Ziel, wobei umstehende Gegner verbrannt werden, wenn er auf den Boden trifft. Allerdings wird der Schaden gleichmäßig auf alle getroffenen Gegner verteilt."
+				"DOTA_Tooltip_ability_invoker_wars_sun_strike_Lore"                             "Harleks Beschwörung der Verbrennung."
+				"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"                            "Gewährt Sicht auf das Zielgebiet, bevor die Fähigkeit trifft."
+				"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note1"                            "Sie erhalten Erfahrung durch das Töten mit Sun Strike, selbst wenn Sie außerhalb der 1200 Erfahrungsreichweite stehen."
+				"DOTA_Tooltip_ability_invoker_wars_sun_strike_area_of_effect"                   "RADIUS:"
+				"DOTA_Tooltip_ability_invoker_wars_sun_strike_delay"                            "VERZÖGERUNG:"
+				"DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"                           "SCHADEN:"
+			
+				"DOTA_Tooltip_ability_invoker_wars_deafening_blast"                             "Deafening Blast"
+				"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"                 "Invoker entfesselt eine mächtige Schallwelle, die allen gegnerischen Einheiten, mit denen sie kollidiert, Schaden zufügt. Der bloße Einschlag des Angriffs reicht aus, um diese Einheiten zurückzustoßen und ihre Angriffe unschädlich zu machen."
+				"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"                        "Buluphonts aurale Störung."
+				"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Note0"                       "Diese Fähigkeit unterbricht kanalisierende Fähigkeiten."
+				"DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"                      "SCHADEN:"
+				"DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"          "RÜCKSTOSSDAUER:"
+				"DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"             "ENTWAFFNUNGSDAUER:"
+			
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor"                                    "Meat ball"
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "Invoker lässt ein brennendes Fleischbällchen auf das Zielgebiet stürzen. Nach der Landung verursacht das Fleischbällchen durchgehend auf dem Level basierenden Schaden und rollt eine bestimmte Strecke, abhängig vom Level weiter. Vom Fleischbällchen getroffene Einheiten werden für eine kurze Zeit in Brand gesetzt, was ihnen auf dem Level basierenden, zusätzlichen Schaden zufügt."
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "Taraks Absturz des Feuers."
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "Fügt feindlichen Einheiten unter dem Meteor alle 0,5 Sekunden Schaden zu und verbrennt Feinde für geringeren Schaden 3 Sekunden lang."
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note1"                          "Der Meteor bewegt sich mit einer Geschwindigkeit von 300."
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_land_time"                      "VERZÖGERUNG:"
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_travel_distance"                    "DISTANZ:"
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_area_of_effect"                 "RADIUS:"
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"                    "SCHADENSINTERVALL:"
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"                        "SCHADEN:"
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_duration"                  "BRANDDAUER:"
+				"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_dps"                       "BRANDSCHADEN PRO SEKUNDE:"
+			
+				"DOTA_Tooltip_ability_invoker_wars_leap"                                                "Shitty Wizard's Leap"
+				"DOTA_Tooltip_ability_invoker_wars_leap_Description"                                    "Invoker springt vorwärts in die Schlacht und stärkt verbündete Einheiten mit einem wilden Hupen bei der Landung, welches Angriffs- und Bewegungstempo gewährt. Das zusätzliche Tempo hält 10 Sekunden an."
+				"DOTA_Tooltip_ability_invoker_wars_leap_Lore"                                           "Sowohl Verbündete als auch Gegner erkennen Invokers ikonenhafte Frisur in der Hitze der Schlacht wieder."
+				"DOTA_Tooltip_ability_invoker_wars_leap_Note0"                                      "Mit Leap kann Projektilen ausgewichen werden."
+				"DOTA_Tooltip_ability_invoker_wars_leap_leap_distance"                              "DISTANZ:"
+				"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus"                                "%BEWEGUNGSBONUS:"
+				"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus_as"                         "ANGRIFFSTEMPO-BONUS:"
+				
+				// Puck Wars
+				"afs_name_puckwars"             "Puck Wars"
+                "afs_des_puckwars"              "Spiele als Puck >_>"
+				
+				// Warlocks
+				"afs_name_warlocks"            "Warlocks"
+				"afs_des_warlocks"             "Du bist ein ungeübter Magier versuche deinen instabilen Zauber von dir wegzuleiten"
+				
+				//Zauber für Warlocks
+				"DOTA_Tooltip_Ability_warlocks_unstable_spell"      "Ungeübter Spell"
+				"DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "Hmm... Sieht er sicher aus? oder Stabil? Keine Ahnung.. Vielleicht sollte Ich veruschen ihn lieber auf meine Rivalen umzuleiten? Es ist wohl besser wenn Ich nicht lange warte."
+				"DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Ungeübter Jaunt"
+				"DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "Du schaffst es endlich zu Reisen, jedoch nicht sehr weit..."
+				"DOTA_Tooltip_Ability_warlocks_novice_hex"      "Ungeübter Hex"
+				"DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "Deine Chancen dich oder dein Ziel zu Hexxen stehen 50/50"
+				"DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Ungeübter Ethereal"
+				"DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Bringe dein Ziel in Äthärische form; Ich hoffe es passt auf sich auf..."
+				
+
+				
+	}
 }
