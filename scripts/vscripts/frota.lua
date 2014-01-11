@@ -1513,7 +1513,7 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
         -- Validate entity
         if IsValidEntity(v) then
             -- Check if it's a h ero
-            if v:IsRealHero() then
+            if v.IsRealHero and v:IsRealHero() then
                 -- Check if it has a player
                 local playerID = v:GetPlayerID()
                 local ply = Players:GetPlayer(playerID)
