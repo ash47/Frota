@@ -1,0 +1,209 @@
+"lang"
+{
+	"Language"      "Greek"
+	"Tokens"
+	{
+		/////////////////
+		// BASE STRINGS
+		////////////////
+
+		// Name of the game
+		"game_mode_15"                  "FROTA"
+
+		// Toggle ready state
+		"afs_toggle_ready"				"Έτοιμος;"
+
+		// Vote related
+		"afs_seconds_remaining"         "δευτερόλεπτα"
+		"afs_second_remaining"          "δευτερόλεπτο"
+		"afs_vote_ends_in"              "Η ψηφοφορία τελειώνει σε"
+		"afs_cast_vote"                 "Ψηφίστε"          // The text on the vote button
+		"afs_vote_yes"                  "Ναι"           // Vote yes button
+		"afs_vote_no"                   "Όχι"            // Vote no button
+
+		// Picking related
+		"afs_picking_timer"             "Η επιλογή τελειώνει σε"
+		"afs_tab_pick_skills"           "Επιλέξτε ικανότητες"
+		"afs_tab_pick_hero"             "Επιλέξτε ήρωα"
+
+		/////////////////
+		// GAME MODES
+		////////////////
+
+		// All Pick
+		"afs_name_allpick"				"All Pick"
+		"afs_des_allpick"				"Επιλέξτε από όλους τους ήρωες"
+
+		// Legends of Dota
+		"afs_name_lod"                  "Legends of dota"
+		"afs_des_lod"                   "Επιλέξτε τις ικανότητες και τον ήρωά σας."
+
+		// Random OMG
+		"afs_name_romg"                 "Random OMG"
+		"afs_des_romg"                  "Πάρτε έναν τυχαίο ήρωα, 3 τυχαίες ικανότητες και μια τυχαία απόλυτη ικανότητα."
+
+		// PvP Arena
+		"afs_name_arena"                "PvP Arena"
+		"afs_des_arena"                 "Μια απλή αρένα αναμέτρησης."
+
+		// Score Limit
+		"afs_o_scoreLimit"              "Score Limit"
+		"afs_od_scoreLimit"             "Παιχνίδι με όριο σκοτωμών."
+
+		// Pudge Wars
+		"afs_name_pudgewars"            "Pudge Wars"
+		"afs_des_pudgewars"             "Play as Pudge, first team to 10 kills wins."
+
+		// Tiny Wars
+		"afs_name_tinywars"				"Tiny Wars"
+		"afs_des_tinywars"				"Παίχτε ως Tiny, η πρώτη ομάδα με 10 σκοτωμούς κερδίζει."
+
+		// Sunstrike Wars
+		"afs_name_sunstrikewars"		"Sun Strike Wars"
+		"afs_des_sunstrikewars"			"Ο καθένας εχει ως μόνη ικανότητα το Sun Strike και πρέπει να σκοτώσει τους αντίπαλους παίχτες με αυτό."
+
+		// Pure Skill
+		"afs_name_pureskill"            "Pure Skill"
+		"afs_des_pureskill"             "Παίξτε ως Mirana με Skewer, Sacred Arrow, Meat Hook και Ice Shards."
+
+		// Invoker Wars
+		"afs_name_INVOKERWARZ"          "Invoker Wars"
+		"afs_des_INVOKERWARZ"           "Είσαι ένας μάγος, Harry."
+
+		// Puck Wars
+		"afs_name_puckwars"             "Puck Wars"
+		"afs_des_puckwars"              "Παίξτε ως Puck >_>"
+
+		// Warlocks
+		"afs_name_warlocks"            "Warlocks"
+		"afs_des_warlocks"             "Παίξτε ως ένας νέος μάγος, πηδώντας ανέμελα σε όλο το χάρτη και χρησιμοποιώντας ένα ριψοκίνδυνο ξορκι!"
+
+		// RvS
+		"afs_name_rvs"            "Rabbits vs. Sheep"
+		"afs_des_rvs"             "What does the Rabbit say?"
+
+		/////////////////
+		// GAME ADDONS
+		////////////////
+
+		// WTF
+		"afs_name_wtf"                  "WTF Mode"
+		"afs_des_wtf"                   "Οι ικανότητες και τα αντικείμενα δεν έχουν χρόνο επαναφόρτισης και κόστος ενέργειας"
+
+		// Free Blink Dagger
+		"afs_name_freeBlinkDagger"      "Free Blink Dagger"
+		"afs_des_freeBlinkDagger"       "Όλοι ξεκινουν με ένα δωρεάν Blink Dagger."
+
+		// No Buying
+		"afs_name_noBuying"				"No Buying"
+		"afs_des_noBuying"				"Απενεργοποιεί την αγορά αντικειμένων."
+
+		// DM Mode
+		"afs_name_dmmode"				"DM Mode"
+		"afs_des"dmmode"				"Κάθε φορά που πεθαίνει κάποιος, επανέρχεται με νέο ήρωα!"
+
+		// Fat-o-Meter
+		"afs_name_fatometer"			"Fat-o-Meter"
+		"afs_des_fatometer"				"Κάθε φορα που ένας σκοτώνει μια μονάδα ή εναν άλλο ήρωα, μεγαλώνει λίγο στο μέγεθος."
+
+		/////////////////
+		// ABILITIES
+		////////////////
+
+		// Invoker Wars
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike"                                  "Sun Strike"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"                      "Αποστέλλει μια καταστροφική ακτίνα ηλιακής ενέργειας σε μια επιλεγμένη τοποθεσία αποτεφρώνοντας όλους τους εχθρούς. Προκαλεί ζημιά ανάλογη του επιπέδου, ωστόσο η προκαλούμενη ζημιά μοιράζεται ισόποσα σε όλους τους εχθρούς.."
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Lore"                             "Η ρήση της αποτέφρωσης του Harlek."
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"                                "Gives vision of the target area before the strike."
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note1"                                "You gain experience with kills made from Sun Strike, even if made from outside of the 1200 experience range."
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_area_of_effect"                   "ΕΜΒΕΛΕΙΑ:"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_delay"                                "ΚΑΘΥΣΤΕΡΗΣΗ:"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"                           "ΖΗΜΙΑ:"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast"                             "Deafening Blast"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"                 "Ο Invoker απελευθερώνει ένα πανίσχυρο ηχητικό κύμα ευθεία μπροστά του, προκαλώντας ζημιά, ανάλογη του επιπέδου."
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"                        "Ο χρυσός εξουδετερωτής του Buluphont.
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Note0"                       "This skill interrupts channeling abilities."
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"                      "ΖΗΜΙΑ:"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"          "ΔΙΑΡΚΕΙΑ:"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"             "ΔΙΑΡΚΕΙΑ ΑΦΟΠΛΙΣΗΣ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor"                                    "Meat Ball"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "Ο Invoker καλεί έναν φλεγόμενο κεφτέ από το διάστημα σε μια επιλεγμένη τοποθεσία. Με την πρόσκρουσή του στο έδαφος, ο μετεωρίτης κινείται προκαλώντας ζημιά ανάλογη του επιπέδου, σε ευθεία σε μια απόσταση ανάλογη του επιπέδου. Όσοι εχθροί έρχονται σε επαφή με το μετεωρίτη καίγονται και δέχονται πρόσθετη ζημιά ανάλογη του επιπέδου."
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "Η κατάβαση του πυρός του Tarak."
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "Deals main damage to enemy units under meteor every 0.5 seconds and burns enemies for smaller damage over 3 seconds."
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note1"                          "The meteor moves at a speed of 300."
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_land_time"                      "ΧΡΟΝΟΣ ΠΡΟΣΚΡΟΥΣΗΣ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_travel_distance"                    "ΑΠΟΣΤΑΣΗ ΖΗΜΙΑΣ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_area_of_effect"                 "ΕΜΒΕΛΕΙΑ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"                    "ΖΗΜΙΑ ΑΝΑ ΔΕΥΤΕΡΟΛΕΠΤΟ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"                        "ΖΗΜΙΑ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_duration"                  "BURN TIME:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_dps"                       "BURN DPS:"
+		"DOTA_Tooltip_ability_invoker_wars_leap"                                                "Shitty Wizard's Leap"
+		"DOTA_Tooltip_ability_invoker_wars_leap_Description"                                    "εφορμά μέσα στην μάχη, ενδυναμώνοντας τις συμμαχικές μονάδες με έναν άγριο βρυχηθμό κατά την προσγείωσή της, χαρίζοντας αυξημένη ταχύτητα και συχνότητα επίθεσης. Η επαύξηση διαρκεί 10 δευτερόλεπτα."
+		"DOTA_Tooltip_ability_invoker_wars_leap_Lore"                                           "Both friend and foe alike recognize Invoker's iconic Shitty Wizard in the heat of battle."
+		"DOTA_Tooltip_ability_invoker_wars_leap_Note0"                                      "You can use Leap to dodge incoming projectiles."
+		"DOTA_Tooltip_ability_invoker_wars_leap_leap_distance"                              "ΑΠΟΣΤΑΣΗ:"
+		"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus"                                "%ΕΠΙΠΛΕΟΝ TAXYTHTA:"
+		"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus_as"                         "ΕΠΙΠΛΕΟΝ ΣΥΧΝΟΤΗΤΑ ΕΠΙΘΕΣΗΣ:"
+
+		// Warlocks
+		"DOTA_Tooltip_Ability_warlocks_unstable_spell"      "Unstable Spell"
+		"DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "Ξέρεις οτι δεν φαίνεται πολύ ασφαλές; Σταθερό;... μήπως να το πετάξεις σε κανά τυχαίο μπάσταρδό; Καλύτερα μην κάτσεις τριγυρω για να δεις τα αποτελέσματα."
+		"DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Novice Jaunt"
+		"DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "Μπορεις να τηλεμεταφερθείς αλλά όχι μακριά."
+		"DOTA_Tooltip_Ability_warlocks_novice_hex"      "Novice Hex"
+		"DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "Έχει 50/50 πιθανότητα να μεταμορφωθείς ο ίδιος."
+		"DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Novice Ethereal"
+		"DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Κάνε αιθέριο εσένα, τον φίλο σού, το δάσκαλό σου. Δεν έχει σημασία αλλά όποιος το δεχτεί, ας προσέχει από τα ξόρκια."
+
+		// Lycan Paw
+		"DOTA_Tooltip_Ability_item_lycan_paw"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_description"		"Το γοργοπόδαρο πνεύμα του Banehallow επιταγχύνει το συνήθως αργό και βαρύ περπάτημα του Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_movespeed_bonus"	"ΕΠΙΠΛΕΟΝ TAXYTHTA:"
+		"DOTA_Tooltip_ability_item_lycan_paw_item_level"		"LEVEL:"
+		"DOTA_Tooltip_Ability_item_lycan_paw_2"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_2_description"		"Το γοργοπόδαρο πνεύμα του Banehallow επιταγχύνει το συνήθως αργό και βαρύ περπάτημα του Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_2_movespeed_bonus"	"ΕΠΙΠΛΕΟΝ TAXYTHTA:"
+		"DOTA_Tooltip_ability_item_lycan_paw_2_item_level"		"LEVEL:"
+		"DOTA_Tooltip_Ability_item_lycan_paw_3"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_3_description"		"Το γοργοπόδαρο πνεύμα του Banehallow επιταγχύνει το συνήθως αργό και βαρύ περπάτημα του Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_3_movespeed_bonus"	"ΕΠΙΠΛΕΟΝ TAXYTHTA:"
+		"DOTA_Tooltip_ability_item_lycan_paw_3_item_level"		"LEVEL:"
+		"DOTA_Tooltip_Ability_item_lycan_paw_4"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_4_description"		"Το γοργοπόδαρο πνεύμα του Banehallow επιταγχύνει το συνήθως αργό και βαρύ περπάτημα του Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_4_movespeed_bonus"	"ΕΠΙΠΛΕΟΝ TAXYTHTA:"
+		"DOTA_Tooltip_ability_item_lycan_paw_4_item_level"		"LEVEL:"
+		"DOTA_Tooltip_Ability_item_lycan_paw_5"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_5_description"		"Το γοργοπόδαρο πνεύμα του Banehallow επιταγχύνει το συνήθως αργό και βαρύ περπάτημα του Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_bonus"	"MOVESPEED BONUS:"
+		"DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_percentage_bonus"	"%ΕΠΙΠΛΕΟΝ TAXYTHTA:"
+		"DOTA_Tooltip_ability_item_lycan_paw_5_attackspeed_bonus"			"ΕΠΙΠΛΕΟΝ ΣΥΧΝΟΤΗΤΑ ΕΠΙΘΕΣΗΣ:"
+		"DOTA_Tooltip_ability_item_lycan_paw_5_item_level"		"ΕΠΙΠΕΔΟ:"
+
+        // Puck Wars
+        "DOTA_Tooltip_ability_puckwars_waning_rift"                                                                                        "Waning Rift"
+        "DOTA_Tooltip_ability_puckwars_waning_rift_Description"                                                                "Το Puck απελευθερώνει αστρική σκόνη που προκαλεί ζημιά στους κοντινούς εχθρούς και δεν τους επιτρέπει να εκτελούν ικανότητες."
+        "DOTA_Tooltip_ability_puckwars_waning_rift_Lore"                                                                        "Με ένα σκανταλιάρικο χαμόγελο, το Puck απλώνει τη μαγεμένη σκόνη του που διακόπτει τη ροή της μαγείας."
+        "DOTA_Tooltip_ability_puckwars_waning_rift_radius"                                                                        "ΕΜΒΕΛΕΙΑ:"
+        "DOTA_Tooltip_ability_puckwars_waning_rift_silence_duration"                                                "ΔΙΑΡΚΕΙΑ:"
+        "DOTA_Tooltip_ability_puckwars_phase_shift"                                                                                        "Phase Shift"
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Description"                                                                "Το Puck προσωρινά μεταφέρεται σε μια άλλη διάσταση και γίνεται άτρωτο."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Lore"                                                                       "Εν ριπή οφθαλμού, το Puck επιστρέφει στη διάσταση από την οποία προέρχεται."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Note0"                                                                        "Puck retains collision size while under the effects of Phase Shift."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Note1"                                                                        "Issuing any action will cancel Phase Shift."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Note2"                                                                        "Puck is invulnerable during Phase Shift."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_duration"                                                                "ΔΙΑΡΚΕΙΑ:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil"                                                                                        "Dream Coil"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_Description"                                                                "Δημιουργεί μια ρήξη από ασταθή μαγεία που δεσμεύει αντίπαλους ήρωες και τους προκαλεί ζημιά και σάστισμα 0.5 δευτερολέπτων. Αν ένας αντίπαλος ήρωας προσπαθήσει να απομακρυνθεί από τη ρήξη, αποδεσμεύεται, αλλά δέχεται πρόσθετη ζημιά και σάστισμα.\n\nΑυτή η ικανότητα μπορεί να αναβαθμιστεί με Aghanim's Scepter."
+        "DOTA_Tooltip_ability_puckwars_dream_coil_Lore"                                                                               "Το Puck εμφυτεύει σύγχυση στους εχθρούς, κάνοντάς τους να ονειρεύονται παραστατικά την ίδια τους τη θνησιμότητα."
+        "DOTA_Tooltip_ability_puckwars_dream_coil_Note0"                                                                        "The initial stun and damage can be blocked by Linken's Sphere, but the target will still be affected by the coils."
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_radius"                                                "ΕΜΒΕΛΕΙΑ:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_stun_duration"                                                "ΠΡΟΣΘΕΤΟ ΣΑΣΤΙΣΜΑ:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage"                                                "ΠΡΟΣΘΕΤΗ ΖΗΜΙΑ:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration"                                                        "ΔΙΑΡΚΕΙΑ:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration_scepter"                                        "SCEPTER ΔΙΑΡΚΕΙΑ:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage_scepter"                                "SCEPTER ΠΡΟΣΘΕΤΗ ΖΗΜΙΑ:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_aghanim_description"                                                "Increases damage from coil breaks and increases coil duration."
+
+	}
+}
