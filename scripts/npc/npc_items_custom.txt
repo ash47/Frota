@@ -889,4 +889,151 @@
 
 	}
 	
+	//=================================================================================================================
+	// Rabbits vs Sheep: The one ring
+	//================== ===============================================================================================
+	"item_rvs_one_ring"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1100"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring"
+		"ItemKillable"					"0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"75"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		
+		"ApplyModifier"
+		{
+			"Target"	"CASTER"
+			"ModifierName"	"rvs_one_ring_1"
+		}
+		"Modifiers"
+		{
+			"rvs_one_ring_1"
+			{
+				"Hidden"	"0"
+				"Passive" 	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"50"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_Regen"			"60"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1101"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring_ult"
+		"ItemKillable"					"0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"75"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		
+		"Modifiers"
+		{
+			"rvs_one_ring_2"
+			{
+				"Hidden"	"0"
+				"Passive" 	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"120"
+			}
+		}
+
+	}
+	
+	//=================================================================================================================
+	// Rabbits vs Sheep: The one ring recipes
+	//================== ===============================================================================================
+	
+	"item_rvs_one_recipe_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1110"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"75"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_2"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring;item_rvs_one_ring"
+		}
+		
+	}
+	
 }
