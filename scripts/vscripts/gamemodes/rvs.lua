@@ -190,9 +190,8 @@ RegisterGamemode('rvs', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        ply:ReplaceHeroWith(build.hero, 100000, 32400)
-
-        local hero = Players:GetSelectedHeroEntity(playerID)
+        local hero = ply:ReplaceHeroWith(build.hero, 100000, 32400)
+        frota:SetActiveHero(hero)
 
         -- Change skills
         frota:ApplyBuild(hero)

@@ -127,7 +127,8 @@ RegisterGamemode('allpick', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        ply:ReplaceHeroWith(build.hero, 2500, 2600)
+        local hero = ply:ReplaceHeroWith(build.hero, 2500, 2600)
+        frota:SetActiveHero(hero)
     end,
 })
 
@@ -146,9 +147,8 @@ RegisterGamemode('lod', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        ply:ReplaceHeroWith(build.hero, 2500, 2600)
-
-        local hero = Players:GetSelectedHeroEntity(playerID)
+        local hero = ply:ReplaceHeroWith(build.hero, 2500, 2600)
+        frota:SetActiveHero(hero)
 
         -- Change skills
         frota:ApplyBuild(hero)
@@ -168,12 +168,11 @@ RegisterGamemode('romg', {
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
-        -- Change hero
-        ply:ReplaceHeroWith(frota:ChooseRandomHero(), 2500, 2600)
-
-        -- Grab hero
         local playerID = ply:GetPlayerID()
-        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Change hero
+        local hero = ply:ReplaceHeroWith(frota:ChooseRandomHero(), 2500, 2600)
+        frota:SetActiveHero(hero)
 
         -- Change skills
         frota:ApplyBuild(hero, {
@@ -252,11 +251,11 @@ RegisterGamemode('pureskill', {
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
-        -- Change heroes
-        ply:ReplaceHeroWith('npc_dota_hero_pudge', 2500, 2600)
-
         local playerID = ply:GetPlayerID()
-        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Change heroes
+        local hero = ply:ReplaceHeroWith('npc_dota_hero_pudge', 2500, 2600)
+        frota:SetActiveHero(hero)
 
         -- Apply the build
         frota:ApplyBuild(hero, {
@@ -307,7 +306,7 @@ RegisterGamemode('freeBlinkDagger', {
     -- When players are given a new hero
     assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
-        local hero = Players:GetSelectedHeroEntity(playerID)
+        local hero = frota:GetActiveHero(playerID)
 
         -- Make sure they have a hero
         if hero then
@@ -325,7 +324,7 @@ RegisterGamemode('noBuying', {
     -- When players are given a new hero
     dota_item_purchased = function(frota, keys)
         -- Check if this hero exists
-        local hero = Players:GetSelectedHeroEntity(keys.PlayerID)
+        local hero = frota:GetActiveHero(keys.PlayerID)
         if hero then
             -- Loop over their items
             for i=0, 11 do
@@ -348,7 +347,7 @@ RegisterGamemode('noBuying', {
 })
 
 -- DM Mode
-RegisterGamemode('dmMode', {
+--[[RegisterGamemode('dmMode', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
@@ -365,7 +364,7 @@ RegisterGamemode('dmMode', {
             end
         end
     end
-})
+})]]
 
 --[[RegisterGamemode('unlimitedMana', {
     -- This gamemode is only for picking
