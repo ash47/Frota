@@ -5,4 +5,5 @@
 
 "CustomHeroList"
 {
+"npc_dota_hero_axe"		"1"
 }

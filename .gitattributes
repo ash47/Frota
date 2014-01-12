@@ -12,3 +12,7 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+git fetch upstream
+git merge upstream/master
+git push origin master
