@@ -347,7 +347,7 @@ RegisterGamemode('noBuying', {
 })
 
 -- DM Mode
-RegisterGamemode('dmMode', {
+--[[RegisterGamemode('dmMode', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
@@ -364,7 +364,7 @@ RegisterGamemode('dmMode', {
             end
         end
     end
-})
+})]]
 
 --[[RegisterGamemode('unlimitedMana', {
     -- This gamemode is only for picking
