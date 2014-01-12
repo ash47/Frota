@@ -65,7 +65,7 @@ RegisterGamemode('warlocks', {
 	end,
 
 	CleanupPlayer = function(frota, leavingPly)
-        local playerID = ply:GetPlayerID()
+        local playerID = leavingPly:GetPlayerID()
 		print("Warlocks: Removing disconnected player, ("..playerID..") from playerList.")
 		table.remove(playerList, playerID)
 	end,
