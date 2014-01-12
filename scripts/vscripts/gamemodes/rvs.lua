@@ -62,12 +62,24 @@ end
 
 
 RegisterGamemode('rvs', {
-    -- This gamemode is only for picking
+    -- This gamemode is for both picking and playing
     sort = GAMEMODE_BOTH,
-
+	
+	-- List of addons to ignore
+--[[
+	ignoreAddons = {
+	
+		wtf = true
+		dmMode = true
+	
+	},
+	]]
+	
     -- Allow certain picking things
     pickHero = true,
     pickSkills = false,
+	
+
 	
 	-- A list of options for fast gameplay stuff
     options = {
@@ -190,8 +202,9 @@ RegisterGamemode('rvs', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        local hero = ply:ReplaceHeroWith(build.hero, 100000, 32400)
-        frota:SetActiveHero(hero)
+        ply:ReplaceHeroWith(build.hero, 100000, 32400)
+
+        local hero = Players:GetSelectedHeroEntity(playerID)
 
         -- Change skills
         frota:ApplyBuild(hero)
