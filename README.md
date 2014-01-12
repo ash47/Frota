@@ -57,10 +57,10 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - dota_local_custom_enable 1;dota_local_custom_game Frota;dota_local_custom_map Frota;dota_force_gamemode 15;update_addon_paths;dota_wait_for_players_to_load 0;dota_wait_for_players_to_load_timeout 10;map riverofsouls;
  - **NOTE** If you reach the hero selection screen, it means Frota didn't load correctly! Frota should override / skip the hero selection screen, and  take you directly to a vote screen! Please ensure you removed Frostivus (and any other addons) and then restart your client.
 
- ###How do I play with friend?###
-  - You need to setup a dedicated server, and port forward (or, you can use hamachi, but port forward is easier)
-  - Follow the guide here: https://forums.alliedmods.net/showpost.php?p=1911667&postcount=64
-  - Google how to port forward, it is different for every router!
+###How do I play with friend?###
+ - You need to setup a dedicated server, and port forward (or, you can use hamachi, but port forward is easier)
+ - Follow the guide here: https://forums.alliedmods.net/showpost.php?p=1911667&postcount=64
+ - Google how to port forward, it is different for every router!
 
 ###Is there a way I can spawn test heroes?###
  - Try the console command 'fake', it will fill the server with fake clients, and give each a hero (it requires sv_cheats 1)
