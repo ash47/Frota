@@ -62,6 +62,9 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Follow the guide here: https://forums.alliedmods.net/showpost.php?p=1911667&postcount=64
   - Google how to port forward, it is different for every router!
 
+###Is there a way I can spawn test heroes?###
+ - Try the console command 'fake', it will fill the server with fake clients, and give each a hero (it requires sv_cheats 1)
+
 ###Hooks & Mod Events###
  - There are many hooks and mod events to make making gamemodes easier.
  - See the top of gamemodes.lua for the latest list of hooks and mod events.
