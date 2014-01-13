@@ -1450,10 +1450,12 @@ function FrotaGameMode:VoteForGamemode()
 		
 		for k, v in pairs(modes) do
 			local banned = false
-			for ban in string.gmatch(bans, '([^,]+)') do
-				if ban == v then
-					banned = true
-					break
+			if bans then
+				for ban in string.gmatch(bans, '([^,]+)') do
+					if ban == v then
+						banned = true
+						break
+					end
 				end
 			end
 			if not banned then 
