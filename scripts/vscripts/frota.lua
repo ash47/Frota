@@ -1438,11 +1438,29 @@ function FrotaGameMode:VoteForGamemode()
 
     -- Grab all the gamemodes the require picking
     local modes = GetPickingGamemodes()
-
-    local options = {}
-    for k, v in pairs(modes) do
-        options['#afs_name_'..v] = '#afs_des_'..v
-    end
+	
+	local preset = Convars:GetStr("frota_mode_preset")
+	
+	local options = {}
+	
+	if preset then
+		options['#afs_name_'..preset] = '#afs_des_'..preset
+	else 
+		local bans = Convars:GetStr("frota_ban_modes")
+		
+		for k, v in pairs(modes) do
+			local banned = false
+			for ban in string.gmatch(bans, '([^,]+)') do
+				if ban == v then
+					banned = true
+					break
+				end
+			end
+			if not banned then 
+				options['#afs_name_'..v] = '#afs_des_'..v
+			end
+		end
+	end
 
     -- Reset the loaders
     self.toLoadPickMode = {}
