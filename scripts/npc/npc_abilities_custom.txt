@@ -1278,7 +1278,47 @@
 
 		"OnSpellStart"
 		{
-
+			"Random"
+			{
+				"Chance" "%eth_chance"
+				//"PseudoRandom" "DOTA_PSEUDO_RANDOM_ITEM_MKB"
+				"OnSuccess"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName" "modifier_item_ethereal_blade_ethereal"
+						"Target" "TARGET"
+					}
+				}
+				"OnFailure"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName" "modifier_item_ethereal_blade_ethereal"
+						"Target" "CASTER"
+					}
+				}
+			}
+			"FireSound"
+			{
+				"EffectName" "DOTA_Item.EtherealBlade.Target"
+			}
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"eth_chance"					"50 65 80"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0 4.0 5.0"
+			}
 		}
 	}
 
