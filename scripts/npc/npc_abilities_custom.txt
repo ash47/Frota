@@ -1497,4 +1497,267 @@
             }
         }
     }
+	
+	//=================================================================================================================
+    // Gambler:Ante Up
+    //=================================================================================================================
+    "gambler_ante_up"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"							"zuus_lightning_bolt"
+		"Baseclass"										"ability_datadriven"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"                                "0"
+
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"                                "0.0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"                                "100"
+		
+		"OnSpellStart"
+		{
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%damage_and_heal"
+			}
+			
+			"Heal"
+			{
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				}
+				"HealAmount"	"%damage_and_heal"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"	"TARGET"
+				"ModifierName" 	"modifier_ante_up"
+			
+			}
+			//"RunScript"
+			//{
+			//	"Target"		"TARGET"
+			//	"ScriptFile"	"scripts/vscripts/gamemodes/gambler.lua"
+			//	"Function"		"anteUpKill"
+			//}
+		}
+		
+		"Modifiers"
+		{
+
+
+			
+			
+			"modifier_ante_up"
+			{
+				"Hidden"	"0"
+				"Duration"	"%buff_duration"
+					
+				"OnKill"
+				{
+					"RemoveModifier"
+					{
+						"Target"	"CASTER"
+						"ModifierName" 	"modifier_ante_up"
+			
+					}
+					"RunScript"
+					{
+						"Caster"		"CASTER"
+						"Target"		"TARGET"
+						"ScriptFile"	"scripts/vscripts/gamemodes/gambler.lua"
+						"Function"		"anteUpKill"
+					}
+
+				}
+				
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"Target"		"TARGET"
+						"ScriptFile"	"scripts/vscripts/gamemodes/gambler.lua"
+						"Function"		"anteUpDeath"
+					}
+				}		
+			}
+		}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                                        		"FIELD_INTEGER"
+                "damage_and_heal"                                       "50 100 150 200"
+            }
+			"02"
+            {
+                "var_type"                                        		"FIELD_INTEGER"
+                "gold_gained"                                       		"300 400 500 600"
+            }
+			"03"
+            {
+                "var_type"                                        		"FIELD_INTEGER"
+                "buff_duration"                                       		"60"
+            }
+        }
+    }
+	
+	//=================================================================================================================
+    // Gambler:Chip Stack
+    //=================================================================================================================
+    "gambler_chip_stack"
+	{
+
+    
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+		"Baseclass"                                     "ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"							"zuus_arc_lightning"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Caster"		"CASTER"
+				"Target"		"TARGET"
+				"ScriptFile"	"scripts/vscripts/gamemodes/gambler.lua"
+				"Function"		"chipStack"
+			}
+		}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"gold_amount"	"15 20 25 30"
+			}
+		}
+    }
+	
+	//=================================================================================================================
+    // Gambler:Lucky Stars
+    //=================================================================================================================
+    "gambler_lucky_stars"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityBehavior"                                	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityTextureName"								"zuus_static_field"
+		"Baseclass"                                         "ability_datadriven"
+
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                                        "FIELD_FLOAT"
+                "lucky_chance"                                        "5 6 7 8"
+            }
+        }
+    }
+	
+	//=================================================================================================================
+    // Gambler:All In
+    //=================================================================================================================
+    "gambler_all_in"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityType"								"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"                           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"						"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"						"DOTA_UNIT_TARGET_HERO"
+        "AbilityTextureName"						"zuus_thundergods_wrath"
+		"Baseclass"                                 "ability_datadriven"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastPoint"                                "0"
+
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        //"AbilityCooldown"                                "35"
+		"AbilityCooldown"                                "0"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        //"AbilityManaCost"                                "150 200 275"
+		"AbilityManaCost"                                "0"
+
+		
+		"OnSpellStart"
+		{
+			"Random"
+			{
+				"Chance" "%fail_chance"
+				"OnSuccess"
+				{	
+					"RunScript"
+					{
+						"Caster"		"CASTER"
+						"Target"		"TARGET"
+						"ScriptFile"	"scripts/vscripts/gamemodes/gambler.lua"
+						"Function"		"allInSuccess"
+					}
+				}
+				"OnFailure"
+				{
+					"RunScript"
+					{
+						"Caster"		"CASTER"
+						"Target"		"TARGET"
+						"ScriptFile"	"scripts/vscripts/gamemodes/gambler.lua"
+						"Function"		"allInFail"
+					}
+				}
+				
+			}
+		
+		}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+		    "01"
+            {
+                "var_type"                                        	"FIELD_INTEGER"
+                "fail_chance"                                        "30 25 20"
+            }
+		
+            "02"
+            {
+                "var_type"                                        "FIELD_INTEGER"
+                "damage_cap"                                        "1500 2000 25000"
+            }
+        }
+    }
 }

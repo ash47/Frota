@@ -889,4 +889,714 @@
 
 	}
 	
+	//=================================================================================================================
+	// Rabbits vs Sheep: The one ring
+	//================== ===============================================================================================
+	"item_rvs_one_ring"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1100"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1000"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		"ApplyModifier"
+		{
+			"Target"	"CASTER"
+			"ModifierName"	"rvs_one_ring_1"
+		}
+		"Modifiers"
+		{
+			"rvs_one_ring_1"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"50"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_Regen"			"60"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1101"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2000"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		"Modifiers"
+		{
+			"rvs_one_ring_2"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"120"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1102"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring"
+		"ItemKillable"					"0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3000"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		"Modifiers"
+		{
+			"rvs_one_ring_3"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"150"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"180"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1103"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4000"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		"Modifiers"
+		{
+			"rvs_one_ring_4"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"240"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1104"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring_med"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5000"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		"Modifiers"
+		{
+			"rvs_one_ring_5"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"300"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1105"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring_med"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"6000"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		"Modifiers"
+		{
+			"rvs_one_ring_6"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"360"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1106"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring_med"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"7000"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		"Modifiers"
+		{
+			"rvs_one_ring_7"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"350"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"420"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1107"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring_med"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"8000"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		"Modifiers"
+		{
+			"rvs_one_ring_8"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"480"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1108"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring_med"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"9000"
+		"ItemShopTags"					""
+		"ItemQuality"					"common"
+		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+
+		"Modifiers"
+		{
+			"rvs_one_ring_9"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"450"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"540"
+			}
+		}
+
+	}
+	
+	"item_rvs_one_ring_10"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1109"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName"			"item_rvs_one_ring_ult"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"10000"
+		"ItemShopTags"					"boost_mana;mana_pool"
+		"ItemQuality"					"rare"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemQuality"					"common"
+		"ItemAliases"					"mana"
+		//"ItemShareability"				"ITEM_NOT_SHAREABLE
+		
+		"Modifiers"
+		{
+			"rvs_one_ring_10"
+			{
+				"Passive" 	"1"
+				"IsHidden"	"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%mana_bonus"
+				}
+			}
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_bonus"			"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"600"
+			}
+		}
+
+	}
+	
+	
+	
+	//=================================================================================================================
+	// Rabbits vs Sheep: The one ring recipes
+	//================== ===============================================================================================
+	
+	"item_rvs_one_recipe_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1110"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_2"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring;item_rvs_one_ring"
+		}
+		
+	}
+	
+	"item_rvs_one_recipe_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1111"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_3"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring_2;item_rvs_one_ring"
+		}
+		
+	}
+	
+	"item_rvs_one_recipe_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1112"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_4"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring_3;item_rvs_one_ring"
+		}
+		
+	}
+	
+	"item_rvs_one_recipe_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1113"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_5"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring_4;item_rvs_one_ring"
+		}
+		
+	}
+	
+	"item_rvs_one_recipe_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1114"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_6"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring_5;item_rvs_one_ring"
+		}
+		
+	}
+	
+	"item_rvs_one_recipe_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1115"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_7"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring_6;item_rvs_one_ring"
+		}
+		
+	}
+	
+	"item_rvs_one_recipe_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1116"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_8"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring_7;item_rvs_one_ring"
+		}
+		
+	}
+	
+	"item_rvs_one_recipe_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1117"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_9"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring_8;item_rvs_one_ring"
+		}
+		
+	}
+	
+	"item_rvs_one_recipe_10"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1118"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"	"1"
+		"ItemResult"	"item_rvs_one_ring_10"
+		"ItemRequirements"
+		{
+			"01"			"item_rvs_one_ring_9;item_rvs_one_ring"
+		}
+		
+	}
+	
+	
+	
 }
