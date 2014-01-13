@@ -1442,14 +1442,14 @@ function FrotaGameMode:VoteForGamemode()
 	
 	local options = {}
 	
-	if preset then
+	if preset and preset ~= "" then
 		options['#afs_name_'..preset] = '#afs_des_'..preset
 	else 
 		local bans = Convars:GetStr("frota_ban_modes")
 		
 		for k, v in pairs(modes) do
 			local banned = false
-			if bans then
+			if bans and bans ~= "" then
 				for ban in string.gmatch(bans, '([^,]+)') do
 					if ban == v then
 						banned = true
