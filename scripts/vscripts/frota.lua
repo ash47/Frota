@@ -137,13 +137,31 @@ function FrotaGameMode:_SetInitialValues()
 end
 
 function FrotaGameMode:RegisterCommands()
-    --[[Convars:RegisterCommand('testa', function(name)
-        FireGameEvent("afs_testa", {})
+    Convars:RegisterCommand('testa', function(name)
+        -- Check if the server ran it
+        if not Convars:GetCommandClient() then
+            FireGameEvent("afs_testa", {})
+        end
     end, '', 0)
 
     Convars:RegisterCommand('testb', function(name)
-        FireGameEvent("afs_testb", {})
-    end, '', 0)]]
+        -- Check if the server ran it
+        if not Convars:GetCommandClient() then
+            FireGameEvent("afs_testb", {})
+        end
+    end, '', 0)
+
+    -- When a user tries to put a skill into a slot
+    --[[Convars:RegisterCommand('teamNumber', function(name, teamNumber)
+        local cmdPlayer = Convars:GetCommandClient()
+        if cmdPlayer then
+            local hero = cmdPlayer:GetAssignedHero()
+            if hero then
+                hero:__KeyValueFromInt('teamnumber', tonumber(teamNumber))
+                return
+            end
+        end
+    end, 'A user tried to put a skill into a slot', 0)]]
 
 
     -- When a user tries to put a skill into a slot
@@ -173,27 +191,30 @@ function FrotaGameMode:RegisterCommands()
 
     -- Fill server with fake clients
     Convars:RegisterCommand('fake', function(name, skillName, slotNumber)
-        -- Create fake players
-        SendToServerConsole('dota_create_fake_clients')
+        -- Check if the server ran it
+        if not Convars:GetCommandClient() then
+            -- Create fake players
+            SendToServerConsole('dota_create_fake_clients')
 
-        -- Assign the fakers
-        self:CreateTimer('assign_fakes', {
-            endTime = Time(),
-            callback = function(frota, args)
-                for i=0, 9 do
-                    local ply = Players:GetPlayer(i)
-                    if Players:IsFakeClient(i) then
+            -- Assign the fakers
+            self:CreateTimer('assign_fakes', {
+                endTime = Time(),
+                callback = function(frota, args)
+                    for i=0, 9 do
                         local ply = Players:GetPlayer(i)
+                        if Players:IsFakeClient(i) then
+                            local ply = Players:GetPlayer(i)
 
-                        self:AutoAssignPlayer({
-                            userid = -(i+1),
-                            index = ply:entindex()-1
-                        })
+                            self:AutoAssignPlayer({
+                                userid = -(i+1),
+                                index = ply:entindex()-1
+                            })
+                        end
                     end
                 end
-            end
-        })
-    end, 'Connects and assigns fake players.', FCVAR_CHEAT)
+            })
+        end
+    end, 'Connects and assigns fake players.', 0)
 
     -- When a user tries to change heroes
     Convars:RegisterCommand('afs_hero', function(name, heroName)
@@ -416,9 +437,17 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
     if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then
         ply:SetTeam(DOTA_TEAM_BADGUYS)
+        --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
     else
         ply:SetTeam(DOTA_TEAM_GOODGUYS)
+        --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_GOODGUYS)
     end
+
+    --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
+
+    --for i=0,4 do
+    --    Players:UpdateTeamSlot(ply:GetPlayerID(), i)
+    --end
 
     local playerID = ply:GetPlayerID()
     local hero = self:GetActiveHero(playerID)
@@ -548,6 +577,9 @@ function FrotaGameMode:OnEntityKilled(keys)
             })
         end
 
+        -- Fire onHeroKilled event
+        self:FireEvent('onHeroKilled', killedUnit, killerEntity)
+
         -- Check if point score
         if not self.gamemodeOptions.killsScore then return end
 
@@ -563,9 +595,6 @@ function FrotaGameMode:OnEntityKilled(keys)
 
         -- Update the scores
         self:UpdateScoreData()
-
-        -- Fire onHeroKilled event
-        self:FireEvent('onHeroKilled', killedUnit, killerEntity)
     end
 end
 
