@@ -21,6 +21,7 @@ require('gamemodes/invokerwars')
 require('gamemodes/puckwars')
 require('gamemodes/plage')
 require('gamemodes/sunstrikewars')
+require('gamemodes/kaolinwars')
 
 -- Include addons
 require('gamemodes/fatometer')
