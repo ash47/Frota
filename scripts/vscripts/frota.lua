@@ -163,10 +163,6 @@ function FrotaGameMode:RegisterCommands()
         end
     end, 'A user tried to put a skill into a slot', 0)]]
 
-	-- Server side setting of a preset game mode
-	Convars:RegisterConvar('frota_mode_preset', nil, 'Set to the game mode you want to start exclusively.', FCVAR_SS)
-	Convars:RegisterConvar('frota_ban_modes', nil, 'Set to modes banned on this server', FCVAR_SS)
-
     -- When a user tries to put a skill into a slot
     Convars:RegisterCommand('afs_skill', function(name, skillName, slotNumber)
         -- Verify we are in picking mode

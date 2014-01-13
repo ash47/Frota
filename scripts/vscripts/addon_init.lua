@@ -7,6 +7,10 @@ function Dynamic_Wrap( mt, name )
     end
 end
 
+-- Server side setting of a preset game mode
+Convars:RegisterConvar('frota_mode_preset', nil, 'Set to the game mode you want to start exclusively.', FCVAR_PROTECTED)
+Convars:RegisterConvar('frota_ban_modes', nil, 'Set to modes banned on this server', FCVAR_PROTECTED)
+
 -- Json stuff
 require('json')
 require('util')
