@@ -11,11 +11,11 @@ end
 Convars:RegisterConvar('frota_mode_preset', nil, 'Set to the game mode you want to start exclusively.', FCVAR_PROTECTED)
 Convars:RegisterConvar('frota_ban_modes', nil, 'Set to modes banned on this server', FCVAR_PROTECTED)
 
--- Json stuff
-require('json')
-require('util')
-require('frota')
-require('gamemodes')
+-- Load Frota
+require('json')         -- Json Library
+require('util')         -- Utilitiy functions
+require('frota')        -- Main frota framework
+require('gamemodes')    -- Gamemode framework and small gamemodes/addons
 
 -- Include gamemodes
 require('gamemodes/tinywars')
