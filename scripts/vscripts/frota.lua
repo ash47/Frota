@@ -137,6 +137,15 @@ function FrotaGameMode:_SetInitialValues()
 end
 
 function FrotaGameMode:RegisterCommands()
+    --[[Convars:RegisterCommand('testa', function(name)
+        FireGameEvent("afs_testa", {})
+    end, '', 0)
+
+    Convars:RegisterCommand('testb', function(name)
+        FireGameEvent("afs_testb", {})
+    end, '', 0)]]
+
+
     -- When a user tries to put a skill into a slot
     Convars:RegisterCommand('afs_skill', function(name, skillName, slotNumber)
         -- Verify we are in picking mode
@@ -155,9 +164,12 @@ function FrotaGameMode:RegisterCommands()
 
     -- End Gamemode
     Convars:RegisterCommand('endgamemode', function(name, skillName, slotNumber)
-        -- End the current gamemode
-        self:EndGamemode()
-    end, 'Ends the current game.', FCVAR_CHEAT)
+        -- Check if the server ran it
+        if not Convars:GetCommandClient() then
+            -- End the current gamemode
+            self:EndGamemode()
+        end
+    end, 'Ends the current game.', 0)
 
     -- Fill server with fake clients
     Convars:RegisterCommand('fake', function(name, skillName, slotNumber)
