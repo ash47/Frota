@@ -20,6 +20,7 @@ require('gamemodes/warlocks')
 require('gamemodes/invokerwars')
 require('gamemodes/puckwars')
 require('gamemodes/plage')
+require('gamemodes/sunstrikewars')
 
 -- Include addons
 require('gamemodes/fatometer')
