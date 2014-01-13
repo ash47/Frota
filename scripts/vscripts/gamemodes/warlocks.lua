@@ -3,10 +3,9 @@ local unstableSkill = 'warlocks_unstable_spell'
 local jauntSkill = 'warlocks_novice_jaunt'
 local hexSkill = 'warlocks_novice_hex'
 local etherealSkill = 'warlocks_novice_ethereal'
-local holderModifier = 'warlocks_marker_spellholder'
-local targetModifier = 'warlocks_marker_spelltarget'
+local etherealModifier = 'modifier_item_ethereal_blade_ethereal'
 
-local playerList = {}
+--local playerList = {}
 local currentHolder = nil
 local previousHolder = nil
 
@@ -19,7 +18,8 @@ RegisterGamemode('warlocks', {
 
     -- List of addons to ignore
     ignoreAddons = {
-        dmMode = true
+        dmMode = true,
+        wtf = true
     },
 
     -- Function to give out heroes
@@ -30,8 +30,8 @@ RegisterGamemode('warlocks', {
         local hero = ply:ReplaceHeroWith(warlockHero, 0, 0)
         frota:SetActiveHero(hero)
 
-		playerList[playerID] = hero
-		print("Warlocks: Adding player, ("..playerID..") to playerList.")
+		--playerList[playerID] = hero
+		--print("Warlocks: Adding player, ("..playerID..") to playerList.")
 
         -- Give blinkdagger
         --hero:AddItem(CreateItem('item_blink', hero, hero))
@@ -43,6 +43,8 @@ RegisterGamemode('warlocks', {
             [3] = hexSkill,
             [4] = etherealSkill
         })
+
+		hero:AddNewModifier(hero, nil, 'modifier_disarmed', {})
 
         hero:__KeyValueFromInt('AbilityLayout', 4)
     end,
@@ -56,18 +58,28 @@ RegisterGamemode('warlocks', {
 			end
 		})
 		Convars:SetFloat("dota_all_vision", 1.0)
-		playerList = {}
-		--frota._scriptBind:BeginThink('WarlockCounterThink', 'counterThink', 0.5)
+		--playerList = {}
 	end,
 
+	--[[
 	dota_player_used_ability = function(frota, keys)
 		PrintTable(keys)
 	end,
+	]]--
 
 	CleanupPlayer = function(frota, leavingPly)
         local playerID = leavingPly:GetPlayerID()
-		print("Warlocks: Removing disconnected player, ("..playerID..") from playerList.")
-		table.remove(playerList, playerID)
+		--print("Warlocks: Removing disconnected player, ("..playerID..") from playerList.")
+		--table.remove(playerList, playerID)
+		-- If the jerk with the spell leavers we pick a new warlock.
+		if leavingPly == currentHolder then
+			frota:CreateTimer('warlocks_countdown_timer', {
+				endTime = Time() + 5,  -- Run 5 seconds from now
+				callback = function(frota, args)
+					__selectRandomWarlock()
+				end
+			})
+		end
 	end,
 
 	onThink = function(frota, dt)
@@ -76,20 +88,20 @@ RegisterGamemode('warlocks', {
 	end,
 
 	onGameEnd = function(frota)
-		print("onGameEnd has fired!")
+		print("Warlocks: onGameEnd has fired!")
 		frota._scriptBind:EndThink('WarlockCounterThink')
 		Convars:SetFloat("dota_all_vision", 0.0)
 	end,
 
 	onHeroKilled = function(frota, killedUnit, killerEntity)
 		local killedPlayerID = killedUnit:GetPlayerID()
-		print("onHeroKilled has fired!")
-		print("Warlocks: Removing killed player, ("..killedPlayerID..") from playerList.")
-		table.remove(playerList, killedPlayerID)
+		print("Warlocks: onHeroKilled has fired!")
+		--print("Warlocks: Removing killed player, ("..killedPlayerID..") from playerList.")
+		--table.remove(playerList, killedPlayerID)
 
 
-		if(#playerList <= 1) then
-			print(#playerList,"is the number of players in playerList.")
+		local livingPlayers = getLivingPlayerList()
+		if(#livingPlayers <= 1) then
 			frota:EndGamemode()
 			return
 		end --You are the one and only.
@@ -121,19 +133,14 @@ RegisterGamemode('warlocks', {
 })
 
 function __selectRandomWarlock()
-	local warlocks = Entities:FindAllByClassname( warlockHero )
-	--PrintTable(warlocks)
-	for k,v in pairs(warlocks) do
-		if not v:IsAlive() then
-			table.remove(warlocks, k)
-		end
-	end
+	local warlocks = getLivingPlayerList()
 	luckyMofo = warlocks[ math.random( #warlocks ) ]
 	setHolder(luckyMofo)
 	currentTime = 8.0 + #warlocks
 end
 
 function unstableSpellOnSpellStart(keys)
+	--PrintTable(keys)
 	-- Pass the rock
 	local caster = keys.caster
 	if caster == nil then
@@ -145,12 +152,26 @@ function unstableSpellOnSpellStart(keys)
 	if target == nil then
 		return
 	end
+	
+	-- If the target is ethereal at the time of cast we halve the time left on the count down.
+	-- But if they have less than 2 seconds left on the countdown we set the time to 2 seconds.
+	if target:HasModifier(etherealModifier) then
+		local newTime = currentTime - ( currentTime / 2 )
+		if newTime <= 2 then
+			newTime = 2
+		end
+		currentTime = newTime
+	end
 
 	removeHolder(caster)
 	setHolder(target)
 end
 
 function setHolder(hero)
+	if hero == nil then
+		__selectRandomWarlock()
+		return
+	end
 	hero:FindAbilityByName(unstableSkill):SetLevel(1)
 	previousHolder = currentHolder
 	currentHolder = hero
@@ -168,22 +189,37 @@ function createCounter()
 		particleCountdown = nil
 		return
 	end
-	if currentTime - math.floor(currentTime) >= 0.5 then
+	local normTime = currentTime - math.floor(currentTime)
+	local normTime = math.floor(normTime * 10)/10
+	if normTime == 0.5 then
 		particleCountdown = ParticleManager:CreateParticle( "alchemist_unstable_concoction_timer", PATTACH_OVERHEAD_FOLLOW, currentHolder )
 		ParticleManager:SetParticleControl( particleCountdown, 1, Vec3( 0.0, currentTime, 8.0 ) )	-- Shows .5
 		ParticleManager:SetParticleControl( particleCountdown, 2, Vec3( 3.0, 0, 0.0 ) )
-	else
+	elseif normTime == 0.0 then
 		particleCountdown = ParticleManager:CreateParticle( "alchemist_unstable_concoction_timer", PATTACH_OVERHEAD_FOLLOW, currentHolder )
 		ParticleManager:SetParticleControl( particleCountdown, 1, Vec3( 0.0, currentTime, 1.0 ) )	-- Shows .0
 		ParticleManager:SetParticleControl( particleCountdown, 2, Vec3( 3.0, 0, 0.0 ) )
 	end
-	--counterThink()
 end
 
 function destroyCounter()
 	if particleCountdown ~= nil then return end
 	ParticleManager:ReleaseParticleIndex( particleCountdown )
 	particleCountdown = nil
+end
+
+function getPlayerList()
+	return Entities:FindAllByClassname( 'npc_dota_hero*' )
+end
+
+function getLivingPlayerList()
+	local livePlayers = getPlayerList()
+	for k,v in pairs(livePlayers) do
+		if not v:IsAlive() then
+			table.remove(livePlayers, k)
+		end
+	end
+	return livePlayers
 end
 
 function killHolder()

@@ -1258,18 +1258,21 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"             "ability_datadriven"
 		"AbilityType"			"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"        "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE "
+		"AbilityBehavior"        "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"	"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"	"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ENEMIES"
 		"AbilityTextureName"		"warlocks_novice_ethereal"
 		"MaxLevel"					"3"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"       "0"
+		"AbilityCastPoint"       "0.33 0.27 0.22"
 
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"        "8a"
+		"AbilityCooldown"        "8 6.5 5"
 
 
 		// Cost
@@ -1278,7 +1281,49 @@
 
 		"OnSpellStart"
 		{
-
+			"Random"
+			{
+				"Chance" "%eth_chance"
+				//"PseudoRandom" "DOTA_PSEUDO_RANDOM_ITEM_MKB"
+				"OnSuccess"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName" "modifier_item_ethereal_blade_ethereal"
+						"Duration" "%duration"
+						"Target" "TARGET"
+					}
+				}
+				"OnFailure"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName" "modifier_item_ethereal_blade_ethereal"
+						"Duration" "%duration"
+						"Target" "CASTER"
+					}
+				}
+			}
+			"FireSound"
+			{
+				"EffectName" "DOTA_Item.EtherealBlade.Target"
+			}
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"eth_chance"					"50 65 80"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0 4.0 5.0"
+			}
 		}
 	}
 
