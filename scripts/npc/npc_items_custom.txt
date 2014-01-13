@@ -18,10 +18,10 @@
 		 // Casting
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityCastRange"       "1200"
-                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
                 "AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
-				
+
 		// Time
         //-------------------------------------------------------------------------------------------------------------
                 "AbilityCooldown"        "1"
@@ -29,7 +29,7 @@
         // Cost
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityManaCost"        "0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"90"
@@ -39,12 +39,12 @@
 
 		"OnSpellStart"
                 {
-				
+
 						"SpawnUnit"
 						{
 								"UnitName"				"npc_dota_mine"
 								"Target" 				"POINT"
-								"UnitCount"				"1"	
+								"UnitCount"				"1"
 								"OnSpawn"
 								{
 									"ApplyModifier"
@@ -57,14 +57,14 @@
 										"Target"			"TARGET"
 										"ModifierName"		"modifier_mine_stunned"
 									}
-								
+
 								}
 						}
-						
-				
-						
+
+
+
 				}
-				
+
 		"Modifiers"
 		{
 			"modifier_mine_stunned"
@@ -77,9 +77,9 @@
 			}
 		}
 	}
-	
-	
-	
+
+
+
 	//=================================================================================================================
 	// Ricochet Turbine
 	//=================================================================================================================
@@ -97,10 +97,10 @@
 		 // Casting
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityCastRange"       "1200"
-                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
                 "AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
-				
+
 		// Time
         //-------------------------------------------------------------------------------------------------------------
                 "AbilityCooldown"        "1"
@@ -108,7 +108,7 @@
         // Cost
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityManaCost"        "0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"90"
@@ -117,7 +117,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 	}
-	
+
 	//=================================================================================================================
 	// Phantom Lance
 	//=================================================================================================================
@@ -135,10 +135,10 @@
 		 // Casting
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityCastRange"       "1200"
-                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
                 "AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
-				
+
 		// Time
         //-------------------------------------------------------------------------------------------------------------
                 "AbilityCooldown"        "1"
@@ -146,7 +146,7 @@
         // Cost
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityManaCost"        "0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"90"
@@ -155,7 +155,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 	}
-	
+
 	//=================================================================================================================
 	// Naix Jaws
 	//=================================================================================================================
@@ -173,10 +173,10 @@
 		 // Casting
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityCastRange"       "1200"
-                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
                 "AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
-				
+
 		// Time
         //-------------------------------------------------------------------------------------------------------------
                 "AbilityCooldown"        "1"
@@ -184,7 +184,7 @@
         // Cost
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityManaCost"        "0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"90"
@@ -193,7 +193,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 	}
-	
+
 		//=================================================================================================================
 	// Earthshaker Totem
 	//=================================================================================================================
@@ -211,10 +211,10 @@
 		 // Casting
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityCastRange"       "1200"
-                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
                 "AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
-				
+
 		// Time
         //-------------------------------------------------------------------------------------------------------------
                 "AbilityCooldown"        "1"
@@ -222,29 +222,29 @@
         // Cost
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityManaCost"        "0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"90"
 		"ItemQuality"					"rare"
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		
-		
-		
+
+
+
 		"OnSpellStart"
                 {
-				
+
 						"SpawnUnit"
 						{
 								"UnitName"				"npc_pudge_wars_barrier"
 								"Target" 				"POINT"
-								"UnitCount"				"1"	
-						
+								"UnitCount"				"1"
+
 						}
-						
-				
-						
+
+
+
 				}
 
 	}
@@ -265,10 +265,10 @@
 		 // Casting
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityCastRange"       "1200"
-                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
                 "AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
-				
+
 		// Time
         //-------------------------------------------------------------------------------------------------------------
                 "AbilityCooldown"        "1"
@@ -276,7 +276,7 @@
         // Cost
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityManaCost"        "0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"90"
@@ -285,7 +285,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 	}
-	
+
 		//=================================================================================================================
 	// Lycan Paw Recipes
 	//=================================================================================================================
@@ -295,12 +295,12 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1017"
 		"BaseClass"						"item_datadriven"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
+		"ItemCost"						"0"
 		"ItemShopTags"					""
-		
+
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
@@ -310,19 +310,19 @@
 			"01"						"item_lycan_paw;item_lycan_paw"
 		}
 	}
-	
+
 	"item_recipe_lycan_paw_3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1024"
 		"BaseClass"						"item_datadriven"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
+		"ItemCost"						"0"
 		"ItemShopTags"					""
-		
+
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
@@ -332,19 +332,19 @@
 			"01"						"item_lycan_paw_2;item_lycan_paw"
 		}
 	}
-	
+
 	"item_recipe_lycan_paw_4"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1025"
 		"BaseClass"						"item_datadriven"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
+		"ItemCost"						"0"
 		"ItemShopTags"					""
-		
+
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
@@ -354,19 +354,19 @@
 			"01"						"item_lycan_paw_3;item_lycan_paw"
 		}
 	}
-	
+
 		"item_recipe_lycan_paw_5"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1026"
 		"BaseClass"						"item_datadriven"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
+		"ItemCost"						"0"
 		"ItemShopTags"					""
-		
+
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
@@ -378,8 +378,8 @@
 	}
 
 
-	
-	
+
+
 	//=================================================================================================================
 	// Lycan Paws
 	//================== ===============================================================================================
@@ -403,10 +403,10 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-		
-		
-		
-		
+
+
+
+
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -415,9 +415,9 @@
 				"ModifierName"			"lycan_paws_speed"
 			}
 		}
-		
-		
-		
+
+
+
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
@@ -425,14 +425,14 @@
 			"lycan_paws_speed"
 			{
 				"Passive" "1"
-				
+
 				"Properties"
 				{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -448,7 +448,7 @@
 		}
 
 	}
-	
+
 	"item_lycan_paw_2"
 	{
 		// General
@@ -469,9 +469,9 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-		
-		
-		
+
+
+
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -480,9 +480,9 @@
 				"ModifierName"			"lycan_paws_speed_2"
 			}
 		}
-		
-		
-		
+
+
+
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
@@ -490,17 +490,17 @@
 			"lycan_paws_speed_2"
 			{
 				"Passive" "1"
-				
+
 				"Properties"
 				{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
-			
+
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -513,7 +513,7 @@
 			}
 		}
 	}
-	
+
 	"item_lycan_paw_3"
 	{
 		// General
@@ -534,8 +534,8 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-		
-		
+
+
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -544,9 +544,9 @@
 				"ModifierName"			"lycan_paws_speed_3"
 			}
 		}
-		
-		
-		
+
+
+
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
@@ -554,17 +554,17 @@
 			"lycan_paws_speed_3"
 			{
 				"Passive" "1"
-				
+
 				"Properties"
 				{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
-			
+
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -578,7 +578,7 @@
 		}
 
 	}
-	
+
 	"item_lycan_paw_4"
 	{
 		// General
@@ -599,8 +599,8 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-		
-		
+
+
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -609,9 +609,9 @@
 				"ModifierName"			"lycan_paws_speed_4"
 			}
 		}
-		
-		
-		
+
+
+
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
@@ -619,17 +619,17 @@
 			"lycan_paws_speed_4"
 			{
 				"Passive" "1"
-				
+
 				"Properties"
 				{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
-			
+
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -643,7 +643,7 @@
 
 		}
 	}
-	
+
 	"item_lycan_paw_5"
 	{
 		// General
@@ -664,8 +664,8 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-		
-		
+
+
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -674,9 +674,9 @@
 				"ModifierName"			"lycan_paws_speed_5"
 			}
 		}
-		
-		
-		
+
+
+
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
@@ -684,16 +684,16 @@
 			"lycan_paws_speed_5"
 			{
 				"Passive" "1"
-				
+
 				"Properties"
 				{
 				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_percentage_bonus"	
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_percentage_bonus"
 				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attackspeed_bonus"
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -719,7 +719,7 @@
 		}
 
 	}
-	
+
 		//=================================================================================================================
 	// Strygwyr Claw
 	//=================================================================================================================
@@ -737,10 +737,10 @@
 		 // Casting
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityCastRange"       "1200"
-                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
                 "AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
-				
+
 		// Time
         //-------------------------------------------------------------------------------------------------------------
                 "AbilityCooldown"        "1"
@@ -748,7 +748,7 @@
         // Cost
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityManaCost"        "0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"90"
@@ -758,8 +758,8 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 	}
-	
-		
+
+
 	//=================================================================================================================
 	// Tiny Arm
 	//=================================================================================================================
@@ -770,21 +770,21 @@
 		"ID"							"1014"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"BaseClass"						"tiny_toss"
 		"AbilityTextureName"			"item_tiny_arm"
-		
+
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"					"5107"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_RUNE_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1300"
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"9"
 
@@ -796,8 +796,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityModifierSupportValue"	"0.25"	// generally used for damage only
 
-		
-		
+
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"90"
@@ -805,7 +805,7 @@
 		"ItemQuality"					"rare"
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -849,7 +849,7 @@
 		}
 
 	}
-	
+
 	//=================================================================================================================
 	// Grappling Hook
 	//=================================================================================================================
@@ -867,10 +867,10 @@
 		 // Casting
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityCastRange"       "1200"
-                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"     
+                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
                 "AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
-				
+
 		// Time
         //-------------------------------------------------------------------------------------------------------------
                 "AbilityCooldown"        "1"
@@ -878,7 +878,7 @@
         // Cost
                 //-------------------------------------------------------------------------------------------------------------
                 "AbilityManaCost"        "0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"90"
@@ -888,7 +888,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 	}
-	
+
 	//=================================================================================================================
 	// Rabbits vs Sheep: The one ring
 	//================== ===============================================================================================
@@ -920,7 +920,7 @@
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -928,7 +928,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -944,7 +944,7 @@
 		}
 
 	}
-	
+
 	"item_rvs_one_ring_2"
 	{
 		// General
@@ -968,7 +968,7 @@
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -976,7 +976,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -992,7 +992,7 @@
 		}
 
 	}
-	
+
 	"item_rvs_one_ring_3"
 	{
 		// General
@@ -1017,7 +1017,7 @@
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -1025,7 +1025,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -1041,7 +1041,7 @@
 		}
 
 	}
-	
+
 	"item_rvs_one_ring_4"
 	{
 		// General
@@ -1065,7 +1065,7 @@
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -1073,7 +1073,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -1089,7 +1089,7 @@
 		}
 
 	}
-	
+
 	"item_rvs_one_ring_5"
 	{
 		// General
@@ -1113,7 +1113,7 @@
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -1121,7 +1121,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -1137,7 +1137,7 @@
 		}
 
 	}
-	
+
 	"item_rvs_one_ring_6"
 	{
 		// General
@@ -1161,7 +1161,7 @@
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -1169,7 +1169,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -1185,7 +1185,7 @@
 		}
 
 	}
-	
+
 	"item_rvs_one_ring_7"
 	{
 		// General
@@ -1209,7 +1209,7 @@
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -1217,7 +1217,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -1233,7 +1233,7 @@
 		}
 
 	}
-	
+
 	"item_rvs_one_ring_8"
 	{
 		// General
@@ -1257,7 +1257,7 @@
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -1265,7 +1265,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -1281,7 +1281,7 @@
 		}
 
 	}
-	
+
 	"item_rvs_one_ring_9"
 	{
 		// General
@@ -1305,7 +1305,7 @@
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -1313,7 +1313,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -1329,7 +1329,7 @@
 		}
 
 	}
-	
+
 	"item_rvs_one_ring_10"
 	{
 		// General
@@ -1348,14 +1348,14 @@
 		"ItemQuality"					"common"
 		"ItemAliases"					"mana"
 		//"ItemShareability"				"ITEM_NOT_SHAREABLE
-		
+
 		"Modifiers"
 		{
 			"rvs_one_ring_10"
 			{
 				"Passive" 	"1"
 				"IsHidden"	"1"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%mana_regen"
@@ -1363,7 +1363,7 @@
 				}
 			}
 		}
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -1379,20 +1379,20 @@
 		}
 
 	}
-	
-	
-	
+
+
+
 	//=================================================================================================================
 	// Rabbits vs Sheep: The one ring recipes
 	//================== ===============================================================================================
-	
+
 	"item_rvs_one_recipe_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1110"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"BaseClass"						"item_datadriven"
 
 		// Item Info
@@ -1406,16 +1406,16 @@
 		{
 			"01"			"item_rvs_one_ring;item_rvs_one_ring"
 		}
-		
+
 	}
-	
+
 	"item_rvs_one_recipe_3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1111"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"BaseClass"						"item_datadriven"
 
 		// Item Info
@@ -1429,16 +1429,16 @@
 		{
 			"01"			"item_rvs_one_ring_2;item_rvs_one_ring"
 		}
-		
+
 	}
-	
+
 	"item_rvs_one_recipe_4"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1112"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"BaseClass"						"item_datadriven"
 
 		// Item Info
@@ -1452,16 +1452,16 @@
 		{
 			"01"			"item_rvs_one_ring_3;item_rvs_one_ring"
 		}
-		
+
 	}
-	
+
 	"item_rvs_one_recipe_5"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1113"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"BaseClass"						"item_datadriven"
 
 		// Item Info
@@ -1475,16 +1475,16 @@
 		{
 			"01"			"item_rvs_one_ring_4;item_rvs_one_ring"
 		}
-		
+
 	}
-	
+
 	"item_rvs_one_recipe_6"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1114"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"BaseClass"						"item_datadriven"
 
 		// Item Info
@@ -1498,16 +1498,16 @@
 		{
 			"01"			"item_rvs_one_ring_5;item_rvs_one_ring"
 		}
-		
+
 	}
-	
+
 	"item_rvs_one_recipe_7"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1115"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"BaseClass"						"item_datadriven"
 
 		// Item Info
@@ -1521,16 +1521,16 @@
 		{
 			"01"			"item_rvs_one_ring_6;item_rvs_one_ring"
 		}
-		
+
 	}
-	
+
 	"item_rvs_one_recipe_8"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1116"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"BaseClass"						"item_datadriven"
 
 		// Item Info
@@ -1544,23 +1544,23 @@
 		{
 			"01"			"item_rvs_one_ring_7;item_rvs_one_ring"
 		}
-		
+
 	}
-	
+
 	"item_rvs_one_recipe_9"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1117"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"BaseClass"						"item_datadriven"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"0"
 		"ItemShopTags"					""
-		
+
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"	"1"
@@ -1569,23 +1569,23 @@
 		{
 			"01"			"item_rvs_one_ring_8;item_rvs_one_ring"
 		}
-		
+
 	}
-	
+
 	"item_rvs_one_recipe_10"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1118"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		
+
 		"BaseClass"						"item_datadriven"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"0"
 		"ItemShopTags"					""
-		
+
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"	"1"
@@ -1594,9 +1594,59 @@
 		{
 			"01"			"item_rvs_one_ring_9;item_rvs_one_ring"
 		}
-		
+
 	}
-	
-	
-	
+
+
+	"item_dust_spamable"
+	{
+		"BaseClass"						"item_dust"
+		//"AbilityTextureName"			"dust"
+
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"40"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Model"							"models/props_gameplay/dust.mdl"
+		"Effect"						"dropped_dust"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"ItemCost"						"0"
+		"ItemShopTags"					"consumable"
+		"ItemQuality"					"consumable"
+		"ItemStackable"					"1"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES"
+		"ItemSupport"					"1"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"4"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed"				"-15"
+			}
+		}
+	}
 }

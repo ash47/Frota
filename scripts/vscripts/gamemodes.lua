@@ -278,6 +278,37 @@ RegisterGamemode('pureskill', {
     end
 })
 
+-- Riki Wars
+RegisterGamemode('rikiwars', {
+    -- Gamemode only has a gameplay component
+    sort = GAMEMODE_PICK,
+
+    -- Function to give out heroes
+    assignHero = function(frota, ply)
+        local playerID = ply:GetPlayerID()
+
+        -- Change heroes
+        local hero = ply:ReplaceHeroWith('npc_dota_hero_riki', 2500, 2600)
+        frota:SetActiveHero(hero)
+
+        -- Change skills
+        frota:ApplyBuild(hero, {
+            [1] = 'rikiwars_smoke_screen',
+            [2] = 'rikiwars_blink_strike',
+            [3] = 'riki_backstab',
+            [4] = 'riki_permanent_invisibility'
+        })
+
+        -- Give dust
+        hero:AddItem(CreateItem('item_dust_spamable', hero, hero))
+    end,
+
+    -- List of addons to ignore
+    ignoreAddons = {
+        dmMode = true
+    },
+})
+
 --[[ Addon plugins ]]--
 
 -- WTF Mode
