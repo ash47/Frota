@@ -60,6 +60,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 ###How do I play with friend?###
  - You need to setup a dedicated server, and port forward (or, you can use hamachi, but port forward is easier)
  - Follow the guide here: https://forums.alliedmods.net/showpost.php?p=1911667&postcount=64
+ - Your addons folder should look like this (note: No DLL files are pictured) http://i.imgur.com/sUtBFki.jpg
  - Google how to port forward, it is different for every router!
 
 ###Is there a way I can spawn test heroes?###
