@@ -5,7 +5,7 @@ local hexSkill = 'warlocks_novice_hex'
 local etherealSkill = 'warlocks_novice_ethereal'
 local etherealModifier = 'modifier_item_ethereal_blade_ethereal'
 
-local playerList = {}
+--local playerList = {}
 local currentHolder = nil
 local previousHolder = nil
 
@@ -30,8 +30,8 @@ RegisterGamemode('warlocks', {
         local hero = ply:ReplaceHeroWith(warlockHero, 0, 0)
         frota:SetActiveHero(hero)
 
-		playerList[playerID] = hero
-		print("Warlocks: Adding player, ("..playerID..") to playerList.")
+		--playerList[playerID] = hero
+		--print("Warlocks: Adding player, ("..playerID..") to playerList.")
 
         -- Give blinkdagger
         --hero:AddItem(CreateItem('item_blink', hero, hero))
@@ -58,7 +58,7 @@ RegisterGamemode('warlocks', {
 			end
 		})
 		Convars:SetFloat("dota_all_vision", 1.0)
-		playerList = {}
+		--playerList = {}
 	end,
 
 	--[[
@@ -69,8 +69,8 @@ RegisterGamemode('warlocks', {
 
 	CleanupPlayer = function(frota, leavingPly)
         local playerID = leavingPly:GetPlayerID()
-		print("Warlocks: Removing disconnected player, ("..playerID..") from playerList.")
-		table.remove(playerList, playerID)
+		--print("Warlocks: Removing disconnected player, ("..playerID..") from playerList.")
+		--table.remove(playerList, playerID)
 		-- If the jerk with the spell leavers we pick a new warlock.
 		if leavingPly == currentHolder then
 			frota:CreateTimer('warlocks_countdown_timer', {
@@ -96,12 +96,12 @@ RegisterGamemode('warlocks', {
 	onHeroKilled = function(frota, killedUnit, killerEntity)
 		local killedPlayerID = killedUnit:GetPlayerID()
 		print("Warlocks: onHeroKilled has fired!")
-		print("Warlocks: Removing killed player, ("..killedPlayerID..") from playerList.")
-		table.remove(playerList, killedPlayerID)
+		--print("Warlocks: Removing killed player, ("..killedPlayerID..") from playerList.")
+		--table.remove(playerList, killedPlayerID)
 
 
-		if(#playerList <= 1) then
-			print(#playerList,"is the number of players in playerList.")
+		local livingPlayers = getLivingPlayerList()
+		if(#livingPlayers <= 1) then
 			frota:EndGamemode()
 			return
 		end --You are the one and only.
@@ -133,13 +133,7 @@ RegisterGamemode('warlocks', {
 })
 
 function __selectRandomWarlock()
-	local warlocks = Entities:FindAllByClassname( 'npc_dota_hero*' )
-	--PrintTable(warlocks)
-	for k,v in pairs(warlocks) do
-		if not v:IsAlive() then
-			table.remove(warlocks, k)
-		end
-	end
+	local warlocks = getLivingPlayerList()
 	luckyMofo = warlocks[ math.random( #warlocks ) ]
 	setHolder(luckyMofo)
 	currentTime = 8.0 + #warlocks
@@ -212,6 +206,20 @@ function destroyCounter()
 	if particleCountdown ~= nil then return end
 	ParticleManager:ReleaseParticleIndex( particleCountdown )
 	particleCountdown = nil
+end
+
+function getPlayerList()
+	return Entities:FindAllByClassname( 'npc_dota_hero*' )
+end
+
+function getLivingPlayerList()
+	local livePlayers = getPlayerList()
+	for k,v in pairs(livePlayers) do
+		if not v:IsAlive() then
+			table.remove(livePlayers, k)
+		end
+	end
+	return livePlayers
 end
 
 function killHolder()
