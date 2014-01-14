@@ -163,7 +163,6 @@ function FrotaGameMode:RegisterCommands()
         end
     end, 'A user tried to put a skill into a slot', 0)]]
 
-
     -- When a user tries to put a skill into a slot
     Convars:RegisterCommand('afs_skill', function(name, skillName, slotNumber)
         -- Verify we are in picking mode
@@ -1438,11 +1437,31 @@ function FrotaGameMode:VoteForGamemode()
 
     -- Grab all the gamemodes the require picking
     local modes = GetPickingGamemodes()
-
-    local options = {}
-    for k, v in pairs(modes) do
-        options['#afs_name_'..v] = '#afs_des_'..v
-    end
+	
+	local preset = Convars:GetStr("frota_mode_preset")
+	
+	local options = {}
+	
+	if preset and preset ~= "" then
+		options['#afs_name_'..preset] = '#afs_des_'..preset
+	else 
+		local bans = Convars:GetStr("frota_ban_modes")
+		
+		for k, v in pairs(modes) do
+			local banned = false
+			if bans and bans ~= "" then
+				for ban in string.gmatch(bans, '([^,]+)') do
+					if ban == v then
+						banned = true
+						break
+					end
+				end
+			end
+			if not banned then 
+				options['#afs_name_'..v] = '#afs_des_'..v
+			end
+		end
+	end
 
     -- Reset the loaders
     self.toLoadPickMode = {}

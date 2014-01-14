@@ -1,4 +1,4 @@
--- Invoker Wars
+-- Puck Wars
 RegisterGamemode('puckwars', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_PICK,
@@ -9,7 +9,7 @@ RegisterGamemode('puckwars', {
         local hero = ply:ReplaceHeroWith('npc_dota_hero_puck', 2500, 2600)
         frota:SetActiveHero(hero)
 
-        -- Apply custom invoker skills
+        -- Apply custom Puck skills
         frota:ApplyBuild(hero, {
             [1] = 'puck_illusory_orb',
             [2] = 'puckwars_waning_rift',
