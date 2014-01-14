@@ -1,0 +1,10 @@
+runehill
+{
+	material overviews/runehill
+	pos_x -2100
+	pos_y 3250
+	scale 5.000
+	rotate 0
+	zoom 1.0000
+}
+
