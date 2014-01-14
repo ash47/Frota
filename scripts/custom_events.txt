@@ -65,5 +65,13 @@
 	{
 		"d"					"string"
 	}
+
+	"afs_testa"
+	{
+	}
+
+	"afs_testb"
+	{
+	}
 }
 
