@@ -403,7 +403,7 @@ RegisterGamemode('unlimitedMana', {
 
     onHeroSpawned = function(frota, hero)
         -- Remove old ability if it exsists
-        if hero:HasAbility('frota_mana_aura') then
+        --[[if hero:HasAbility('frota_mana_aura') then
             hero:RemoveAbility('frota_mana_aura')
         end
 
@@ -412,7 +412,8 @@ RegisterGamemode('unlimitedMana', {
 
         -- Set it to level 1
         local ab = hero:FindAbilityByName('frota_mana_aura')
-        ab:SetLevel(1)
+        ab:SetLevel(1)]]
+        hero:__KeyValueFromInt('StatusManaRegen', 1000)
     end
 })
 
