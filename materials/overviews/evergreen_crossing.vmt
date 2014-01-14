@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "overviews/evergreen_crossing"
+	"$translucent" 1
+	"$vertexalpha" 1
+}
