@@ -2,7 +2,12 @@
 {
 	"1"
     {
-        "File"      "frota"
+        "File"      "frotaOverlay"
+        "Depth"     "51"
+    }
+    "2"
+    {
+        "File"      "frotaHud"
         "Depth"     "7"
     }
 }
