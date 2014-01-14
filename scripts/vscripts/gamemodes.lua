@@ -397,24 +397,25 @@ RegisterGamemode('noBuying', {
     end
 })]]
 
---[[RegisterGamemode('unlimitedMana', {
+RegisterGamemode('unlimitedMana', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
     onHeroSpawned = function(frota, hero)
         -- Remove old ability if it exsists
-        if hero:HasAbility('forest_troll_high_priest_mana_aura') then
-            hero:RemoveAbility('forest_troll_high_priest_mana_aura')
+        --[[if hero:HasAbility('frota_mana_aura') then
+            hero:RemoveAbility('frota_mana_aura')
         end
 
         -- Add mana regen
-        hero:AddAbility('forest_troll_high_priest_mana_aura')
+        hero:AddAbility('frota_mana_aura')
 
         -- Set it to level 1
-        local ab = hero:FindAbilityByName('forest_troll_high_priest_mana_aura')
-        ab:SetLevel(1)
+        local ab = hero:FindAbilityByName('frota_mana_aura')
+        ab:SetLevel(1)]]
+        hero:__KeyValueFromInt('StatusManaRegen', 1000)
     end
-})]]
+})
 
 -- Not done yet
 --[[RegisterGamemode('sunstrikewars', {
