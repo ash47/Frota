@@ -2540,4 +2540,26 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Frota Mana Aura
+	//=================================================================================================================
+	"frota_mana_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"Baseclass"						"crystal_maiden_brilliance_aura"
+		"Maxlevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mana_regen"		"999999"
+			}
+		}
+	}
+
 }
