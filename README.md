@@ -72,20 +72,21 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 
 ###Translations###
  - Please make a pull request if you want to update translations
- - English by Ash47
- - Russian by lokkdokk
+ - English by [Ash47][1]
+ - Russian by [lokkdokk][2]
  - French by Canardlaquay
- - Hungarian by Easimer
- - German by DarkMio_mainframe
+ - Hungarian by [Easimer][4]
+ - German by [DarkMio_mainframe][5]
  - Turkish by ozen
  - Spanish by JosDW
- - Portuguese by Kobb
- - Finnish by SQL
- - Chinese by cs-italy
+ - Portuguese by [Kobb][8]
+ - Finnish by [SQL][9]
+ - Chinese by [cs-italy][10]
 
 ###Maps###
- - riverofsouls by Z-Machine
- - deadlock by Z-Machine
+ - riverofsouls by [Z-Machine][11]
+ - deadlock by [Z-Machine][11]
+ - runehill by Azarak908
 
 ###Issues that need help###
  - When a player leaves the game, their slot isn't removed, and hence, someone else can't connect and take their place, this is caused by the limit of 5 players per team, someone solve this :P
@@ -99,3 +100,11 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - Adding more addons + gamemodes
  - The hud needs to be rewritten, once we know how to stop the hud from freezing (causes it to miss events), this rewrite will happen.
 
+[1]: https://github.com/ash47
+[2]: https://github.com/lokkdokk
+[4]: https://github.com/Easimer
+[5]: https://github.com/DarkMio
+[8]: https://github.com/KobbDota
+[9]: https://github.com/justSQL
+[10]: https://github.com/cs-italy
+[11]: https://github.com/Z-Machine
