@@ -1,0 +1,9 @@
+evergreen_crossing
+{
+	material overviews/evergreen_crossing
+	pos_x -4096
+	pos_y 4096
+	scale 8.000
+	rotate 0
+	zoom 1.0000
+}
