@@ -6,6 +6,8 @@
     import ValveLib.Globals;
     import ValveLib.ResizeManager;
 
+    // Events
+    import flash.events.MouseEvent;
 
 	public class frotaHud extends MovieClip {
 		// Game API related stuff
@@ -21,8 +23,19 @@
         // Stores the overlay panel
         public static var overlay:MovieClip;
 
+        // Movieclips on the stage
+        public var hudMask:MovieClip;
+        public var SideMenu:MovieClip;
+
         // Shortcut functions
         public static var Translate:Function;
+
+        // For testing purposes
+        public function frotaHud() : void {
+            SideMenu.gotoAndPlay("open");
+
+            SideMenu.Content.btnToggle.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
+        }
 
         // When the hud is loaded
         public function onLoaded() : void {
@@ -36,6 +49,12 @@
 
             // Hook Game API Related Stuff
             Globals.instance.resizeManager.AddListener(this);
+
+            // Remove the hud mask
+            this.removeChild(hudMask);
+
+            // Hook the side menu
+            SideMenu.Content.btnToggle.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
 
             // Make the hud visible
             visible = true;
@@ -57,6 +76,22 @@
             this.scaleY = re.ScreenHeight/maxStageHeight;
             overlay.scaleX = re.ScreenWidth/maxStageWidth;
             overlay.scaleY = re.ScreenHeight/maxStageHeight;
+        }
+
+        public static function addFrameBehaviour(mc:MovieClip, frame:String, behaviour:Function) {
+            // Loop over all labels
+            for(var i:int=0;i<mc.currentLabels.length;i++){
+                // Check if this is the frame we wanted
+                if(mc.currentLabels[i].name == frame){
+                    // Add event
+                    mc.addFrameScript(mc.currentLabels[i].frame-1,behaviour);
+                }
+            }
+        }
+
+        public function SideMenuToggleClicked(e:MouseEvent) {
+            // Toggle the side menu
+            SideMenu.toggle();
         }
 	}
 

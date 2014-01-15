@@ -7,6 +7,10 @@
         public var globals:Object;
         public var elementName:String;
 
+        // Containers
+        public var upper:MovieClip;
+        public var lower:MovieClip;
+
         // This function is required
 		public function onLoaded() : void {}
 	}
