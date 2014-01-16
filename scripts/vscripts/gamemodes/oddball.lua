@@ -3,7 +3,6 @@ local hero_has_gem = 0
 RegisterGamemode('oddball', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_BOTH,
-	i = 0,
     -- Function to give out heroes
     assignHero = function(frota, ply)
         -- Change heroes
