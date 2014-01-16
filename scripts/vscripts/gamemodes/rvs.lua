@@ -77,7 +77,7 @@ RegisterGamemode('rvs', {
 	
     -- Allow certain picking things
     pickHero = true,
-    pickSkills = false,
+    pickSkills = true,
 	
 
 	
@@ -100,16 +100,16 @@ RegisterGamemode('rvs', {
             s = VOTE_SORT_RANGE,
 
             -- Minimal possible value
-            min = 1,
+            min = 50,
 
             -- Maximal possible value
-            max = 100,
+            max = 350,
 
             -- Default vaule (if no one votes)
-            def = 10,
+            def = 150,
 
             -- Slider tick interval
-            tick = 10,
+            tick = 50,
 
             -- Slider step interval
             step = 1
@@ -170,7 +170,6 @@ RegisterGamemode('rvs', {
 			elseif unitName == 'npc_dota_creep_badguys_melee' then
 				spawn_radiant_creep()
 				spawn_radiant_creep()
-				spawn_dire_creep()
 				
 				if frota.scoreRadiant > 0 then
 					frota.scoreRadiant = frota.scoreRadiant - 1
@@ -202,7 +201,7 @@ RegisterGamemode('rvs', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        ply:ReplaceHeroWith(build.hero, 100000, 32400)
+        ply:ReplaceHeroWith(build.hero, 2500, 0)
 
         local hero = Players:GetSelectedHeroEntity(playerID)
 
