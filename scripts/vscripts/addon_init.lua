@@ -27,6 +27,7 @@ require('gamemodes/plage')
 require('gamemodes/sunstrikewars')
 require('gamemodes/kaolinwars')
 require('gamemodes/kunkkawars')
+require('gamemodes/oddball')
 
 -- Include addons
 require('gamemodes/fatometer')
