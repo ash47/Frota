@@ -40,12 +40,12 @@ RegisterGamemode('oddball', {
         frota:SetScoreLimit(options.scoreLimit)    
 		frota:CreateTimer('oddball_create_timer', {        
 			endTime = Time() + 1,    
-			callback = function(frota, args)            
-				local playerID = frota:GetRandomPlayer():GetPlayerID() 				       
-				local hero = Players:GetSelectedHeroEntity(playerID)        
-				hero:AddItem(CreateItem('item_gem', hero, hero))    
-				hero_has_gem = hero
-				any_gem_active = 1
+			callback = function(frota, args)    
+				local vector = Vec3( 0, 0, 0 )
+				local unit = CreateUnitByName("npc_dota_neutral_satyr_trickster2", vector, false, nil, nil, DOTA_TEAM_NEUTRALS)
+				unit:AddItem(CreateItem('item_gem', nil, nil))    			
+				unit:SetMaxHealth(5000)
+				unit:SetHealth(5000)
 			end   
 		})
 	end,
