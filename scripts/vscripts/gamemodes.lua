@@ -413,7 +413,7 @@ RegisterGamemode('unlimitedMana', {
         -- Set it to level 1
         local ab = hero:FindAbilityByName('frota_mana_aura')
         ab:SetLevel(1)]]
-        hero:__KeyValueFromInt('StatusManaRegen', 1000)
+        hero:__KeyValueFromInt('StatusManaRegen', 500)
     end
 })
 
