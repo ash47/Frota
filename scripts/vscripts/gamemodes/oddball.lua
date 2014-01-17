@@ -60,11 +60,13 @@ RegisterGamemode('oddball', {
                     if item:GetAbilityName() == 'item_oddball' then
 						hero_has_gem=hero
 						any_gem_active = 1
-						void AddNewModifier(hero,nil, modifier_bloodseeker_thirst_vision,nil)
+						hero:AddNewModifier(hero, nil, 'modifier_bloodseeker_thirst_vision' ,nil)
 						break
-                   else
-				   RemoveModifierByName(modifier_bloodseeker_thirst_vision)
-				   end
+					else
+						if hero:HasModifier('modifier_bloodseeker_thirst_vision') == true then
+							hero:RemoveModifierByName('modifier_bloodseeker_thirst_vision')
+						end
+					end
                 end
             end
         end
