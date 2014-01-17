@@ -1649,4 +1649,41 @@
 			}
 		}
 	}
+	"item_oddball"
+	{
+		"BaseClass"						"item_rapier"
+		"AbilityTextureName"			"oddball"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1333"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/gem01.mdl"
+		"effect"						"dropped_smoke"
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"999999"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"OnSpellStart"
+                {
+				"ApplyModifier"
+					{
+					"Target"			"CASTER"
+					"ModifierName"		"modifier_bloodseeker_thirst_vision"
+					}
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"-50"
+			}
+		}
+	}
 }
