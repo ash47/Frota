@@ -1668,13 +1668,6 @@
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
-		"OnSpellStart"
-                {
-				"ApplyModifier"
-					{
-					"Target"			"CASTER"
-					"ModifierName"		"modifier_bloodseeker_thirst_vision"
-					}
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
