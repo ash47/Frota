@@ -16,10 +16,10 @@
         - "player"          "short"
         - "abilityname"     "string"
     - dota_player_learned_ability
-        - "player"        	"short"
+        - "player"          "short"
         - "abilityname"     "string"
     - dota_player_gained_level
-        - "player"        	"short"
+        - "player"          "short"
         - "level"           "short"
     - dota_item_purchased
         - "PlayerID"        "short"
