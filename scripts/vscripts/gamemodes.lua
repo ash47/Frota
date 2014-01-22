@@ -13,13 +13,13 @@
     MOD EVENTS -- Mod events are all in the form of (frota, keys), you can find the arguments below via keys: keys.PlayerID
 
     - dota_player_used_ability
-        - "PlayerID"        "short"
+        - "player"          "short"
         - "abilityname"     "string"
     - dota_player_learned_ability
-        - "PlayerID"        "short"
+        - "player"          "short"
         - "abilityname"     "string"
     - dota_player_gained_level
-        - "PlayerID"        "short"
+        - "player"          "short"
         - "level"           "short"
     - dota_item_purchased
         - "PlayerID"        "short"
@@ -29,14 +29,16 @@
         - "PlayerID"        "short"
         - "itemname"        "string"
     - last_hit
-        - "PlayerID"         "short"
+        - "PlayerID"        "short"
         - "EntKilled"       "short"
         - "FirstBlood"      "bool"
         - "HeroKill"        "bool"
         - "TowerKill"       "bool"
     - dota_item_picked_up
-        - "itemname"        "string"
-        - "PlayerID"        "short"
+        - "itemname"        	"string"
+        - "PlayerID"        	"short"
+        - "ItemEntityIndex" 	"long"
+        - "HeroEntityIndex" 	"long"
      - dota_super_creep
         - "teamnumber"      "short"
     - dota_glyph_used
