@@ -6,7 +6,6 @@ package  {
         public var Content:MovieClip;
         public var subMenu:MovieClip;
 
-
         // Constants
         public static var STATE_FULLY_CLOSED = 1;
         public static var STATE_MENU_MOVING = 2;
