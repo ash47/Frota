@@ -1437,16 +1437,16 @@ function FrotaGameMode:VoteForGamemode()
 
     -- Grab all the gamemodes the require picking
     local modes = GetPickingGamemodes()
-	
+
 	local preset = Convars:GetStr("frota_mode_preset")
-	
+
 	local options = {}
-	
+
 	if preset and preset ~= "" then
 		options['#afs_name_'..preset] = '#afs_des_'..preset
-	else 
+	else
 		local bans = Convars:GetStr("frota_ban_modes")
-		
+
 		for k, v in pairs(modes) do
 			local banned = false
 			if bans and bans ~= "" then
@@ -1457,7 +1457,7 @@ function FrotaGameMode:VoteForGamemode()
 					end
 				end
 			end
-			if not banned then 
+			if not banned then
 				options['#afs_name_'..v] = '#afs_des_'..v
 			end
 		end
