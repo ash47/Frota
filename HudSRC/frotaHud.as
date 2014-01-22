@@ -33,10 +33,16 @@
 
         // For testing purposes
         public function frotaHud() : void {
-            SideMenu.gotoAndPlay("open");
+            // Open the side menu
+            SideMenu.open();
 
+            // Hook Buttons
             btnToggleSideMenu.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
             SideMenu.Content.btnToggle.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
+            SideMenu.Content.btnTest.addEventListener(MouseEvent.CLICK, TestButtonClicked, false, 0, true);
+
+            // Remove the hud mask
+            this.removeChild(hudMask);
         }
 
         // When the hud is loaded
@@ -94,6 +100,10 @@
         public function SideMenuToggleClicked(e:MouseEvent) {
             // Toggle the side menu
             SideMenu.toggle();
+        }
+
+        public function TestButtonClicked(e:MouseEvent) {
+            SideMenu.toggleExtend();
         }
 	}
 
