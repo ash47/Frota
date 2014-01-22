@@ -33,13 +33,8 @@
 
         // For testing purposes
         public function frotaHud() : void {
-            // Open the side menu
-            SideMenu.open();
-
-            // Hook Buttons
-            btnToggleSideMenu.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
-            SideMenu.Content.btnToggle.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
-            SideMenu.Content.btnTest.addEventListener(MouseEvent.CLICK, TestButtonClicked, false, 0, true);
+            // Hook the menu
+            hookMenu();
 
             // Remove the hud mask
             this.removeChild(hudMask);
@@ -62,7 +57,11 @@
             this.removeChild(hudMask);
 
             // Hook the side menu
-            SideMenu.Content.btnToggle.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
+            hookMenu();
+
+            // Move the side button into place
+            removeChild(btnToggleSideMenu);
+            overlay.addChild(btnToggleSideMenu);
 
             // Make the hud visible
             visible = true;
@@ -84,6 +83,16 @@
             this.scaleY = re.ScreenHeight/maxStageHeight;
             overlay.scaleX = re.ScreenWidth/maxStageWidth;
             overlay.scaleY = re.ScreenHeight/maxStageHeight;
+        }
+
+        public function hookMenu() {
+            // Open the side menu
+            SideMenu.open();
+
+            // Hook Buttons
+            btnToggleSideMenu.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
+            SideMenu.Content.btnToggle.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
+            SideMenu.Content.btnTest.addEventListener(MouseEvent.CLICK, TestButtonClicked, false, 0, true);
         }
 
         public static function addFrameBehaviour(mc:MovieClip, frame:String, behaviour:Function) {

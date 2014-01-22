@@ -30,19 +30,22 @@ package  {
         }
 
         function fullyClosed() : void {
-            menuState = STATE_FULLY_CLOSED;
+            this.menuState = STATE_FULLY_CLOSED;
             stop();
             this.visible = false;
         }
 
         function fullyOpen() : void {
-            menuState = STATE_FULLY_OPEN;
+            this.menuState = STATE_FULLY_OPEN;
             stop();
         }
 
         // Closes the menu
         public function close() {
             this.gotoAndPlay("close");
+
+            // Change menu state
+            this.menuState = STATE_MENU_MOVING;
 
             // Check if we should reopen the sub menu
             if(subMenu.menuState == STATE_FULLY_OPEN) {
@@ -64,6 +67,9 @@ package  {
             this.gotoAndPlay("open");
             this.visible = true;
 
+            // Change menu state
+            this.menuState = STATE_MENU_MOVING;
+
             // Check if we need to reopen the sub menu
             if(reopen) {
                 subMenu.open();
@@ -73,9 +79,9 @@ package  {
         // Toggles the menu
         public function toggle() {
             // Check if we are open, or closed
-            if(menuState == STATE_FULLY_OPEN) {
+            if(this.menuState == STATE_FULLY_OPEN) {
                 this.close();
-            } else if(menuState == STATE_FULLY_CLOSED) {
+            } else if(this.menuState == STATE_FULLY_CLOSED) {
                 this.open();
             }
         }

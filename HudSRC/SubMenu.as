@@ -33,12 +33,18 @@
         // Closes the menu
         public function close() {
             this.gotoAndPlay("close");
+
+            // Change menu state
+            menuState = SideMenu.STATE_MENU_MOVING;
         }
 
         // Opens the menu
         public function open() {
             this.gotoAndPlay("open");
             this.visible = true;
+
+            // Change menu state
+            menuState = SideMenu.STATE_MENU_MOVING;
         }
 
         // Toggles the menu
