@@ -75,7 +75,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 ###Translations###
  - Please make a pull request if you want to update translations
  - English by [Ash47][1]
- - Russian by [lokkdokk][2]
+ - Russian by [lokkdokk][2], [Shuker][3]
  - French by Canardlaquay
  - Hungarian by [Easimer][4]
  - German by [DarkMio_mainframe][5]
@@ -104,6 +104,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 
 [1]: https://github.com/ash47
 [2]: https://github.com/lokkdokk
+[3]: https://github.com/theShuker
 [4]: https://github.com/Easimer
 [5]: https://github.com/DarkMio
 [8]: https://github.com/KobbDota
