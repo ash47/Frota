@@ -53,11 +53,11 @@
 	--Rabbits vs Sheep
 	
 local function spawn_radiant_creep ()
-	CreateUnitByName('npc_dota_creep_goodguys_melee', Vec3(math.random(575,1600),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
+	CreateUnitByName('npc_dota_creep_goodguys_melee', Vec3(math.random(790,3420),math.random(-1490,1120),0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
 end
 
 local function spawn_dire_creep ()
-	CreateUnitByName('npc_dota_creep_badguys_melee',Vec3(math.random(-1665,-705),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_BADGUYS)
+	CreateUnitByName('npc_dota_creep_badguys_melee',Vec3(math.random(-3330,-770),math.random(-1490,1120),0) , true, nil, nil, DOTA_TEAM_BADGUYS)
 end
 
 
@@ -118,10 +118,13 @@ RegisterGamemode('rvs', {
 	
 	--Stuff that happens when the game starts
 	onGameStart = function(frota, keys)
-			
+		
+		--Disables respawn
+		
+		
 		--- Grab options
         local options = frota:GetOptions()
-
+		
         -- Set the score limit
         frota:SetScoreLimit(options.scoreLimit)
 		--Spawn the starting creeps
@@ -204,9 +207,11 @@ RegisterGamemode('rvs', {
         ply:ReplaceHeroWith(build.hero, 2500, 0)
 
         local hero = Players:GetSelectedHeroEntity(playerID)
-
         -- Change skills
         frota:ApplyBuild(hero)
+		if hero then
+			hero:AddItem(CreateItem('item_aegis', hero, hero))
+		end
     end,
 	
 
