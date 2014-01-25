@@ -44,7 +44,9 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Every time you die, you respawn as a new hero!
  - **Fat-o-Meter**
   - Every time a hero kills creep or another hero, he grows a little bit.
-
+ - **Unlimited Mana**
+  - Players have max mana regen.
+ 
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
  - **IMPORTANT** Dota will only load the first plugin in your addons folder, to prevent this, move all other addons out of your addons folder. (I moved mine into an addons_disabled folder) - ONLY the host has to do this. This is not required if you use d2fixups
@@ -73,7 +75,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 ###Translations###
  - Please make a pull request if you want to update translations
  - English by [Ash47][1]
- - Russian by [lokkdokk][2]
+ - Russian by [lokkdokk][2], [Shuker][3]
  - French by Canardlaquay
  - Hungarian by [Easimer][4]
  - German by [DarkMio_mainframe][5]
@@ -102,6 +104,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 
 [1]: https://github.com/ash47
 [2]: https://github.com/lokkdokk
+[3]: https://github.com/theShuker
 [4]: https://github.com/Easimer
 [5]: https://github.com/DarkMio
 [8]: https://github.com/KobbDota
