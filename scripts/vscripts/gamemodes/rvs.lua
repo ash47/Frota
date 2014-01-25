@@ -71,6 +71,8 @@ RegisterGamemode('rvs', {
 	
 		wtf = true
 		dmMode = true
+		fatometer = true
+		noBuying = true
 	
 	},
 	]]
@@ -78,8 +80,6 @@ RegisterGamemode('rvs', {
     -- Allow certain picking things
     pickHero = true,
     pickSkills = true,
-	
-
 	
 	-- A list of options for fast gameplay stuff
     options = {
@@ -103,16 +103,16 @@ RegisterGamemode('rvs', {
             min = 50,
 
             -- Maximal possible value
-            max = 350,
+            max = 500,
 
             -- Default vaule (if no one votes)
-            def = 150,
+            def = 200,
 
             -- Slider tick interval
             tick = 50,
 
             -- Slider step interval
-            step = 1
+            step = 50
         }
     },
 	
@@ -127,14 +127,26 @@ RegisterGamemode('rvs', {
 		
         -- Set the score limit
         frota:SetScoreLimit(options.scoreLimit)
-		--Spawn the starting creeps
+		--Spawn the radiant starting creeps
 		spawn_radiant_creep()
 		spawn_radiant_creep()
 		spawn_radiant_creep()
+		local radiantWatcherL = CreateUnitByName('npc_rvs_watcher',Vec3(2105,-185,0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
+		local radiantWatcherR = CreateUnitByName('npc_rvs_watcher',Vec3(-2100,-185,0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
 		
+		radiantWatcherL:AddNewModifier(radiantWatcherL, nil, "modifier_invulnerable", {})
+		radiantWatcherR:AddNewModifier(radiantWatcherL, nil, "modifier_invulnerable", {})
+		
+		--Spawn the dire starting creeps
 		spawn_dire_creep()
 		spawn_dire_creep()
 		spawn_dire_creep()
+		
+		local direWatcherL = CreateUnitByName('npc_rvs_watcher',Vec3(-2100,-155,0) , true, nil, nil, DOTA_TEAM_BADGUYS)
+		local direWatcherR = CreateUnitByName('npc_rvs_watcher',Vec3(2105,-155,0) , true, nil, nil, DOTA_TEAM_BADGUYS)
+		
+		direWatcherL:AddNewModifier(radiantWatcherL, nil, "modifier_invulnerable", {})
+		direWatcherR:AddNewModifier(radiantWatcherL, nil, "modifier_invulnerable", {})
 		
 		--Add the number of creeps
 		frota.scoreDire = frota.scoreDire + 3
