@@ -11,19 +11,19 @@ RegisterGamemode('kotolofthehill', {
             s = VOTE_SORT_RANGE,
 
             -- Minimal possible value
-            min = 3000,
+            min = 1000,
 
             -- Maximal possible value
-            max = 10000,
+            max = 3000,
 
             -- Default vaule (if no one votes)
-            def = 6000,
+            def = 1500,
 
             -- Slider tick interval
-            tick = 1000,
+            tick = 500,
 
             -- Slider step interval
-            step = 500
+            step = 250
         }
     },
 
@@ -35,37 +35,38 @@ RegisterGamemode('kotolofthehill', {
     onThink = function(frota, dt)
     print('thinking')
         local controlPointVec = Vec3(0,0,0)
-      --  local controlPoint = Entities:FindByName(nil, 'hill_marker_01')
-        -- local controlPointVec = controlPoint:GetOrigin()
-        local unitsOnPoint = FindUnitsInRadius(DOTA_TEAM_GOODGUYS + DOTA_TEAM_BADGUYS, controlPointVec, null, 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY + DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-        local goodGuysCount = 0
-        local badGuysCount = 0
-        local tableSize = 0
-        
-        for k,v in pairs(unitsOnPoint) do
-            print(k, v)
-            tableSize = tableSize + 1
-        end
-
-        for i=1,tableSize do
-            print(i)
-            local hero = unitsOnPoint[i]
-            if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-                goodGuysCount = goodGuysCount + 1
-            else
-                badGuysCount = badGuysCount + 1
+          --  local controlPoint = Entities:FindByName(nil, 'hill_marker_01')
+            -- local controlPointVec = controlPoint:GetOrigin()
+            local goodUnitsOnPoint = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, controlPointVec, null, 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+            local badUnitsOnPoint = FindUnitsInRadius(DOTA_TEAM_BADGUYS, controlPointVec, null, 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+            local unitsOnPoint = {}
+            for k,v in ipairs(goodUnitsOnPoint) do unitsOnPoint[#unitsOnPoint+1] = v end
+            for k,v in ipairs(badUnitsOnPoint) do unitsOnPoint[#unitsOnPoint+1] = v end
+            local goodGuysCount = 0
+            local badGuysCount = 0
+            local tableSize = 0
+           
+            for k,v in pairs(unitsOnPoint) do
+                tableSize = tableSize + 1
             end
-        end
-
-        if goodGuysCount > badGuysCount then
-            frota.scoreRadiant = frota.scoreRadiant + 1
-            frota:UpdateScoreData()
-        elseif goodGuysCount == badGuysCount then
-        elseif badGuysCount > goodGuysCount then
-            frota.scoreDire = frota.scoreDire + 1
-            frota:UpdateScoreData()
-        end
-        print(goodGuysCount)
+     
+            for i=1,tableSize do
+                local hero = unitsOnPoint[i]
+                if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+                    goodGuysCount = goodGuysCount + 1
+                else
+                    badGuysCount = badGuysCount + 1
+                end
+            end
+     
+            if goodGuysCount > badGuysCount then
+                frota.scoreRadiant = frota.scoreRadiant + 1
+                frota:UpdateScoreData()
+            elseif goodGuysCount == badGuysCount then
+            elseif badGuysCount > goodGuysCount then
+                frota.scoreDire = frota.scoreDire + 1
+                frota:UpdateScoreData()
+            end
         print('finish thinking')
     end,
 
