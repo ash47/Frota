@@ -28,6 +28,7 @@ require('gamemodes/sunstrikewars')
 require('gamemodes/kaolinwars')
 require('gamemodes/kunkkawars')
 require('gamemodes/oddball')
+require('gamemodes/kotolofthehill')
 
 -- Include addons
 require('gamemodes/fatometer')
