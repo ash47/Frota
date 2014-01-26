@@ -26,6 +26,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 ###Gameplay Gamemodes###
  - **PvP Arena**
   - A PvP arena game mode
+ -** King of the Hill**
+  - Fight to get more players on top of the point than the enemy team.
 
 ###Picking + Gameplay Gamemodes###
  - **Rabbits vs. Sheep**
