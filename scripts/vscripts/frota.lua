@@ -1802,4 +1802,84 @@ function FrotaGameMode:PrecacheSkill(skillName)
     return
 end
 
+--[[
+Use            : function to search an item in hero's invent and return if present otherwise nil
+               : For multiple instances of same item, first one is returned
+Arguments:
+hscript hero   : the player's hero
+string itemname: Item name for e.g. "item_blink"
+bool stash     : whether to search stash slots also
+bool dropped   : whether to search dropped items also
+
+Returns Values : 
+Returns a table with key,
+    Item: if found in slots
+    PhysicalItem: if dropped item
+Otherwise nil
+]]
+function FrotaGameMode:GetHeroItemByName(hero,itemName,stash,dropped)
+    local item=nil
+    local physicalItem=nil
+    local found={}
+    -- 6 hero slots
+    local nslots=6
+    -- additional 6 stash slots
+    if stash then
+        nslots=nslots + 6
+    end
+    for i=0,nslots-1 do
+        item = hero:GetItemInSlot(i)
+        -- check slot has valid item or nothing
+        if IsValidEntity(item) then
+            -- check item is the required one
+            if item:GetName() == itemName then
+                found["Item"] = item
+                return found
+            end
+        end
+    end
+    -- Check Dropped Items for hero item
+    if dropped then
+        local num = GameRules:NumDroppedItems()
+        for i=0,num-1 do
+            -- get Physical item
+            physicalItem = GameRules:GetDroppedItem(i)
+            -- get Actual item in it
+            item = physicalItem:GetContainedItem()
+            -- check item is the required one
+            if item:GetName() == itemName then
+                -- Check owner of item is given hero
+                if item:GetPurchaser() == hero then
+                    found["PhysicalItem"] = physicalItem
+                    return found
+                end
+            end
+        end
+    end
+    return nil
+end
+
+--[[
+Use            : function to remove an item in hero's invent if present
+               : For multiple instances of same item, first one is removed only
+Arguments:
+hscript hero   : the player's hero
+string itemname: Item name for e.g. "item_blink"
+bool stash     : whether to search stash slots also
+bool dropped   : whether to search dropped items also
+
+Returns Values : true on Success otherwise false
+]]
+function FrotaGameMode:RemoveHeroItemByName(hero,itemName,stash,dropped)
+    local found = self:GetHeroItemByName(hero,itemName,stash,dropped)
+    if found.Item then
+        found.Item:Remove()
+    elseif found.PhysicalItem then
+        found.PhysicalItem:Remove()
+    else
+        return false
+    end
+    return true
+end
+
 EntityFramework:RegisterScriptClass( FrotaGameMode )
