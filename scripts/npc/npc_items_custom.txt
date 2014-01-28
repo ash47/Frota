@@ -1679,4 +1679,46 @@
 			}
 		}
 	}
+	
+	"item_capture_flag"
+	{
+		"BaseClass"						"item_rapier"
+		"AbilityTextureName"			"capture_flag"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1334"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models\props_teams\banner_radiant.mdl"
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"999999"
+		"ItemShopTags"					"damage"
+		"ItemDroppable"					"1"
+		"ItemQuality"					"epic"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+	}
+
+	"item_capture_flag_dire"
+	{
+		"BaseClass"						"item_rapier"
+		"AbilityTextureName"			"capture_flag_dire"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1335"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models\props_teams\banner_dire_small.mdl"
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"999999"
+		"ItemShopTags"					"damage"
+		"ItemDroppable"					"1"
+		"ItemQuality"					"epic"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+	}
 }
