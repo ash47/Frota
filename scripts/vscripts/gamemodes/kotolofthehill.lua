@@ -30,10 +30,11 @@ RegisterGamemode('kotolofthehill', {
     onGameStart = function(frota)
     print('running onGameStart')
     print('finished onGameStart')
+    local options = frota:GetOptions()
+    frota:SetScoreLimit(options.scoreLimit)
     end,
 
     onThink = function(frota, dt)
-    print('thinking')
         local controlPointVec = Vec3(0,0,0)
           --  local controlPoint = Entities:FindByName(nil, 'hill_marker_01')
             -- local controlPointVec = controlPoint:GetOrigin()
@@ -67,7 +68,6 @@ RegisterGamemode('kotolofthehill', {
                 frota.scoreDire = frota.scoreDire + 1
                 frota:UpdateScoreData()
             end
-        print('finish thinking')
     end,
 
     })
