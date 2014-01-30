@@ -10,21 +10,19 @@ RegisterGamemode('gambler', {
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
-        -- Change heroes
-        ply:ReplaceHeroWith(rubickHero, 2500, 2600)
-
         local playerID = ply:GetPlayerID()
-        local hero = Players:GetSelectedHeroEntity(playerID)
+
+        -- Change heroes
+        local hero = Players:ReplaceHeroWith(playerID, rubickHero, 2500, 2600)
+        frota:SetActiveHero(hero)
 
         -- Apply the build
-		
 		frota:ApplyBuild(hero, {
             [1] = anteSkill,
             [2] = chipSkill,
             [3] = luckySkill,
             [4] = allInSkill
         })
-		
     end,
 
     -- A list of options for fast gameplay stuff
@@ -75,10 +73,10 @@ local gama = {}
 
 function anteUpRegister(keys)
 
-end	
+end
 
 function anteUpKill(keys)
-	
+
 	--local caster = keys.caster
 	--if caster == nil then
 	--	return
@@ -95,7 +93,7 @@ function anteUpKill(keys)
 end
 
 function anteUpDeath(keys)
-	
+
 	--caster:ForceKill(false)
 	--local caster = keys.caster
 	--if caster == nil then
@@ -109,7 +107,7 @@ function anteUpDeath(keys)
 	--if target == nil then
 	--	return
 	--end
-			
+
 	--end
 end
 
@@ -118,7 +116,7 @@ chipStackAmount = {}
 chipStackAmount[1] = 0.15
 chipStackAmount[2] = 0.2
 chipStackAmount[3] = 0.25
-chipStackAmount[4] = 0.3 
+chipStackAmount[4] = 0.3
 
 function chipStack(keys)
 
@@ -126,12 +124,12 @@ function chipStack(keys)
 	if caster == nil then
 		return
 	end
-	
+
 	local target = keys.target_entities[1]
 	if target == nil then
 		return
 	end
-	
+
 	local dmg = target:GetGold()*chipStackAmount[1]
 	local hp = target:GetHealth()
 	if hp <= dmg then
@@ -139,39 +137,39 @@ function chipStack(keys)
 	else
 		target:SetHealth(hp-dmg)
 	end
-	
-	
-	
+
+
+
 
 end
 
-function allInSuccess(keys)	
-	
+function allInSuccess(keys)
+
 	local caster = keys.caster
 	if caster == nil then
 		sendAMsg('no caster')
 		return
 	end
-	
+
 	sendAMsg('I won!?!?!?')
-	
+
 end
 
-function allInFail(keys)	
-	
+function allInFail(keys)
+
 	local caster = keys.caster
 	if caster == nil then
 		sendAMsg('no caster')
 		return
 	end
-	
+
 	--sendAMsg('time to lose money')
 	local startingGold = caster:GetGold()
 	local lostAmount = RandomInt(0, startingGold)
 	sendAMsg(lostAmount)
 	--caster:ModifyGold(lostAmount,false,0)
 	--caster:SetGold(startingGold-lostAmount, false,0)
-	
+
 end
 
 function sendAMsg(msg)
@@ -183,6 +181,5 @@ function sendAMsg(msg)
 end
 
 
-	
-	
-	
+
+

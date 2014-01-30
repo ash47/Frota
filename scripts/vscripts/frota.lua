@@ -47,6 +47,9 @@ function FrotaGameMode:new (o)
 end
 
 function FrotaGameMode:InitGameMode()
+    -- Ensure players is hooked
+    Players = Players or Entities:FindAllByClassname("dota_player_manager")[1]
+
     -- Load version
     self.frotaVersion = LoadKeyValues("scripts/version.txt").version
 
@@ -92,7 +95,7 @@ function FrotaGameMode:InitGameMode()
     -- Load initital Values
     self:_SetInitialValues()
 
-    Convars:SetBool('dota_suppress_invalid_orders', true)
+    --Convars:SetFloat('dota_suppress_invalid_orders', 1)
 
     -- Start thinkers
     self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.1)
@@ -137,32 +140,6 @@ function FrotaGameMode:_SetInitialValues()
 end
 
 function FrotaGameMode:RegisterCommands()
-    Convars:RegisterCommand('testa', function(name)
-        -- Check if the server ran it
-        if not Convars:GetCommandClient() then
-            FireGameEvent("afs_testa", {})
-        end
-    end, '', 0)
-
-    Convars:RegisterCommand('testb', function(name)
-        -- Check if the server ran it
-        if not Convars:GetCommandClient() then
-            FireGameEvent("afs_testb", {})
-        end
-    end, '', 0)
-
-    -- When a user tries to put a skill into a slot
-    --[[Convars:RegisterCommand('teamNumber', function(name, teamNumber)
-        local cmdPlayer = Convars:GetCommandClient()
-        if cmdPlayer then
-            local hero = cmdPlayer:GetAssignedHero()
-            if hero then
-                hero:__KeyValueFromInt('teamnumber', tonumber(teamNumber))
-                return
-            end
-        end
-    end, 'A user tried to put a skill into a slot', 0)]]
-
     -- When a user tries to put a skill into a slot
     Convars:RegisterCommand('afs_skill', function(name, skillName, slotNumber)
         -- Verify we are in picking mode
@@ -780,7 +757,7 @@ function FrotaGameMode:ChangeHero(hero, newHeroName)
         end
 
         -- Replace the hero
-        local newHero = ply:ReplaceHeroWith(newHeroName, gold, exp)
+        local newHero = Players:ReplaceHeroWith(playerID, newHeroName, gold, exp)
         self:SetActiveHero(newHero)
 
         -- Validate new hero
@@ -875,7 +852,7 @@ function FrotaGameMode:SelectHero(ply, heroName, dontChangeNow)
 
     if not dontChangeNow then
         -- Change hero
-        local hero = ply:ReplaceHeroWith(heroName, 0, 0)
+        local hero = Players:ReplaceHeroWith(playerID, heroName, 0, 0)
         self:SetActiveHero(hero)
 
         -- Make sure we have a hero
@@ -974,7 +951,9 @@ function FrotaGameMode:UpdateScoreData()
         -- Check if there was a winner
         if winner ~= -1 then
             -- Reset back to gamemode voting
+            print("a")
             self:EndGamemode()
+            print("b")
         end
 
         -- Update clients
@@ -1055,7 +1034,7 @@ function FrotaGameMode:_InitCVars()
         return
     end
     self.bHasSetCVars = true
-    Convars:SetBool( "dota_winter_ambientfx", true )
+    --Convars:SetBool( "dota_winter_ambientfx", true )
 end
 
 function FrotaGameMode:_RestartGame()
@@ -1413,7 +1392,7 @@ end
 function FrotaGameMode:ResetAllHeroes()
     -- Replace all player's heroes, and then stun them
     self:LoopOverPlayers(function(ply, playerID)
-        self:SetActiveHero(ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0))
+        self:SetActiveHero(Players:ReplaceHeroWith(playerID, 'npc_dota_hero_axe', 0, 0))
     end)
 end
 
@@ -1687,7 +1666,7 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
                 local ply = Players:GetPlayer(playerID)
                 if ply then
                     -- Yes, replace this player's hero for axe
-                    self:SetActiveHero(ply:ReplaceHeroWith('npc_dota_hero_axe', 0, 0))
+                    self:SetActiveHero(Players:ReplaceHeroWith(playerID, 'npc_dota_hero_axe', 0, 0))
                 else
                     -- Nope, remove it
                     v:Remove()

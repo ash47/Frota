@@ -17,7 +17,7 @@ local function makeInvoker(frota, ply)
     ply:__KeyValueFromInt('teamnumber', team_striker)
 
     -- New Hero
-    local hero = ply:ReplaceHeroWith('npc_dota_hero_invoker', 0, 0)
+    local hero = Players:ReplaceHeroWith(playerID, 'npc_dota_hero_invoker', 0, 0)
     frota:SetActiveHero(hero)
 
     -- Change skills
@@ -57,7 +57,7 @@ local function makeRunner(frota, ply)
     -- Set to runner team
     ply:__KeyValueFromInt('teamnumber', team_runner)
 
-    local hero = ply:ReplaceHeroWith(frota:ChooseRandomHero(), 0, 0)
+    local hero = Players:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 0, 0)
     frota:SetActiveHero(hero)
 
     -- Reset player team

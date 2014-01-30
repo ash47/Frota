@@ -5,8 +5,10 @@ RegisterGamemode('puckwars', {
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
+        local playerID = ply:GetPlayerID()
+
         -- Change heroes
-        local hero = ply:ReplaceHeroWith('npc_dota_hero_puck', 2500, 2600)
+        local hero = Players:ReplaceHeroWith(playerID, 'npc_dota_hero_puck', 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Apply custom Puck skills

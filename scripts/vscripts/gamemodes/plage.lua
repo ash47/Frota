@@ -16,7 +16,8 @@ RegisterGamemode('plage', {
         ply:__KeyValueFromInt('teamnumber', teamID)
 
         -- New Hero
-        local hero = ply:ReplaceHeroWith(heroName, 2500, 2600)
+        local playerID = ply:GetPlayerID()
+        local hero = Players:ReplaceHeroWith(playerID, heroName, 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Reset player team
@@ -71,7 +72,6 @@ RegisterGamemode('plage', {
         -- Change player's team
         ply:__KeyValueFromInt('teamnumber', newTeam)
 
-        --local hero = ply:ReplaceHeroWith(newHeroName, 2500, 2600)
         local hero = frota:ChangeHero(killedUnit, newHeroName)
 
         -- Reset player's team

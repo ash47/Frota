@@ -127,7 +127,7 @@ RegisterGamemode('allpick', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        local hero = ply:ReplaceHeroWith(build.hero, 2500, 2600)
+        local hero = Players:ReplaceHeroWith(playerID, build.hero, 2500, 2600)
         frota:SetActiveHero(hero)
     end,
 })
@@ -147,7 +147,7 @@ RegisterGamemode('lod', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        local hero = ply:ReplaceHeroWith(build.hero, 2500, 2600)
+        local hero = Players:ReplaceHeroWith(playerID, build.hero, 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Change skills
@@ -171,7 +171,7 @@ RegisterGamemode('romg', {
         local playerID = ply:GetPlayerID()
 
         -- Change hero
-        local hero = ply:ReplaceHeroWith(frota:ChooseRandomHero(), 2500, 2600)
+        local hero = Players:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Change skills
@@ -254,7 +254,7 @@ RegisterGamemode('pureskill', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = ply:ReplaceHeroWith('npc_dota_hero_pudge', 2500, 2600)
+        local hero = Players:ReplaceHeroWith(playerID, 'npc_dota_hero_pudge', 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Apply the build
@@ -288,7 +288,7 @@ RegisterGamemode('rikiwars', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = ply:ReplaceHeroWith('npc_dota_hero_riki', 2500, 2600)
+        local hero = Players:ReplaceHeroWith(playerID, 'npc_dota_hero_riki', 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Change skills
@@ -312,7 +312,7 @@ RegisterGamemode('rikiwars', {
 --[[ Addon plugins ]]--
 
 -- WTF Mode
-RegisterGamemode('wtf', {
+--[[RegisterGamemode('wtf', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
@@ -327,7 +327,7 @@ RegisterGamemode('wtf', {
         -- Disable WTF
         Convars:SetBool('dota_ability_debug', false)
     end
-})
+})]]
 
 -- Free Blink Dagger
 RegisterGamemode('freeBlinkDagger', {
@@ -402,50 +402,6 @@ RegisterGamemode('unlimitedMana', {
     sort = GAMEMODE_ADDON,
 
     onHeroSpawned = function(frota, hero)
-        -- Remove old ability if it exsists
-        --[[if hero:HasAbility('frota_mana_aura') then
-            hero:RemoveAbility('frota_mana_aura')
-        end
-
-        -- Add mana regen
-        hero:AddAbility('frota_mana_aura')
-
-        -- Set it to level 1
-        local ab = hero:FindAbilityByName('frota_mana_aura')
-        ab:SetLevel(1)]]
         hero:__KeyValueFromInt('StatusManaRegen', 500)
     end
 })
-
--- Not done yet
---[[RegisterGamemode('sunstrikewars', {
-    -- Gamemode only has a gameplay component
-    sort = GAMEMODE_BOTH,
-
-    -- Players can pick their hero
-    pickHero = true,
-
-    -- Function to give out heroes
-    assignHero = function(frota, ply)
-        local playerID = ply:GetPlayerID()
-        local build = frota.selectedBuilds[playerID]
-
-        -- Change hero
-        ply:ReplaceHeroWith(build.hero, 2500, 2600)
-    end,
-
-    -- A list of options for fast gameplay stuff
-    options = {
-        -- Kills give team points
-        killsScore = true,
-
-        -- Score Limit
-        scoreLimit = 10,
-
-        -- Enable scores
-        useScores = true,
-
-        -- Respawn delay
-        respawnDelay = 3
-    }
-})]]

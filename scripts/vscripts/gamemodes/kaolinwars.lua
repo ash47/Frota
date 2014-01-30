@@ -5,8 +5,10 @@ RegisterGamemode('kaolinwars', {
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
+        local playerID = ply:GetPlayerID()
+
         -- Change heroes
-        local hero = ply:ReplaceHeroWith('npc_dota_hero_earth_spirit', 2500, 2600)
+        local hero = Players:ReplaceHeroWith(playerID, 'npc_dota_hero_earth_spirit', 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Apply the build
@@ -22,7 +24,7 @@ RegisterGamemode('kaolinwars', {
 
     -- DM Mode changed our hero
     dmNewHero = function(frota, hero)
-        -- Change skills	
+        -- Change skills
         frota:ApplyBuild(hero, {
             [1] = 'pure_skill_earth_spirit_boulder_smash',
             [2] = 'pure_skill_earth_spirit_rolling_boulder',
