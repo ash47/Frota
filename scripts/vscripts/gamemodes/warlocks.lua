@@ -27,7 +27,7 @@ RegisterGamemode('warlocks', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = Players:ReplaceHeroWith(playerID, warlockHero, 0, 0)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, warlockHero, 0, 0)
         frota:SetActiveHero(hero)
 
 		--playerList[playerID] = hero
@@ -100,8 +100,8 @@ RegisterGamemode('warlocks', {
 		--table.remove(playerList, killedPlayerID)
 
 
-		local livingPlayers = getLivingPlayerList()
-		if(#livingPlayers <= 1) then
+		local livingPlayerResource = getLivingPlayerList()
+		if(#livingPlayerResource <= 1) then
 			frota:EndGamemode()
 			return
 		end --You are the one and only.
@@ -213,13 +213,13 @@ function getPlayerList()
 end
 
 function getLivingPlayerList()
-	local livePlayers = getPlayerList()
-	for k,v in pairs(livePlayers) do
+	local livePlayerResource = getPlayerList()
+	for k,v in pairs(livePlayerResource) do
 		if not v:IsAlive() then
-			table.remove(livePlayers, k)
+			table.remove(livePlayerResource, k)
 		end
 	end
-	return livePlayers
+	return livePlayerResource
 end
 
 function killHolder()

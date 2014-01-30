@@ -17,7 +17,7 @@ RegisterGamemode('plage', {
 
         -- New Hero
         local playerID = ply:GetPlayerID()
-        local hero = Players:ReplaceHeroWith(playerID, heroName, 2500, 2600)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, heroName, 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Reset player team
@@ -41,12 +41,12 @@ RegisterGamemode('plage', {
         local newHeroName = heroMap[newTeam]
 
         -- Make sure we have their original team
-        local ply = Players:GetPlayer(killedUnit:GetPlayerID())
+        local ply = PlayerResource:GetPlayer(killedUnit:GetPlayerID())
         if not ply then return end
 
         -- Check if there is anyone not on the new team
         local allDone = true
-        frota:LoopOverPlayers(function(lPly, playerID)
+        frota:LoopOverPlayerResource(function(lPly, playerID)
             -- Ignore this player
             if lPly == ply then return end
 

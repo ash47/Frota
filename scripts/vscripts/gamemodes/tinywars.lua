@@ -8,7 +8,7 @@ RegisterGamemode('tinywars', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = Players:ReplaceHeroWith(playerID, 'npc_dota_hero_tiny', 2500, 2600)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_tiny', 2500, 2600)
         frota:SetActiveHero(hero)
 
 		-- Apply the build

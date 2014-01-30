@@ -13,7 +13,7 @@ RegisterGamemode('gambler', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = Players:ReplaceHeroWith(playerID, rubickHero, 2500, 2600)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, rubickHero, 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Apply the build

@@ -8,7 +8,7 @@ RegisterGamemode('oddball', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = Players:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 5000, 2600)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 5000, 2600)
         frota:SetActiveHero(hero)
     end,
 
@@ -54,7 +54,7 @@ RegisterGamemode('oddball', {
     end,
 
     dota_item_picked_up = function(frota, keys)
-        local hero = Players:GetSelectedHeroEntity(keys.PlayerID)
+        local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
         if hero then
             for i=0, 5 do
                 local item = hero:GetItemInSlot(i)

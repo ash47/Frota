@@ -17,7 +17,7 @@ local function makeInvoker(frota, ply)
     ply:__KeyValueFromInt('teamnumber', team_striker)
 
     -- New Hero
-    local hero = Players:ReplaceHeroWith(playerID, 'npc_dota_hero_invoker', 0, 0)
+    local hero = PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_invoker', 0, 0)
     frota:SetActiveHero(hero)
 
     -- Change skills
@@ -57,7 +57,7 @@ local function makeRunner(frota, ply)
     -- Set to runner team
     ply:__KeyValueFromInt('teamnumber', team_runner)
 
-    local hero = Players:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 0, 0)
+    local hero = PlayerResource:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 0, 0)
     frota:SetActiveHero(hero)
 
     -- Reset player team
@@ -90,7 +90,7 @@ RegisterGamemode('sunstrikewars', {
         if not killedUnit then return end
 
         -- Grab player
-        local ply = Players:GetPlayer(killedUnit:GetPlayerID())
+        local ply = PlayerResource:GetPlayer(killedUnit:GetPlayerID())
         if not ply then return end
 
         -- Make them into an invoker
@@ -98,7 +98,7 @@ RegisterGamemode('sunstrikewars', {
 
         -- Check if there is anyone not on the new team
         local allDone = true
-        frota:LoopOverPlayers(function(lPly, playerID)
+        frota:LoopOverPlayerResource(function(lPly, playerID)
             -- Check team of this hero
             local h = frota:GetActiveHero(playerID)
             if IsValidEntity(h) then

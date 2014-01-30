@@ -129,7 +129,7 @@ RegisterGamemode('allpick', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        local hero = Players:ReplaceHeroWith(playerID, build.hero, 2500, 2600)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, build.hero, 2500, 2600)
         frota:SetActiveHero(hero)
     end,
 })
@@ -149,7 +149,7 @@ RegisterGamemode('lod', {
         local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        local hero = Players:ReplaceHeroWith(playerID, build.hero, 2500, 2600)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, build.hero, 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Change skills
@@ -173,7 +173,7 @@ RegisterGamemode('romg', {
         local playerID = ply:GetPlayerID()
 
         -- Change hero
-        local hero = Players:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 2500, 2600)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Change skills
@@ -256,7 +256,7 @@ RegisterGamemode('pureskill', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = Players:ReplaceHeroWith(playerID, 'npc_dota_hero_pudge', 2500, 2600)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_pudge', 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Apply the build
@@ -290,7 +290,7 @@ RegisterGamemode('rikiwars', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = Players:ReplaceHeroWith(playerID, 'npc_dota_hero_riki', 2500, 2600)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_riki', 2500, 2600)
         frota:SetActiveHero(hero)
 
         -- Change skills
@@ -336,7 +336,7 @@ RegisterGamemode('freeBlinkDagger', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
-    -- When players are given a new hero
+    -- When PlayerResource are given a new hero
     assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
         local hero = frota:GetActiveHero(playerID)
@@ -354,7 +354,7 @@ RegisterGamemode('noBuying', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
-    -- When players are given a new hero
+    -- When PlayerResource are given a new hero
     dota_item_purchased = function(frota, keys)
         -- Check if this hero exists
         local hero = frota:GetActiveHero(keys.PlayerID)
@@ -367,7 +367,7 @@ RegisterGamemode('noBuying', {
                     -- See if it was the item that was just bought
                     if item:GetAbilityName() == keys.itemname then
                         -- Refund the gold
-                        Players:SetGold(keys.PlayerID, Players:GetUnreliableGold(keys.PlayerID)+keys.itemcost, false)
+                        PlayerResource:SetGold(keys.PlayerID, PlayerResource:GetUnreliableGold(keys.PlayerID)+keys.itemcost, false)
 
                         -- Remove the item
                         item:Remove()
@@ -384,7 +384,7 @@ RegisterGamemode('noBuying', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
-    -- When players are given a new hero
+    -- When PlayerResource are given a new hero
     onHeroKilled = function(frota, killedUnit, killerEntity)
         if IsValidEntity(killedUnit) then
             -- Change their hero

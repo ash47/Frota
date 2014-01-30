@@ -1,15 +1,15 @@
 -- Syntax copied mostly from frostivus example
 
 -- Constants
-MAX_PLAYERS = 10
+MAX_PlayerResource = 10
 STARTING_GOLD = 625
 
 -- State control
-STATE_INIT = 0      -- Waiting for players
+STATE_INIT = 0      -- Waiting for PlayerResource
 STATE_VOTING = 1    -- Voting on what to play
-STATE_PICKING = 2   -- Players are selecting builds / skills / heroes
-STATE_BANNING = 3   -- Players are banning stuff
-STATE_PLAYING = 4   -- Players are playing
+STATE_PICKING = 2   -- PlayerResource are selecting builds / skills / heroes
+STATE_BANNING = 3   -- PlayerResource are banning stuff
+STATE_PLAYING = 4   -- PlayerResource are playing
 STATE_FINISHED = 5  -- A round is finished, display stats + Vote to restart?
 
 -- Gamemode Sorts
@@ -47,9 +47,6 @@ function FrotaGameMode:new (o)
 end
 
 function FrotaGameMode:InitGameMode()
-    -- Ensure players is hooked
-    Players = Players or Entities:FindAllByClassname("dota_player_manager")[1]
-
     -- Load version
     self.frotaVersion = LoadKeyValues("scripts/version.txt").version
 
@@ -169,7 +166,7 @@ function FrotaGameMode:RegisterCommands()
     Convars:RegisterCommand('fake', function(name, skillName, slotNumber)
         -- Check if the server ran it
         if not Convars:GetCommandClient() then
-            -- Create fake players
+            -- Create fake PlayerResource
             SendToServerConsole('dota_create_fake_clients')
 
             -- Assign the fakers
@@ -177,9 +174,9 @@ function FrotaGameMode:RegisterCommands()
                 endTime = Time(),
                 callback = function(frota, args)
                     for i=0, 9 do
-                        local ply = Players:GetPlayer(i)
-                        if Players:IsFakeClient(i) then
-                            local ply = Players:GetPlayer(i)
+                        local ply = PlayerResource:GetPlayer(i)
+                        if PlayerResource:IsFakeClient(i) then
+                            local ply = PlayerResource:GetPlayer(i)
 
                             self:AutoAssignPlayer({
                                 userid = -(i+1),
@@ -190,7 +187,7 @@ function FrotaGameMode:RegisterCommands()
                 end
             })
         end
-    end, 'Connects and assigns fake players.', 0)
+    end, 'Connects and assigns fake PlayerResource.', 0)
 
     -- When a user tries to change heroes
     Convars:RegisterCommand('afs_hero', function(name, heroName)
@@ -254,8 +251,8 @@ function FrotaGameMode:RegisterCommands()
 
                 local data = {}
 
-                self:LoopOverPlayers(function(ply, playerID)
-                    local steamID = Players:GetSteamAccountID(playerID)
+                self:LoopOverPlayerResource(function(ply, playerID)
+                    local steamID = PlayerResource:GetSteamAccountID(playerID)
 
                     if steamID > 0 then
                         data[playerID] = steamID
@@ -283,8 +280,8 @@ function FrotaGameMode:RegisterCommands()
     end, 'Client requested the current state', 0)
 end
 
--- Loops over all players, return true to stop the loop
-function FrotaGameMode:LoopOverPlayers(callback)
+-- Loops over all PlayerResource, return true to stop the loop
+function FrotaGameMode:LoopOverPlayerResource(callback)
     for k, v in pairs(self.vUserIDMap) do
         -- Validate the player
         if IsValidEntity(v) then
@@ -298,7 +295,7 @@ end
 
 function FrotaGameMode:IsValidPlayerID(checkPlayerID)
     local isValid = false
-    self:LoopOverPlayers(function(ply, playerID)
+    self:LoopOverPlayerResource(function(ply, playerID)
         if playerID == checkPlayerID then
             isValid = true
             return true
@@ -311,7 +308,7 @@ end
 function FrotaGameMode:GetPlayerList()
     local plyList = {}
 
-    self:LoopOverPlayers(function(ply, playerID)
+    self:LoopOverPlayerResource(function(ply, playerID)
         table.insert(plyList, ply)
     end)
 
@@ -322,7 +319,7 @@ function FrotaGameMode:ShuffleTeams()
     local teamID = DOTA_GC_TEAM_GOOD_GUYS
 
     -- Shuffle
-    self:LoopOverPlayers(function(ply, playerID)
+    self:LoopOverPlayerResource(function(ply, playerID)
         ply:__KeyValueFromInt('teamnumber', teamID)
 
         if teamID == DOTA_GC_TEAM_GOOD_GUYS then
@@ -347,7 +344,7 @@ function FrotaGameMode:ResetBuilds()
     -- Store the default axe build for each player
     self.selectedBuilds = {}
 
-    self:LoopOverPlayers(function(ply, playerID)
+    self:LoopOverPlayerResource(function(ply, playerID)
         self.selectedBuilds[playerID] = self:GetDefaultBuild()
     end)
 end
@@ -407,20 +404,20 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     local entIndex = keys.index+1
     local ply = EntIndexToHScript(entIndex)
 
-    -- Find the team with the least players
+    -- Find the team with the least PlayerResource
     local teamSize = {
         [DOTA_TEAM_GOODGUYS] = 0,
         [DOTA_TEAM_BADGUYS] = 0
     }
 
-    self:LoopOverPlayers(function(ply, playerID)
-        if Players:GetPlayer(playerID) then
-            local ply = Players:GetPlayer(playerID)
+    self:LoopOverPlayerResource(function(ply, playerID)
+        if PlayerResource:GetPlayer(playerID) then
+            local ply = PlayerResource:GetPlayer(playerID)
             if ply then
-                -- Grab the players team
+                -- Grab the PlayerResource team
                 local team = ply:GetTeam()
 
-                -- Increase the number of players on this players team
+                -- Increase the number of PlayerResource on this PlayerResource team
                 teamSize[team] = (teamSize[team] or 0) + 1
             end
         end
@@ -437,7 +434,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
 
     --for i=0,4 do
-    --    Players:UpdateTeamSlot(ply:GetPlayerID(), i)
+    --    PlayerResource:UpdateTeamSlot(ply:GetPlayerID(), i)
     --end
 
     local playerID = ply:GetPlayerID()
@@ -493,7 +490,7 @@ function FrotaGameMode:CleanupPlayer(keys)
     for k,v in pairs(Entities:FindAllByClassname('npc_dota_hero_*')) do
         if v:IsRealHero() then
             -- Grab the owning player
-            local ply = Players:GetPlayer(v:GetPlayerID())
+            local ply = PlayerResource:GetPlayer(v:GetPlayerID())
 
             -- Check if this is our leaver
             if ply and ply == leavingPly then
@@ -508,8 +505,8 @@ function FrotaGameMode:CleanupPlayer(keys)
         callback = function(frota, args)
             local foundSomeone = false
 
-            -- Check if there are any players connected
-            self:LoopOverPlayers(function(ply, playerID)
+            -- Check if there are any PlayerResource connected
+            self:LoopOverPlayerResource(function(ply, playerID)
                 foundSomeone = true
             end)
 
@@ -517,7 +514,7 @@ function FrotaGameMode:CleanupPlayer(keys)
                 return
             end
 
-            -- No players are in, reset to initial vote
+            -- No PlayerResource are in, reset to initial vote
             self:_SetInitialValues()
         end
     })
@@ -726,7 +723,7 @@ end
 
 function FrotaGameMode:ChangeHero(hero, newHeroName)
     local playerID = hero:GetPlayerID()
-    local ply = Players:GetPlayer(playerID)
+    local ply = PlayerResource:GetPlayer(playerID)
     if ply then
         -- Grab info
         local exp = hero:GetCurrentXP()
@@ -757,7 +754,7 @@ function FrotaGameMode:ChangeHero(hero, newHeroName)
         end
 
         -- Replace the hero
-        local newHero = Players:ReplaceHeroWith(playerID, newHeroName, gold, exp)
+        local newHero = PlayerResource:ReplaceHeroWith(playerID, newHeroName, gold, exp)
         self:SetActiveHero(newHero)
 
         -- Validate new hero
@@ -852,7 +849,7 @@ function FrotaGameMode:SelectHero(ply, heroName, dontChangeNow)
 
     if not dontChangeNow then
         -- Change hero
-        local hero = Players:ReplaceHeroWith(playerID, heroName, 0, 0)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, heroName, 0, 0)
         self:SetActiveHero(hero)
 
         -- Make sure we have a hero
@@ -888,8 +885,8 @@ function FrotaGameMode:ToggleReadyState(playerID)
 
     -- Check if everyone is ready
     local allReady = true
-    self:LoopOverPlayers(function(ply, playerID)
-        if Players:GetPlayer(playerID) and (not self.selectedBuilds[playerID].ready) then
+    self:LoopOverPlayerResource(function(ply, playerID)
+        if PlayerResource:GetPlayer(playerID) and (not self.selectedBuilds[playerID].ready) then
             allReady = false
             return true
         end
@@ -1044,13 +1041,13 @@ function FrotaGameMode:_RestartGame()
         UTIL_RemoveImmediate( item )
     end
 
-    -- Reset Players
-    self:LoopOverPlayers(function(ply, playerID)
-        Players:SetGold( playerID, STARTING_GOLD, false )
-        Players:SetGold( playerID, 0, true )
-        Players:SetBuybackCooldownTime( playerID, 0 )
-        Players:SetBuybackGoldLimitTime( playerID, 0 )
-        Players:ResetBuybackCostTime( playerID )
+    -- Reset PlayerResource
+    self:LoopOverPlayerResource(function(ply, playerID)
+        PlayerResource:SetGold( playerID, STARTING_GOLD, false )
+        PlayerResource:SetGold( playerID, 0, true )
+        PlayerResource:SetBuybackCooldownTime( playerID, 0 )
+        PlayerResource:SetBuybackGoldLimitTime( playerID, 0 )
+        PlayerResource:ResetBuybackCostTime( playerID )
     end)
 
     -- Set initial Values again
@@ -1357,15 +1354,15 @@ function FrotaGameMode:_thinkState_Voting(dt)
 
     -- Change to picking phase if it isn't already active
     if (not self.startedInitialVote) and self.currentState ~= STATE_VOTING then
-        local totalPlayers = 0
+        local totalPlayerResource = 0
 
-        -- Check how many players are in
-        self:LoopOverPlayers(function(ply, playerID)
-            totalPlayers = totalPlayers + 1
+        -- Check how many PlayerResource are in
+        self:LoopOverPlayerResource(function(ply, playerID)
+            totalPlayerResource = totalPlayerResource + 1
         end)
 
         -- Ensure we have at least one player
-        if totalPlayers <= 0 then
+        if totalPlayerResource <= 0 then
             return
         end
 
@@ -1391,8 +1388,8 @@ end
 -- Resets everyone's hero to axe
 function FrotaGameMode:ResetAllHeroes()
     -- Replace all player's heroes, and then stun them
-    self:LoopOverPlayers(function(ply, playerID)
-        self:SetActiveHero(Players:ReplaceHeroWith(playerID, 'npc_dota_hero_axe', 0, 0))
+    self:LoopOverPlayerResource(function(ply, playerID)
+        self:SetActiveHero(PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_axe', 0, 0))
     end)
 end
 
@@ -1410,7 +1407,7 @@ end
 
 function FrotaGameMode:VoteForGamemode()
     -- Reset ready status
-    self:LoopOverPlayers(function(ply, playerID)
+    self:LoopOverPlayerResource(function(ply, playerID)
         self.selectedBuilds[playerID].ready = false
     end)
 
@@ -1663,10 +1660,10 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
             if v.IsRealHero and v:IsRealHero() then
                 -- Check if it has a player
                 local playerID = v:GetPlayerID()
-                local ply = Players:GetPlayer(playerID)
+                local ply = PlayerResource:GetPlayer(playerID)
                 if ply then
                     -- Yes, replace this player's hero for axe
-                    self:SetActiveHero(Players:ReplaceHeroWith(playerID, 'npc_dota_hero_axe', 0, 0))
+                    self:SetActiveHero(PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_axe', 0, 0))
                 else
                     -- Nope, remove it
                     v:Remove()
@@ -1684,7 +1681,7 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
     end
 
     -- Loop over every player
-    self:LoopOverPlayers(function(ply, playerID)
+    self:LoopOverPlayerResource(function(ply, playerID)
         -- Check if we should touch heroes
         if not leaveHeroes then
             if IsValidEntity(self:GetActiveHero(playerID)) then
@@ -1695,9 +1692,9 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
         end
 
         -- Set buyback state
-        Players:SetBuybackCooldownTime(playerID, 0)
-        Players:SetBuybackGoldLimitTime(playerID, 0)
-        Players:ResetBuybackCostTime(playerID)
+        PlayerResource:SetBuybackCooldownTime(playerID, 0)
+        PlayerResource:SetBuybackGoldLimitTime(playerID, 0)
+        PlayerResource:ResetBuybackCostTime(playerID)
     end)
 end
 
@@ -1722,7 +1719,7 @@ end
 function FrotaGameMode:BuildBuildsData()
     local data = {}
 
-    self:LoopOverPlayers(function(ply, playerID)
+    self:LoopOverPlayerResource(function(ply, playerID)
         local v = self.selectedBuilds[playerID]
         if v then
             -- Convert ready bool into a number
@@ -1790,7 +1787,7 @@ string itemname: Item name for e.g. "item_blink"
 bool stash     : whether to search stash slots also
 bool dropped   : whether to search dropped items also
 
-Returns Values : 
+Returns Values :
 Returns a table with key,
     Item: if found in slots
     PhysicalItem: if dropped item

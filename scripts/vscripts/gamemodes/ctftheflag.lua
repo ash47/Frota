@@ -1,32 +1,32 @@
 RegisterGamemode('ctftheflag', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_PLAY,
- 
+
         options = {killsScore = false,useScores = true,respawnDelay = 10 },
-               
+
                 voteOptions = {
         -- Score limit vote
         scoreLimit = {
             -- Range based
             s = VOTE_SORT_RANGE,
- 
+
             -- Minimal possible value
             min = 5,
- 
+
             -- Maximal possible value
             max = 15,
- 
+
             -- Default vaule (if no one votes)
             def = 10,
- 
+
             -- Slider tick interval
             tick = 5,
- 
+
             -- Slider step interval
             step = 1
         }
     },
- 
+
     onGameStart = function(frota)
     print('running onGameStart')
     local heroWithFlag = nil
@@ -37,20 +37,20 @@ RegisterGamemode('ctftheflag', {
     frota:SetScoreLimit(options.scoreLimit)
     print('finished onGameStart')
     end,
- 
+
     onThink = function(frota, dt)
             local goodGuysBase = Entities:FindByName(nil, 'base_goodguys')
             local goodGuysBaseVec = goodGuysBase:GetOrigin()
             local badGuysBase = Entities:FindByName(nil, 'base_badguys')
             local badGuysBaseVec = badGuysBase:GetOrigin()
             local goodUnitsOnPoint = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, goodGuysBaseVec, null, 150, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-            local badUnitsOnPoint = FindUnitsInRadius(DOTA_TEAM_BADGUYS, badGuysBaseVec, null, 150, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)      
+            local badUnitsOnPoint = FindUnitsInRadius(DOTA_TEAM_BADGUYS, badGuysBaseVec, null, 150, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
             local tableSize = 0
-           
+
             for k,v in pairs(goodUnitsOnPoint) do
                 tableSize = tableSize + 1
             end
-     
+
             for i=1,tableSize do
                 local hero = goodUnitsOnPoint[i]
                 if hero then
@@ -73,13 +73,13 @@ RegisterGamemode('ctftheflag', {
                     end
                 end
             end
- 
+
             tableSize = 0
- 
+
             for k,v in pairs(badUnitsOnPoint) do
                 tableSize = tableSize + 1
             end
-     
+
             for i=1,tableSize do
                 local hero = badUnitsOnPoint[i]
                 if hero then
@@ -128,7 +128,7 @@ RegisterGamemode('ctftheflag', {
                             heroWithFlag = nil
                         end
                     end
-                end                
+                end
             end
 
             if heroWithDireFlag then
@@ -156,13 +156,13 @@ RegisterGamemode('ctftheflag', {
                             heroWithDireFlag = nil
                         end
                     end
-                end                
+                end
             end
 
     end,
- 
+
     dota_item_picked_up = function(frota, keys)
-        local hero = Players:GetSelectedHeroEntity(keys.PlayerID)
+        local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
         if hero then
             for i=0, 5 do
                 local item = hero:GetItemInSlot(i)
@@ -178,7 +178,7 @@ RegisterGamemode('ctftheflag', {
                             hero:AddNewModifier(hero, nil, 'modifier_silence' ,nil)
                             hero:AddNewModifier(hero, nil, 'modifier_bounty_hunter_track' ,nil)
                             heroWithFlag = hero
-                            break  
+                            break
                         end
                     elseif item:GetAbilityName() == 'item_capture_flag_dire' then
                         if hero:GetTeam() == DOTA_TEAM_BADGUYS then
@@ -191,7 +191,7 @@ RegisterGamemode('ctftheflag', {
                             hero:AddNewModifier(hero, nil, 'modifier_silence' ,nil)
                             hero:AddNewModifier(hero, nil, 'modifier_bounty_hunter_track' ,nil)
                             heroWithDireFlag = hero
-                            break  
+                            break
                         end
                     end
                 end
@@ -201,7 +201,7 @@ RegisterGamemode('ctftheflag', {
 
     })
 
-    
+
     function spawnRadiantFlag( )
         local goodGuysBase = Entities:FindByName(nil, 'base_goodguys')
         local goodGuysBaseVec = goodGuysBase:GetOrigin()
