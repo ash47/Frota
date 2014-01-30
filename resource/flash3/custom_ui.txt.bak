@@ -2,7 +2,12 @@
 {
     "1"
     {
-        "File"      "frota"
+        "File"      "frotaOverlay"
+        "Depth"     "50"
+    }
+	"2"
+    {
+        "File"      "frotaHud"
         "Depth"     "7"
     }
 }
@@ -35,7 +40,7 @@
 // highlight_reel: 37,
 // stats_dropdown: 38,
 // halloween: 39,
-// killcam: 40,     // and inspect
+// killcam: 40,		// and inspect
 // scoreboard: 41,
 // quickstats: 42,
 // shared_units: 43,

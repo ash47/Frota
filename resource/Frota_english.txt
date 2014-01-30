@@ -1,4 +1,4 @@
-��"lang"
+"lang"
 
 {
 
@@ -66,7 +66,7 @@
 
 		"afs_des_oddball"				"get the gem, keep the gem"
 
-		
+
 
 		// All Pick
 
@@ -194,7 +194,7 @@
 
 		"afs_des_rikiwars"				"Play as riki, get free dust ??? profit"
 
-		
+
 
 		// Kunkka Wars
 
@@ -202,7 +202,7 @@
 
 		"afs_des_akunkkawars"				"Kunkka is a pirate."
 
-		
+
 		// KOTH
 		"afs_name_kotolofthehill"			"King of the Hill"
 		"afs_des_kotolofthehill"			"Fight to get more friendly players on top of the point."
@@ -412,7 +412,7 @@
 		"DOTA_Tooltip_Ability_item_oddball"					"Oddball"
 
 		"DOTA_Tooltip_Ability_item_oddball_description"		"holding the oddball increases your teams score"
-		
+
 		// CTF
 		"DOTA_Tooltip_Ability_item_capture_flag"					"Radiant Flag"
 		"DOTA_Tooltip_Ability_item_capture_flag_description"		"You are silenced and run slower while holding this flag."
@@ -420,9 +420,9 @@
 		"DOTA_Tooltip_Ability_item_capture_flag_dire"				"Dire Flag"
 		"DOTA_Tooltip_Ability_item_capture_flag_dire_description"	"You are silenced and run slower while holding this flag."
 
-		
 
-		
+
+
 
 		"DOTA_Tooltip_Ability_item_rvs_one_ring"					"The One Ring"
 
@@ -620,7 +620,7 @@
 
         "DOTA_Tooltip_ability_puckwars_dream_coil_aghanim_description"                                                "Increases damage from coil breaks and increases coil duration."
 
-		
+
 
 		// Kunkka Wars
 

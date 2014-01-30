@@ -10,11 +10,11 @@ RegisterGamemode('oddball', {
         -- Change heroes
         local hero = Players:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 5000, 2600)
         frota:SetActiveHero(hero)
-	end,
+    end,
 
-	options = {killsScore = false,useScores = true,respawnDelay = 15 },
+    options = {killsScore = false,useScores = true,respawnDelay = 15 },
 
-		voteOptions = {
+        voteOptions = {
         -- Score limit vote
         scoreLimit = {
             -- Range based
@@ -37,88 +37,83 @@ RegisterGamemode('oddball', {
         }
     },
 
-	onGameStart = function(frota)
+    onGameStart = function(frota)
         local options = frota:GetOptions()
         frota:SetScoreLimit(options.scoreLimit)
-		frota:CreateTimer('oddball_create_timer', {
-			endTime = Time() + 1,
-			callback = function(frota, args)
-				local vector = Vec3( 0, 0, 0 )
-				local unit = CreateUnitByName("npc_dota_neutral_satyr_trickster2", vector, false, nil, nil, DOTA_TEAM_NEUTRALS)
-<<<<<<< HEAD
-				unit:AddItem(CreateItem('item_oddball', nil, nil))    			
-				cply = frota:GetPlayerList()
-				unit:SetMaxHealth(#cply * 500)
-=======
-				unit:AddItem(CreateItem('item_gem', nil, nil))
-				unit:SetMaxHealth(5000)
->>>>>>> origin/New-Hud
-				unit:SetHealth(5000)
-			end
-		})
-	end,
+        frota:CreateTimer('oddball_create_timer', {
+            endTime = Time() + 1,
+            callback = function(frota, args)
+                local vector = Vec3( 0, 0, 0 )
+                local unit = CreateUnitByName("npc_dota_neutral_satyr_trickster2", vector, false, nil, nil, DOTA_TEAM_NEUTRALS)
+                unit:AddItem(CreateItem('item_oddball', nil, nil))
+                cply = frota:GetPlayerList()
+                unit:SetMaxHealth(#cply * 500)
+                unit:SetHealth(5000)
+            end
+        })
+    end,
 
-	dota_item_picked_up = function(frota, keys)
+    dota_item_picked_up = function(frota, keys)
         local hero = Players:GetSelectedHeroEntity(keys.PlayerID)
         if hero then
             for i=0, 5 do
                 local item = hero:GetItemInSlot(i)
                 if item then
                     if item:GetAbilityName() == 'item_oddball' then
-						hero_has_gem=hero
-						any_gem_active = 1
-						hero:AddNewModifier(hero, nil, 'modifier_bloodseeker_thirst_vision' ,nil)
-						break
-					else
-						if hero:HasModifier('modifier_bloodseeker_thirst_vision') == true then
-							hero:RemoveModifierByName('modifier_bloodseeker_thirst_vision')
-						end
-					end
+                        hero_has_gem=hero
+                        any_gem_active = 1
+                        hero:AddNewModifier(hero, nil, 'modifier_bloodseeker_thirst_vision' ,nil)
+                        break
+                    else
+                        if hero:HasModifier('modifier_bloodseeker_thirst_vision') == true then
+                            hero:RemoveModifierByName('modifier_bloodseeker_thirst_vision')
+                        end
+                    end
                 end
             end
         end
     end,
 
-	onThink = function(frota, dt)
-			--[[if frota.scoreRadiant % 500 == 0 then
-		local playerID = frota:ply:GetPlayerID()
-		local hero = frota:GetActiveHero(playerID)
-			if  hero:GetTeam() == DOTA_TEAM_BADGUYS then
-				local cgold = GetGold()
-				hero:SetGold(cgold+250, true)
-				frota.scoreRadiant = frota.scoreRadiant + 1
-				frota:UpdateScoreData()
-			end
-		end
-		if frota.scoreDire % 500 == 0 then
-	    local playerID = frota.ply:GetPlayerID()
-		local hero = frota:GetActiveHero(playerID)
-			if  hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-				local cgold = GetGold()
-				hero:SetGold(cgold+250, true)
-				frota.scoreDire = frota.scoreDire + 1
-				frota:UpdateScoreData()
-			end
-		end]]
-		if any_gem_active == 1 then
-		hero = hero_has_gem
-			for i=0,5 do
-				local item = hero:GetItemInSlot(i)
-				if item then
-					if item:GetAbilityName() == 'item_oddball' then
-						if  hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-							frota.scoreRadiant = frota.scoreRadiant + 1
-							frota:UpdateScoreData()
-						end
-						if  hero:GetTeam() == DOTA_TEAM_BADGUYS then
-							frota.scoreDire = frota.scoreDire + 1
-							frota:UpdateScoreData()
-						end
-					end
-				end
-			end
-		end
-	end,
+    onThink = function(frota, dt)
+            --[[if frota.scoreRadiant % 500 == 0 then
+        local playerID = frota:ply:GetPlayerID()
+        local hero = frota:GetActiveHero(playerID)
+            if  hero:GetTeam() == DOTA_TEAM_BADGUYS then
+                local cgold = GetGold()
+                hero:SetGold(cgold+250, true)
+                frota.scoreRadiant = frota.scoreRadiant + 1
+                frota:UpdateScoreData()
+            end
+        end
+        if frota.scoreDire % 500 == 0 then
+        local playerID = frota.ply:GetPlayerID()
+        local hero = frota:GetActiveHero(playerID)
+            if  hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+                local cgold = GetGold()
+                hero:SetGold(cgold+250, true)
+                frota.scoreDire = frota.scoreDire + 1
+                frota:UpdateScoreData()
+            end
+        end]]
+        if any_gem_active == 1 then
+        hero = hero_has_gem
+            for i=0,5 do
+                local item = hero:GetItemInSlot(i)
+                if item then
+                    if item:GetAbilityName() == 'item_oddball' then
+                        if  hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+                            frota.scoreRadiant = frota.scoreRadiant + 1
+                            frota:UpdateScoreData()
+                        end
+                        if  hero:GetTeam() == DOTA_TEAM_BADGUYS then
+                            frota.scoreDire = frota.scoreDire + 1
+                            frota:UpdateScoreData()
+                        end
+                    end
+                end
+            end
+        end
+    end,
 
 
 
