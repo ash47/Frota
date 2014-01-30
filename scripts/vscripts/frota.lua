@@ -153,6 +153,13 @@ function FrotaGameMode:RegisterCommands()
         end
     end, 'A user tried to put a skill into a slot', 0)
 
+    -- When a user tries to put a skill into a slot
+    Convars:RegisterCommand('popup', function(name, skillName, slotNumber)
+        local cmdPlayer = Convars:GetCommandClient()
+
+        ShowGenericPopupToPlayer(cmdPlayer, "a", "b", "c", "d", 30)
+    end, 'A user tried to put a skill into a slot', 0)
+
     -- End Gamemode
     Convars:RegisterCommand('endgamemode', function(name, skillName, slotNumber)
         -- Check if the server ran it
@@ -425,10 +432,8 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
     if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then
         ply:SetTeam(DOTA_TEAM_BADGUYS)
-        ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
     else
         ply:SetTeam(DOTA_TEAM_GOODGUYS)
-        ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_GOODGUYS)
     end
 
     --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)

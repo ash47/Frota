@@ -57,7 +57,7 @@ RegisterGamemode('warlocks', {
 				__selectRandomWarlock()
 			end
 		})
-		Convars:SetFloat("dota_all_vision", 1.0)
+		--Convars:SetFloat("dota_all_vision", 1.0)
 		--playerList = {}
 	end,
 
@@ -90,7 +90,7 @@ RegisterGamemode('warlocks', {
 	onGameEnd = function(frota)
 		print("Warlocks: onGameEnd has fired!")
 		frota._scriptBind:EndThink('WarlockCounterThink')
-		Convars:SetFloat("dota_all_vision", 0.0)
+		--Convars:SetFloat("dota_all_vision", 0.0)
 	end,
 
 	onHeroKilled = function(frota, killedUnit, killerEntity)

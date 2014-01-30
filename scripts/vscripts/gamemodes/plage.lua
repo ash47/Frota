@@ -97,12 +97,12 @@ RegisterGamemode('plage', {
         end
 
         -- Enable all vision
-        Convars:SetBool('dota_all_vision', true)
+        --Convars:SetBool('dota_all_vision', true)
     end,
 
     -- When the game ends
     onGameEnd = function(frota)
-        -- Disable WTF
-        Convars:SetBool('dota_all_vision', false)
+        -- Disable All Vision
+        --Convars:SetBool('dota_all_vision', false)
     end
 })

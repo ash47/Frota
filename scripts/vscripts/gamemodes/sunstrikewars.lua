@@ -127,7 +127,7 @@ RegisterGamemode('sunstrikewars', {
         isStriker = {}
 
         -- Enable all vision
-        Convars:SetBool('dota_all_vision', true)
+        --Convars:SetBool('dota_all_vision', true)
     end,
 
     -- When the game starts
@@ -142,6 +142,6 @@ RegisterGamemode('sunstrikewars', {
     -- When the game ends
     onGameEnd = function(frota)
         -- Disable WTF
-        Convars:SetBool('dota_all_vision', false)
+        --Convars:SetBool('dota_all_vision', false)
     end
 })
