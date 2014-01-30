@@ -224,7 +224,7 @@ RegisterGamemode('arena', {
             min = 1,
 
             -- Maximal possible value
-            max = 50,
+            max = 100,
 
             -- Default vaule (if no one votes)
             def = 10,
