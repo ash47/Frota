@@ -27,7 +27,7 @@ RegisterGamemode('warlocks', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = ply:ReplaceHeroWith(warlockHero, 0, 0)
+        local hero = Players:ReplaceHeroWith(playerID, warlockHero, 0, 0)
         frota:SetActiveHero(hero)
 
 		--playerList[playerID] = hero
@@ -152,7 +152,7 @@ function unstableSpellOnSpellStart(keys)
 	if target == nil then
 		return
 	end
-	
+
 	-- If the target is ethereal at the time of cast we halve the time left on the count down.
 	-- But if they have less than 2 seconds left on the countdown we set the time to 2 seconds.
 	if target:HasModifier(etherealModifier) then

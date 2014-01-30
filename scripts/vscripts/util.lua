@@ -21,7 +21,7 @@ function PrintTable(t, indent, done)
         elseif type(value) == "userdata" and not done[value] then
             done [value] = true
             print(string.rep ("\t", indent)..v..":")
-            PrintTable (getmetatable(value).__index or getmetatable(value), indent + 2, done)
+            PrintTable ((getmetatable(value) and getmetatable(value).__index) or getmetatable(value), indent + 2, done)
         else
             print(string.rep ("\t", indent)..tostring(v)..": "..tostring(value))
         end

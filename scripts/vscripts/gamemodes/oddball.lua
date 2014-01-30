@@ -5,13 +5,15 @@ RegisterGamemode('oddball', {
     sort = GAMEMODE_BOTH,
     -- Function to give out heroes
     assignHero = function(frota, ply)
+        local playerID = ply:GetPlayerID()
+
         -- Change heroes
-        local hero = ply:ReplaceHeroWith(frota:ChooseRandomHero(), 5000, 2600)
+        local hero = Players:ReplaceHeroWith(playerID, frota:ChooseRandomHero(), 5000, 2600)
         frota:SetActiveHero(hero)
 	end,
-	
-	options = {killsScore = false,useScores = true,respawnDelay = 15 }, 
-		
+
+	options = {killsScore = false,useScores = true,respawnDelay = 15 },
+
 		voteOptions = {
         -- Score limit vote
         scoreLimit = {
@@ -34,23 +36,28 @@ RegisterGamemode('oddball', {
             step = 500
         }
     },
-	
+
 	onGameStart = function(frota)
         local options = frota:GetOptions()
-        frota:SetScoreLimit(options.scoreLimit)    
-		frota:CreateTimer('oddball_create_timer', {        
-			endTime = Time() + 1,    
-			callback = function(frota, args)    
+        frota:SetScoreLimit(options.scoreLimit)
+		frota:CreateTimer('oddball_create_timer', {
+			endTime = Time() + 1,
+			callback = function(frota, args)
 				local vector = Vec3( 0, 0, 0 )
 				local unit = CreateUnitByName("npc_dota_neutral_satyr_trickster2", vector, false, nil, nil, DOTA_TEAM_NEUTRALS)
+<<<<<<< HEAD
 				unit:AddItem(CreateItem('item_oddball', nil, nil))    			
 				cply = frota:GetPlayerList()
 				unit:SetMaxHealth(#cply * 500)
+=======
+				unit:AddItem(CreateItem('item_gem', nil, nil))
+				unit:SetMaxHealth(5000)
+>>>>>>> origin/New-Hud
 				unit:SetHealth(5000)
-			end   
+			end
 		})
 	end,
-	
+
 	dota_item_picked_up = function(frota, keys)
         local hero = Players:GetSelectedHeroEntity(keys.PlayerID)
         if hero then
@@ -71,7 +78,7 @@ RegisterGamemode('oddball', {
             end
         end
     end,
-		
+
 	onThink = function(frota, dt)
 			--[[if frota.scoreRadiant % 500 == 0 then
 		local playerID = frota:ply:GetPlayerID()
@@ -113,6 +120,6 @@ RegisterGamemode('oddball', {
 		end
 	end,
 
-	
+
 
 })

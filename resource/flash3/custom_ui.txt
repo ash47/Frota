@@ -1,8 +1,13 @@
 "CustomUI"
 {
-	"1"
+    "1"
     {
-        "File"      "frota"
+        "File"      "frotaOverlay"
+        "Depth"     "50"
+    }
+	"2"
+    {
+        "File"      "frotaHud"
         "Depth"     "7"
     }
 }
