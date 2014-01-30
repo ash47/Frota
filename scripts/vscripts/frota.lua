@@ -153,12 +153,12 @@ function FrotaGameMode:RegisterCommands()
         end
     end, 'A user tried to put a skill into a slot', 0)
 
-    -- When a user tries to put a skill into a slot
+    --[[-- Popup test
     Convars:RegisterCommand('popup', function(name, skillName, slotNumber)
         local cmdPlayer = Convars:GetCommandClient()
 
-        ShowGenericPopupToPlayer(cmdPlayer, "a", "b", "c", "d", 30)
-    end, 'A user tried to put a skill into a slot', 0)
+        ShowGenericPopupToPlayer(cmdPlayer, "a", "b", "c", "d", 1)
+    end, 'A user tried to put a skill into a slot', 0)]]
 
     -- End Gamemode
     Convars:RegisterCommand('endgamemode', function(name, skillName, slotNumber)
@@ -952,10 +952,14 @@ function FrotaGameMode:UpdateScoreData()
 
         -- Check if there was a winner
         if winner ~= -1 then
-            -- Reset back to gamemode voting
-            print("a")
-            self:EndGamemode()
-            print("b")
+            -- Reset back to gamemode voting after a short delay
+            self:CreateTimer('scoreLimitReached', {
+                endTime = Time(),
+                callback = function(frota, args)
+                    -- End the gamemode
+                    self:EndGamemode()
+                end
+            })
         end
 
         -- Update clients
