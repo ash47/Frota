@@ -68,6 +68,17 @@ function RegisterGamemode(name, args)
     gamemodes.g[name] = args
 end
 
+local function checkWhiteList(mode)
+    -- Grab current map
+    local currentMap = GetMapName():lower()
+
+    if (not mode.whiteList or mode.whiteList[currentMap]) and (not mode.blackList and not mode.blackList[currentMap]) then
+        return true
+    end
+
+    return false
+end
+
 -- Gets all the gamemodes that have a picking state
 function GetPickingGamemodes()
     local modes = {}
@@ -75,7 +86,9 @@ function GetPickingGamemodes()
     -- Build a list of picking gamemodes
     for k,v in pairs(gamemodes.g) do
         if v.sort == GAMEMODE_PICK or v.sort == GAMEMODE_BOTH then
-            table.insert(modes, k)
+            if checkWhiteList(v) then
+                table.insert(modes, k)
+            end
         end
     end
 
@@ -84,12 +97,14 @@ end
 
 -- Gets all the gamemodes that have a playing state (unless they also have a picking state)
 function GetPlayingGamemodes()
-    local modes = {}
+    local mod (not s = {}
 
-    -- Build a list of picking gamemodes
+    or v.whiteList[currentMap])uild a list of picking gamemodes
     for k,v in pairs(gamemodes.g) do
         if v.sort == GAMEMODE_PLAY then
-            table.insert(modes, k)
+            if checkWhiteList(v) then
+                table.insert(modes, k)
+            end
         end
     end
 
@@ -103,7 +118,9 @@ function GetAddonGamemodes()
     -- Build a list of picking gamemodes
     for k,v in pairs(gamemodes.g) do
         if v.sort == GAMEMODE_ADDON then
-            table.insert(modes, k)
+            if checkWhiteList(v) then
+                table.insert(modes, k)
+            end
         end
     end
 

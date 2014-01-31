@@ -27,6 +27,10 @@ RegisterGamemode('ctftheflag', {
         }
     },
 
+    whiteList = {
+        'some_map' = true
+    },
+
     onGameStart = function(frota)
     print('running onGameStart')
     local heroWithFlag = nil

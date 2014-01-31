@@ -2,8 +2,8 @@ RegisterGamemode('kotolofthehill', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_PLAY,
 
-        options = {killsScore = false,useScores = true,respawnDelay = 10 }, 
-                
+        options = {killsScore = false,useScores = true,respawnDelay = 10 },
+
                 voteOptions = {
         -- Score limit vote
         scoreLimit = {
@@ -27,6 +27,10 @@ RegisterGamemode('kotolofthehill', {
         }
     },
 
+    whiteList = {
+        'some_map' = true
+    },
+
     onGameStart = function(frota)
     print('running onGameStart')
     print('finished onGameStart')
@@ -46,11 +50,11 @@ RegisterGamemode('kotolofthehill', {
             local goodGuysCount = 0
             local badGuysCount = 0
             local tableSize = 0
-           
+
             for k,v in pairs(unitsOnPoint) do
                 tableSize = tableSize + 1
             end
-     
+
             for i=1,tableSize do
                 local hero = unitsOnPoint[i]
                 if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
@@ -59,7 +63,7 @@ RegisterGamemode('kotolofthehill', {
                     badGuysCount = badGuysCount + 1
                 end
             end
-     
+
             if goodGuysCount > badGuysCount then
                 frota.scoreRadiant = frota.scoreRadiant + 1
                 frota:UpdateScoreData()
