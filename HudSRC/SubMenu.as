@@ -40,11 +40,14 @@
 
         // Opens the menu
         public function open() {
-            this.gotoAndPlay("open");
-            this.visible = true;
+            // Check if it's already open
+            if(menuState != SideMenu.STATE_FULLY_OPEN) {
+                this.gotoAndPlay("open");
+                this.visible = true;
 
-            // Change menu state
-            menuState = SideMenu.STATE_MENU_MOVING;
+                // Change menu state
+                menuState = SideMenu.STATE_MENU_MOVING;
+            }
         }
 
         // Toggles the menu

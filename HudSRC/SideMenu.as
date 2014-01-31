@@ -64,16 +64,39 @@ package  {
 
         // Opens the menu
         public function open() {
-            this.gotoAndPlay("open");
-            this.visible = true;
+            // Make sure the menu isn't already open
+            if(this.menuState != STATE_FULLY_OPEN) {
+                this.gotoAndPlay("open");
+                this.visible = true;
 
-            // Change menu state
-            this.menuState = STATE_MENU_MOVING;
+                // Change menu state
+                this.menuState = STATE_MENU_MOVING;
 
-            // Check if we need to reopen the sub menu
-            if(reopen) {
-                subMenu.open();
+                // Check if we need to reopen the sub menu
+                if(reopen) {
+                    subMenu.open();
+                }
             }
+        }
+
+        // Opens the menu and the sub menu
+        public function openFull() {
+            // Make sure the menu isn't already open
+            if(this.menuState != STATE_FULLY_OPEN) {
+                this.gotoAndPlay("open");
+                this.visible = true;
+
+                // Change menu state
+                this.menuState = STATE_MENU_MOVING;
+
+                // Check if we need to reopen the sub menu
+                if(reopen) {
+                    subMenu.open();
+                }
+            }
+
+            // Open the submenu
+            subMenu.open();
         }
 
         // Toggles the menu
@@ -88,6 +111,8 @@ package  {
 
         // Toggles the 2ndary menu
         public function toggleExtend() {
+
+
             subMenu.toggle();
         }
     }

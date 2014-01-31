@@ -31,6 +31,12 @@
         // Shortcut functions
         public static var Translate:Function;
 
+        // Shortcuts to movieclips
+        public var actualContent:MovieClip;
+
+        // Menus
+        public var menuList:Object;
+
         // For testing purposes
         public function frotaHud() : void {
             // Hook the menu
@@ -87,12 +93,22 @@
 
         public function hookMenu() {
             // Open the side menu
-            SideMenu.open();
+            SideMenu.openFull();
 
             // Hook Buttons
             btnToggleSideMenu.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
             SideMenu.Content.btnToggle.addEventListener(MouseEvent.CLICK, SideMenuToggleClicked, false, 0, true);
             SideMenu.Content.btnTest.addEventListener(MouseEvent.CLICK, TestButtonClicked, false, 0, true);
+
+            // Create shortcuts
+            actualContent = SideMenu.Content.subMenu.subMenuContent.actualContent;
+
+            // Create menus
+            menuList = {};
+            menuList.welcome = new menuWelcome();
+
+            // Apply welcome screen
+            showScreen(menuList.welcome);
         }
 
         public static function addFrameBehaviour(mc:MovieClip, frame:String, behaviour:Function) {
@@ -113,6 +129,22 @@
 
         public function TestButtonClicked(e:MouseEvent) {
             SideMenu.toggleExtend();
+        }
+
+        public function cleanupClip(mc:MovieClip) {
+            var children = mc.numChildren-1;
+            while(children >= 0) {
+                mc.removeChildAt(children);
+                children--;
+            }
+        }
+
+        public function showScreen(screen:MovieClip) {
+            // Cleanup the old screen
+            cleanupClip(actualContent);
+
+            // Show new screen
+            actualContent.addChild(screen);
         }
 	}
 
