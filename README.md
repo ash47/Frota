@@ -33,7 +33,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 ###Gameplay Gamemodes###
  - **PvP Arena**
   - A PvP arena game mode
- - ** King of the Hill**
+ - **King of the Hill**
   - Fight to get more players on top of the point than the enemy team.
  - **Oddball**
   - get the gem, keep the gem
@@ -53,13 +53,13 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 
 ###Addons###
  - **~~WTF Mode~~**
-  - Players have the option to turn WTF Mode on, making all spells and items have no mana cost and no cooldown.
+  - ~~Players have the option to turn WTF Mode on, making all spells and items have no mana cost and no cooldown.~~
  - **Free Blink Dagger**
   - Everyone will spawn with a free blink dagger.
  - **No Buying**
   - Items can't be bought from the shop.
  - **~~DM Mode~~**
-  - Every time you die, you respawn as a new hero!
+  - ~~Every time you die, you respawn as a new hero!~~
  - **Fat-o-Meter**
   - Every time a hero kills creep or another hero, he grows a little bit.
  - **Unlimited Mana**
