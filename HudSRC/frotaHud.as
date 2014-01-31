@@ -106,9 +106,13 @@
             // Create menus
             menuList = {};
             menuList.welcome = new menuWelcome();
+            menuList.voteScreen = new menuVoteScreen();
 
             // Apply welcome screen
             showScreen(menuList.welcome);
+
+            // Apply vote screen
+            showScreen(menuList.voteScreen);
         }
 
         public static function addFrameBehaviour(mc:MovieClip, frame:String, behaviour:Function) {
@@ -131,7 +135,7 @@
             SideMenu.toggleExtend();
         }
 
-        public function cleanupClip(mc:MovieClip) {
+        public static function cleanupClip(mc:MovieClip) {
             var children = mc.numChildren-1;
             while(children >= 0) {
                 mc.removeChildAt(children);
