@@ -46,10 +46,10 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - What does the Rabbit say?
  - **Warlocks**
   - Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell.
- - **Sun Strike Wars**
-  - One player spawns with Sun Strike and has to kill all the other players with it.
- - **Plague**
-  - When you kill someone, they become the same hero as you, when everyone is the same hero, the game is over.
+ - **~~Sun Strike Wars~~**
+  - ~~One player spawns with Sun Strike and has to kill all the other players with it.~~
+ - **~~Plague~~**
+  - ~~When you kill someone, they become the same hero as you, when everyone is the same hero, the game is over.~~
 
 ###Addons###
  - **~~WTF Mode~~**
