@@ -520,7 +520,10 @@ function FrotaGameMode:CleanupPlayer(keys)
             end
 
             -- No players are in, reset to initial vote
-            self:_SetInitialValues()
+            --self:_SetInitialValues()
+
+            -- Close server
+            SendToServerConsole('exit')
         end
     })
 end
