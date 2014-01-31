@@ -72,7 +72,7 @@ local function checkWhiteList(mode)
     -- Grab current map
     local currentMap = GetMapName():lower()
 
-    if (not mode.whiteList or mode.whiteList[currentMap]) and (not mode.blackList and not mode.blackList[currentMap]) then
+    if (not mode.whiteList or mode.whiteList[currentMap]) and (not mode.blackList or not mode.blackList[currentMap]) then
         return true
     end
 
