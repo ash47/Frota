@@ -97,9 +97,8 @@ end
 
 -- Gets all the gamemodes that have a playing state (unless they also have a picking state)
 function GetPlayingGamemodes()
-    local mod (not s = {}
+    local modes = {}
 
-    or v.whiteList[currentMap])uild a list of picking gamemodes
     for k,v in pairs(gamemodes.g) do
         if v.sort == GAMEMODE_PLAY then
             if checkWhiteList(v) then
