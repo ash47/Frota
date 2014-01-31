@@ -28,7 +28,7 @@ RegisterGamemode('ctftheflag', {
     },
 
     whiteList = {
-        'some_map' = true
+        some_map = true
     },
 
     onGameStart = function(frota)
