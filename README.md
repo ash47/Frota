@@ -22,33 +22,49 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Play as Puck, most of Puck's spells have no mana cost.
  - **Tiny Wars**
   - Players spawn as tiny, all of his spells have no mana cost.
+ - **Earth Spirit Wars**
+  - Dota's a balance of imbalance, right?
+ - **Riki Wars**
+  - Play as riki, get free dust ??? profit
+ - **Kunkka Wars**
+  - Kunkka is a pirate.
+
 
 ###Gameplay Gamemodes###
  - **PvP Arena**
   - A PvP arena game mode
- -** King of the Hill**
+ - ** King of the Hill**
   - Fight to get more players on top of the point than the enemy team.
+ - **Oddball**
+  - get the gem, keep the gem
+ - **Capture the Flag**
+  - Steal and return the enemies' flag while protecting your own.
+
 
 ###Picking + Gameplay Gamemodes###
  - **Rabbits vs. Sheep**
   - What does the Rabbit say?
  - **Warlocks**
   - Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell.
+ - **Sun Strike Wars**
+  - One player spawns with Sun Strike and has to kill all the other players with it.
+ - **Plague**
+  - When you kill someone, they become the same hero as you, when everyone is the same hero, the game is over.
 
 ###Addons###
- - **WTF Mode**
+ - **~~WTF Mode~~**
   - Players have the option to turn WTF Mode on, making all spells and items have no mana cost and no cooldown.
  - **Free Blink Dagger**
   - Everyone will spawn with a free blink dagger.
  - **No Buying**
   - Items can't be bought from the shop.
- - **DM Mode**
+ - **~~DM Mode~~**
   - Every time you die, you respawn as a new hero!
  - **Fat-o-Meter**
   - Every time a hero kills creep or another hero, he grows a little bit.
  - **Unlimited Mana**
   - Players have max mana regen.
- 
+
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
  - **IMPORTANT** Dota will only load the first plugin in your addons folder, to prevent this, move all other addons out of your addons folder. (I moved mine into an addons_disabled folder) - ONLY the host has to do this. This is not required if you use d2fixups
