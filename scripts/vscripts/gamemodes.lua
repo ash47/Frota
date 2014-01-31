@@ -336,7 +336,7 @@ RegisterGamemode('freeBlinkDagger', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
-    -- When PlayerResource are given a new hero
+    -- When players are given a new hero
     assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
         local hero = frota:GetActiveHero(playerID)
@@ -354,7 +354,7 @@ RegisterGamemode('noBuying', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
-    -- When PlayerResource are given a new hero
+    -- When players are given a new hero
     dota_item_purchased = function(frota, keys)
         -- Check if this hero exists
         local hero = frota:GetActiveHero(keys.PlayerID)
@@ -384,7 +384,7 @@ RegisterGamemode('noBuying', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
 
-    -- When PlayerResource are given a new hero
+    -- When players are given a new hero
     onHeroKilled = function(frota, killedUnit, killerEntity)
         if IsValidEntity(killedUnit) then
             -- Change their hero

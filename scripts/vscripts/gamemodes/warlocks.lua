@@ -100,8 +100,8 @@ RegisterGamemode('warlocks', {
 		--table.remove(playerList, killedPlayerID)
 
 
-		local livingPlayerResource = getLivingPlayerList()
-		if(#livingPlayerResource <= 1) then
+		local livingPlayers = getLivingPlayerList()
+		if(#livingPlayers <= 1) then
 			frota:EndGamemode()
 			return
 		end --You are the one and only.
@@ -213,13 +213,13 @@ function getPlayerList()
 end
 
 function getLivingPlayerList()
-	local livePlayerResource = getPlayerList()
-	for k,v in pairs(livePlayerResource) do
+	local livePlayers = getPlayerList()
+	for k,v in pairs(livePlayers) do
 		if not v:IsAlive() then
-			table.remove(livePlayerResource, k)
+			table.remove(livePlayers, k)
 		end
 	end
-	return livePlayerResource
+	return livePlayers
 end
 
 function killHolder()

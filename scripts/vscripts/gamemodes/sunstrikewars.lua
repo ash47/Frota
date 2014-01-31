@@ -98,7 +98,7 @@ RegisterGamemode('sunstrikewars', {
 
         -- Check if there is anyone not on the new team
         local allDone = true
-        frota:LoopOverPlayerResource(function(lPly, playerID)
+        frota:LoopOverPlayers(function(lPly, playerID)
             -- Check team of this hero
             local h = frota:GetActiveHero(playerID)
             if IsValidEntity(h) then

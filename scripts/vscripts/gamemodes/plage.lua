@@ -46,7 +46,7 @@ RegisterGamemode('plage', {
 
         -- Check if there is anyone not on the new team
         local allDone = true
-        frota:LoopOverPlayerResource(function(lPly, playerID)
+        frota:LoopOverPlayers(function(lPly, playerID)
             -- Ignore this player
             if lPly == ply then return end
 
