@@ -1,56 +1,4 @@
---[[
-    EVENTS:
-
-    - onPickingStart(frota): When the picking stage is loaded
-    - onGameStart(frota): When the game actually starts
-    - assignHero(frota, ply): A player needs a hero to be assigned
-    - onHeroKilled(frota, killedUnit, killerEntity): A player was killed by something (note: killerEntity could be null)
-    - onThink(frota, dt): Runs ~every 0.1 seconds, dt is the time since the last think, should be around 0.1 of a second
-    - onGameEnd(frota): Runs when the game mode finishes, you can do cleanup here
-
-    MOD EVENTS -- Mod events are all in the form of (frota, keys), you can find the arguments below via keys: keys.PlayerID
-
-    - dota_player_used_ability
-        - "PlayerID"        "short"
-        - "abilityname"     "string"
-    - dota_player_learned_ability
-        - "PlayerID"        "short"
-        - "abilityname"     "string"
-    - dota_player_gained_level
-        - "PlayerID"        "short"
-        - "level"           "short"
-    - dota_item_purchased
-        - "PlayerID"        "short"
-        - "itemname"        "string"
-        - "itemcost"        "short"
-    - dota_item_used
-        - "PlayerID"        "short"
-        - "itemname"        "string"
-    - last_hit
-        - "PlayerID"         "short"
-        - "EntKilled"       "short"
-        - "FirstBlood"      "bool"
-        - "HeroKill"        "bool"
-        - "TowerKill"       "bool"
-    - dota_item_picked_up
-        - "itemname"        "string"
-        - "PlayerID"        "short"
-     - dota_super_creep
-        - "teamnumber"      "short"
-    - dota_glyph_used
-        - "teamnumber"      "short"
-    - dota_courier_respawned
-        - "teamnumber"      "short"
-    - dota_courier_lost
-        - "teamnumber"      "short"
-    - entity_killed
-        - "entindex_killed"         "long"
-        - "entindex_attacker"       "long"
-        - "entindex_inflictor"      "long"
-        - "damagebits"              "long"
-]]
-
-	--Rabbits vs Sheep
+--Rabbits vs Sheep
 
 local function spawn_radiant_creep ()
 	CreateUnitByName('npc_dota_creep_goodguys_melee', Vec3(math.random(575,1600),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
@@ -65,21 +13,9 @@ RegisterGamemode('rvs', {
     -- This gamemode is for both picking and playing
     sort = GAMEMODE_BOTH,
 
-	-- List of addons to ignore
---[[
-	ignoreAddons = {
-
-		wtf = true
-		dmMode = true
-
-	},
-	]]
-
     -- Allow certain picking things
     pickHero = true,
     pickSkills = false,
-
-
 
 	-- A list of options for fast gameplay stuff
     options = {
@@ -204,12 +140,4 @@ RegisterGamemode('rvs', {
         local hero = PlayerResource:ReplaceHeroWith(playerID, build.hero, 100000, 32400)
         frota:SetActiveHero(hero)
     end,
-
-
-
-
-
-
-
 })
-
