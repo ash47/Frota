@@ -135,9 +135,10 @@ RegisterGamemode('rvs', {
     -- Function to give out heroes
     assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
+        local build = frota.selectedBuilds[playerID]
 
         -- Change hero
-        local hero = PlayerResource:ReplaceHeroWith(playerID, build.hero, 100000, 32400)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, build.hero, 2500, 2600)
         frota:SetActiveHero(hero)
     end,
 })
