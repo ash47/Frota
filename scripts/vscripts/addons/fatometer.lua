@@ -2,7 +2,7 @@
 local scale = {}
 
 RegisterGamemode('fatometer', {
-    -- Gamemode covers picking and playing
+    -- This is an addon
     sort = GAMEMODE_ADDON,
 
     -- Reset the scale when the game restarts

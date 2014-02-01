@@ -9,6 +9,7 @@
     - onGameEnd(frota): Runs when the game mode finishes, you can do cleanup here
     - CleanupPlayer(frota, leavingPly): A player is about to leave and be cleaned up
     - NewPlayer(frota, ply): A new player has connected, and been assigned their hero
+    - onHeroRespawn(frota, hero): When a hero is respawned (doesnt include initial spawn!)
 
     MOD EVENTS -- Mod events are all in the form of (frota, keys), you can find the arguments below via keys: keys.PlayerID
 

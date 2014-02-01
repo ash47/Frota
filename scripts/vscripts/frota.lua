@@ -534,6 +534,14 @@ function FrotaGameMode:AutoFireEvent(keys)
     self.self:FireEvent(self.ev, keys)
 end
 
+function FrotaGameMode:RespawnHero(hero, buyback, unknown1, unknown2)
+    -- Respawn the hero
+    hero:RespawnHero(buyback, unknown1, unknown2)
+
+    -- Fire the respawn event
+    self:FireEvent('onHeroRespawn', hero)
+end
+
 function FrotaGameMode:OnEntityKilled(keys)
     -- Fire entity killed event
     self:FireEvent('entity_killed', keys)
@@ -561,7 +569,7 @@ function FrotaGameMode:OnEntityKilled(keys)
                         -- Validate the unit
                         if killedUnit and IsValidEntity(killedUnit) then
                             -- Respawn the dead guy
-                            killedUnit:RespawnHero(false, false, false)
+                            frota:RespawnHero(killedUnit, false, false, false, false)
                         end
                     end
                 end
