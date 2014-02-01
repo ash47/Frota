@@ -418,16 +418,11 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     }
 
     self:LoopOverPlayers(function(ply, playerID)
-        if PlayerResource:GetPlayer(playerID) then
-            local ply = PlayerResource:GetPlayer(playerID)
-            if ply then
-                -- Grab the players team
-                local team = ply:GetTeam()
+        -- Grab the players team
+        local team = ply:GetTeam()
 
-                -- Increase the number of players on this player's team
-                teamSize[team] = (teamSize[team] or 0) + 1
-            end
-        end
+        -- Increase the number of players on this player's team
+        teamSize[team] = (teamSize[team] or 0) + 1
     end)
 
     if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then

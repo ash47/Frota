@@ -18,21 +18,21 @@ require('frota')        -- Main frota framework
 require('gamemodes')    -- Gamemode framework and small gamemodes/addons
 
 -- Include gamemodes
-require('gamemodes/tinywars')
-require('gamemodes/rvs')
---require('gamemodes/warlocks')
+require('gamemodes/ctftheflag')
 require('gamemodes/invokerwars')
-require('gamemodes/puckwars')
---require('gamemodes/plage')
---require('gamemodes/sunstrikewars')
 require('gamemodes/kaolinwars')
+require('gamemodes/kotolofthehill')
 require('gamemodes/kunkkawars')
 require('gamemodes/oddball')
-require('gamemodes/kotolofthehill')
-require('gamemodes/ctftheflag')
+--require('gamemodes/plage')
+require('gamemodes/puckwars')
+require('gamemodes/rvs')
+--require('gamemodes/sunstrikewars')
+--require('gamemodes/survival')
+require('gamemodes/tinywars')
+--require('gamemodes/warlocks')
 
 -- Include addons
-require('gamemodes/fatometer')
-
+require('addons/fatometer')
 
 print("\n\nDone Loading!\n\n")
