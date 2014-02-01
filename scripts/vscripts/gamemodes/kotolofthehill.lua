@@ -2,7 +2,11 @@ RegisterGamemode('kotolofthehill', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_PLAY,
 
-    options = {killsScore = false,useScores = true,respawnDelay = 10 },
+    options = {
+        killsScore = false,
+        useScores = true,
+        respawnDelay = 10
+    },
 
     voteOptions = {
         -- Score limit vote
@@ -27,51 +31,35 @@ RegisterGamemode('kotolofthehill', {
         }
     },
 
+    -- List of maps this plugin works with
     whiteList = {
-        some_map = true
+        arenaotdr = true
     },
 
     onGameStart = function(frota)
-    print('running onGameStart')
-    print('finished onGameStart')
-    local options = frota:GetOptions()
-    frota:SetScoreLimit(options.scoreLimit)
+        -- Set the score limit
+        local options = frota:GetOptions()
+        frota:SetScoreLimit(options.scoreLimit)
     end,
 
     onThink = function(frota, dt)
+        -- The position where the hill is
         local controlPointVec = Vec3(0,0,0)
-          --  local controlPoint = Entities:FindByName(nil, 'hill_marker_01')
-            -- local controlPointVec = controlPoint:GetOrigin()
-            local goodUnitsOnPoint = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, controlPointVec, null, 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-            local badUnitsOnPoint = FindUnitsInRadius(DOTA_TEAM_BADGUYS, controlPointVec, null, 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-            local unitsOnPoint = {}
-            for k,v in ipairs(goodUnitsOnPoint) do unitsOnPoint[#unitsOnPoint+1] = v end
-            for k,v in ipairs(badUnitsOnPoint) do unitsOnPoint[#unitsOnPoint+1] = v end
-            local goodGuysCount = 0
-            local badGuysCount = 0
-            local tableSize = 0
 
-            for k,v in pairs(unitsOnPoint) do
-                tableSize = tableSize + 1
-            end
+        -- The number of good/bad guys on the point
+        local goodGuysCount = #FindUnitsInRadius(DOTA_TEAM_GOODGUYS, controlPointVec, null, 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+        local badGuysCount = #FindUnitsInRadius(DOTA_TEAM_BADGUYS, controlPointVec, null, 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
 
-            for i=1,tableSize do
-                local hero = unitsOnPoint[i]
-                if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-                    goodGuysCount = goodGuysCount + 1
-                else
-                    badGuysCount = badGuysCount + 1
-                end
-            end
-
-            if goodGuysCount > badGuysCount then
-                frota.scoreRadiant = frota.scoreRadiant + 1
-                frota:UpdateScoreData()
-            elseif goodGuysCount == badGuysCount then
-            elseif badGuysCount > goodGuysCount then
-                frota.scoreDire = frota.scoreDire + 1
-                frota:UpdateScoreData()
-            end
+        -- Check who has more units on the point
+        if goodGuysCount > badGuysCount then
+            -- More radiant units, increase radiant score
+            frota.scoreRadiant = frota.scoreRadiant + 1
+            frota:UpdateScoreData()
+        elseif goodGuysCount < badGuysCount then
+            -- More dire units, increase dire score
+            frota.scoreDire = frota.scoreDire + 1
+            frota:UpdateScoreData()
+        end
     end,
 
     })

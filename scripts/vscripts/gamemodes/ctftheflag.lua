@@ -2,9 +2,13 @@ RegisterGamemode('ctftheflag', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_PLAY,
 
-        options = {killsScore = false,useScores = true,respawnDelay = 10 },
+    options = {
+        killsScore = false,
+        useScores = true,
+        respawnDelay = 10
+    },
 
-                voteOptions = {
+    voteOptions = {
         -- Score limit vote
         scoreLimit = {
             -- Range based
@@ -27,19 +31,20 @@ RegisterGamemode('ctftheflag', {
         }
     },
 
+    -- List of maps this plugin works with
     whiteList = {
-        some_map = true
+        keeperofthekotol = true
     },
 
     onGameStart = function(frota)
-    print('running onGameStart')
-    local heroWithFlag = nil
-    local heroWithDireFlag = nil
-    spawnDireFlag()
-    spawnRadiantFlag()
-    local options = frota:GetOptions()
-    frota:SetScoreLimit(options.scoreLimit)
-    print('finished onGameStart')
+        print('running onGameStart')
+        local heroWithFlag = nil
+        local heroWithDireFlag = nil
+        spawnDireFlag()
+        spawnRadiantFlag()
+        local options = frota:GetOptions()
+        frota:SetScoreLimit(options.scoreLimit)
+        print('finished onGameStart')
     end,
 
     onThink = function(frota, dt)
