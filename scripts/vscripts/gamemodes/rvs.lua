@@ -1,27 +1,44 @@
---Rabbits vs Sheep
+-- Settings
+local NUM_STARTING_CREEPS = 3   -- Number of creeps to spawn when the game starts
 
-local function spawn_radiant_creep ()
-	CreateUnitByName('npc_dota_creep_goodguys_melee', Vec3(math.random(575,1600),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
+local CREEPS_PER_KILL = 2       -- Number of creeps to spawn each time a creep is killed
+
+-- This spawns a creep for the enemy team
+local function spawnCreepForTeam(team)
+    -- Check which team they were on
+    if team == DOTA_TEAM_BADGUYS then
+        -- Spawn a creep for the bad guys
+        CreateUnitByName('npc_dota_creep_badguys_melee',Vec3(math.random(-1665,-705),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_BADGUYS)
+    elseif team == DOTA_TEAM_GOODGUYS then
+        -- Spawn a creep for the good guys
+        CreateUnitByName('npc_dota_creep_goodguys_melee', Vec3(math.random(575,1600),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
+    end
 end
 
-local function spawn_dire_creep ()
-	CreateUnitByName('npc_dota_creep_badguys_melee',Vec3(math.random(-1665,-705),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_BADGUYS)
+-- This returns true if the entity parsed is a RVS creep
+local function isRVSCreep(ent)
+    -- Make sure something was parsed
+    if ent then
+        -- Grab the name of this entity
+        local name = ent:GetUnitName()
+
+        -- Check if it is a creep
+        if name == 'npc_dota_creep_badguys_melee' or name == 'npc_dota_creep_goodguys_melee' then
+            -- Yes, it's safe to assume this is a RVS creep
+            return true
+        end
+    end
+
+    return false
 end
 
-
+-- Regigster Rabbits VS Sheep
 RegisterGamemode('rvs', {
     -- This gamemode is for both picking and playing
-    sort = GAMEMODE_BOTH,
-
-    -- Allow certain picking things
-    pickHero = true,
-    pickSkills = false,
+    sort = GAMEMODE_PLAY,
 
 	-- A list of options for fast gameplay stuff
     options = {
-        -- Kills give team points
-        killsScore = true,
-
         -- Enable scores
         useScores = true,
 
@@ -54,24 +71,21 @@ RegisterGamemode('rvs', {
 
 	--Stuff that happens when the game starts
 	onGameStart = function(frota, keys)
-
 		--- Grab options
         local options = frota:GetOptions()
 
         -- Set the score limit
         frota:SetScoreLimit(options.scoreLimit)
-		--Spawn the starting creeps
-		spawn_radiant_creep()
-		spawn_radiant_creep()
-		spawn_radiant_creep()
 
-		spawn_dire_creep()
-		spawn_dire_creep()
-		spawn_dire_creep()
+		-- Spawn the starting creeps
+		for i=1,NUM_STARTING_CREEPS do
+            spawnCreepForTeam(DOTA_TEAM_GOODGUYS)
+            spawnCreepForTeam(DOTA_TEAM_BADGUYS)
+        end
 
-		--Add the number of creeps
-		frota.scoreDire = frota.scoreDire + 3
-		frota.scoreRadiant = frota.scoreRadiant + 3
+		-- Set the scores to 3 -- there are three creeps on each side
+		frota.scoreDire = 3
+		frota.scoreRadiant = 3
 
 		--Update score
 		frota:UpdateScoreData()
@@ -79,66 +93,65 @@ RegisterGamemode('rvs', {
 
 	--Function that handles dying
 	entity_killed = function(frota, keys)
-		-- Proceed to do stuff
+		-- Grab the unit that was killed
 		local killedUnit = EntIndexToHScript( keys.entindex_killed )
-		local killerEntity = nil
 
-		if keys.entindex_attacker ~= nil then
-			killerEntity = EntIndexToHScript( keys.entindex_attacker )
-		end
-
-		local winner = -1
-
+        -- Make sure something was killed
 		if killedUnit then
-			local unitName = killedUnit:GetUnitName()
-			if unitName == 'npc_dota_creep_goodguys_melee' then
-				spawn_dire_creep()
-				spawn_dire_creep()
+            -- There is no winner yet
+            local winner = -1
 
-				if frota.scoreDire > 0 then
-					frota.scoreDire = frota.scoreDire + - 1
-				end
-				frota.scoreRadiant = frota.scoreRadiant + 2
-				if frota.scoreRadiant >= (frota.gamemodeOptions.scoreLimit or -1) then
-					winner = DOTA_TEAM_BADGUYS
-				end
+            -- Make sure this is a RVS creep
+            if isRVSCreep(killedUnit) then
+                -- Grab the team the killed unit was on
+                local team = killedUnit:GetTeam()
 
-			elseif unitName == 'npc_dota_creep_badguys_melee' then
-				spawn_radiant_creep()
-				spawn_radiant_creep()
-				spawn_dire_creep()
+                -- Spawn the extra creeps
+                for i=1,CREEPS_PER_KILL do
+                    spawnCreepForTeam(team)
+                    spawnCreepForTeam(team)
+                end
 
-				if frota.scoreRadiant > 0 then
-					frota.scoreRadiant = frota.scoreRadiant - 1
-				end
-				frota.scoreDire = frota.scoreDire + 2
-				if frota.scoreDire >= (frota.gamemodeOptions.scoreLimit or -1) then
-					winner = DOTA_TEAM_GOODGUYS
-				end
+                -- Check which team they were on
+                if team == DOTA_TEAM_GOODGUYS then
+                    -- The creep that died was on Radiant
 
-			end
+                    -- Decrease the number of creeps left for dire to kill
+                    frota.scoreDire = frota.scoreDire - 1
+
+                    -- Increase the number of creeps for radiant to kill
+                    frota.scoreRadiant = frota.scoreRadiant + CREEPS_PER_KILL
+
+                    -- Check if Radiant has too many creeps
+                    if frota.scoreRadiant >= (frota.gamemodeOptions.scoreLimit or -1) then
+                        -- Dire Victory
+                        winner = DOTA_TEAM_BADGUYS
+                    end
+                elseif team == DOTA_TEAM_BADGUYS then
+                    -- The creep that died was on Dire
+
+                    -- Decrease the number of creeps left for radiant to kill
+                    frota.scoreRadiant = frota.scoreRadiant - 1
+
+                    -- Increase the number of creeps for dire to kill
+                    frota.scoreDire = frota.scoreDire + CREEPS_PER_KILL
+
+                    -- Check if Dire has too many creeps
+                    if frota.scoreDire >= (frota.gamemodeOptions.scoreLimit or -1) then
+                        -- Radiant Victory
+                        winner = DOTA_TEAM_GOODGUYS
+                    end
+                end
+
+                -- Update the scores
+                frota:UpdateScoreData()
+
+                -- Check if someone won
+                if winner ~= -1 then
+                    -- Simply end the gamemode
+                    frota:EndGamemode()
+                end
+            end
 		end
-
-
-		--Finally update score
-		frota:UpdateScoreData()
-
-		-- Check if there was a winner
-
-		if winner ~= -1 then
-            -- Reset back to gamemode voting
-
-            frota:EndGamemode()
-        end
-	end,
-
-    -- Function to give out heroes
-    assignHero = function(frota, ply)
-        local playerID = ply:GetPlayerID()
-        local build = frota.selectedBuilds[playerID]
-
-        -- Change hero
-        local hero = PlayerResource:ReplaceHeroWith(playerID, build.hero, 2500, 2600)
-        frota:SetActiveHero(hero)
-    end,
+	end
 })

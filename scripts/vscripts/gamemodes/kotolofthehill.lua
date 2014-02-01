@@ -2,9 +2,9 @@ RegisterGamemode('kotolofthehill', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_PLAY,
 
-        options = {killsScore = false,useScores = true,respawnDelay = 10 },
+    options = {killsScore = false,useScores = true,respawnDelay = 10 },
 
-                voteOptions = {
+    voteOptions = {
         -- Score limit vote
         scoreLimit = {
             -- Range based
