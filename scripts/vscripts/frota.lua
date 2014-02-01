@@ -1101,8 +1101,11 @@ function FrotaGameMode:Think()
         end
     end
 
-    -- Fire gamemode thinks
-    self:FireEvent('onThink', dt)
+    -- Ensure a game is active
+    if self.currentState == STATE_PLAYING then
+        -- Fire gamemode thinks
+        self:FireEvent('onThink', dt)
+    end
 end
 
 function FrotaGameMode:SetBuildSkills(playerID, skills)
@@ -1450,6 +1453,11 @@ function FrotaGameMode:VoteForGamemode()
     self.toLoadPickMode = {}
     self.toLoadPlayMode = {}
 
+    -- Reset current modes
+    self.pickMode = {}
+    self.playMode = {}
+    self.loadedAddons = {}
+
     -- Create a vote for the game mode
     self:CreateVote({
         sort = VOTE_SORT_SINGLE,
@@ -1613,26 +1621,63 @@ function FrotaGameMode:SetScoreLimit(limit)
     self.gamemodeOptions.scoreLimit = limit
 end
 
+function FrotaGameMode:HandleEventError(name, event, err)
+    -- This gets fired when an event throws an error
+
+    -- Log to console
+    print(err)
+
+    -- Ensure we have data
+    name = tostring(name or 'unknown')
+    event = tostring(event or 'unknown')
+    err = tostring(err or 'unknown')
+
+    -- Tell everyone there was an error
+    Say(nil, COLOR_RED..name..COLOR_NONE..' threw an error on event '..COLOR_RED..event, false)
+    Say(nil, COLOR_RED..err, false)
+
+    -- Prevent loop arounds
+    if not self.errorHandled then
+        -- Store that we handled an error
+        self.errorHandled = true
+
+        -- End the gamemode
+        self:EndGamemode()
+    end
+end
+
 function FrotaGameMode:FireEvent(name, ...)
     local e
 
     -- Pick mode events
     e = (self.pickMode and self.pickMode[name])
     if e then
-        e(self, ...)
+        local status, err = pcall(e, self, ...)
+        if not status then
+            self:HandleEventError(self.pickMode.__name, name, err)
+            return
+        end
     end
 
     -- Play mode events
     e = (self.playMode and self.playMode[name])
     if e then
-        e(self, ...)
+        local status, err = pcall(e, self, ...)
+        if not status then
+            self:HandleEventError(self.playMode.__name, name, err)
+            return
+        end
     end
 
     -- Addon events
     for k, v in pairs(self.loadedAddons or {}) do
         e = v[name]
         if e then
-            e(self, ...)
+            local status, err = pcall(e, self, ...)
+            if not status then
+                self:HandleEventError(v.__name, name, err)
+                return
+            end
         end
     end
 end
@@ -1641,6 +1686,9 @@ function FrotaGameMode:LoadGamemode()
     -- Store the modes
     self.pickMode = self.toLoadPickMode
     self.playMode = self.toLoadPlayMode
+
+    -- Reset the error handling state
+    self.errorHandled = false
 
     -- Fire event
     self:FireEvent('onPickingStart')

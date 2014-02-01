@@ -27,3 +27,24 @@ function PrintTable(t, indent, done)
         end
     end
 end
+
+-- Colors
+COLOR_NONE = '\x06'
+COLOR_GRAY = '\x06'
+COLOR_GREY = '\x06'
+COLOR_GREEN = '\x0C'
+COLOR_DPURPLE = '\x0D'
+COLOR_SPINK = '\x0E'
+COLOR_DYELLOW = '\x10'
+COLOR_PINK = '\x11'
+COLOR_RED = '\x12'
+COLOR_LGREEN = '\x15'
+COLOR_BLUE = '\x16'
+COLOR_DGREEN = '\x18'
+COLOR_SBLUE = '\x19'
+COLOR_PURPLE = '\x1A'
+COLOR_ORANGE = '\x1B'
+COLOR_LRED = '\x1C'
+COLOR_GOLD = '\x1D'
+
+print(COLOR_RED)

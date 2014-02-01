@@ -64,6 +64,9 @@ gamemodes = gamemodes or {}
 gamemodes.g = gamemodes.g or {}
 
 function RegisterGamemode(name, args)
+    -- Store the gamemode name
+    args.__name = name
+
     -- Store the gamemode
     gamemodes.g[name] = args
 end
