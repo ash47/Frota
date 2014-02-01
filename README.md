@@ -39,13 +39,15 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - get the gem, keep the gem
  - **Capture the Flag**
   - Steal and return the enemies' flag while protecting your own.
+ - **Rabbits vs. Sheep**
+  - What does the Rabbit say?
+ - **King of the Hill**
+  - Fight to get more friendly players on top of the point.
 
 
 ###Picking + Gameplay Gamemodes###
- - **Rabbits vs. Sheep**
-  - What does the Rabbit say?
- - **Warlocks**
-  - Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell.
+ - **~~Warlocks~~**
+  - ~~Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell.~~
  - **~~Sun Strike Wars~~**
   - ~~One player spawns with Sun Strike and has to kill all the other players with it.~~
  - **~~Plague~~**
@@ -64,6 +66,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Every time a hero kills creep or another hero, he grows a little bit.
  - **Unlimited Mana**
   - Players have max mana regen.
+ - **Spawn Protection**
+  - Heroes will be momentarily invulnerable when they spawn.
 
 ###How do I use this?###
  - Keep in mind it is still in development, and may be buggy
