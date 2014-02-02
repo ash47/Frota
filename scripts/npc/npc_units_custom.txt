@@ -357,6 +357,7 @@
 			"particlefile"				"particles/units/heroes/hero_earth_spirit.pcf"
 			"particlefile"				"particles/units/heroes/hero_abyssal_underlord.pcf"
 			"particlefile"				"particles/units/heroes/hero_terrorblade.pcf"
+			"particlefile"				"particles/units/heroes/hero_phoenix.pcf"
 		}
 	}
 
