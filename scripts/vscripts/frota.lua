@@ -69,12 +69,12 @@ function FrotaGameMode:InitGameMode()
     ListenToGameEvent('entity_killed', Dynamic_Wrap(FrotaGameMode, 'OnEntityKilled'), self)
     ListenToGameEvent('player_connect_full', Dynamic_Wrap(FrotaGameMode, 'AutoAssignPlayer'), self)
     ListenToGameEvent('player_disconnect', Dynamic_Wrap(FrotaGameMode, 'CleanupPlayer'), self)
+    ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(FrotaGameMode, 'ShopReplacement'), self)
 
     -- Mod Events
     self:ListenToEvent('dota_player_used_ability')
     self:ListenToEvent('dota_player_learned_ability')
     self:ListenToEvent('dota_player_gained_level')
-    self:ListenToEvent('dota_item_purchased')
     self:ListenToEvent('dota_item_used')
     self:ListenToEvent('last_hit')
     self:ListenToEvent('dota_item_picked_up')
@@ -477,6 +477,80 @@ function FrotaGameMode:GetActiveHero(playerID)
     return self.vActiveHeroMap[playerID]
 end
 
+-- Replaces some of the shop buying mechanics
+function FrotaGameMode:ShopReplacement(keys)
+    -- Check if it is an illegal item
+    if(self.customItemKV[keys.itemname]) then
+        -- Check if this hero exists
+        local hero = self:GetActiveHero(keys.PlayerID)
+        if hero then
+            -- Loop over their items
+            for i=0, 11 do
+                -- See if there is an item in this slot
+                local item = hero:GetItemInSlot(i)
+                if item and item:GetOwner() == hero then
+                    -- See if it was the item that was just bought
+                    if item:GetAbilityName() == keys.itemname then
+                        -- Refund the gold
+                        PlayerResource:SetGold(keys.PlayerID, PlayerResource:GetUnreliableGold(keys.PlayerID)+keys.itemcost, false)
+
+                        -- Remove the item
+                        item:Remove()
+                        return
+                    end
+                end
+            end
+
+            local team = hero:GetTeam()
+
+            -- Search couriers
+            local n = PlayerResource:GetNumCouriersForTeam(team)
+            if n > 0 then
+                for i=0,n-1 do
+                    local courier = PlayerResource:GetNthCourierForTeam(i, team)
+
+                    for j=0, 5 do
+                        local item = courier:GetItemInSlot(j)
+                        if item and item:GetOwner() == courier then
+                            -- See if it was the item that was just bought
+                            if item:GetAbilityName() == keys.itemname then
+                                -- Refund the gold
+                                PlayerResource:SetGold(keys.PlayerID, PlayerResource:GetUnreliableGold(keys.PlayerID)+keys.itemcost, false)
+
+                                -- Remove the item
+                                item:Remove()
+                                return
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        -- Failed to find the old fasion way, check the ground
+        local n = GameRules:NumDroppedItems()
+        if n > 0 then
+            -- Grab the newest item
+            local itemCon = GameRules:GetDroppedItem(n-1)
+            if itemCon then
+                local item = itemCon:GetContainedItem()
+                if item and item:GetOwner() == hero then
+                    if item:GetAbilityName() == keys.itemname then
+                        -- Refund the gold
+                        PlayerResource:SetGold(keys.PlayerID, PlayerResource:GetUnreliableGold(keys.PlayerID)+keys.itemcost, false)
+
+                        -- Remove the item
+                        item:Remove()
+                        itemCon:Remove()
+                        return
+                    end
+                end
+            end
+
+        end
+    end
+end
+
 -- Cleanup a player when they leave
 function FrotaGameMode:CleanupPlayer(keys)
     -- Grab and validate the leaver
@@ -615,9 +689,9 @@ function FrotaGameMode:FindHeroOwner(skillName)
 end
 
 function FrotaGameMode:LoadAbilityList()
-    local abs = LoadKeyValues( "scripts/kv/abilities.kv" )
-    self.heroListKV = LoadKeyValues( "scripts/npc/npc_heroes.txt" )
-    --local englishPack = LoadKeyValues( "resource/dota_english.txt" )
+    local abs = LoadKeyValues("scripts/kv/abilities.kv")
+    self.heroListKV = LoadKeyValues("scripts/npc/npc_heroes.txt")
+    self.customItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
 
     -- Build list of heroes
     self.heroList = {}
