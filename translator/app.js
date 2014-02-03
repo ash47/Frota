@@ -202,7 +202,16 @@ fs.readFile(resDir+'Frota_english.txt', 'utf16le', function(err, data) {
             console.log('Parsing: '+lang);
             var kv2 = parseKV(data2);
 
+            // Grab a new copy of the english data
             var newData = data;
+
+            // Replace language header
+            var key = 'Language'
+            var realLang = kv.lang[key];
+            var startPos = newData.indexOf(key)+key.length;
+            var keyPos = newData.indexOf(realLang, startPos);
+            newData = newData.substring(0, keyPos) + lang + newData.substring(keyPos+realLang.length);
+
             for(var key in kv.lang.Tokens) {
                 var value = kv.lang.Tokens[key];
                 value = value.replace(/\n/g, '\\n');
@@ -211,7 +220,6 @@ fs.readFile(resDir+'Frota_english.txt', 'utf16le', function(err, data) {
                 value = value.replace(/r/g, '\\\r');
 
                 var startPos = newData.indexOf(key)+key.length;
-
                 var keyPos = newData.indexOf(value, startPos);
 
                 if(keyPos != -1) {
