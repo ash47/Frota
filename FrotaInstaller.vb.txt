@@ -11,7 +11,6 @@ Public Class FrotaInstall
         Dim _fileName = CurDir() & "\addoninfo.txt"
         If My.Computer.FileSystem.FileExists(_fileName) Then
             FileOpen(1, _fileName, OpenMode.Input)
-
             Do While Not EOF(1)
                 _lineString = LineInput(1)
                 'MsgBox(_lineString)
@@ -24,9 +23,7 @@ Public Class FrotaInstall
                     Or InStr(_lineString, "_addonDescription") > 0 _
                    Then
                     addonInfo.Text = addonInfo.Text & Chr(13) & Trim(Mid(_lineString, 1, 60))
-
                 End If
-
             Loop
             addonInfo.Text = addonInfo.Text & Chr(13) & Chr(13) & "Start Your Dota2 Client" & Chr(13) & "Click the Image Below to Install Frota"
         Else
@@ -36,23 +33,17 @@ Public Class FrotaInstall
                 Me.Close()
             End If
         End If
-
         Label1.Text = CurDir()
-
     End Sub
 
     Private Sub FrotaInstallation()
         Dim runningProcess() As Process                             'store all running process
         Dim dotaFound As Boolean                                    'dota is running?
-
         runningProcess = System.Diagnostics.Process.GetProcesses    'Get All Running Process
-
         'Search for dota
         For Each mProcess As Process In runningProcess
             If mProcess.ProcessName = "dota" Then
-
                 dotaFound = True
-
                 Dim targetPath As String
                 targetPath = mProcess.MainModule.FileName              'catch running dota2-thread
                 targetPath = Mid(targetPath, 1, Len(targetPath) - 8) 'delete "dota.exe"
@@ -71,6 +62,7 @@ Public Class FrotaInstall
             End If
         End If
     End Sub
+
     Private Sub InstallFrota(Path As String)
         If My.Computer.FileSystem.FileExists((CurDir() & "\scripts\vscripts\frota.lua")) Then
             MsgBox(Path, , "Frota will be install into")
@@ -83,6 +75,7 @@ Public Class FrotaInstall
             MsgBox("Please Put Frota Installer Under Frota - master before running")
         End If
     End Sub
+
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles exitbutton.Click
         Me.Close()
     End Sub
