@@ -2,7 +2,6 @@
 	import flash.display.MovieClip;
 	import fl.containers.ScrollPane;
 
-
 	public class menuVoteScreen extends MovieClip {
 		// Contained movieclips
 		public var voteContent:MovieClip;
@@ -18,6 +17,9 @@
 		public function menuVoteScreen() {
 			// Put the source in place
 			scrollPane.source = voteContent;
+
+			var vote:voteText = addVoteChoice("asd", "aaa");
+			vote.flash(true);
 
 			for(var i=0; i<30; i++) {
 				addVoteChoice("asd", "aaa");
@@ -36,8 +38,8 @@
 			scrollPane.update();
 		}
 
-		public function addVoteChoice(name:String, text:String) {
-			var vote = new voteText();
+		public function addVoteChoice(name:String, text:String) : voteText {
+			var vote:voteText = new voteText();
 			voteContent.addChild(vote);
 			vote.x = xx;
 			vote.y = yy;
@@ -50,6 +52,8 @@
 
 			// Update the scrollpane
 			scrollPane.update();
+
+			return vote;
 		}
 	}
 
