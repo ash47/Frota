@@ -375,7 +375,8 @@ function FrotaGameMode:CreateTimer(name, args)
             endTime = Time you want this timer to end: Time() + 30 (for 30 seconds from now),
             callback = function(frota, args) to run when this timer expires,
             text = text to display to clients,
-            send = set this to true if you want clients to get this
+            send = set this to true if you want clients to get this,
+            persist = bool: Should we keep this timer even if the match ends?
         }
 
         If you want your timer to loop, simply return the time of the next callback inside of your callback, for example:
@@ -1144,12 +1145,6 @@ function FrotaGameMode:_RestartGame()
 end
 
 function FrotaGameMode:Think()
-    -- If the game's over, it's over.
-    --[[if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-        self._scriptBind:EndThink( "GameThink" )
-        return
-    end]]
-
     -- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
     local now = GameRules:GetGameTime()
     if self.t0 == nil then
@@ -1785,9 +1780,28 @@ function FrotaGameMode:LoadGamemode()
     end
 end
 
+function FrotaGameMode:RemoveTimers(killAll)
+    local timers = {}
+
+    -- If we shouldn't kill all timers
+    if not killAll then
+        -- Loop over all timers
+        for k,v in pairs(self.timers) do
+            -- Check if it is persistant
+            if v.persist then
+                -- Add it to our new timer list
+                timers[k] = v
+            end
+        end
+    end
+
+    -- Store the new batch of timers
+    self.timers = timers
+end
+
 function FrotaGameMode:CleanupEverything(leaveHeroes)
     -- Remove all timers
-    self.timers = {}
+    self:RemoveTimers()
 
     -- Remove all NPCs
     for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
