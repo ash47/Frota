@@ -4,12 +4,12 @@ local NUM_STARTING_CREEPS = 3   -- Number of creeps to spawn when the game start
 local CREEPS_PER_KILL = 2       -- Number of creeps to spawn each time a creep is killed
 
 -- This spawns a creep for the enemy team
-local function spawnCreepForTeam(team)
+local function spawnCreepForEnemyTeam(team)
     -- Check which team they were on
-    if team == DOTA_TEAM_BADGUYS then
+    if team == DOTA_TEAM_GOODGUYS then
         -- Spawn a creep for the bad guys
         CreateUnitByName('npc_dota_creep_badguys_melee',Vec3(math.random(-1665,-705),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_BADGUYS)
-    elseif team == DOTA_TEAM_GOODGUYS then
+    elseif team == DOTA_TEAM_BADGUYS then
         -- Spawn a creep for the good guys
         CreateUnitByName('npc_dota_creep_goodguys_melee', Vec3(math.random(575,1600),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
     end
@@ -79,8 +79,8 @@ RegisterGamemode('rvs', {
 
 		-- Spawn the starting creeps
 		for i=1,NUM_STARTING_CREEPS do
-            spawnCreepForTeam(DOTA_TEAM_GOODGUYS)
-            spawnCreepForTeam(DOTA_TEAM_BADGUYS)
+            spawnCreepForEnemyTeam(DOTA_TEAM_GOODGUYS)
+            spawnCreepForEnemyTeam(DOTA_TEAM_BADGUYS)
         end
 
 		-- Set the scores to 3 -- there are three creeps on each side
@@ -108,8 +108,8 @@ RegisterGamemode('rvs', {
 
                 -- Spawn the extra creeps
                 for i=1,CREEPS_PER_KILL do
-                    spawnCreepForTeam(team)
-                    spawnCreepForTeam(team)
+                    spawnCreepForEnemyTeam(team)
+                    spawnCreepForEnemyTeam(team)
                 end
 
                 -- Check which team they were on

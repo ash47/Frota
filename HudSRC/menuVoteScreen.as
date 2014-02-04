@@ -12,6 +12,8 @@
 		private static var maxWidth:Number = 753;
 		private var xx = 0;
 		private var yy = 0;
+		private var voteWidth = 250;
+		private var voteHeight = 62;
 
 		public function menuVoteScreen() {
 			// Put the source in place
@@ -40,10 +42,10 @@
 			vote.x = xx;
 			vote.y = yy;
 
-			xx += vote.width;
-			if(xx+vote.width > maxWidth) {
+			xx += voteWidth;
+			if(xx+voteWidth > maxWidth) {
 				xx = 0;
-				yy += vote.height;
+				yy += voteHeight;
 			}
 
 			// Update the scrollpane
