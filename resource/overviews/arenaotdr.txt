@@ -1,0 +1,13 @@
+arenaotdr // Change this key to your map's name
+{
+	material "overviews/arenaotdr" //path to the VTF and VMT above.  Note that the file extension is missing here
+ 
+    //Coordinates to the upper left corner of your map
+    pos_y 2560
+	pos_x -2560
+
+
+	scale 5.000 //Minimap scale.  Smaller the map, smaller the number. 
+	rotate 0 //Minimap rotation.  This should always be 0.  
+	zoom 1.0000 //Minimap zoom.  This should always be 1 unless your texture is larger than the playable bounds of your map.  
+}
