@@ -469,8 +469,10 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     })
 end
 
-function FrotaGameMode:SetActiveHero(hero)
-    self.vActiveHeroMap[hero:GetPlayerID()] = hero
+function FrotaGameMode:SetActiveHero(hero, playerID)
+    if hero then
+        self.vActiveHeroMap[playerID or hero:GetPlayerID()] = hero
+    end
 end
 
 function FrotaGameMode:GetActiveHero(playerID)
