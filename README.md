@@ -101,6 +101,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Listing 1 plugin:
   - [01] Dota 2 Fixups (1.9.2) by Nicholas Hastings
  - If you don't see these two, then you have installed either metamod, or d2fixups incorrectly
+ - If you see >> Unknown command "meta" << it means metamod is installed incorrectly, verify you added it to gameinfo.txt
 
 ###Is there a way I can spawn test heroes?###
  - Try the console command 'fake', it will fill the server with fake clients, and give each a hero, this command can only be run from the server console
