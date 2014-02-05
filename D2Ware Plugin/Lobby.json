@@ -1,0 +1,18 @@
+{
+	"mainFields": ["Map"],
+	"fields": {
+		"Map": {
+			"type": "select",
+			"options":	[
+				"Dota",
+				"Runehill",
+				"River Of Souls",
+				"Arena of the Dark Rift",
+				"Evergreen Crossing",
+				"Frostivus",
+				"Keeper of the Kotol",
+				"Labyrinth"
+			]
+		}
+	}
+}
