@@ -96,7 +96,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - srcds.exe -console -game dota +maxplayers 10 +hostport 27015 -condebug -dev +exec someconfig +map riverofsouls.bsp
   - **NOTE:** You need to create **server/dota/cfg/someconfig.cfg** and add the following to it to make it work:
    - dota_local_custom_enable 1;dota_local_custom_game Frota;dota_local_custom_map Frota;dota_force_gamemode 15;update_addon_paths
- - In my experience, if your steam.inf doesn't match up to [http://api.steampowered.com/IGCVersion_570/GetServerVersion/v1?format=xml] (THIS DOCUMENT) then the server may just exit
+ - In my experience, if your steam.inf doesn't match up to [THIS DOCUMENT] (http://api.steampowered.com/IGCVersion_570/GetServerVersion/v1?format=xml) then the server may just exit
  - Verify you have installed metamod and d2fixups correctly, you can do this by adding **+meta list** to your launch parameters, checking your dota/console.log, you should see these two lines:
   - Listing 1 plugin:
   - [01] Dota 2 Fixups (1.9.2) by Nicholas Hastings
