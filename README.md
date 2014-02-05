@@ -103,7 +103,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - If you don't see these two, then you have installed either metamod, or d2fixups incorrectly
 
 ###Is there a way I can spawn test heroes?###
- - Try the console command 'fake', it will fill the server with fake clients, and give each a hero (it requires sv_cheats 1)
+ - Try the console command 'fake', it will fill the server with fake clients, and give each a hero, this command can only be run from the server console
 
 ###Hooks & Mod Events###
  - There are many hooks and mod events to make making gamemodes easier.
