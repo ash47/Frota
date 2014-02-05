@@ -46,6 +46,11 @@ RegisterGamemode('rvs', {
         respawnDelay = 3
     },
 
+    -- List of maps this plugin wont work with
+    blackList = {
+        dota = true
+    },
+
 	voteOptions = {
         -- Score limit vote
         scoreLimit = {

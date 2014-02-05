@@ -36,6 +36,11 @@ RegisterGamemode('ctftheflag', {
         keeperofthekotol = true
     },
 
+    -- List of maps this plugin wont work with
+    blackList = {
+        dota = true
+    },
+
     onGameStart = function(frota)
         print('running onGameStart')
         local heroWithFlag = nil

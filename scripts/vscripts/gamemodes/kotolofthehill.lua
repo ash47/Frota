@@ -36,6 +36,11 @@ RegisterGamemode('kotolofthehill', {
         arenaotdr = true
     },
 
+    -- List of maps this plugin wont work with
+    blackList = {
+        dota = true
+    },
+
     onGameStart = function(frota)
         -- Set the score limit
         local options = frota:GetOptions()

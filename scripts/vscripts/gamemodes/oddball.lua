@@ -26,6 +26,11 @@ RegisterGamemode('oddball', {
         respawnDelay = 15
     },
 
+    -- List of maps this plugin wont work with
+    blackList = {
+        dota = true
+    },
+
     voteOptions = {
         -- Score limit vote
         scoreLimit = {

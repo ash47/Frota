@@ -40,8 +40,6 @@
         - "PlayerID"        	"short"
         - "ItemEntityIndex" 	"long"
         - "HeroEntityIndex" 	"long"
-     - dota_super_creep
-        - "teamnumber"      "short"
     - dota_glyph_used
         - "teamnumber"      "short"
     - dota_courier_respawned
@@ -234,6 +232,11 @@ RegisterGamemode('arena', {
         respawnDelay = 3
     },
 
+    -- List of maps this plugin wont work with
+    blackList = {
+        dota = true
+    },
+
     voteOptions = {
         -- Score limit vote
         scoreLimit = {
@@ -263,6 +266,40 @@ RegisterGamemode('arena', {
 
         -- Set the score limit
         frota:SetScoreLimit(options.scoreLimit)
+    end
+})
+
+-- "Classic" Dota
+RegisterGamemode('dota', {
+    -- Gamemode only has a gameplay component
+    sort = GAMEMODE_PLAY,
+
+    -- A list of options for fast gameplay stuff
+    options = {
+        -- Kills give team points
+        killsScore = true,
+
+        -- Enable scores
+        useScores = true
+    },
+
+    -- This is ONLY for the dota map
+    whiteList = {
+        dota = true
+    },
+
+    onGameStart = function(frota)
+        print('Loading Dota')
+
+        -- Apply Dota specific Options
+        GameRules:SetHeroRespawnEnabled(true)
+    end,
+
+    onGameEnd = function(frota)
+        print('dota is done!')
+
+        -- Reset to normal gamemode options
+        GameRules:SetHeroRespawnEnabled(false)
     end
 })
 
@@ -304,6 +341,11 @@ RegisterGamemode('pureskill', {
 RegisterGamemode('rikiwars', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_PICK,
+
+    -- List of maps this plugin wont work with
+    blackList = {
+        dota = true
+    },
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
@@ -373,6 +415,11 @@ RegisterGamemode('freeBlinkDagger', {
 RegisterGamemode('noBuying', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
+
+    -- List of maps this plugin wont work with
+    blackList = {
+        dota = true
+    },
 
     -- When players are given a new hero
     dota_item_purchased = function(frota, keys)

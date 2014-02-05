@@ -78,7 +78,6 @@ function FrotaGameMode:InitGameMode()
     self:ListenToEvent('dota_item_used')
     self:ListenToEvent('last_hit')
     self:ListenToEvent('dota_item_picked_up')
-    self:ListenToEvent('dota_super_creep')
     self:ListenToEvent('dota_glyph_used')
     self:ListenToEvent('dota_courier_respawned')
     self:ListenToEvent('dota_courier_lost')
@@ -693,6 +692,7 @@ function FrotaGameMode:LoadAbilityList()
     local abs = LoadKeyValues("scripts/kv/abilities.kv")
     self.heroListKV = LoadKeyValues("scripts/npc/npc_heroes.txt")
     self.customItemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
+    self.subAbilities = LoadKeyValues("scripts/kv/abilityDeps.kv")
 
     -- Build list of heroes
     self.heroList = {}
@@ -712,6 +712,7 @@ function FrotaGameMode:LoadAbilityList()
     -- Table containing every skill
     self.vAbList = {}
     self.vAbListSort = {}
+    self.vAbListLookup = {}
 
     -- Build skill list
     for k,v in pairs(abs) do
@@ -735,6 +736,9 @@ function FrotaGameMode:LoadAbilityList()
 
                 -- Store the sort reference
                 table.insert(self.vAbListSort[k], kk)
+
+                -- Store the reverse lookup
+                self.vAbListLookup[kk] = k
             end
         end
     end
@@ -799,11 +803,33 @@ function FrotaGameMode:ApplyBuild(hero, build)
     -- Remove all the skills from our hero
     self:RemoveAllSkills(hero)
 
+    -- Table to store all the extra skills we need to give
+    local extraSkills = {}
+
     -- Give all the abilities in this build
     for k,v in ipairs(build) do
+        -- Check if this skill has sub abilities
+        if self.subAbilities[v] then
+            -- Store that we need this skill
+            extraSkills[self.subAbilities[v]] = true
+        end
+
         -- Add to build
         hero:AddAbility(v)
         self.currentSkillList[hero][k] = v
+    end
+
+    -- Add missing abilities
+    local i = #build+1
+    for k,v in pairs(extraSkills) do
+        -- Add the ability
+        hero:AddAbility(k)
+
+        -- Store that we have it
+        self.currentSkillList[hero][i] = k
+
+        -- Move onto the next slot
+        i = i + 1
     end
 end
 
@@ -891,11 +917,51 @@ function FrotaGameMode:LoadBuildFromHero(hero)
 end
 
 function FrotaGameMode:SkillIntoSlot(hero, skillName, skillSlot, dontSlotIt)
-    -- Validate Data here (never trust client)
-
     -- Grab playerID
     local playerID = hero:GetPlayerID()
     if not self:IsValidPlayerID(playerID) then
+        return
+    end
+
+    -- Check for limits
+    local totalUlts = 0
+    local totalSkills = 0
+
+    -- Count all old skills
+    for k,v in pairs(self.selectedBuilds[playerID].skills) do
+        if k ~= skillSlot then
+            -- Grab the sort
+            local sort =  self.vAbListLookup[v]
+
+            -- Check it
+            if sort == 'Ults' then
+                -- It's an ult
+                totalUlts = totalUlts + 1
+            elseif sort == 'Abs' then
+                -- It's a normal skill
+                totalSkills = totalSkills + 1
+            end
+        end
+    end
+
+    -- Grab the sort
+    local sort =  self.vAbListLookup[skillName]
+
+    -- Check it
+    if sort == 'Ults' then
+        -- It's an ult
+        totalUlts = totalUlts + 1
+    elseif sort == 'Abs' then
+        -- It's a normal skill
+        totalSkills = totalSkills + 1
+    else
+        -- Unknown skill -- Ignore
+        return
+    end
+
+    -- If we've hit the ult limit
+    if totalUlts > 1 then
+        -- Don't slot this skill
         return
     end
 
@@ -1547,6 +1613,9 @@ function FrotaGameMode:VoteForGamemode()
             -- Grab the mode
             self.toLoadPickMode = GetGamemode(mode)
 
+            -- Tell everyone
+            Say(nil, COLOR_LGREEN..tostring(mode)..COLOR_NONE..' was loaded!', false)
+
             -- Check if it was a picking gamemode
             if self.toLoadPickMode.sort == GAMEMODE_PICK then
                 -- We need a gameplay gamemode now
@@ -1567,6 +1636,9 @@ function FrotaGameMode:VoteForGamemode()
                     onFinish = function(winners)
                         -- Grab the winning option, we need to remove the #afs_name_ from the start
                         local mode = string.sub(winners[math.random(1, #winners)], 11)
+
+                        -- Tell everyone
+                        Say(nil, COLOR_LGREEN..tostring(mode)..COLOR_NONE..' was loaded!', false)
 
                         -- Grab the mode
                         self.toLoadPlayMode = GetGamemode(mode)
@@ -1629,6 +1701,10 @@ function FrotaGameMode:VoteForAddons()
                 -- Check if a plugin was meant to be loaded
                 if v then
                     local mode = string.sub(k, 11)
+                    -- Tell everyone
+                    Say(nil, COLOR_LGREEN..tostring(mode)..COLOR_NONE..' was loaded!', false)
+
+                    -- Load it
                     table.insert(self.loadedAddons, GetGamemode(mode))
                 end
             end
@@ -1672,7 +1748,11 @@ function FrotaGameMode:VoteForOptions()
         onFinish = function(winners)
             local realWinners = {}
             for k, v in pairs(winners) do
-                realWinners[string.sub(k, 8)] = v
+                local txt = string.sub(k, 8)
+                realWinners[txt] = v
+
+                -- Tell everyone
+                Say(nil, COLOR_LGREEN..tostring(txt)..COLOR_NONE..' was set to '..COLOR_LGREEN..tostring(v), false)
             end
 
             -- Store the options
@@ -1799,12 +1879,27 @@ function FrotaGameMode:RemoveTimers(killAll)
     self.timers = timers
 end
 
+function FrotaGameMode:RespawnBuildings()
+    for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
+        -- Validate entity
+        if IsValidEntity(v) then
+            if v.IsTower then
+                if v:IsAlive() then
+                    v:Heal(v:GetMaxHealth(), v)
+                else
+                    v:RespawnUnit()
+                end
+            end
+        end
+    end
+end
+
 function FrotaGameMode:CleanupEverything(leaveHeroes)
     -- Remove all timers
     self:RemoveTimers()
 
-    -- Remove all NPCs
-    for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
+    -- Cleanup Heroes
+    for k,v in pairs(Entities:FindAllByClassname('npc_dota_hero_*')) do
         -- Validate entity
         if IsValidEntity(v) then
             -- Check if it's a h ero
@@ -1819,11 +1914,26 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
                     -- Nope, remove it
                     v:Remove()
                 end
-            else
-                v:Remove()
             end
         end
     end
+
+    -- Cleanup Units
+    for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
+        -- Validate entity
+        if IsValidEntity(v) then
+            if v.IsHero and not(v:IsHero() or v:IsTower()) then
+                local name = v:GetClassname():lower()
+                if not (name:find('tower') or name:find('rax') or name:find('filler') or name:find('fort') or name:find('announcer') or name:find('buildings') or name:find('creep_lane') or name:find('roshan')) then
+                    print(name)
+                    v:Remove()
+                end
+            end
+        end
+    end
+
+    -- Fully heal / respawn buildings
+    self:RespawnBuildings()
 
     -- Clean up everything on the ground;
     while GameRules:NumDroppedItems() > 0 do
