@@ -90,42 +90,57 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - Your addons folder should look like this (note: No DLL files are pictured) http://i.imgur.com/sUtBFki.jpg
  - Google how to port forward, it is different for every router!
 
+###More SRCDS Setup Help###
+ - To debug, try adding **-condebug** to the SRCDS launch parameters, this will log all the server output to server/dota/console.log, you can check for errors in there
+ - Here's a set of working launch parameters
+  - srcds.exe -console -game dota +maxplayers 10 +hostport 27015 -condebug -dev +exec someconfig +map riverofsouls.bsp
+  - **NOTE:** You need to create **server/dota/cfg/someconfig.cfg** and add the following to it to make it work:
+   - dota_local_custom_enable 1;dota_local_custom_game Frota;dota_local_custom_map Frota;dota_force_gamemode 15;update_addon_paths
+ - If your steam.inf doesn't match up to the <active_version> of [THIS DOCUMENT] (http://api.steampowered.com/IGCVersion_570/GetServerVersion/v1?format=xml) then the server may just exit
+ - Verify you have installed metamod and d2fixups correctly, you can do this by adding **+meta list** to your launch parameters, starting the server, then checking your dota/console.log. You should see these two lines:
+  - Listing 1 plugin:
+  - [01] Dota 2 Fixups (1.9.2) by Nicholas Hastings
+ - If you don't see these two, then you have installed either metamod, or d2fixups incorrectly
+ - If you see >> Unknown command "meta" << it means metamod is installed incorrectly, verify you added it to [gameinfo.txt](http://wiki.alliedmods.net/Installing_Metamod:Source#GameInfo)
+
 ###Is there a way I can spawn test heroes?###
- - Try the console command 'fake', it will fill the server with fake clients, and give each a hero (it requires sv_cheats 1)
+ - Try the console command 'fake', it will fill the server with fake clients, and give each a hero, this command can only be run from the server console
 
 ###Hooks & Mod Events###
  - There are many hooks and mod events to make making gamemodes easier.
  - See the top of gamemodes.lua for the latest list of hooks and mod events.
 
+###Maps###
+ - arenaotdr by [DarkMio][12]
+ - deadlock by [Z-Machine][11]
+ - evergreen_crossing by [hanni7345][13]
+ - keeperofthekotol by [Kobb][8]
+ - labyrinth0 by [superfreexa][14]
+ - riverofsouls by [Z-Machine][11]
+ - runehill by [Azarak][15]
+
 ###Translations###
  - Please make a pull request if you want to update translations
  - English by [Ash47][1]
- - Russian by [lokkdokk][2], [Shuker][3]
- - French by Canardlaquay
- - Hungarian by [Easimer][4]
- - German by [DarkMio_mainframe][5]
- - Turkish by ozen
- - Spanish by JosDW
- - Portuguese by [Kobb][8]
+ - Brazilian by [otaviomad][16], [away000][17]
  - Finnish by [SQL][9]
+ - French by Canardlaquay
+ - German by [DarkMio_mainframe][5]
+ - Greek by [SeCTeen][18]
+ - Hungarian by [Easimer][4]
+ - Nyx by penguinwizzard
+ - Polish by [Kobb][8]
+ - Russian by [lokkdokk][2], [Shuker][3]
  - Chinese by [cs-italy][10]
-
-###Maps###
- - riverofsouls by [Z-Machine][11]
- - deadlock by [Z-Machine][11]
- - runehill by Azarak908
+ - Spanish by JosDW
+ - Turkish by ozen
 
 ###Issues that need help###
  - When a player leaves the game, their slot isn't removed, and hence, someone else can't connect and take their place, this is caused by the limit of 5 players per team, someone solve this :P
 
 ###Up next###
- - More work on the game mode system
-  - Which team actually won needs to be added (you can see via the scores, but an announcment would be nice)
- - Improved picking
-  - Filters
-  - Build picking / generation
- - Adding more addons + gamemodes
- - The hud needs to be rewritten, once we know how to stop the hud from freezing (causes it to miss events), this rewrite will happen.
+ - The hud is still being rewritten, it is slowly progressing
+ - Hoping to write a Tower Defence Framework
 
 [1]: https://github.com/ash47
 [2]: https://github.com/lokkdokk
@@ -136,3 +151,10 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 [9]: https://github.com/justSQL
 [10]: https://github.com/cs-italy
 [11]: https://github.com/Z-Machine
+[12]: https://github.com/DarkMio
+[13]: https://github.com/hanni7345
+[14]: https://github.com/superfreexa
+[15]: https://github.com/Azarak
+[16]: https://github.com/otaviomad
+[17]: https://github.com/away000
+[18]: https://github.com/SeCTeen
