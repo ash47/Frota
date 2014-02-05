@@ -1926,7 +1926,7 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
         if IsValidEntity(v) then
             if v.IsHero and not(v:IsHero() or v:IsTower()) then
                 local name = v:GetClassname():lower()
-                if not (name:find('tower') or name:find('rax') or name:find('filler') or name:find('fort') or name:find('announcer') or name:find('buildings') or name:find('creep_lane') or name:find('roshan')) then
+                if not (name:find('tower') or name:find('rax') or name:find('barracks') or name:find('filler') or name:find('fort') or name:find('announcer') or name:find('building') or name:find('roshan')) then
                     print(name)
                     v:Remove()
                 end
