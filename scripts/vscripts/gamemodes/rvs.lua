@@ -58,19 +58,19 @@ RegisterGamemode('rvs', {
             s = VOTE_SORT_RANGE,
 
             -- Minimal possible value
-            min = 1,
+            min = 50,
 
             -- Maximal possible value
-            max = 100,
+            max = 500,
 
             -- Default vaule (if no one votes)
-            def = 10,
+            def = 200,
 
             -- Slider tick interval
-            tick = 10,
+            tick = 50,
 
             -- Slider step interval
-            step = 1
+            step = 50
         }
     },
 
