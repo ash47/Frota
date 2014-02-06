@@ -141,6 +141,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 ###Up next###
  - The hud is still being rewritten, it is slowly progressing
  - Hoping to write a Tower Defence Framework
+ - Better D2Ware support
 
 [1]: https://github.com/ash47
 [2]: https://github.com/lokkdokk
