@@ -240,7 +240,7 @@ RegisterGamemode('dorh', {
 				lastUnitSpawnedTime = now
 				currentRound = currentRound + 1
 				unittoSpawnThisRound = unitCountRound[currentRound]
-				Say(nil,'Round '..COLOR_RED..tostring(currentRound)..' Started', false)
+				Say(nil,COLOR_LGREEN..'Round '..COLOR_RED..tostring(currentRound)..COLOR_LGREEN..' Started', false)
 			end
 		end
 		
@@ -248,7 +248,7 @@ RegisterGamemode('dorh', {
 		if nEnemyAlive == 0  and round_have_started and unittoSpawnThisRound <= 0 then
 			timeRoundEnd = GameRules:GetGameTime()
 			round_have_started = false
-			Say(nil,'Round '..COLOR_RED..tostring(currentRound)..' Finished', false)
+			Say(nil,COLOR_LGREEN..'Round '..COLOR_RED..tostring(currentRound)..COLOR_LGREEN..' Finished', false)
 		end
 		
 		--spawn wave units
