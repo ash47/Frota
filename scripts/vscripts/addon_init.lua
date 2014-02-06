@@ -18,6 +18,7 @@ require('frota')        -- Main frota framework
 require('gamemodes')    -- Gamemode framework and small gamemodes/addons
 
 -- Include gamemodes
+require('gamemodes/dorh')
 require('gamemodes/ctftheflag')
 require('gamemodes/invokerwars')
 require('gamemodes/kaolinwars')
