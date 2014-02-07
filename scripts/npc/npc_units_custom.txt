@@ -231,7 +231,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -339,9 +339,9 @@
 		"ModelScale"				"0.5"
 		"IsAncient"					"0"
 		"IsNeutralUnitType"			"0"
-		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
-		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"SelectionGroup"			"minions"					// Units with the same selection group will cycle together when tabbing through owned units
+		"SelectOnSpawn"				"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -447,6 +447,7 @@
 		"Model"						"models/heroes/keeper_of_the_light/keeper_of_the_light.mdl"	// Model.
 		"Level"						"1"
 		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
 		"AutoAttacksByDefault"		"1"
 		
 		// Abilities
@@ -532,27 +533,29 @@
 		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
 		"Model"						"models/heroes/witchdoctor/witchdoctor.mdl"	// Model.
 		"Level"						"1"
+		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
 		"AutoAttacksByDefault"		"1"
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"dorh_upgrade_tower_base_lvl2"			// Ability 1.
+		"Ability1"					"dorh_upgrade_tower_base_lvl3"			// Ability 1.
 		"Ability2"					""			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					""			// Ability 4.
 
 		// Attack
-		//-------------------------------------------------------------------------------------------------------------
+		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"27"									// Damage range min.
 		"AttackDamageMax"			"37"									// Damage range max.
-		"AttackRate"				"1.0"									// Speed of attack.
-		"AttackAnimationPoint"		"0.4"									// Normalized time in animation cycle to attack.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
 		"AttackRange"				"600"									// Range within a target can be attacked.
-		"ProjectileModel"			"witchdoctor_base_attack"				// Particle system model for projectile.
-		"ProjectileSpeed"			"1200"									// Speed of projectile.
+		"ProjectileModel"			"witchdoctor_base_attack"		// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -616,7 +619,9 @@
 		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
 		"Model"						"models/heroes/necrolyte/necrolyte.mdl"	// Model.
 		"Level"						"1"
+		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
 		"AutoAttacksByDefault"		"1"
 		
 		// Abilities
@@ -681,7 +686,7 @@
 		//Inventory
 		"HasInventory"				"1"
 		
-		"ParticleFile"				"particles/units/heroes/hero_obsidian_destroyer.pcf"
+		"ParticleFile"				"particles/units/heroes/hero_necrolyte.pcf"
 		
 		"Creature"
 		{
@@ -700,7 +705,9 @@
 		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
 		"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.mdl"	// Model.
 		"Level"						"1"
+		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
 		"AutoAttacksByDefault"		"1"
 		
 		// Abilities
@@ -765,17 +772,1060 @@
 		//Inventory
 		"HasInventory"				"1"
 		
+		"ParticleFile"				"particles/units/heroes/hero_obsidian_destroyer.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "187" }
+				"Wearable2"	{ "ItemDef"	"188" }
+				"Wearable3"	{ "ItemDef"	"189" }
+				"Wearable4"	{ "ItemDef"	"190" }
+			}
+		}
+	}
+	
+	
+	
+	"npc_dorh_tower_slow_lvl1"	//VENO
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/keeper_of_the_light/keeper_of_the_light.mdl"	// Model.
+		"Level"						"1"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dorh_upgrade_tower_base_lvl2"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"27"									// Damage range min.
+		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"600"									// Range within a target can be attacked.
+		"ProjectileModel"			"keeper_of_the_light_base_attack"		// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
 		"ParticleFile"				"particles/units/heroes/hero_keeper_of_the_light.pcf"
 		
 		"Creature"
 		{
 			"AttachWearables"
 			{
-				"Wearable1"	{ "ItemDef" "226" }
-				"Wearable2"	{ "ItemDef"	"4346" }
+				"Wearable1"	{ "ItemDef" "252" }
+				"Wearable2"	{ "ItemDef"	"253" }
+				"Wearable3" { "ItemDef"	"254" }
+				"Wearable4" { "ItemDef"	"255" }
+				"Wearable5" { "ItemDef"	"256" }
+				"Wearable6" { "ItemDef"	"257" }
 			}
 		}
 	}
+	
+	"npc_dorh_tower_slow_lvl2"	//DR
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/witchdoctor/witchdoctor.mdl"	// Model.
+		"Level"						"1"
+		"MinimapIconSize"			"300"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dorh_upgrade_tower_base_lvl3"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"27"									// Damage range min.
+		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"600"									// Range within a target can be attacked.
+		"ProjectileModel"			"witchdoctor_base_attack"		// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_witchdoctor.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "94" }
+				"Wearable2"	{ "ItemDef"	"95" }
+				"Wearable3" { "ItemDef"	"96" }
+				"Wearable4" { "ItemDef"	"97" }
+			}
+		}
+	}
+	
+	"npc_dorh_tower_slow_lvl3"	//QOP
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/necrolyte/necrolyte.mdl"	// Model.
+		"Level"						"1"
+		"MinimapIconSize"			"300"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dorh_upgrade_tower_base_lvl4"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"22"									// Damage range min.
+		"AttackDamageMax"			"26"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"			"0.53"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"		"800"									// Range within a target can be acquired.
+		"AttackRange"				"550"									// Range within a target can be attacked.
+		"ProjectileModel"			"necrolyte_base_attack"							// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_necrolyte.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "211" }
+				"Wearable2"	{ "ItemDef"	"212" }
+				"Wearable3" { "ItemDef"	"213" }
+				"Wearable4" { "ItemDef"	"214" }
+			}
+		}
+	}
+	
+	"npc_dorh_tower_slow_lvl4"	//AA
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.mdl"	// Model.
+		"Level"						"1"
+		"MinimapIconSize"			"300"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"20"									// Damage range min.
+		"AttackDamageMax"			"35"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.46"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"450"									// Range within a target can be attacked.
+		"ProjectileModel"			"obsidian_destroyer_base_attack"						// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_obsidian_destroyer.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "187" }
+				"Wearable2"	{ "ItemDef"	"188" }
+				"Wearable3"	{ "ItemDef"	"189" }
+				"Wearable4"	{ "ItemDef"	"190" }
+			}
+		}
+	}
+	
+	
+	
+	"npc_dorh_tower_aoe_lvl1"	//TA
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/keeper_of_the_light/keeper_of_the_light.mdl"	// Model.
+		"Level"						"1"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dorh_upgrade_tower_base_lvl2"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"27"									// Damage range min.
+		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"600"									// Range within a target can be attacked.
+		"ProjectileModel"			"keeper_of_the_light_base_attack"		// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_keeper_of_the_light.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "252" }
+				"Wearable2"	{ "ItemDef"	"253" }
+				"Wearable3" { "ItemDef"	"254" }
+				"Wearable4" { "ItemDef"	"255" }
+				"Wearable5" { "ItemDef"	"256" }
+				"Wearable6" { "ItemDef"	"257" }
+			}
+		}
+	}
+	
+	"npc_dorh_tower_aoe_lvl2"	//SVEN
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/witchdoctor/witchdoctor.mdl"	// Model.
+		"Level"						"1"
+		"MinimapIconSize"			"300"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dorh_upgrade_tower_base_lvl3"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"27"									// Damage range min.
+		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"600"									// Range within a target can be attacked.
+		"ProjectileModel"			"witchdoctor_base_attack"		// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_witchdoctor.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "94" }
+				"Wearable2"	{ "ItemDef"	"95" }
+				"Wearable3" { "ItemDef"	"96" }
+				"Wearable4" { "ItemDef"	"97" }
+			}
+		}
+	}
+	
+	"npc_dorh_tower_aoe_lvl3"	//LUNA
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/necrolyte/necrolyte.mdl"	// Model.
+		"Level"						"1"
+		"MinimapIconSize"			"300"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dorh_upgrade_tower_base_lvl4"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"22"									// Damage range min.
+		"AttackDamageMax"			"26"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"			"0.53"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"		"800"									// Range within a target can be acquired.
+		"AttackRange"				"550"									// Range within a target can be attacked.
+		"ProjectileModel"			"necrolyte_base_attack"							// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_necrolyte.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "211" }
+				"Wearable2"	{ "ItemDef"	"212" }
+				"Wearable3" { "ItemDef"	"213" }
+				"Wearable4" { "ItemDef"	"214" }
+			}
+		}
+	}
+	
+	"npc_dorh_tower_aoe_lvl4"	//MED
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.mdl"	// Model.
+		"Level"						"1"
+		"MinimapIconSize"			"300"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"20"									// Damage range min.
+		"AttackDamageMax"			"35"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.46"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"450"									// Range within a target can be attacked.
+		"ProjectileModel"			"obsidian_destroyer_base_attack"						// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_obsidian_destroyer.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "187" }
+				"Wearable2"	{ "ItemDef"	"188" }
+				"Wearable3"	{ "ItemDef"	"189" }
+				"Wearable4"	{ "ItemDef"	"190" }
+			}
+		}
+	}
+	
+	
+	"npc_dorh_tower_dps_lvl1"	//HUS
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/keeper_of_the_light/keeper_of_the_light.mdl"	// Model.
+		"Level"						"1"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dorh_upgrade_tower_base_lvl2"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"27"									// Damage range min.
+		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"600"									// Range within a target can be attacked.
+		"ProjectileModel"			"keeper_of_the_light_base_attack"		// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_keeper_of_the_light.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "252" }
+				"Wearable2"	{ "ItemDef"	"253" }
+				"Wearable3" { "ItemDef"	"254" }
+				"Wearable4" { "ItemDef"	"255" }
+				"Wearable5" { "ItemDef"	"256" }
+				"Wearable6" { "ItemDef"	"257" }
+			}
+		}
+	}
+	
+	"npc_dorh_tower_dps_lvl2"	//WEAVER
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/witchdoctor/witchdoctor.mdl"	// Model.
+		"Level"						"1"
+		"MinimapIconSize"			"300"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dorh_upgrade_tower_base_lvl3"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"27"									// Damage range min.
+		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"600"									// Range within a target can be attacked.
+		"ProjectileModel"			"witchdoctor_base_attack"		// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_witchdoctor.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "94" }
+				"Wearable2"	{ "ItemDef"	"95" }
+				"Wearable3" { "ItemDef"	"96" }
+				"Wearable4" { "ItemDef"	"97" }
+			}
+		}
+	}
+	
+	"npc_dorh_tower_dps_lvl3"	//SF
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/necrolyte/necrolyte.mdl"	// Model.
+		"Level"						"1"
+		"MinimapIconSize"			"300"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dorh_upgrade_tower_base_lvl4"			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"22"									// Damage range min.
+		"AttackDamageMax"			"26"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"			"0.53"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"		"800"									// Range within a target can be acquired.
+		"AttackRange"				"550"									// Range within a target can be attacked.
+		"ProjectileModel"			"necrolyte_base_attack"							// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_necrolyte.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "211" }
+				"Wearable2"	{ "ItemDef"	"212" }
+				"Wearable3" { "ItemDef"	"213" }
+				"Wearable4" { "ItemDef"	"214" }
+			}
+		}
+	}
+	
+	"npc_dorh_tower_dps_lvl4"	//SNIP
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/obsidian_destroyer/obsidian_destroyer.mdl"	// Model.
+		"Level"						"1"
+		"MinimapIconSize"			"300"
+		"ModelScale"				"0.8"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"20"									// Damage range min.
+		"AttackDamageMax"			"35"									// Damage range max.
+		"AttackRate"				"1.7"									// Speed of attack.
+		"AttackAnimationPoint"		"0.46"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"450"									// Range within a target can be attacked.
+		"ProjectileModel"			"obsidian_destroyer_base_attack"						// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"100"		// Range of vision during day light.
+		"VisionNighttimeRange"		"100"		// Range of vision at night time.
+		
+		//Inventory
+		"HasInventory"				"1"
+		
+		"ParticleFile"				"particles/units/heroes/hero_obsidian_destroyer.pcf"
+		
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"	{ "ItemDef" "187" }
+				"Wearable2"	{ "ItemDef"	"188" }
+				"Wearable3"	{ "ItemDef"	"189" }
+				"Wearable4"	{ "ItemDef"	"190" }
+			}
+		}
+	}
+	
 	
 	
 	//=================================================================================
@@ -792,7 +1842,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -822,8 +1872,8 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"0"			// Experience earn.
-		"BountyGoldMin"				"8"			// Gold earned min.
-		"BountyGoldMax"				"14"			// Gold earned max.
+		"BountyGoldMin"				"10"			// Gold earned min.
+		"BountyGoldMax"				"12"			// Gold earned max.
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -876,7 +1926,7 @@
 	"npc_dorh_enemy_legion"			//round 2
 	{
 		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
-		"Model"						"models\heroes\legion_commande\legion_commander.mdl"	// Model.
+		"Model"						"models\heroes\legion_commander\legion_commander.mdl"	// Model.
 		"SoundSet"					"0"					// Name of sound set.
 		"Level"						"1"
 		"ModelScale"				"0.5"
@@ -884,7 +1934,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -914,8 +1964,8 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"0"			// Experience earn.
-		"BountyGoldMin"				"8"			// Gold earned min.
-		"BountyGoldMax"				"14"			// Gold earned max.
+		"BountyGoldMin"				"20"			// Gold earned min.
+		"BountyGoldMax"				"22"			// Gold earned max.
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -975,7 +2025,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1005,8 +2055,8 @@
 		// Bounty
 		//----------------------------------------------------------------
 		"BountyXP"					"0"			// Experience earn.
-		"BountyGoldMin"				"8"			// Gold earned min.
-		"BountyGoldMax"				"14"			// Gold earned max.
+		"BountyGoldMin"				"30"			// Gold earned min.
+		"BountyGoldMax"				"32"			// Gold earned max.
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -1066,7 +2116,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1158,7 +2208,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1253,7 +2303,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1344,7 +2394,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1435,7 +2485,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1526,7 +2576,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1615,7 +2665,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1705,7 +2755,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1795,7 +2845,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1885,7 +2935,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -1976,7 +3026,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -2043,7 +3093,7 @@
 		"VisionDaytimeRange"		"2000"		// Range of vision during day light.
 		"VisionNighttimeRange"		"2000"		// Range of vision at night time.
 		
-		"ParticleFile"				"particles/units/heroes/ember_spirit.pcf"
+		"ParticleFile"				"particles/units/heroes/hero_ember_spirit.pcf"
 		
 		"Creature"
 		{
@@ -2070,7 +3120,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -2160,7 +3210,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -2250,7 +3300,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -2343,7 +3393,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -2423,7 +3473,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -2515,7 +3565,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -2606,7 +3656,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
@@ -2700,7 +3750,7 @@
 		"IsNeutralUnitType"			"0"
 		"SelectionGroup"			""					// Units with the same selection group will cycle together when tabbing through owned units
 		"SelectOnSpawn"				"0"
-		"CanBeDominated"			"1"
+		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
 		"AutoAttacksByDefault"		"1"
 		
