@@ -312,12 +312,14 @@ RegisterGamemode('dorh', {
 		if now - preGameStartTime >= prePrepareTime and prepareEnded == false then
 			prepareEnded = true 
 			round_have_started = true
+			lastUnitSpawnedTime = now
 		end
 		
 		--end rest between round
 		if timeRoundEnd ~= nil and not has_failed then
 			if now - timeRoundEnd >= timeBetweenRound and round_have_started == false and prepareEnded == true then
 				round_have_started = true
+				lastUnitSpawnedTime = now
 				currentRound = currentRound + 1
 				-- in case of bugs
 				if unitCountRound[currentRound] then
