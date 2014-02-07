@@ -40,9 +40,14 @@ if FrotaGameMode == nil then
     FrotaGameMode.__index = FrotaGameMode
 end
 
+function GetFrota()
+    return FROTA_REFERENCE
+end
+
 function FrotaGameMode:new (o)
     o = o or {}
     setmetatable(o, self)
+    FROTA_REFERENCE = o
     return o
 end
 

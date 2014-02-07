@@ -31,6 +31,7 @@ require('gamemodes/rvs')
 --require('gamemodes/survival')
 require('gamemodes/tinywars')
 --require('gamemodes/warlocks')
+require('gamemodes/towerdefence')
 
 -- Include addons
 require('addons/fatometer')
