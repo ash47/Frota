@@ -242,9 +242,9 @@ RegisterGamemode('dorh', {
 		nEnemyAlive = 0
 		has_failed = false
 		--for test below	--change current round here to start from this round
-		currentRound = 1
-		prePrepareTime = 10
-		timeBetweenRound = 10
+		--currentRound = 1
+		--prePrepareTime = 10
+		--timeBetweenRound = 10
 		--for test above
 		
 		unittoSpawnThisRound = unitCountRound[currentRound]
