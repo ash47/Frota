@@ -80,7 +80,7 @@ local waveHint = {
 					"",	--19
 					"",	--20
 					"",	--21
-					"Final Boss, THE ROSHAN is comming! You have 60 seconds to get well prepared!"	--22
+					"Final Boss, THE ROSHAN is comming! You have a bonus of 60 seconds to get well prepared!"	--22
 }
 	
 local function spawnWaypointMarkers(frota)
@@ -337,7 +337,7 @@ RegisterGamemode('dorh', {
 			if currentRound <= 21 then
 				timeBetweenRound = timeBetweenRound + (currentRound*2)
 				if currentRound == 21 then
-					timeBetweenRound = 60
+					timeBetweenRound = timeBetweenRound + 60
 				end
 				Say(nil,COLOR_LGREEN..'Round '..COLOR_RED..tostring(currentRound)..COLOR_LGREEN..' Complete', false)
 				Say(nil,COLOR_LGREEN..'Next round,'..COLOR_RED..' ROUND '..tostring(currentRound+1)..' Comes in '..tostring(timeBetweenRound)..' seconds.', false)
