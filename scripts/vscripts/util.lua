@@ -16,7 +16,7 @@ function PrintTable(t, indent, done)
 
         if type(value) == "table" and not done[value] then
             done [value] = true
-            print(string.rep ("\t", indent)..v..":")
+            print(string.rep ("\t", indent)..tostring(v)..":")
             PrintTable (value, indent + 2, done)
         elseif type(value) == "userdata" and not done[value] then
             done [value] = true

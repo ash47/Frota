@@ -329,6 +329,88 @@
 	//=================================================================================
 	//DoRH Minion
 	//=================================================================================
+	"npc_dorh_tower_general"
+	{
+		"BaseClass"					"npc_dota_creep_neutral"	// Class of entity of link to.
+		"Model"						"models/heroes/zuus/zuus.mdl"	// Model.
+		"SoundSet"					"0"					// Name of sound set.
+		"Level"						"1"
+		"ModelScale"				"0.5"
+		"IsAncient"					"0"
+		"IsNeutralUnitType"			"0"
+		"SelectionGroup"			"minions"					// Units with the same selection group will cycle together when tabbing through owned units
+		"SelectOnSpawn"				"0"
+		"CanBeDominated"			"0"
+
+		// Abilities
+		//----------------------------------------------------------------
+
+		"Ability1"					"dorh_upgrade_tower_base"			// Ability 1.
+		"Ability2"					"dorh_upgrade_tower_aoe"			// Ability 2.
+		"Ability3"					"dorh_upgrade_tower_slow"			// Ability 3.
+		"Ability4"					"dorh_upgrade_tower_dps"			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.
+		"MagicalResistance"				"0"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"10"									// Damage range min.
+		"AttackDamageMax"			"20"									// Damage range max.
+		"AttackRate"				"1.2"									// Speed of attack.
+		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
+		"AttackRange"				"600"									// Range within a target can be attacked.
+		"ProjectileModel"			"keeper_of_the_light_base_attack"		// Particle system model for projectile.
+		"ProjectileSpeed"			"900"									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"2000"		// Range of vision during day light.
+		"VisionNighttimeRange"		"2000"		// Range of vision at night time.
+
+		//Inventory
+		"HasInventory"				"0"
+	}
+
 	"npc_dorh_minion_zuus"
 	{
 		"BaseClass"					"npc_dota_creep_neutral"	// Class of entity of link to.
@@ -452,7 +534,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"dorh_upgrade_tower_base_lvl2"			// Ability 1.
+		"Ability1"					"dorh_upgrade_tower_base"			// Ability 1.
 		"Ability2"					"beastmaster_inner_beast"			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					""			// Ability 4.
@@ -1838,7 +1920,7 @@
 		"SelectOnSpawn"				"0"
 		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
-		"AutoAttacksByDefault"		"1"
+		"AutoAttacksByDefault"		"0"
 
 		// Abilities
 		//----------------------------------------------------------------
@@ -1859,9 +1941,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"10"									// Damage range min.
+		"AttackDamageMax"			"20"									// Damage range max.
+		"AttackAcquisitionRange"	"10"			// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -1881,7 +1965,7 @@
 		"MovementSpeed"				"250"		// Speed
 		"MovementTurnRate"			"0.5"		// Turning rate.
 		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
-		"FollowRange"				"100"		// Distance to keep when following
+		"FollowRange"				"0"		// Distance to keep when following
 
 		// Status
 		//----------------------------------------------------------------
@@ -1930,7 +2014,7 @@
 		"SelectOnSpawn"				"0"
 		"CanBeDominated"			"0"
 		"IgnoreAddSummonedToSelection" "0"
-		"AutoAttacksByDefault"		"1"
+		"AutoAttacksByDefault"		"0"
 
 		// Abilities
 		//----------------------------------------------------------------
@@ -1951,9 +2035,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"10"									// Damage range min.
+		"AttackDamageMax"			"20"									// Damage range max.
+		"AttackAcquisitionRange"	"10"			// Range within a target can be acquired.
+		"AttackRange"				"40"		// Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2042,9 +2128,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"10"									// Damage range min.
+		"AttackDamageMax"			"20"									// Damage range max.
+		"AttackAcquisitionRange"	"10"			// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2133,9 +2221,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2225,9 +2315,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2320,9 +2412,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "100"       // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2411,9 +2505,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "100"       // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2502,9 +2598,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "100"       // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2593,9 +2691,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2682,9 +2782,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2772,9 +2874,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2862,9 +2966,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -2952,9 +3058,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -3043,9 +3151,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -3137,9 +3247,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "100"       // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -3227,9 +3339,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "100"       // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -3317,9 +3431,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -3410,9 +3526,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -3490,9 +3608,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -3582,9 +3702,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -3673,9 +3795,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "10"                                    // Damage range min.
+        "AttackDamageMax"           "20"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------
@@ -3767,9 +3891,11 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"									// Damage range min.
-		"AttackDamageMax"			"0"									// Damage range max.
+		"AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+        "AttackDamageMin"           "1000"                                    // Damage range min.
+        "AttackDamageMax"           "2000"                                    // Damage range max.
+        "AttackAcquisitionRange"    "10"            // Range within a target can be acquired.
+        "AttackRange"               "20"        // Range within a target can be attacked.
 
 		// Bounty
 		//----------------------------------------------------------------

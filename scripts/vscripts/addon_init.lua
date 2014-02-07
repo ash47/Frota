@@ -40,3 +40,7 @@ require('addons/goldpersecond')
 require('addons/spawnprotection')
 
 print("\n\nDone Loading!\n\n")
+
+--[[local file = io.open ('dota/addons/Frota/maps/'..GetMapName()..'.gnv', 'r')
+local a = file:read('*all')
+io.close (file)]]

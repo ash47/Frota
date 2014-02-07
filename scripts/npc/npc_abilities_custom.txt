@@ -2649,6 +2649,96 @@
 		}
 	}
 
+	"dorh_build_general"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName" 			"undying_soul_rip"
+		"Maxlevel"						"1"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.0"
+		"AbilityChannelTime"			"1.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelSucceeded"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"10"
+			}
+		}
+	}
+
+	"dorh_upgrade_tower_base"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"undying_soul_rip"
+		"MaxLevel"						"1"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelSucceeded"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"100 200 300 400"
+			}
+		}
+	}
+
 	"dorh_summon_minion_zuus"
 	{
 		// General

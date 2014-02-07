@@ -27,13 +27,13 @@ local wayPointPositions = {
     [9] = Vec3(2190,2030,0)
 }
 
--- This will store a reference to each waypoint
-local wavePoints = {}
+-- The actual way points
+local wayPoints = {}
 
 -- These are the skills everyone in dorh will get
 local dorhSkills = {
     [1] = 'dorh_wisp_blink',
-    [2] = 'dorh_summon_minion_zuus',
+    [2] = 'dorh_build_general',
     [3] = 'dorh_wisp_slow',
     [4] = 'dorh_wisp_passive',
     [5] = 'dorh_wisp_destroy',
@@ -61,22 +61,36 @@ local function spawnWaypointMarkers()
 
         -- Make invulnerable
         unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
+
+        -- Spawn a waypoint
+        local wayPoint = Entities:CreateByClassname('path_corner')
+        wayPoint:SetOrigin(v)
+        wayPoint:__KeyValueFromString('targetname', 'dorh_target_'..k)
+        wayPoints[k] = wayPoint
+    end
+
+    for i=1, #wayPoints-1 do
+        local wayPoint = wayPoints[i]
+        wayPoint:__KeyValueFromString('target', 'dorh_target_'..i+1)
     end
 end
 
 -- Spawns a unit, and makes it march towards the end
 local function spawnUnit(unitName, points)
     -- Spawn the unit at the first waypoint
-    local unit = CreateUnitByName(unitName, wayPointPositions[1]+RandomVector(150), false, nil, nil, DOTA_TEAM_NOTEAM)
+    local unit = CreateUnitByName(unitName, wayPointPositions[1]+RandomVector(150), true, nil, nil, 1)
 
     -- Store how many points this unit is worth
     unit.points = points
 
     -- Phase the unit -- it shouldn't collide with anything
-    unit:AddNewModifier(unit, nil, "modifier_phased", {})
+    --unit:AddNewModifier(unit, nil, "modifier_phased", {})
+
+    unit:SetMustReachEachGoalEntity(true)
+    unit:SetInitialGoalEntity(wayPoints[2])
 
     -- Make it march towards the checkpoints
-    for i = 2, #wayPointPositions do
+    --[[for i = 2, #wayPointPositions do
         -- Grab this waypoint
         local pos = wayPointPositions[i]
 
@@ -87,7 +101,9 @@ local function spawnUnit(unitName, points)
             Position = pos,
             Queue = true
         })
-    end
+    end]]
+
+
 
     -- Store this as an active unit
     table.insert(waveUnits, unit)
@@ -268,6 +284,34 @@ local function distance(a, b)
     return math.sqrt(xx*xx + yy*yy)
 end
 
+local function attemptToBuy(playerID, cost, callback)
+    -- Grab how much gold this user has
+    local gold = PlayerResource:GetGold(playerID)
+
+    -- Make sure they have enough to buy this building
+    if gold >= cost then
+        -- Take the gold
+        PlayerResource:SpendGold(playerID, cost, 0)
+
+        -- Run the callback
+        callback()
+
+        return true
+    end
+
+    return false
+end
+
+local function setUpgradeLevel(unit, name, level)
+    local ab = unit:FindAbilityByName(name)
+    if ab then
+        ab:SetLevel(level)
+        return true
+    end
+
+    return false
+end
+
 -- Register the gamemode itself
 RegisterGamemode('dorh', {
     -- Gamemode controls both picking and playing
@@ -357,7 +401,7 @@ RegisterGamemode('dorh', {
             -- Validate the unit
             if IsValidEntity(v) then
                 -- Check how close this unit is to the end
-                if distance(v:GetOrigin(), endPoint) < 100 then
+                if distance(v:GetOrigin(), endPoint) < 200 then
                     -- Close enough, kill it
                     local points = v.points or 1
 
@@ -402,6 +446,62 @@ RegisterGamemode('dorh', {
                 end
             end
         end
+    end,
+
+    -- Buying of towers
+    onDataDrivenSpellStart = function(frota, keys)
+        local hero = keys.caster
+        local ability = keys.ability
+        local name = ability:GetAbilityName()
+
+        if name == 'dorh_build_general' or name:find('dorh_upgrade_') then
+            local cost = ability:GetSpecialValueFor('cost')
+            local owner = hero:GetOwner()
+            local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
+
+            -- Grab how much gold this user has
+            local gold = PlayerResource:GetGold(playerID)
+
+            -- Make sure they have enough to buy this building
+            if gold < cost then
+                -- Nope, stop the channel
+                hero:Stop()
+            end
+        end
+    end,
+
+    onDataDrivenChannelSucceeded = function(frota, keys)
+        local point = keys.target_points[1]
+        local hero = keys.caster
+        local ability = keys.ability
+        local heroName = hero:GetClassname()
+        local name = ability:GetAbilityName()
+
+        local cost = ability:GetSpecialValueFor('cost')
+        local owner = hero:GetOwner()
+
+        local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
+        local ply = PlayerResource:GetPlayer(playerID)
+
+        if name == 'dorh_build_general' then
+            -- Build a general building
+            attemptToBuy(playerID, cost, function()
+                -- Build the building
+                local unit = CreateUnitByName("npc_dorh_tower_general", point, true, hero, hero, hero:GetTeam())
+                unit:SetOwner(hero)
+                setUpgradeLevel(unit, 'dorh_upgrade_tower_base', 1)
+            end)
+        elseif name == 'dorh_upgrade_tower_base' then
+            -- General Upgrade
+            attemptToBuy(playerID, cost, function()
+                if heroName == 'npc_dorh_tower_general' then
+                    local unit = CreateUnitByName("npc_dorh_tower_base_lvl1", hero:GetOrigin(), false, hero, hero, hero:GetTeam())
+                    unit:SetOwner(owner)
+                    setUpgradeLevel(unit, 'dorh_upgrade_tower_base', 2)
+                    hero:Remove()
+                end
+            end)
+        end
     end
 })
 
@@ -424,7 +524,7 @@ waveData = {
         units = {
             [1] = {
                 sort = 'npc_dorh_enemy_legion',
-                count = 20,
+                count = 500,
                 points = 1
             }
         }
