@@ -334,6 +334,7 @@ RegisterGamemode('dorh', {
 			timeRoundEnd = GameRules:GetGameTime()
 			round_have_started = false
 			if currentRound <= 21 then
+				timeBetweenRound = timeBetweenRound + (currentRound*2)
 				if currentRound == 21 then
 					timeBetweenRound = 60
 				end
