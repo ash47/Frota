@@ -1666,18 +1666,45 @@ function FrotaGameMode:VoteForAddons()
     -- Build list of incompatble addons
     local incom = {}
 
+    local whiteList = {}
+    local useWhiteList = false
+
     if self.toLoadPickMode then
+        -- Blacklist plugins
         for k,v in pairs(self.toLoadPickMode.ignoreAddons or {}) do
             if v then
                 incom[k] = true
             end
         end
+
+        -- Whitelist plugins
+        if self.toLoadPickMode.compatibleAddons then
+            useWhiteList = true
+
+            for k,v in pairs(self.toLoadPickMode.compatibleAddons or {}) do
+                if v then
+                    whiteList[k] = true
+                end
+            end
+        end
     end
 
     if self.toLoadPlayMode then
+        -- Blacklist plugins
         for k,v in pairs(self.toLoadPlayMode.ignoreAddons or {}) do
             if v then
                 incom[k] = true
+            end
+        end
+
+        -- Whitelist plugins
+        if self.toLoadPlayMode.compatibleAddons then
+            useWhiteList = true
+
+            for k,v in pairs(self.toLoadPlayMode.compatibleAddons or {}) do
+                if v then
+                    whiteList[k] = true
+                end
             end
         end
     end
@@ -1687,7 +1714,7 @@ function FrotaGameMode:VoteForAddons()
 
     local options = {}
     for k, v in pairs(modes) do
-        if not incom[v] then
+        if (not incom[v]) and ((not useWhiteList) or whiteList[v]) then
             options['#afs_name_'..v] = {
                 d = '#afs_des_'..v,
                 s = VOTE_SORT_YESNO,
