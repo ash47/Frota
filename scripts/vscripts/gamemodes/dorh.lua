@@ -316,7 +316,7 @@ RegisterGamemode('dorh', {
 		
 		--end rest between round
 		if timeRoundEnd ~= nil and not has_failed then
-			if now - timeRoundEnd >= timeBetweenRound and round_have_started == false and prepareEnded = true then
+			if now - timeRoundEnd >= timeBetweenRound and round_have_started == false and prepareEnded == true then
 				round_have_started = true
 				currentRound = currentRound + 1
 				-- in case of bugs
