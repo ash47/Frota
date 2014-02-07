@@ -8,9 +8,9 @@ local nEnemyAlive
 local timeRoundEnd
 local prepareEnded
 local finalBossSpawned
-local itemCheckerTimer
 local dorhHero
 local nUnitMax
+local has_failed
 
 local unit_per_round = 20
 local prePrepareTime = 60
@@ -58,6 +58,30 @@ local unitCountRound = {20,20,20,20,1, 	-- start,2-5
 						20,20,20,1,		-- 14-17
 						20,20,20,1,1		-- 18-22		
 						}
+local waveHint = {
+					"",	--1 dont need this
+					"",	--2
+					"",	--3
+					"",	--4
+					"",	--5
+					"",	--6
+					"",	--7
+					"",	--8
+					"",	--9
+					"",	--10
+					"",	--11
+					"",	--12
+					"",	--13
+					"",	--14
+					"",	--15
+					"",	--16
+					"",	--17
+					"",	--18
+					"",	--19
+					"",	--20
+					"",	--21
+					"Final Boss, THE ROSHAN is comming! You have 60 seconds to get well prepared!"	--22
+}
 	
 local function spawnWaypointMarkers(frota)
 	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint1, false, nil, nil, DOTA_TEAM_GOODGUYS)
@@ -94,7 +118,7 @@ function _levelSkillz(frota)
 	if dorhHero then
 		local ab = dorhHero:FindAbilityByName('dorh_wisp_passive')
 		if ab then
-		ab:SetLevel(1)
+			ab:SetLevel(1)
 		end
 		local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus')
 		if ab then
@@ -216,8 +240,9 @@ RegisterGamemode('dorh', {
 		--set init values
 		currentRound = 1
 		nEnemyAlive = 0
+		has_failed = false
 		--for test below	--change current round here to start from this round
-		--currentRound = 22
+		currentRound = 1
 		prePrepareTime = 10
 		timeBetweenRound = 10
 		--for test above
@@ -230,19 +255,14 @@ RegisterGamemode('dorh', {
 		
 		--store start time
 		preGameStartTime = GameRules:GetGameTime()
-		itemCheckerTimer = preGameStartTime
-		
-		--precache all round unit
-		--for i = 1,22 do	
-			--if unitRound[i] then	
-				--its said need 2 arguments, but found one only on wiki
-				--PrecacheUnit(unitRound[i])
-			--end
-		--end
-		
-		--console: get prepared
-		Say(nil,COLOR_LGREEN..'The first wave comes in '.. COLOR_RED..tostring(prePrepareTime)..COLOR_LGREEN..' seconds , GET PREPARED !', false)
-    
+		timeRoundEnd = GameRules:GetGameTime()
+	
+		--tell how to play
+		Say(nil,COLOR_LGREEN..'********************************************************', false)
+		Say(nil,COLOR_LGREEN..'*******************'..COLOR_RED..'Defense of RuneHill'..COLOR_LGREEN..'*******************', false)
+		Say(nil,COLOR_LGREEN..'*********Defense the rune top of 22 waves of enemies********', false)
+		Say(nil,COLOR_LGREEN..'****The first wave comes in '.. COLOR_RED..tostring(prePrepareTime)..COLOR_LGREEN..' seconds , GET PREPARED !*****', false)
+		Say(nil,COLOR_LGREEN..'********************************************************', false)
     end,
 	
 	onThink = function(frota, dt)
@@ -252,57 +272,52 @@ RegisterGamemode('dorh', {
 		-- just in case of bugs
 		if currentRound > 22 then
 			frota:EndGamemode()
-		end
-		
-		-- set every unit friendly to the godlike wisp
-		local uAllWorld = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, waypoint8, nil, 30000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
-		print(tostring(#uAllWorld))
-		if #uAllWorld >= 32 then
-			local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus_disabled')
-			if not ab then
-				frota:ApplyBuild(dorhHero, {
-				[1] = 'dorh_wisp_blink',
-				[2] = 'dorh_summon_minion_zuus_disabled',
-				[3] = 'dorh_wisp_slow',
-				[4] = 'dorh_wisp_passive',
-				[5] = 'dorh_wisp_destroy',
-				[6] = 'dorh_wisp_stun',
-				[7] = 'attribute_bonus'
-				})
-				_levelSkillz(frota)
-			end
 		else
-			local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus')
-			if not ab then
-				frota:ApplyBuild(dorhHero, {
-				[1] = 'dorh_wisp_blink',
-				[2] = 'dorh_summon_minion_zuus',
-				[3] = 'dorh_wisp_slow',
-				[4] = 'dorh_wisp_passive',
-				[5] = 'dorh_wisp_destroy',
-				[6] = 'dorh_wisp_stun',
-				[7] = 'attribute_bonus'
-				})
-				_levelSkillz(frota)
+			-- set every unit friendly to the godlike wisp
+			local uAllWorld = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, waypoint8, nil, 30000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
+			if #uAllWorld >= 32 and dorhHero:IsAlive() then
+				local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus_disabled')
+				if not ab then
+					frota:ApplyBuild(dorhHero, {
+					[1] = 'dorh_wisp_blink',
+					[2] = 'dorh_summon_minion_zuus_disabled',
+					[3] = 'dorh_wisp_slow',
+					[4] = 'dorh_wisp_passive',
+					[5] = 'dorh_wisp_destroy',
+					[6] = 'dorh_wisp_stun',
+					[7] = 'attribute_bonus'
+					})
+					_levelSkillz(frota)
+				end
+			else
+				local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus')
+				if not ab then
+					frota:ApplyBuild(dorhHero, {
+					[1] = 'dorh_wisp_blink',
+					[2] = 'dorh_summon_minion_zuus',
+					[3] = 'dorh_wisp_slow',
+					[4] = 'dorh_wisp_passive',
+					[5] = 'dorh_wisp_destroy',
+					[6] = 'dorh_wisp_stun',
+					[7] = 'attribute_bonus'
+					})
+					_levelSkillz(frota)
+				end
+			end
+			for _,unit in ipairs(uAllWorld) do
+				unit:SetOwner( dorhHero )
 			end
 		end
-		for _,unit in ipairs(uAllWorld) do
-			unit:SetOwner( dorhHero )
-		end
-		
 		--end prepare
 		if now - preGameStartTime >= prePrepareTime and prepareEnded == false then
 			prepareEnded = true 
 			round_have_started = true
-			lastUnitSpawnedTime = now
-			Say(nil,'Round Started Prepared finished', false)
 		end
 		
 		--end rest between round
-		if timeRoundEnd ~= nil then
-			if now - timeRoundEnd >= timeBetweenRound and round_have_started == false then
+		if timeRoundEnd ~= nil and not has_failed then
+			if now - timeRoundEnd >= timeBetweenRound and round_have_started == false and prepareEnded = true then
 				round_have_started = true
-				lastUnitSpawnedTime = now
 				currentRound = currentRound + 1
 				-- in case of bugs
 				if unitCountRound[currentRound] then
@@ -313,10 +328,17 @@ RegisterGamemode('dorh', {
 		end
 		
 		--round # cleared
-		if nEnemyAlive == 0  and round_have_started and unittoSpawnThisRound <= 0 then
+		if nEnemyAlive == 0  and round_have_started and unittoSpawnThisRound <= 0 and not has_failed then
 			timeRoundEnd = GameRules:GetGameTime()
 			round_have_started = false
-			Say(nil,COLOR_LGREEN..'Round '..COLOR_RED..tostring(currentRound)..COLOR_LGREEN..' Finished', false)
+			if currentRound <= 21 then
+				if currentRound == 21 then
+					timeBetweenRound = 60
+				end
+				Say(nil,COLOR_LGREEN..'Round '..COLOR_RED..tostring(currentRound)..COLOR_LGREEN..' Complete', false)
+				Say(nil,COLOR_LGREEN..'Next round,'..COLOR_RED..' ROUND '..tostring(currentRound+1)..' Comes in '..tostring(timeBetweenRound)..' seconds.', false)
+				Say(nil,COLOR_LGREEN.."Hints: "..waveHint[currentRound+1], false)
+			end
 		end
 		
 		--spawn wave units
@@ -349,14 +371,26 @@ RegisterGamemode('dorh', {
 		dorhOrdertoMove( frota , waypoint7 , waypoint8 )
 		
 		--record and remove escaped units
-		local uOnPoint = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, waypoint8, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
-		for _,unit in ipairs(uOnPoint) do
-			frota.scoreDire = frota.scoreDire + 1
-			UTIL_RemoveImmediate(unit)
-			nEnemyAlive = nEnemyAlive -1
-			--Say(nil, COLOR_RED..tostring(nEnemyAlive)..COLOR_LGREEN..' Enemy Left!( Enemy Goal Achieved)', false)
-			Say(nil, COLOR_RED..tostring(20- frota.scoreDire)..COLOR_LGREEN..' Lives Left!', false)
-			frota:UpdateScoreData()
+		local uOnPoint = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, waypoint8, nil, 200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
+		if #uOnPoint > 0 then
+			if currentRound == 22 then
+				frota.scoreDire = 20
+				frota:UpdateScoreData()
+				has_failed = true
+				Say(nil,COLOR_RED..'Final Boss ESCAPED! FAILED!!!', false)
+			else
+				for _,unit in ipairs(uOnPoint) do
+					frota.scoreDire = frota.scoreDire + 1
+					frota:UpdateScoreData()
+					UTIL_RemoveImmediate(unit)
+					nEnemyAlive = nEnemyAlive -1
+					if frota.scoreDire >= 20 then
+						has_failed = true
+					end
+					--Say(nil, COLOR_RED..tostring(nEnemyAlive)..COLOR_LGREEN..' Enemy Left!( Enemy Goal Achieved)', false)
+					Say(nil, COLOR_RED..tostring(20- frota.scoreDire)..COLOR_LGREEN..' Lives Left!', false)
+				end
+			end
 		end
 	end,
 	
@@ -366,16 +400,16 @@ RegisterGamemode('dorh', {
 
         -- Make sure something was killed
 		if killedUnit then
-
-		local team = killedUnit:GetTeam()
+			local team = killedUnit:GetTeam()
 			--if an enemy unit killed
 			if team == DOTA_TEAM_BADGUYS then
 				nEnemyAlive = nEnemyAlive - 1
 				--Say(nil, COLOR_RED..tostring(nEnemyAlive)..COLOR_LGREEN..' Enemy Left!(Entity Killed)', false)
 				--if the only final boss killed then end game mode
 				if currentRound == 22 then
-					print("Final Boss Killed Fires Game End")
-					frota:EndGamemode()
+					Say(nil,COLOR_RED..'Final Boss Killed! CONGRATULATIONS!!!', false)
+					frota.scoreRadiant = 20
+					frota:UpdateScoreData()
 				end
 			end
 		end	
