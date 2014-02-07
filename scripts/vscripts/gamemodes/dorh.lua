@@ -8,6 +8,9 @@ local nEnemyAlive
 local timeRoundEnd
 local prepareEnded
 local finalBossSpawned
+local itemCheckerTimer
+local dorhHero
+local nUnitMax
 
 local unit_per_round = 20
 local prePrepareTime = 60
@@ -87,6 +90,39 @@ function _spawnWaves_test(frota,round)
 	end
 end
 
+function _levelSkillz(frota)
+	if dorhHero then
+		local ab = dorhHero:FindAbilityByName('dorh_wisp_passive')
+		if ab then
+		ab:SetLevel(1)
+		end
+		local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus')
+		if ab then
+			ab:SetLevel(1)
+		end
+		local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus_disabled')
+		if ab then
+			ab:SetLevel(1)
+		end
+		local ab = dorhHero:FindAbilityByName('dorh_wisp_slow')
+		if ab then
+			ab:SetLevel(1)
+		end
+		local ab = dorhHero:FindAbilityByName('dorh_wisp_stun')
+		if ab then
+			ab:SetLevel(1)
+		end
+		local ab = dorhHero:FindAbilityByName('dorh_wisp_destroy')
+		if ab then
+			ab:SetLevel(1)
+		end
+		local ab = dorhHero:FindAbilityByName('dorh_wisp_blink')
+		if ab then
+			ab:SetLevel(1)
+		end
+	end	
+end
+
 RegisterGamemode('dorh', {
     -- Gamemode only has a gameplay component
     sort = GAMEMODE_BOTH,
@@ -136,60 +172,43 @@ RegisterGamemode('dorh', {
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
-        local hero = PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_wisp', 120, 0)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_wisp', 1000, 0)
+		dorhHero = hero
 		
 		-- Make invulnerable
 		hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
         frota:SetActiveHero(hero)
+		dorhHero:__KeyValueFromInt("StatusManaRegen",20)
 
         -- Apply custom invoker skills
         frota:ApplyBuild(hero, {
-            [1] = 'dorh_wisp_passive',
+            [1] = 'dorh_wisp_blink',
             [2] = 'dorh_summon_minion_zuus',
             [3] = 'dorh_wisp_slow',
-            [4] = 'dorh_wisp_stun',
+            [4] = 'dorh_wisp_passive',
             [5] = 'dorh_wisp_destroy',
-            [6] = 'dorh_wisp_collect',
+            [6] = 'dorh_wisp_stun',
             [7] = 'attribute_bonus'
         })
 		
 		-- Level wisp skills
-		local ab = hero:FindAbilityByName('dorh_wisp_passive')
-		if ab then
-		ab:SetLevel(1)
-		end
-		local ab = hero:FindAbilityByName('dorh_summon_minion_zuus')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = hero:FindAbilityByName('dorh_wisp_slow')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = hero:FindAbilityByName('dorh_wisp_stun')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = hero:FindAbilityByName('dorh_wisp_destroy')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = hero:FindAbilityByName('dorh_wisp_collect')
-		if ab then
-			ab:SetLevel(1)
-		end
-    end,
+		_levelSkillz(frota)
+   
+		GameRules:SetHeroMinimapIconSize( 200 )
+		GameRules:SetCreepMinimapIconScale( 0.6 )
+		
+	end,
 	
     onGameStart = function(frota)
     
 		local options = frota:GetOptions()
         frota:SetScoreLimit(options.scoreLimit)
 		
-		--[[local cply = frota:GetPlayerList()
+		local cply = frota:GetPlayerList()
 		if #cply > 1 then
 			print("DoRH is a solo gamemode")
 			frota:EndGamemode()
-		end]]
+		end
 
 		--spawn way point markers 1-8 on the ground 
 		spawnWaypointMarkers(frota)
@@ -211,18 +230,64 @@ RegisterGamemode('dorh', {
 		
 		--store start time
 		preGameStartTime = GameRules:GetGameTime()
+		itemCheckerTimer = preGameStartTime
+		
+		--precache all round unit
+		--for i = 1,22 do	
+			--if unitRound[i] then	
+				--its said need 2 arguments, but found one only on wiki
+				--PrecacheUnit(unitRound[i])
+			--end
+		--end
+		
 		--console: get prepared
-		Say(nil,COLOR_LGREEN..'the first wave comes in '.. COLOR_RED..tostring(prePrepareTime)..COLOR_LGREEN..' seconds , GET PREPARED !', false)
+		Say(nil,COLOR_LGREEN..'The first wave comes in '.. COLOR_RED..tostring(prePrepareTime)..COLOR_LGREEN..' seconds , GET PREPARED !', false)
     
     end,
 	
 	onThink = function(frota, dt)
 	
 		local now = GameRules:GetGameTime()
-		
+
 		-- just in case of bugs
 		if currentRound > 22 then
 			frota:EndGamemode()
+		end
+		
+		-- set every unit friendly to the godlike wisp
+		local uAllWorld = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, waypoint8, nil, 30000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
+		print(tostring(#uAllWorld))
+		if #uAllWorld >= 32 then
+			local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus_disabled')
+			if not ab then
+				frota:ApplyBuild(dorhHero, {
+				[1] = 'dorh_wisp_blink',
+				[2] = 'dorh_summon_minion_zuus_disabled',
+				[3] = 'dorh_wisp_slow',
+				[4] = 'dorh_wisp_passive',
+				[5] = 'dorh_wisp_destroy',
+				[6] = 'dorh_wisp_stun',
+				[7] = 'attribute_bonus'
+				})
+				_levelSkillz(frota)
+			end
+		else
+			local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus')
+			if not ab then
+				frota:ApplyBuild(dorhHero, {
+				[1] = 'dorh_wisp_blink',
+				[2] = 'dorh_summon_minion_zuus',
+				[3] = 'dorh_wisp_slow',
+				[4] = 'dorh_wisp_passive',
+				[5] = 'dorh_wisp_destroy',
+				[6] = 'dorh_wisp_stun',
+				[7] = 'attribute_bonus'
+				})
+				_levelSkillz(frota)
+			end
+		end
+		for _,unit in ipairs(uAllWorld) do
+			unit:SetOwner( dorhHero )
 		end
 		
 		--end prepare
@@ -239,7 +304,10 @@ RegisterGamemode('dorh', {
 				round_have_started = true
 				lastUnitSpawnedTime = now
 				currentRound = currentRound + 1
-				unittoSpawnThisRound = unitCountRound[currentRound]
+				-- in case of bugs
+				if unitCountRound[currentRound] then
+					unittoSpawnThisRound = unitCountRound[currentRound]
+				end
 				Say(nil,COLOR_LGREEN..'Round '..COLOR_RED..tostring(currentRound)..COLOR_LGREEN..' Started', false)
 			end
 		end
