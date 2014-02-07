@@ -1,166 +1,288 @@
 -- Defense of Rune Hill
--- Tower Denfese Addon of Frota
+-- Tower Denfese Addon for Frota
 -- By Xavier@2014.02
 
-local currentRound
-local round_have_started
-local nEnemyAlive
-local timeRoundEnd
-local prepareEnded
-local finalBossSpawned
-local dorhHero
-local nUnitMax
-local has_failed
+-- Preparation time (in seconds)
+local prepTime = 10
 
-local unit_per_round = 20
-local prePrepareTime = 100
-local timeBetweenRound = 30
-local timeUnitSpawnInterval = 0.5
+-- Time between waves (in seconds)
+local timeBetweenWaves = 5
 
-local waypoint1 = Vec3(-1120,-1120,0)
-local waypoint2 = Vec3(40,940,0)
-local waypoint3 = Vec3(690,260,0)
-local waypoint4 = Vec3(490,-1360,0)
-local waypoint5 = Vec3(2450,-1400,0)
-local waypoint6 = Vec3(2400,630,0)
-local waypoint7 = Vec3(1450,500,0)
-local waypoint8 = Vec3(1550,-500,0)
-local waypoint9 = Vec3(2190,2030,0)
+-- How fast units spawn
+local spawnInterval = 0.5
 
-local unitRound = {
-                  "npc_dorh_enemy_gycrophter",  	-- 1  	--Round Start
-                  "npc_dorh_enemy_legion",  		-- 2
-                  "npc_dorh_enemy_tinker",  		-- 3
-                  "npc_dorh_enemy_bounty_hunter",  	-- 4
-                  "npc_dorh_enemy_alchemist",  		-- 5  	--Round 1 Boss
-                  "npc_dorh_enemy_beast_master",  -- 6
-                  "npc_dorh_enemy_furion",  -- 7
-                  "npc_dorh_enemy_enchant",  -- 8
-                  "npc_dorh_enemy_brood_mother",  -- 9  	--Round 2 Boss
-                  "npc_dorh_enemy_slardar",  -- 10
-                  "npc_dorh_enemy_tide_hunter",  -- 11
-                  "npc_dorh_enemy_nage_siren",  -- 12
-                  "npc_dorh_enemy_slark",  -- 13	--Round 3 Boss
-                  "npc_dorh_enemy_ember_spirit",  -- 14
-                  "npc_dorh_enemy_lina",  -- 15
-                  "npc_dorh_enemy_batridder",  -- 16
-                  "npc_dorh_enemy_doom",  -- 17	--Round 4 Boss
-                  "npc_dorh_enemy_tiny",  -- 18
-                  "npc_dorh_enemy_sandking",  -- 19
-                  "npc_dorh_enemy_eldertitan",  -- 20
-                  "npc_dorh_enemy_earth_spirit",  -- 21	--Round 5 Boss
-                  "npc_dorh_enemy_roshan"  --  22		--Round Final BOSS
-				}
+-- How many lives the players start with
+local startingLives = 20
 
-local unitCountRound = {20,20,20,20,1, 	-- start,2-5
-						20,20,20,1,		-- 6-9
-						20,20,20,1,		-- 10-13
-						20,20,20,1,		-- 14-17
-						20,20,20,1,1		-- 18-22
-						}
-local waveHint = {
-					"",	--1 dont need this
-					"",	--2
-					"",	--3
-					"",	--4
-					"",	--5
-					"",	--6
-					"",	--7
-					"",	--8
-					"",	--9
-					"",	--10
-					"",	--11
-					"",	--12
-					"",	--13
-					"",	--14
-					"",	--15
-					"",	--16
-					"",	--17
-					"",	--18
-					"",	--19
-					"",	--20
-					"",	--21
-					"Final Boss, THE ROSHAN is comming! You have a bonus of 60 seconds to get well prepared!"	--22
+-- These are the waypoints units will follow
+local wayPointPositions = {
+    [1] = Vec3(-1120,-1120,0),
+    [2] = Vec3(40,940,0),
+    [3] = Vec3(690,260,0),
+    [4] = Vec3(490,-1360,0),
+    [5] = Vec3(2450,-1400,0),
+    [6] = Vec3(2400,630,0),
+    [7] = Vec3(1450,500,0),
+    [8] = Vec3(1550,-500,0),
+    [9] = Vec3(2190,2030,0)
 }
 
-local function spawnWaypointMarkers(frota)
-	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint1, false, nil, nil, DOTA_TEAM_GOODGUYS)
-	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint2, false, nil, nil, DOTA_TEAM_GOODGUYS)
-	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint3, false, nil, nil, DOTA_TEAM_GOODGUYS)
-	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint4, false, nil, nil, DOTA_TEAM_GOODGUYS)
-	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint5, false, nil, nil, DOTA_TEAM_GOODGUYS)
-	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint6, false, nil, nil, DOTA_TEAM_GOODGUYS)
-	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint7, false, nil, nil, DOTA_TEAM_GOODGUYS)
-	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint8, false, nil, nil, DOTA_TEAM_GOODGUYS)
-	local unit = CreateUnitByName("npc_dorh_waypoint_marker", waypoint9, false, nil, nil, DOTA_TEAM_GOODGUYS)
-end
+-- This will store a reference to each waypoint
+local wavePoints = {}
 
-local function dorhOrdertoMove(frota,thisPoint,nextPoint)
-    local uOnPoint = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, thisPoint, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
-    for _,unit in ipairs(uOnPoint) do
-    ExecuteOrderFromTable({
-      UnitIndex = unit:entindex(),
-      OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION,
-      Position = nextPoint,
-      Queue = false
-      })
+-- These are the skills everyone in dorh will get
+local dorhSkills = {
+    [1] = 'dorh_wisp_blink',
+    [2] = 'dorh_summon_minion_zuus',
+    [3] = 'dorh_wisp_slow',
+    [4] = 'dorh_wisp_passive',
+    [5] = 'dorh_wisp_destroy',
+    [6] = 'dorh_wisp_stun'
+}
+
+-- Wave data is defined at the very bottom
+local waveData
+
+-- The current wave we're in
+local currentWave = -1
+
+-- Is a wave active?
+local waveActive = false
+
+-- A list of all the units spawned during a wave
+local waveUnits = {}
+
+-- Spawns the waypoints
+local function spawnWaypointMarkers()
+    -- Loop over each wavepoint
+    for k,v in ipairs(wayPointPositions) do
+        -- Spawn the marker
+        local unit = CreateUnitByName("npc_dorh_waypoint_marker", v, false, nil, nil, DOTA_TEAM_NOTEAM)
+
+        -- Make invulnerable
+        unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
     end
 end
 
-function _spawnWaves_test(frota,round)
-	local unitSpawned = CreateUnitByName(unitRound[round], waypoint1 + RandomVector( 150 ), false, nil, nil, DOTA_TEAM_BADGUYS)
-	if unitSpawned then
-		unitSpawned:AddNewModifier( unitSpawned, nil, "modifier_phased", {} )
-	end
+-- Spawns a unit, and makes it march towards the end
+local function spawnUnit(unitName, points)
+    -- Spawn the unit at the first waypoint
+    local unit = CreateUnitByName(unitName, wayPointPositions[1]+RandomVector(150), false, nil, nil, DOTA_TEAM_NOTEAM)
+
+    -- Store how many points this unit is worth
+    unit.points = points
+
+    -- Phase the unit -- it shouldn't collide with anything
+    unit:AddNewModifier(unit, nil, "modifier_phased", {})
+
+    -- Make it march towards the checkpoints
+    for i = 2, #wayPointPositions do
+        -- Grab this waypoint
+        local pos = wayPointPositions[i]
+
+        -- Queue a march towards the next position
+        ExecuteOrderFromTable({
+            UnitIndex = unit:entindex(),
+            OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION,
+            Position = pos,
+            Queue = true
+        })
+    end
+
+    -- Store this as an active unit
+    table.insert(waveUnits, unit)
 end
 
-function _levelSkillz(frota)
-	if dorhHero then
-		local ab = dorhHero:FindAbilityByName('dorh_wisp_passive')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus_disabled')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = dorhHero:FindAbilityByName('dorh_wisp_slow')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = dorhHero:FindAbilityByName('dorh_wisp_stun')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = dorhHero:FindAbilityByName('dorh_wisp_destroy')
-		if ab then
-			ab:SetLevel(1)
-		end
-		local ab = dorhHero:FindAbilityByName('dorh_wisp_blink')
-		if ab then
-			ab:SetLevel(1)
-		end
-	end
+-- Sets the correct levels for all the skills
+local function setAbilityLevels(hero)
+    -- Loop over every skill they should have
+    for k,v in pairs(dorhSkills) do
+        -- Check if they have the skill
+        local ab = hero:FindAbilityByName(v)
+        if ab then
+            -- Set it to level 1
+            ab:SetLevel(1)
+        end
+    end
 end
 
+-- Cleanup any lose wave units
+local function clearWaveUnits()
+    -- While there are still units alive
+    while #waveUnits > 0 do
+        -- Grab and remove the first unit
+        local unit = table.remove(waveUnits, 1)
+
+        -- Check if it is alive
+        if IsValidEntity(unit) then
+            -- Remove the unit
+            unit:Remove()
+        end
+    end
+end
+
+-- Starts a wave
+local function startWave(waveNumber)
+    -- Grab the data for this wave
+    local data = waveData[waveNumber]
+
+    -- Validate the wave number
+    if not data then
+        print('You tried to start an invalid wave '..waveNumber)
+        return
+    end
+
+    -- Store the current wave
+    currentWave = waveNumber
+
+    -- Cleanup any old wave units
+    clearWaveUnits()
+
+    -- A list of things to spawn
+    local toSpawn = {}
+
+    -- Build the list of things to spawn
+    for k,v in pairs(data.units) do
+        for i=1,v.count do
+            table.insert(toSpawn, {
+                sort = v.sort,
+                points = v.points
+            })
+        end
+    end
+
+    -- Grab a reference to frota
+    local frota = GetFrota()
+
+    -- Set dire's score to the number of units remaining
+    frota.scoreDire = #toSpawn
+    frota:UpdateScoreData()
+
+    -- Create a timer to spawn stuff
+    frota:CreateTimer('dorhSpawnTimer', {
+        endTime = Time() + spawnInterval,
+        callback = function(frota, args)
+            -- Check if there is anything left to spawn
+            if #toSpawn > 0 then
+                -- Grab the next unit to spawn
+                local unitData = table.remove(toSpawn, 1)
+
+                -- Spawn it
+                spawnUnit(unitData.sort, unitData.points)
+
+                -- Check if there is still something left to spawn
+                if #toSpawn > 0 then
+                    -- Run this again after a delay
+                    return Time() + spawnInterval
+                end
+            end
+        end
+    })
+
+    -- Cleanup timers
+    frota:RemoveTimer('dorhPreTimer')
+    frota:RemoveTimer('dorhWaveTimer')
+
+    -- Tell everyone which wave was started
+    Say(nil, COLOR_LGREEN..'Wave '..COLOR_RED..waveNumber..COLOR_LGREEN..' Started!', false)
+
+    -- Store that there is a wave active
+    waveActive = true
+end
+
+function endWave(startNextWave)
+    -- There is no longer a wave active
+    waveActive = false
+
+    -- Cleanup any lose wave units
+    clearWaveUnits()
+
+    -- Tell users this wave is over
+    Say(nil, COLOR_LGREEN..'Wave complete!', false)
+
+    -- Should we start the next wave?
+    if startNextWave then
+        -- Grab a reference to frota
+        local frota = GetFrota()
+
+        -- Grab the data for the next wave
+        local data = waveData[currentWave+1]
+
+        -- Check if the next wave exists
+        if data then
+            -- Tell users when the next wave will start
+            Say(nil, COLOR_LGREEN..'Wave '..COLOR_RED..tostring(currentWave+1)..COLOR_LGREEN..' starts in '..tostring(timeBetweenWaves)..' seconds!', false)
+
+            -- Check if this wave has a hint
+            if data.waveHint then
+                -- Say the hint
+                Say(nil, data.waveHint, false)
+            end
+
+            -- Create the timer to start the next wave
+            frota:CreateTimer('dorhWaveTimer', {
+                endTime = Time() + timeBetweenWaves + (data.bonusTime or 0),
+                callback = function(frota, args)
+                    -- Start next wave
+                    startWave(currentWave+1)
+                end,
+                text = "#dorh_next_wave_timer",
+                send = true
+            })
+        else
+            -- No valid wave found -- they must have won
+            frota:EndGamemode()
+        end
+    end
+end
+
+-- Checks if a wave should end
+local function checkWaveStatus()
+    -- Make sure there is a wave active
+    if waveActive then
+        -- Check score
+        local frota = GetFrota()
+        if frota.scoreRadiant <= 0 then
+            -- Tell them they lost
+            Say(nil, COLOR_LGREEN..'You lose, loser!', false)
+
+            -- Game over
+            frota:EndGamemode()
+            return
+        end
+
+        -- Check if no units remain
+        if #waveUnits == 0 then
+            -- End the current wave
+            endWave(true)
+        end
+    end
+end
+
+-- Returns the distance between two points
+local function distance(a, b)
+    -- Pythagorian distance
+    local xx = (a.x-b.x)
+    local yy = (a.y-b.y)
+
+    return math.sqrt(xx*xx + yy*yy)
+end
+
+-- Register the gamemode itself
 RegisterGamemode('dorh', {
-    -- Gamemode only has a gameplay component
+    -- Gamemode controls both picking and playing
     sort = GAMEMODE_BOTH,
 
     -- A list of options for fast gameplay stuff
     options = {
-        killsScore = false,
-        useScores = true,
-        respawnDelay = 15
+        killsScore = false, -- Kills don't do anything
+        useScores = true,   -- This gamemode does use scores
+        respawnDelay = 1    -- Pretty instant respawn (players shouldnt die anyways)
     },
 
     -- List of addons that are compatible
     compatibleAddons = {
-        -- None
+        -- Don't load any addons
     },
 
     -- List of maps this plugin works with
@@ -168,230 +290,365 @@ RegisterGamemode('dorh', {
         runehill = true
     },
 
-	assignHero = function(frota, ply)
+    assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
 
         -- Change heroes
         local hero = PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_wisp', 1000, 0)
-		dorhHero = hero
-
-		-- Make invulnerable
-		hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
         frota:SetActiveHero(hero)
-		dorhHero:__KeyValueFromInt("StatusManaRegen",20)
 
-        -- Apply custom invoker skills
-        frota:ApplyBuild(hero, {
-            [1] = 'dorh_wisp_blink',
-            [2] = 'dorh_summon_minion_zuus',
-            [3] = 'dorh_wisp_slow',
-            [4] = 'dorh_wisp_passive',
-            [5] = 'dorh_wisp_destroy',
-            [6] = 'dorh_wisp_stun',
-            [7] = 'attribute_bonus'
-        })
+        -- Make invulnerable
+        hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
 
-		-- Level wisp skills
-		_levelSkillz(frota)
+        -- Give building skills
+        frota:ApplyBuild(hero, dorhSkills)
 
-		GameRules:SetHeroMinimapIconSize( 200 )
-		GameRules:SetCreepMinimapIconScale( 0.6 )
-
-	end,
-
-    onGameStart = function(frota)
-
-		local options = frota:GetOptions()
-        frota:SetScoreLimit(options.scoreLimit)
-
-		local cply = frota:GetPlayerList()
-		if #cply > 1 then
-			print("DoRH is a solo gamemode")
-			frota:EndGamemode()
-		end
-
-		--spawn way point markers 1-8 on the ground
-		spawnWaypointMarkers(frota)
-
-		--set init values
-		currentRound = 1
-		nEnemyAlive = 0
-		has_failed = false
-		--for test below	--change current round here to start from this round
-		--currentRound = 1
-		--prePrepareTime = 10
-		--timeBetweenRound = 10
-		--for test above
-
-		unittoSpawnThisRound = unitCountRound[currentRound]
-		round_have_started = false
-		prepareEnded = false
-		finalBossSpawned = nil
-		finalBossAppeared =  false
-
-		--store start time
-		preGameStartTime = GameRules:GetGameTime()
-		timeRoundEnd = GameRules:GetGameTime()
-
-		--tell how to play
-		Say(nil,COLOR_LGREEN..'********************************************************', false)
-		Say(nil,COLOR_LGREEN..'*******************'..COLOR_RED..'Defense of RuneHill'..COLOR_LGREEN..'*******************', false)
-		Say(nil,COLOR_LGREEN..'*********Defense the rune top of 22 waves of enemies********', false)
-		Say(nil,COLOR_LGREEN..'******You can summon 30 minions to help you to defend*******', false)
-		Say(nil,COLOR_LGREEN..'****The first wave comes in '.. COLOR_RED..tostring(prePrepareTime)..COLOR_LGREEN..' seconds , GET PREPARED !*****', false)
-		Say(nil,COLOR_LGREEN..'********************************************************', false)
+        -- Level it's skills
+        setAbilityLevels(hero)
     end,
 
-	onThink = function(frota, dt)
+    onGameStart = function(frota)
+        -- Spawn way point markers on the ground
+        spawnWaypointMarkers()
 
-		local now = GameRules:GetGameTime()
+        -- Reset vars
+        currentWave = 1
+        waveActive = false
 
-		-- just in case of bugs
-		if currentRound > 22 then
-			frota:EndGamemode()
-		else
-			-- set every unit friendly to the godlike wisp
-			local uAllWorld = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, waypoint8, nil, 30000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
-			if #uAllWorld >= 32 and dorhHero:IsAlive() then
-				local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus_disabled')
-				if not ab then
-					frota:ApplyBuild(dorhHero, {
-					[1] = 'dorh_wisp_blink',
-					[2] = 'dorh_summon_minion_zuus_disabled',
-					[3] = 'dorh_wisp_slow',
-					[4] = 'dorh_wisp_passive',
-					[5] = 'dorh_wisp_destroy',
-					[6] = 'dorh_wisp_stun',
-					[7] = 'attribute_bonus'
-					})
-					_levelSkillz(frota)
-				end
-			else
-				local ab = dorhHero:FindAbilityByName('dorh_summon_minion_zuus')
-				if not ab then
-					frota:ApplyBuild(dorhHero, {
-					[1] = 'dorh_wisp_blink',
-					[2] = 'dorh_summon_minion_zuus',
-					[3] = 'dorh_wisp_slow',
-					[4] = 'dorh_wisp_passive',
-					[5] = 'dorh_wisp_destroy',
-					[6] = 'dorh_wisp_stun',
-					[7] = 'attribute_bonus'
-					})
-					_levelSkillz(frota)
-				end
-			end
-			for _,unit in ipairs(uAllWorld) do
-				unit:SetOwner( dorhHero )
-			end
-		end
-		--end prepare
-		if now - preGameStartTime >= prePrepareTime and prepareEnded == false then
-			prepareEnded = true
-			round_have_started = true
-			lastUnitSpawnedTime = now
-		end
+        -- Cleanup any lose wave units
+        clearWaveUnits()
 
-		--end rest between round
-		if timeRoundEnd ~= nil and not has_failed then
-			if now - timeRoundEnd >= timeBetweenRound and round_have_started == false and prepareEnded == true then
-				round_have_started = true
-				lastUnitSpawnedTime = now
-				currentRound = currentRound + 1
-				-- in case of bugs
-				if unitCountRound[currentRound] then
-					unittoSpawnThisRound = unitCountRound[currentRound]
-				end
-				Say(nil,COLOR_LGREEN..'Round '..COLOR_RED..tostring(currentRound)..COLOR_LGREEN..' Started', false)
-			end
-		end
+        -- Store the amount of lives and units
+        frota.scoreRadiant = startingLives
+        frota.scoreDire = 0
+        frota:UpdateScoreData()
 
-		--round # cleared
-		if nEnemyAlive == 0  and round_have_started and unittoSpawnThisRound <= 0 and not has_failed then
-			timeRoundEnd = GameRules:GetGameTime()
-			round_have_started = false
-			if currentRound <= 21 then
-				timeBetweenRound = timeBetweenRound + (currentRound*2)
-				if currentRound == 21 then
-					timeBetweenRound = timeBetweenRound + 60
-				end
-				Say(nil,COLOR_LGREEN..'Round '..COLOR_RED..tostring(currentRound)..COLOR_LGREEN..' Complete', false)
-				Say(nil,COLOR_LGREEN..'Next round,'..COLOR_RED..' ROUND '..tostring(currentRound+1)..' Comes in '..tostring(timeBetweenRound)..' seconds.', false)
-				Say(nil,COLOR_LGREEN.."Hints: "..waveHint[currentRound+1], false)
-			end
-		end
+        --tell how to play
+        Say(nil,COLOR_LGREEN..'********************************************************', false)
+        Say(nil,COLOR_LGREEN..'*******************'..COLOR_RED..'Defense of RuneHill'..COLOR_LGREEN..'*******************', false)
+        Say(nil,COLOR_LGREEN..'*********Defend rune hill from '..#waveData..' waves of enemies********', false)
+        Say(nil,COLOR_LGREEN..'******You can summon 30 minions to help you to defend*******', false)
+        Say(nil,COLOR_LGREEN..'****The first wave comes in '..COLOR_RED..prepTime..COLOR_LGREEN..' seconds, GET PREPARED !*****', false)
+        Say(nil,COLOR_LGREEN..'********************************************************', false)
 
-		--spawn wave units
-		if unittoSpawnThisRound > 0 and round_have_started and currentRound <= 24 then
-			if now - lastUnitSpawnedTime >= timeUnitSpawnInterval then
-				_spawnWaves_test(frota,currentRound)
-				unittoSpawnThisRound = unittoSpawnThisRound - 1
-				nEnemyAlive = nEnemyAlive + 1
-				lastUnitSpawnedTime = now
-			end
-		end
+        -- Create the preparation timer
+        frota:CreateTimer('dorhPreTimer', {
+            endTime = Time() + prepTime,
+            callback = function(frota, args)
+                -- Start the first wave
+                startWave(1)
+            end,
+            text = "#dorh_prep_time",
+            send = true
+        })
+    end,
 
-		--spawn final boss
-		if unittoSpawnThisRound > 0 and round_have_started and currentRound == 25 and not finalBossAppeared then
-			finalBossAppeared = true
+    -- When the game ends
+    onGameEnd = function(frota)
+        -- Cleanup any leftovers
+        clearWaveUnits()
+    end,
 
-			finalBossSpawned = CreateUnitByName("npc_dorh_enemy_roshan" , waypoint1 , false, nil, nil , DOTA_TEAM_BADGUYS)
-			finalBossSpawned:AddNewModifier( finalBossSpawned , nil, "modifier_phased" , {} )
-			Say(nil,COLOR_RED..'HERE COMES THE BOSS!!!', false)
-		end
+    -- Checking for units 'escaping'
+    onThink = function(frota, dt)
+        -- Allow units to 'escape'
+        local endPoint = wayPointPositions[#wayPointPositions]
+        for k,v in pairs(waveUnits) do
+            -- Validate the unit
+            if IsValidEntity(v) then
+                -- Check how close this unit is to the end
+                if distance(v:GetOrigin(), endPoint) < 100 then
+                    -- Close enough, kill it
+                    local points = v.points or 1
 
-		--TD AIs
-		dorhOrdertoMove( frota , waypoint1 , waypoint4 )
-		dorhOrdertoMove( frota , waypoint4 , waypoint5 )
-		dorhOrdertoMove( frota , waypoint5 , waypoint6 )
-		dorhOrdertoMove( frota , waypoint6 , waypoint9 )
-		dorhOrdertoMove( frota , waypoint9 , waypoint2 )
-		dorhOrdertoMove( frota , waypoint2 , waypoint3 )
-		dorhOrdertoMove( frota , waypoint3 , waypoint7 )
-		dorhOrdertoMove( frota , waypoint7 , waypoint8 )
+                    -- Update the scores
+                    frota.scoreDire = frota.scoreDire - 1
+                    frota.scoreRadiant = frota.scoreRadiant - points
+                    frota:UpdateScoreData()
 
-		--record and remove escaped units
-		local uOnPoint = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, waypoint8, nil, 200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
-		if #uOnPoint > 0 then
-			if currentRound == 22 then
-				frota.scoreDire = 20
-				frota:UpdateScoreData()
-				has_failed = true
-				Say(nil,COLOR_RED..'Final Boss ESCAPED! FAILED!!!', false)
-			else
-				for _,unit in ipairs(uOnPoint) do
-					frota.scoreDire = frota.scoreDire + 1
-					frota:UpdateScoreData()
-					UTIL_RemoveImmediate(unit)
-					nEnemyAlive = nEnemyAlive -1
-					if frota.scoreDire >= 20 then
-						has_failed = true
-					end
-					--Say(nil, COLOR_RED..tostring(nEnemyAlive)..COLOR_LGREEN..' Enemy Left!( Enemy Goal Achieved)', false)
-					Say(nil, COLOR_RED..tostring(20- frota.scoreDire)..COLOR_LGREEN..' Lives Left!', false)
-				end
-			end
-		end
-	end,
+                    -- Remove this unit
+                    table.remove(waveUnits, k)
+                    v:ForceKill(false)
 
-	entity_killed = function(frota, keys)
-		-- Grab the unit that was killed
-		local killedUnit = EntIndexToHScript( keys.entindex_killed )
+                    -- Check if we've won the round
+                    checkWaveStatus()
+                end
+            end
+        end
+    end,
+
+    -- Check if the round should end
+    entity_killed = function(frota, keys)
+        -- Grab the unit that was killed
+        local killedUnit = EntIndexToHScript(keys.entindex_killed)
 
         -- Make sure something was killed
-		if killedUnit then
-			local team = killedUnit:GetTeam()
-			--if an enemy unit killed
-			if team == DOTA_TEAM_BADGUYS then
-				nEnemyAlive = nEnemyAlive - 1
-				--Say(nil, COLOR_RED..tostring(nEnemyAlive)..COLOR_LGREEN..' Enemy Left!(Entity Killed)', false)
-				--if the only final boss killed then end game mode
-				if currentRound == 22 then
-					Say(nil,COLOR_RED..'Final Boss Killed! CONGRATULATIONS!!!', false)
-					frota.scoreRadiant = 20
-					frota:UpdateScoreData()
-				end
-			end
-		end
-	end
+        if killedUnit then
+            -- See if this was one of our wave units
+            for k,v in pairs(waveUnits) do
+                if killedUnit == v then
+                    -- Yep, remove it from the list
+                    table.remove(waveUnits, k)
+
+                    -- Lower dire's score (the amount of units left to kill)
+                    frota.scoreDire = frota.scoreDire - 1
+                    frota:UpdateScoreData()
+
+                    -- Check if we've won the round
+                    checkWaveStatus()
+
+                    -- Done
+                    return
+                end
+            end
+        end
+    end
 })
+
+-- This should be moved into a KV file
+waveData = {
+    -- Wave 1
+    [1] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_gycrophter',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 2
+    [2] = {
+        waveHint = COLOR_LGREEN..'2nd Wave Hint',
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_legion',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 3
+    [3] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_tinker',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 4
+    [4] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_bounty_hunter',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 5
+    [5] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_alchemist',
+                count = 1,
+                points = 5
+            }
+        }
+    },
+
+    -- Wave 6
+    [6] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_alchemist',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 7
+    [7] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_furion',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 8
+    [8] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_enchant',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 9
+    [9] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_brood_mother',
+                count = 1,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 10
+    [10] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_slardar',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 11
+    [11] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_tide_hunter',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 12
+    [12] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_nage_siren',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 13
+    [13] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_slark',
+                count = 1,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 14
+    [14] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_ember_spirit',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 15
+    [15] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_lina',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 16
+    [16] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_batridder',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 17
+    [17] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_doom',
+                count = 1,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 18
+    [18] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_tiny',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 19
+    [19] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_sandking',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 20
+    [20] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_eldertitan',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 21
+    [21] = {
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_earth_spirit',
+                count = 20,
+                points = 1
+            }
+        }
+    },
+
+    -- Wave 22
+    [22] = {
+        waveHint = 'Final Boss, THE ROSHAN is comming! You have a bonus of 60 seconds to get well prepared!',
+        bonusTime = 60,
+        units = {
+            [1] = {
+                sort = 'npc_dorh_enemy_roshan',
+                count = 1,
+                points = 20
+            }
+        }
+    }
+}

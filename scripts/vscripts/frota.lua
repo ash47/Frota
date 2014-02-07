@@ -1237,17 +1237,24 @@ function FrotaGameMode:Think()
             self.timers[k] = nil
 
             -- Run the callback
-            local nextCall = v.callback(self, v)
+            local status, nextCall = pcall(v.callback, self, v)
 
-            -- Check if it needs to loop
-            if nextCall then
-                -- Change it's end time
-                v.endTime = nextCall
-                self.timers[k] = v
+            -- Make sure it worked
+            if status then
+                -- Check if it needs to loop
+                if nextCall then
+                    -- Change it's end time
+                    v.endTime = nextCall
+                    self.timers[k] = v
+                end
+
+                -- Update timer data
+                self:UpdateTimerData()
+            else
+                -- Nope, handle the error
+                self:HandleEventError('Timer', k, nextCall)
+                return
             end
-
-            -- Update timer data
-            self:UpdateTimerData()
         end
     end
 
