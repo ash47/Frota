@@ -13,7 +13,7 @@ local nUnitMax
 local has_failed
 
 local unit_per_round = 20
-local prePrepareTime = 60
+local prePrepareTime = 100
 local timeBetweenRound = 30
 local timeUnitSpawnInterval = 0.5
 
@@ -261,6 +261,7 @@ RegisterGamemode('dorh', {
 		Say(nil,COLOR_LGREEN..'********************************************************', false)
 		Say(nil,COLOR_LGREEN..'*******************'..COLOR_RED..'Defense of RuneHill'..COLOR_LGREEN..'*******************', false)
 		Say(nil,COLOR_LGREEN..'*********Defense the rune top of 22 waves of enemies********', false)
+		Say(nil,COLOR_LGREEN..'******You can summon 30 minions to help you to defend*******', false)
 		Say(nil,COLOR_LGREEN..'****The first wave comes in '.. COLOR_RED..tostring(prePrepareTime)..COLOR_LGREEN..' seconds , GET PREPARED !*****', false)
 		Say(nil,COLOR_LGREEN..'********************************************************', false)
     end,
