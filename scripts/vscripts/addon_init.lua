@@ -19,6 +19,7 @@ require('gamemodes')    -- Gamemode framework and small gamemodes/addons
 
 -- Include gamemodes
 require('gamemodes/ctftheflag')
+require('gamemodes/dorh')
 require('gamemodes/invokerwars')
 require('gamemodes/kaolinwars')
 require('gamemodes/kotolofthehill')

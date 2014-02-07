@@ -2563,6 +2563,1888 @@
 	}
 
 	//=================================================================================================================
+	// DoRH Skillz below Mark:Xavier
+	//=================================================================================================================
+	"dorh_make_marker_a_marker"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"item_phase_boots"
+
+		// Modifiers
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	"dorh_make_tower_looks_like_a_tower"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"item_phase_boots"
+
+		// Modifiers
+		//-------------------------------------------------------------------------------------------------------------
+		"PreCache"
+		{
+			"ParticleFile"				"particles/units/heroes/hero_necrolyte.pcf"
+		}
+
+		"Modifiers"
+		{
+			"modifier_tower_like"
+			{
+				"IsPassive"			"1"
+				"IsHidden"			"1"
+				"AttachEffect"
+				{
+					"EffectName"	"necrolyte_scythe"
+					"Target"		"CASTER"
+					"EffectAttachType" 		"follow_origin"
+				}
+			}
+		}
+	}
+
+	"dorh_unit_phase"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"item_phase_boots"
+
+		// Modifiers
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	"dorh_summon_minion_zuus"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"undying_soul_rip"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0"
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"15"
+		"OnChannelSucceeded"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_minion_zuus"
+				"UnitCount"			"1"
+				"UnitLimit"			"10"
+				"SpawnRadius"		"175"
+				"Target"			"CASTER"
+			}
+		}
+	}
+	"dorh_summon_minion_zuus_disabled"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"undying_soul_rip"
+		"MaxLevel"						"1"
+	}
+
+
+	"dorh_upgrade_tower_base_lvl1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"undying_soul_rip"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_base_lvl1"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_base_lvl2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"undying_soul_rip"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_base_lvl2"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_base_lvl3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"undying_soul_rip"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_base_lvl3"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_base_lvl4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"undying_soul_rip"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_base_lvl4"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+
+	"dorh_upgrade_tower_slow_lvl1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"abaddon_death_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_slow_lvl1"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_slow_lvl2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"abaddon_death_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_slow_lvl2"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_slow_lvl3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"abaddon_death_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_slow_lvl3"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_slow_lvl4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"abaddon_death_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_slow_lvl4"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+
+	"dorh_upgrade_tower_aoe_lvl1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"brewmaster_thunder_clap"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_aoe_lvl1"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_aoe_lvl2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"brewmaster_thunder_clap"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_aoe_lvl2"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_aoe_lvl3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"brewmaster_thunder_clap"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_aoe_lvl3"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_aoe_lvl4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"brewmaster_thunder_clap"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_aoe_lvl4"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+
+	"dorh_upgrade_tower_dps_lvl1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"ember_spirit_activate_fire_remnant"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_dps_lvl1"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_dps_lvl2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"ember_spirit_activate_fire_remnant"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_dps_lvl2"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_dps_lvl3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"ember_spirit_activate_fire_remnant"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_dps_lvl3"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	"dorh_upgrade_tower_dps_lvl4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"ember_spirit_activate_fire_remnant"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnChannelSucceeded"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_dps_lvl4"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+			"RemoveUnit"
+			{
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+
+
+	"dorh_wisp_blink"
+	{
+		"BaseClass"			"antimage_blink"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"MaxLevel"			"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blink_range"			"1200"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_blink_range"		"200"
+			}
+		}
+
+	}
+	"dorh_wisp_passive"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"rubick_empty1"
+		"MaxLevel"						"1"
+
+
+
+	}
+	"dorh_wisp_slow"
+	{
+		"BaseClass"						"lich_frost_nova"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+		"AbilityDuration"				"5.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"100"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.3"	// Primarily about the damage
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"PreCache"
+		{
+			"particlefile"				"particles/units/heroes/hero_lich.pcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aoe_damage"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"300"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_movement_speed"	"-30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_attack_speed"		"-20"
+			}
+		}
+	}
+	"dorh_wisp_stun"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"batrider_flamebreak"
+		"BaseClass"						"ability_datadriven"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"
+		//"AbilityCastMinimumRange"		"500" // Not hooked up?  Added hook in vscript to check min range.
+		"AbilityCastPoint"				"0.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"1.0"
+
+		"precache"
+		{
+			"particlefile"				"particles/units/heroes/hero_batrider.pcf"
+			"particlefile"				"particles/econ/generic/generic_aoe_shockwave_1.pcf"
+			"soundfile"					"scripts/game_sounds/ability_dorh_all.txt"
+		}
+
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"EffectName"			"batrider_flamebreak"
+				"MoveSpeed"				"%speed"
+				"StartPosition"			"attach_attack1"
+				"StartRadius"			"%collision_radius"
+				"EndRadius"				"%collision_radius"
+				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_NONE"
+				"TargetTypes"			"DOTA_UNIT_TARGET_NONE"
+				"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_NONE"
+				"HasFrontalCone"		"0"
+				"ProvidesVision"		"1"
+				"VisionRadius"			"300"
+			}
+			"CreateThinker"
+			{
+				"ModifierName"			"target_effect_thinker"
+				"Target"				"POINT"
+			}
+			"FireSound"
+			{
+				"EffectName"			"Catapult.Attack"
+				"Target"				"CASTER"
+			}
+		}
+
+		"OnProjectileFinish"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Catapult.Impact"
+				"Target"				"POINT"
+			}
+			"Damage"
+			{
+				"Target"
+				{
+					"Center"			"PROJECTILE"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Radius"			"%explosion_radius"
+				}
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+				"Damage"				"%damage"
+			}
+			"Knockback"
+			{
+				"Target"
+				{
+					"Center"			"PROJECTILE"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Radius"			"%explosion_radius"
+				}
+				"Center"				"PROJECTILE"
+				"Distance"				"%knockback_max_distance"
+				"IsFixedDistance"		"1"
+				"Height"				"%knockback_height"
+				"Duration"				"%knockback_duration"
+			}
+		}
+
+		"Modifiers"
+		{
+			"target_effect_thinker"
+			{
+				"Duration"				"3"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"generic_aoe_shockwave_1"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+						"ControlPoints"
+						{
+							"00"		"0 0 0"
+							"01"		"%explosion_radius 0 0"
+							"02"		"6 0 1"
+							"03"		"200 0 0"
+							"04"		"0 0 0"
+						}
+					}
+				}
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"150"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion_radius"		"250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"collision_radius"		"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"800"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_max_distance"	"500"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_height"		"100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.25"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mindistance"			"500"
+			}
+
+		}
+	}
+	"dorh_wisp_destroy"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityTextureName" 			"backdoor_protection"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"MaxLevel"						"1"
+		"AbilityChannelTime"			"1.0"
+
+		"PreCache"
+		{
+			"ParticleFile"				"particles/units/heroes/hero_wisp.pcf"
+		}
+
+		"OnChannelSucceeded"
+		{
+			"RemoveUnit"
+			{
+				"Target"	"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"dorh_wisp_destroyer"
+				"Target"		"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"dorh_wisp_destroyer"
+			{
+				"Duration"					"1.0"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"CASTER"
+						"EffectName" 			"wisp_overcharge"
+						"EffectAttachType" 		"follow_origin"
+					}
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName" 			"wisp_overcharge"
+						"EffectAttachType" 		"follow_origin"
+					}
+				}
+			}
+		}
+	}
+
+	//DoRH Custom Tower Abilities Below
+
+	"dorh_sniper_coup_de_grace"		//not used yet
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName" 			"phantom_assassin_coup_de_grace"
+		"MaxLevel"						"1"
+		//"OnSpellStart"
+		//{
+		//	"ApplyModifier"
+		//	{
+		//		"ModifierName" "coup_de_grace_crit"
+		//		"Target"	   "CASTER"
+		//	}
+		//}
+
+		"Modifiers"
+		{
+			"coup_de_grace_passive"
+			{
+				"Passive"	 "1"
+				"IsHidden"	 "1"
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance" "%crit_chance"
+						"PseudoRandom" "DOTA_PSEUDO_RANDOM_PHANTOMASSASSIN_CRIT"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName" "coup_de_grace_crit"
+								"Target"	   "CASTER"
+							}
+
+						}
+					}
+				}
+			}
+
+			"coup_de_grace_crit"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"   "%crit_bonus"
+				}
+
+				"OnAttackLanded"
+				{
+					"FireEffect"
+					{
+						"EffectName"		 "phantom_assassin_crit_impact"
+						"EffectAttachType"	 "follow_origin"
+						"Target"			 "TARGET"
+					}
+					"CleaveAttack"
+					{
+						"CleavePercent"		"%crit_cleave_damage"
+						"CleaveRadius"      "%crit_radius"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"coup_de_grace_crit"
+						"Target"			"CASTER"
+					}
+				}
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_bonus"				"300 400 500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_radius"				"200"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_cleave_damage"		"50"
+			}
+		}
+	}
+	"dorh_tower_freezing_splash"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"lich_chain_frost"
+
+		"precache"
+		{
+			"particlefile"				"particles/units/heroes/hero_lich.pcf"
+		}
+
+		// Modifiers
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"tower_orb_freezing_splash"
+			{
+				"IsHidden"				"0"
+				"Passive"				"1"
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				}
+
+				"OnOrbImpact"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName" "tower_freezing_splash_slow"
+						"Target"
+						{
+							"Center" "TARGET"
+							"Radius" "%slow_radius"
+							"Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHER"
+						}
+					}
+
+					"FireEffect"
+					{
+						"Target" "TARGET"
+						"EffectName" "lich_frost_nova"
+						"EffectAttachType" "follow_origin"
+						"EffectRadius" "slow_radius"
+					}
+				}
+			}
+
+			"tower_freezing_splash_slow"
+			{
+				"Duration" "%slow_duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%move_slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%attack_slow"
+				}
+
+				"StatusEffectName" "status_effect_frost_lich"
+				"StatusEffectPriority" "9"
+				"EffectName" "lich_slowed_cold"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_radius"				"150"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"slow_duration"					"1"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_slow"						"-30"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_slow"						"-10"
+			}
+		}
+	}
+	"dorh_tower_sven_hammer_splash"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"sven_storm_bolt"
+
+		"precache"
+		{
+			"ParticleFile"				"particles/units/heroes/hero_sven.pcf"
+		}
+
+		// Modifiers
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"tower_orb_freezing_splash"
+			{
+				"IsHidden"				"0"
+				"Passive"				"1"
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"	"sven_spell_storm_bolt"
+					"CastAttack"		"1"
+				}
+
+				"OnOrbImpact"
+				{
+					"Damage"
+					{
+						"Target"
+						{
+							"Center" "TARGET"
+							"Radius" "%damage_radius"
+							"Teams" "DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_OTHER"
+						}
+						"Type"					"DAMAGE_TYPE_MAGICAL"
+						"Damage"				"%damage"
+					}
+				}
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_radius"				"200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"100"
+			}
+		}
+	}
+	"dorh_glacier_arrows"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"drow_ranger_frost_arrows"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"0 0 0 0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Data-Driven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_holdout_glacier_arrow_owner"
+			{
+				"Passive"               "1"
+				"IsHidden"				"1"
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"	"drow_frost_arrow"
+					"CastAttack"		"1"
+				}
+
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"				"%AbilityManaCost"
+					}
+					"FireSound"
+					{
+						"EffectName"			"Hero_DrowRanger.FrostArrows"
+						"Target"				"CASTER"
+					}
+				}
+
+				"OnOrbImpact"
+				{
+					"RemoveModifier"
+					{
+						"Target"			"TARGET"
+						"ModifierName"		"modifier_knockback"
+					}
+
+					"ApplyModifier"
+					{
+						"Target"			"TARGET"
+						"ModifierName"		"modifier_drow_ranger_frost_arrows_slow"
+						"Duration"			"%slow_duration"
+					}
+
+					"Knockback"
+					{
+						"Target"		"TARGET"
+						"Center"		"CASTER"
+						"Duration"		"%duration"
+						"Distance"		"%knockback_distance"
+						"Height"		"0"
+						"ShouldStun"	"0"
+					}
+				}
+			}
+		}
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"0.1"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"knockback_distance"			"100"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"slow_duration"					"1.0"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"frost_arrows_movement_speed"	"-20"
+			}
+		}
+	}
+
+	"dorh_queenofpain_shadow_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"queenofpain_shadow_strike"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"5000"
+		"AbilityCastPoint"				"0.452 0.452 0.452 0.452"
+
+		"AbilityCooldown"				"20.0 16.0 12.0 8.0"
+		"AbilityDuration"				"15.0 15.0 15.0 15.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110"
+
+		"precache"
+		{
+			"particlefile"				"particles/frostivus_herofx.pcf"
+			"soundfile"					"scripts/game_sounds_heroes/game_sounds_queenofpain.txt"
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_QueenOfPain.ShadowStrike"
+				"Target"			"CASTER"
+			}
+
+			"LinearProjectile"
+			{
+				"EffectName"			"queen_shadow_strike_linear_parent"
+				"MoveSpeed"				"%projectile_speed"
+				"StartPosition"			"attach_attack1"
+				"FixedDistance"			"%distance"
+				"StartRadius"			"%radius"
+				"EndRadius"				"%radius"
+				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+				"HasFrontalCone"		"0"
+				"ProvidesVision"		"1"
+				"VisionRadius"			"300"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit" "false"
+			"ApplyModifier"
+			{
+				"Target" 				"TARGET"
+				"Duration"				"%duration_damage"
+				"ModifierName"			"modifier_queenofpain_shadow_strike"
+			}
+			"Damage"
+			{
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%strike_damage"
+				"Target"	"TARGET"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"strike_damage"			"50 75 100 125"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_damage"		"30 40 50 60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"-20 -30 -40 -50"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"1200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"125"
+			}
+		}
+	}
+
+	"dorh_queen_freezing_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"crystal_maiden_freezing_field"
+
+		"precache"
+		{
+			"particlefile"				"particles/units/heroes/hero_crystalmaiden.pcf"
+		}
+
+		// Modifiers
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"tower_orb_freezing_strike"
+			{
+				"IsHidden"				"0"
+				"Passive"				"1"
+				"Orb"
+				{
+					"Priority"			"DOTA_ORB_PRIORITY_ABILITY"
+				}
+
+				"OnOrbImpact"
+				{
+					"Random"
+					{
+						"Chance" 		"%chance"
+						"PseudoRandom" "DOTA_PSEUDO_RANDOM_SLARDAR_BASH"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName" "tower_freezing_strike_freeze"
+								"Target"		"TARGET"
+							}
+							"FireEffect"
+							{
+								"Target" 			"TARGET"
+								"EffectName" 		"maiden_frostbite"
+								"EffectAttachType" 	"follow_origin"
+							}
+						}
+					}
+				}
+			}
+
+			"tower_freezing_strike_freeze"
+			{
+				"Duration" "%duration"
+				"EffectName" "generic_stunned"
+				"EffectAttachType" "follow_overhead"
+				"OverrideAnimation" "ACT_DOTA_DISABLED"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"slow_duration"					"1"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"chance"						"20"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_slow"						"-10"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"0.3"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Tower Defence Buildings
 	//=================================================================================================================
 	"td_build_general"
