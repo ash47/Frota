@@ -3661,6 +3661,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"batrider_flamebreak"
 		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
