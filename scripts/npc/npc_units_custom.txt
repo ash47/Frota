@@ -345,10 +345,10 @@
 		// Abilities
 		//----------------------------------------------------------------
 
-		"Ability1"					"dorh_upgrade_tower_base"			// Ability 1.
-		"Ability2"					"dorh_upgrade_tower_aoe"			// Ability 2.
-		"Ability3"					"dorh_upgrade_tower_slow"			// Ability 3.
-		"Ability4"					"dorh_upgrade_tower_dps"			// Ability 4.
+		"Ability1"					"dorh_upgrade_tower_base_lvl1"			// Ability 1.
+		"Ability2"					"dorh_upgrade_tower_aoe_lvl1"			// Ability 2.
+		"Ability3"					"dorh_upgrade_tower_slow_lvl1"			// Ability 3.
+		"Ability4"					"dorh_upgrade_tower_dps_lvl1"			// Ability 4.
 		"Ability5"					""			// Ability 5.
 		"Ability6"					""			// Ability 6 - Extra.
 		"Ability7"					""			// Ability 7 - Extra.
@@ -530,7 +530,7 @@
 		"Model"						"models/heroes/visage/visage_familiar_stoneform.mdl"	// Model.
 		"Level"						"1"
 		"ModelScale"				"1.0"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -602,12 +602,12 @@
 		"Level"						"1"
 		"ModelScale"				"0.8"
 		"SelectionGroup"			"dorh_tower_base_lvl1"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"dorh_upgrade_tower_base"			// Ability 1.
+		"Ability1"					"dorh_upgrade_tower_base_lvl2"			// Ability 1.
 		"Ability2"					"beastmaster_inner_beast"			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					""			// Ability 4.
@@ -615,8 +615,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"27"									// Damage range min.
-		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackDamageMin"			"100"									// Damage range min.
+		"AttackDamageMax"			"100"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -665,7 +665,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_keeper_of_the_light.pcf"
 
@@ -691,7 +691,7 @@
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
 		"SelectionGroup"			"dorh_tower_base_lvl2"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -704,8 +704,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"27"									// Damage range min.
-		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackDamageMin"			"200"									// Damage range min.
+		"AttackDamageMax"			"300"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -754,7 +754,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_witchdoctor.pcf"
 
@@ -778,7 +778,7 @@
 		"SelectionGroup"			"dorh_tower_base_lvl3"
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -791,8 +791,8 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"22"									// Damage range min.
-		"AttackDamageMax"			"26"									// Damage range max.
+		"AttackDamageMin"			"400"									// Damage range min.
+		"AttackDamageMax"			"500"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"			"0.53"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"		"800"									// Range within a target can be acquired.
@@ -841,7 +841,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_necrolyte.pcf"
 
@@ -865,7 +865,7 @@
 		"MinimapIconSize"			"300"
 		"SelectionGroup"			"dorh_tower_base_lvl4"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -878,8 +878,8 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"20"									// Damage range min.
-		"AttackDamageMax"			"35"									// Damage range max.
+		"AttackDamageMin"			"800"									// Damage range min.
+		"AttackDamageMax"			"900"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.46"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -928,7 +928,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_obsidian_destroyer.pcf"
 
@@ -953,7 +953,7 @@
 		"Level"						"1"
 		"ModelScale"				"0.8"
 		"SelectionGroup"			"dorh_tower_slow_lvl1"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -966,8 +966,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"27"									// Damage range min.
-		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackDamageMin"			"100"									// Damage range min.
+		"AttackDamageMax"			"150"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -1016,7 +1016,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_venomancer.pcf"
 
@@ -1041,7 +1041,7 @@
 		"SelectionGroup"			"dorh_tower_slow_lvl2"
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1054,8 +1054,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"27"									// Damage range min.
-		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackDamageMin"			"200"									// Damage range min.
+		"AttackDamageMax"			"250"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -1104,7 +1104,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_drow.pcf"
 
@@ -1130,7 +1130,7 @@
 		"SelectionGroup"			"dorh_tower_slow_lvl3"
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1143,8 +1143,8 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"22"									// Damage range min.
-		"AttackDamageMax"			"26"									// Damage range max.
+		"AttackDamageMin"			"300"									// Damage range min.
+		"AttackDamageMax"			"350"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"			"0.53"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"		"800"									// Range within a target can be acquired.
@@ -1193,7 +1193,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_queenofpain.pcf"
 
@@ -1216,7 +1216,7 @@
 		"MinimapIconSize"			"300"
 		"SelectionGroup"			"dorh_tower_slow_lvl4"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1229,8 +1229,8 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"20"									// Damage range min.
-		"AttackDamageMax"			"35"									// Damage range max.
+		"AttackDamageMin"			"400"									// Damage range min.
+		"AttackDamageMax"			"450"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.46"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -1279,7 +1279,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_ancient_apparition.pcf"
 	}
@@ -1293,7 +1293,7 @@
 		"Level"						"1"
 		"SelectionGroup"			"dorh_tower_aoe_lvl1"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1306,8 +1306,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"27"									// Damage range min.
-		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackDamageMin"			"200"									// Damage range min.
+		"AttackDamageMax"			"250"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -1356,7 +1356,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_templar_assassin.pcf"
 
@@ -1379,7 +1379,7 @@
 		"SelectionGroup"			"dorh_tower_aoe_lvl2"
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1392,8 +1392,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"27"									// Damage range min.
-		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackDamageMin"			"400"									// Damage range min.
+		"AttackDamageMax"			"450"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -1442,7 +1442,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_sven.pcf"
 
@@ -1467,7 +1467,7 @@
 		"SelectionGroup"			"dorh_tower_aoe_lvl3"
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1480,8 +1480,8 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"22"									// Damage range min.
-		"AttackDamageMax"			"26"									// Damage range max.
+		"AttackDamageMin"			"600"									// Damage range min.
+		"AttackDamageMax"			"650"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"			"0.53"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"		"800"									// Range within a target can be acquired.
@@ -1530,7 +1530,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_luna.pcf"
 
@@ -1556,7 +1556,7 @@
 		"SelectionGroup"			"dorh_tower_aoe_lvl4"
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1569,8 +1569,8 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"20"									// Damage range min.
-		"AttackDamageMax"			"35"									// Damage range max.
+		"AttackDamageMin"			"800"									// Damage range min.
+		"AttackDamageMax"			"850"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.46"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -1619,7 +1619,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_medusa.pcf"
 
@@ -1644,7 +1644,7 @@
 		"Level"						"1"
 		"SelectionGroup"			"dorh_tower_dps_lvl1"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1657,8 +1657,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"27"									// Damage range min.
-		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackDamageMin"			"300"									// Damage range min.
+		"AttackDamageMax"			"400"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -1707,7 +1707,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_huskar.pcf"
 
@@ -1732,7 +1732,7 @@
 		"SelectionGroup"			"dorh_tower_dps_lvl2"
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1745,8 +1745,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"27"									// Damage range min.
-		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackDamageMin"			"700"									// Damage range min.
+		"AttackDamageMax"			"800"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -1795,7 +1795,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_weaver.pcf"
 
@@ -1819,7 +1819,7 @@
 		"SelectionGroup"			"dorh_tower_dps_lvl3"
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1832,8 +1832,8 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"22"									// Damage range min.
-		"AttackDamageMax"			"26"									// Damage range max.
+		"AttackDamageMin"			"1000"									// Damage range min.
+		"AttackDamageMax"			"1200"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"			"0.53"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"		"800"									// Range within a target can be acquired.
@@ -1882,7 +1882,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_nevermore.pcf"
 	}
@@ -1895,7 +1895,7 @@
 		"SelectionGroup"			"dorh_tower_dps_lvl4"
 		"MinimapIconSize"			"300"
 		"ModelScale"				"0.8"
-		"ConsideredHero"			"1"
+		"ConsideredHero"			"0"
 		"AutoAttacksByDefault"		"1"
 
 		// Abilities
@@ -1908,8 +1908,8 @@
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"20"									// Damage range min.
-		"AttackDamageMax"			"35"									// Damage range max.
+		"AttackDamageMin"			"1500"									// Damage range min.
+		"AttackDamageMax"			"1600"									// Damage range max.
 		"AttackRate"				"1.2"									// Speed of attack.
 		"AttackAnimationPoint"		"0.46"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
@@ -1958,7 +1958,7 @@
 		"VisionNighttimeRange"		"100"		// Range of vision at night time.
 
 		//Inventory
-		"HasInventory"				"1"
+		"HasInventory"				"0"
 
 		"ParticleFile"				"particles/units/heroes/hero_sniper.pcf"
 
