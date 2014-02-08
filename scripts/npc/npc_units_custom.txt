@@ -595,7 +595,6 @@
 		//Inventory
 		"HasInventory"				"0"
 	}
-	}
 	"npc_dorh_tower_base_lvl1"	//kotol
 	{
 		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
