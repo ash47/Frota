@@ -368,7 +368,7 @@
 		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
 		"AttackRange"				"600"									// Range within a target can be attacked.
-		"ProjectileModel"			"keeper_of_the_light_base_attack"		// Particle system model for projectile.
+		"ProjectileModel"			"zuus_base_attack"		// Particle system model for projectile.
 		"ProjectileSpeed"			"900"									// Speed of projectile.
 
 		// Bounty
@@ -409,6 +409,8 @@
 
 		//Inventory
 		"HasInventory"				"0"
+		
+		"ParticleFile"				"particles/units/heroes/hero_zuus.pcf"
 	}
 
 	"npc_dorh_minion_zuus"
@@ -522,6 +524,78 @@
 	//=================================================================================
 	//DoRH Towers Below
 	//=================================================================================
+	"npc_dorh_tower_foundation_bed"
+	{
+		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
+		"Model"						"models/heroes/visage/visage_familiar_stoneform.mdl"	// Model.
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"ConsideredHero"			"1"
+		"AutoAttacksByDefault"		"1"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					"dorh_make_marker_a_marker"			// Ability 4.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"27"									// Damage range min.
+		"AttackDamageMax"			"37"									// Damage range max.
+		"AttackRate"				"1.2"									// Speed of attack.
+		"AttackAnimationPoint"		"0.3"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"									// Range within a target can be acquired.
+		"AttackRange"				"900"									// Range within a target can be attacked.
+		"ProjectileModel"			""		// Particle system model for projectile.
+		"ProjectileSpeed"			""									// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"50"
+		"HealthBarOffset"			"-1"		// -1 means use the models
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"350"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+		"HasAggressiveStance"		"0"			// Plays alternate idle/run animation when near enemies
+		"FollowRange"				"100"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"500"			// Base mana.
+		"StatusManaRegen"			"500"			// Mana regeneration rate.
+		"StatusStartingMana"		"-1"		// -1 means default to full mana
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+
+		//Inventory
+		"HasInventory"				"0"
+	}
+	}
 	"npc_dorh_tower_base_lvl1"	//kotol
 	{
 		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
