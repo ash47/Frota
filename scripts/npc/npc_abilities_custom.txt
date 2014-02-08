@@ -2593,38 +2593,6 @@
 			}
 		}
 	}
-
-	"dorh_make_tower_looks_like_a_tower"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"item_phase_boots"
-
-		// Modifiers
-		//-------------------------------------------------------------------------------------------------------------
-		"PreCache"
-		{
-			"ParticleFile"				"particles/units/heroes/hero_necrolyte.pcf"
-		}
-
-		"Modifiers"
-		{
-			"modifier_tower_like"
-			{
-				"IsPassive"			"1"
-				"IsHidden"			"1"
-				"AttachEffect"
-				{
-					"EffectName"	"necrolyte_scythe"
-					"Target"		"CASTER"
-					"EffectAttachType" 		"follow_origin"
-				}
-			}
-		}
-	}
-
 	"dorh_unit_phase"
 	{
 		// General
@@ -2672,6 +2640,33 @@
 				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
 				"Function"				"onDataDrivenSpellStart"
 			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_general"
+				"UnitCount"			"1"
+				"SpawnRadius"	 	"0"
+				"Target"			"POINT"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{		
+						"Target"		"TARGET"
+						"Duration"		"1.0"
+						"ModifierName"	"modifier_dorh_tower_preview"
+					}
+					"DelayedAction"		
+					{
+						"Delay"			"1.0"
+						"Action"
+						{
+							"RemoveUnit"
+							{
+								"Target"		"TARGET"
+							}
+						}
+					}
+				}
+			}
 		}
 		"OnChannelSucceeded"
 		{
@@ -2680,6 +2675,21 @@
 				"Target"				"POINT"
 				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
 				"Function"				"onDataDrivenChannelSucceeded"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_dorh_tower_preview"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 
