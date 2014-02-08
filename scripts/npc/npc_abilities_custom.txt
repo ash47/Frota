@@ -2623,7 +2623,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName" 			"undying_soul_rip"
+		"AbilityTextureName" 			"zuus_static_field"
 		"Maxlevel"						"1"
 
 		// Stats
@@ -2656,7 +2656,7 @@
 					}
 					"DelayedAction"		
 					{
-						"Delay"			"1.0"
+						"Delay"			"0.95"
 						"Action"
 						{
 							"RemoveUnit"
@@ -2668,6 +2668,15 @@
 				}
 			}
 		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
 		"OnChannelSucceeded"
 		{
 			"RunScript"
@@ -2675,6 +2684,13 @@
 				"Target"				"POINT"
 				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
 				"Function"				"onDataDrivenChannelSucceeded"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_general"
+				"UnitCount"			"1"
+				"SpawnRadius"	 	"0"
+				"Target"			"POINT"
 			}
 		}
 		"Modifiers"
@@ -2704,7 +2720,6 @@
 			}
 		}
 	}
-
 	"dorh_upgrade_tower_base"
 	{
 		// General
@@ -2725,6 +2740,15 @@
 				"Target"				"POINT"
 				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
 				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
 			}
 		}
 		"OnChannelSucceeded"
@@ -2771,6 +2795,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"15"
+		
 		"OnChannelSucceeded"
 		{
 			"SpawnUnit"
@@ -2792,15 +2817,13 @@
 		"AbilityTextureName" 			"undying_soul_rip"
 		"MaxLevel"						"1"
 	}
-
-
 	"dorh_upgrade_tower_base_lvl1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"undying_soul_rip"
+		"AbilityTextureName" 			"keeper_of_the_light_spirit_form"
 		"MaxLevel"						"1"
 
 		// Casting
@@ -2814,8 +2837,39 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
 		"OnChannelSucceeded"
 		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
 			"ApplyModifier"
 			{
 				"Target"	"CASTER"
@@ -2828,12 +2882,7 @@
 				"SpawnRadius"		"1"
 				"Target"			"CASTER"
 			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
 		}
-
 		"Modifiers"
 		{
 			"modifier_phased_movement"
@@ -2844,6 +2893,14 @@
 				}
 			}
 		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"						"100"
+			}
+		}
 	}
 	"dorh_upgrade_tower_base_lvl2"
 	{
@@ -2851,7 +2908,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"undying_soul_rip"
+		"AbilityTextureName" 			"keeper_of_the_light_spirit_form"
 		"MaxLevel"						"1"
 
 		// Casting
@@ -2865,8 +2922,39 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
 		"OnChannelSucceeded"
 		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
 			"ApplyModifier"
 			{
 				"Target"	"CASTER"
@@ -2879,22 +2967,23 @@
 				"SpawnRadius"		"1"
 				"Target"			"CASTER"
 			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
 		}
-
 		"Modifiers"
 		{
 			"modifier_phased_movement"
 			{
-				"IsHidden"				"1"
-				"Passive"				"1"
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"200"
 			}
 		}
 	}
@@ -2904,7 +2993,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"undying_soul_rip"
+		"AbilityTextureName" 			"keeper_of_the_light_spirit_form"
 		"MaxLevel"						"1"
 
 		// Casting
@@ -2918,8 +3007,39 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
 		"OnChannelSucceeded"
 		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
 			"ApplyModifier"
 			{
 				"Target"	"CASTER"
@@ -2932,22 +3052,23 @@
 				"SpawnRadius"		"1"
 				"Target"			"CASTER"
 			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
 		}
-
 		"Modifiers"
 		{
 			"modifier_phased_movement"
 			{
-				"IsHidden"				"1"
-				"Passive"				"1"
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"300"
 			}
 		}
 	}
@@ -2957,7 +3078,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"undying_soul_rip"
+		"AbilityTextureName" 			"keeper_of_the_light_spirit_form"
 		"MaxLevel"						"1"
 
 		// Casting
@@ -2971,8 +3092,39 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
 		"OnChannelSucceeded"
 		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
 			"ApplyModifier"
 			{
 				"Target"	"CASTER"
@@ -2985,67 +3137,7 @@
 				"SpawnRadius"		"1"
 				"Target"			"CASTER"
 			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
 		}
-
-		"Modifiers"
-		{
-			"modifier_phased_movement"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-
-	"dorh_upgrade_tower_slow_lvl1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"abaddon_death_coil"
-		"MaxLevel"						"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"1.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"OnChannelSucceeded"
-		{
-			"ApplyModifier"
-			{
-				"Target"	"CASTER"
-				"ModifierName"	"modifier_phased_movement"
-			}
-			"SpawnUnit"
-			{
-				"UnitName"			"npc_dorh_tower_slow_lvl1"
-				"UnitCount"			"1"
-				"SpawnRadius"		"1"
-				"Target"			"CASTER"
-			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
-		}
-
 		"Modifiers"
 		{
 			"modifier_phased_movement"
@@ -3056,380 +3148,15 @@
 				}
 			}
 		}
-	}
-	"dorh_upgrade_tower_slow_lvl2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"abaddon_death_coil"
-		"MaxLevel"						"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"1.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"OnChannelSucceeded"
+		"AbilitySpecial"
 		{
-			"ApplyModifier"
+			"01"
 			{
-				"Target"	"CASTER"
-				"ModifierName"	"modifier_phased_movement"
-			}
-			"SpawnUnit"
-			{
-				"UnitName"			"npc_dorh_tower_slow_lvl2"
-				"UnitCount"			"1"
-				"SpawnRadius"		"1"
-				"Target"			"CASTER"
-			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_phased_movement"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"500"
 			}
 		}
 	}
-	"dorh_upgrade_tower_slow_lvl3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"abaddon_death_coil"
-		"MaxLevel"						"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"1.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"OnChannelSucceeded"
-		{
-			"ApplyModifier"
-			{
-				"Target"	"CASTER"
-				"ModifierName"	"modifier_phased_movement"
-			}
-			"SpawnUnit"
-			{
-				"UnitName"			"npc_dorh_tower_slow_lvl3"
-				"UnitCount"			"1"
-				"SpawnRadius"		"1"
-				"Target"			"CASTER"
-			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_phased_movement"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	"dorh_upgrade_tower_slow_lvl4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"abaddon_death_coil"
-		"MaxLevel"						"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"1.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"OnChannelSucceeded"
-		{
-			"ApplyModifier"
-			{
-				"Target"	"CASTER"
-				"ModifierName"	"modifier_phased_movement"
-			}
-			"SpawnUnit"
-			{
-				"UnitName"			"npc_dorh_tower_slow_lvl4"
-				"UnitCount"			"1"
-				"SpawnRadius"		"1"
-				"Target"			"CASTER"
-			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_phased_movement"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-
-	"dorh_upgrade_tower_aoe_lvl1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"brewmaster_thunder_clap"
-		"MaxLevel"						"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"1.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"OnChannelSucceeded"
-		{
-			"ApplyModifier"
-			{
-				"Target"	"CASTER"
-				"ModifierName"	"modifier_phased_movement"
-			}
-			"SpawnUnit"
-			{
-				"UnitName"			"npc_dorh_tower_aoe_lvl1"
-				"UnitCount"			"1"
-				"SpawnRadius"		"1"
-				"Target"			"CASTER"
-			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_phased_movement"
-			{
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	"dorh_upgrade_tower_aoe_lvl2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"brewmaster_thunder_clap"
-		"MaxLevel"						"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"1.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"OnChannelSucceeded"
-		{
-			"ApplyModifier"
-			{
-				"Target"	"CASTER"
-				"ModifierName"	"modifier_phased_movement"
-			}
-			"SpawnUnit"
-			{
-				"UnitName"			"npc_dorh_tower_aoe_lvl2"
-				"UnitCount"			"1"
-				"SpawnRadius"		"1"
-				"Target"			"CASTER"
-			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_phased_movement"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	"dorh_upgrade_tower_aoe_lvl3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"brewmaster_thunder_clap"
-		"MaxLevel"						"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"1.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"OnChannelSucceeded"
-		{
-			"ApplyModifier"
-			{
-				"Target"	"CASTER"
-				"ModifierName"	"modifier_phased_movement"
-			}
-			"SpawnUnit"
-			{
-				"UnitName"			"npc_dorh_tower_aoe_lvl3"
-				"UnitCount"			"1"
-				"SpawnRadius"		"1"
-				"Target"			"CASTER"
-			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_phased_movement"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-	"dorh_upgrade_tower_aoe_lvl4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName" 			"brewmaster_thunder_clap"
-		"MaxLevel"						"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"1.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"OnChannelSucceeded"
-		{
-			"ApplyModifier"
-			{
-				"Target"	"CASTER"
-				"ModifierName"	"modifier_phased_movement"
-			}
-			"SpawnUnit"
-			{
-				"UnitName"			"npc_dorh_tower_aoe_lvl4"
-				"UnitCount"			"1"
-				"SpawnRadius"		"1"
-				"Target"			"CASTER"
-			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_phased_movement"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-
 	"dorh_upgrade_tower_dps_lvl1"
 	{
 		// General
@@ -3450,8 +3177,39 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
 		"OnChannelSucceeded"
 		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
 			"ApplyModifier"
 			{
 				"Target"	"CASTER"
@@ -3464,12 +3222,7 @@
 				"SpawnRadius"		"1"
 				"Target"			"CASTER"
 			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
 		}
-
 		"Modifiers"
 		{
 			"modifier_phased_movement"
@@ -3478,6 +3231,14 @@
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"						"500"
 			}
 		}
 	}
@@ -3501,8 +3262,39 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
 		"OnChannelSucceeded"
 		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
 			"ApplyModifier"
 			{
 				"Target"	"CASTER"
@@ -3515,22 +3307,23 @@
 				"SpawnRadius"		"1"
 				"Target"			"CASTER"
 			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
 		}
-
 		"Modifiers"
 		{
 			"modifier_phased_movement"
 			{
-				"IsHidden"				"1"
-				"Passive"				"1"
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"1000"
 			}
 		}
 	}
@@ -3554,8 +3347,39 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
 		"OnChannelSucceeded"
 		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
 			"ApplyModifier"
 			{
 				"Target"	"CASTER"
@@ -3568,22 +3392,23 @@
 				"SpawnRadius"		"1"
 				"Target"			"CASTER"
 			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
 		}
-
 		"Modifiers"
 		{
 			"modifier_phased_movement"
 			{
-				"IsHidden"				"1"
-				"Passive"				"1"
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"2000"
 			}
 		}
 	}
@@ -3607,8 +3432,39 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
 		"OnChannelSucceeded"
 		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
 			"ApplyModifier"
 			{
 				"Target"	"CASTER"
@@ -3621,27 +3477,706 @@
 				"SpawnRadius"		"1"
 				"Target"			"CASTER"
 			}
-			"RemoveUnit"
-			{
-				"Target"			"CASTER"
-			}
 		}
-
 		"Modifiers"
 		{
 			"modifier_phased_movement"
 			{
-				"IsHidden"				"1"
-				"Passive"				"1"
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"3000"
+			}
+		}
 	}
+	"dorh_upgrade_tower_slow_lvl1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"abaddon_death_coil"
+		"MaxLevel"						"1"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
 
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_slow_lvl1"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"						"500"
+			}
+		}
+	}
+	"dorh_upgrade_tower_slow_lvl2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"abaddon_death_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_slow_lvl2"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"1000"
+			}
+		}
+	}
+	"dorh_upgrade_tower_slow_lvl3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"abaddon_death_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_slow_lvl3"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"2000"
+			}
+		}
+	}
+	"dorh_upgrade_tower_slow_lvl4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"abaddon_death_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_slow_lvl4"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"3000"
+			}
+		}
+	}
+	"dorh_upgrade_tower_aoe_lvl1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"puck_dream_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_aoe_lvl1"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"						"500"
+			}
+		}
+	}
+	"dorh_upgrade_tower_aoe_lvl2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"puck_dream_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_aoe_lvl2"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"1000"
+			}
+		}
+	}
+	"dorh_upgrade_tower_aoe_lvl3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"puck_dream_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_aoe_lvl3"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"2000"
+			}
+		}
+	}
+	"dorh_upgrade_tower_aoe_lvl4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName" 			"puck_dream_coil"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"1.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"CASTER"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"DelayedAction"		
+			{
+				"Delay"			"0.1"
+				"Action"
+				{
+					"RunScript"
+					{
+						"Target"				"CASTER"
+						"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+						"Function"				"onDataDrivenChannelSucceeded"
+					}
+				}
+			}
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"	"modifier_phased_movement"
+			}
+			"SpawnUnit"
+			{
+				"UnitName"			"npc_dorh_tower_aoe_lvl4"
+				"UnitCount"			"1"
+				"SpawnRadius"		"1"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_phased_movement"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"3000"
+			}
+		}
+	}
 
 	"dorh_wisp_blink"
 	{

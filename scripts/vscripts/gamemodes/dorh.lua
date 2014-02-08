@@ -56,10 +56,11 @@ local waveUnits = {}
 local function spawnWaypointMarkers()
     -- Loop over each wavepoint
     for k,v in ipairs(wayPointPositions) do
-        -- Spawn the marker
-        local unit = CreateUnitByName("npc_dorh_waypoint_marker", v, false, nil, nil, DOTA_TEAM_NOTEAM)
-
-        -- Make invulnerable
+        -- Spawn the marker for radiant to provide the vision of all map
+        local unit = CreateUnitByName("npc_dorh_waypoint_marker", v, false, nil, nil, DOTA_TEAM_GOODGUYS)
+		-- Make invulnerable
+		unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
+        local unit = CreateUnitByName("npc_dorh_waypoint_marker", v, false, nil, nil, DOTA_TEAM_BADGUYS)
         unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
 
         -- Spawn a waypoint
@@ -371,7 +372,7 @@ RegisterGamemode('dorh', {
         Say(nil,COLOR_LGREEN..'********************************************************', false)
         Say(nil,COLOR_LGREEN..'*******************'..COLOR_RED..'Defense of RuneHill'..COLOR_LGREEN..'*******************', false)
         Say(nil,COLOR_LGREEN..'*********Defend rune hill from '..#waveData..' waves of enemies********', false)
-        Say(nil,COLOR_LGREEN..'******You can summon 30 minions to help you to defend*******', false)
+        Say(nil,COLOR_LGREEN..'******You can summon 30 minions to help you to defend******', false)
         Say(nil,COLOR_LGREEN..'****The first wave comes in '..COLOR_RED..prepTime..COLOR_LGREEN..' seconds, GET PREPARED !*****', false)
         Say(nil,COLOR_LGREEN..'********************************************************', false)
 
@@ -450,6 +451,29 @@ RegisterGamemode('dorh', {
 
     -- Buying of towers
     onDataDrivenSpellStart = function(frota, keys)
+		local unit = keys.caster
+		local ability = keys.ability
+		local name = ability:GetAbilityName()
+		local cost = ability:GetSpecialValueFor('cost')
+		local owner = unit:GetOwner()
+		local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
+		
+            -- Build a general building
+			local gold = PlayerResource:GetGold(playerID)
+            if gold < cost then
+				Say(nil, COLOR_RED..'NOT ENOUGH GOLD!!!!', false)
+                unit:Stop()
+            end
+			-- Make sure they have enough to buy this building
+			if gold >= cost then
+			end
+			
+			--it's ok to take the gold even there's not enough gold, cost will take and set gold to a -value, then return to player when hero/unit stopped
+			PlayerResource:SpendGold(playerID, cost, 0)
+	
+    end,
+	
+	onDataDrivenChannelInterrupted = function(frota, keys)
         local hero = keys.caster
         local ability = keys.ability
         local name = ability:GetAbilityName()
@@ -459,49 +483,36 @@ RegisterGamemode('dorh', {
             local owner = hero:GetOwner()
             local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
 
-            -- Grab how much gold this user has
-            local gold = PlayerResource:GetGold(playerID)
-
-            -- Make sure they have enough to buy this building
-            if gold < cost then
-                -- Nope, stop the channel
-                hero:Stop()
-            end
+            -- return the gold
+			PlayerResource:SpendGold(playerID, -cost, 0)
         end
-    end,
+	end,
 
     onDataDrivenChannelSucceeded = function(frota, keys)
-        local point = keys.target_points[1]
+		local point = keys.target_points[1]
         local hero = keys.caster
         local ability = keys.ability
         local heroName = hero:GetClassname()
         local name = ability:GetAbilityName()
-
-        local cost = ability:GetSpecialValueFor('cost')
         local owner = hero:GetOwner()
+		if name ~= 'dorh_build_general' then
+			point = hero:GetOrigin()
+		end
 
-        local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
-        local ply = PlayerResource:GetPlayer(playerID)
-
-        if name == 'dorh_build_general' then
-            -- Build a general building
-            attemptToBuy(playerID, cost, function()
-                -- Build the building
-                local unit = CreateUnitByName("npc_dorh_tower_general", point, true, hero, hero, hero:GetTeam())
-                unit:SetOwner(hero)
-                setUpgradeLevel(unit, 'dorh_upgrade_tower_base', 1)
-            end)
-        elseif name == 'dorh_upgrade_tower_base' then
-            -- General Upgrade
-            attemptToBuy(playerID, cost, function()
-                if heroName == 'npc_dorh_tower_general' then
-                    local unit = CreateUnitByName("npc_dorh_tower_base_lvl1", hero:GetOrigin(), false, hero, hero, hero:GetTeam())
-                    unit:SetOwner(owner)
-                    setUpgradeLevel(unit, 'dorh_upgrade_tower_base', 2)
-                    hero:Remove()
-                end
-            end)
-        end
+		local unitOnPoint = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, point , nil, 1 , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
+		print('Units Found'..tostring(#unitOnPoint))
+		if name == 'dorh_build_general' then
+			for _,unit in ipairs(unitOnPoint) do
+				unit:SetOwner( hero )
+			end
+		else
+			for _,unit in ipairs(unitOnPoint) do
+				unit:SetOwner( owner )
+				if hero then
+				UTIL_RemoveImmediate( hero )
+				end
+			end
+		end
     end
 })
 
