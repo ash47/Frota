@@ -43,6 +43,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - What does the Rabbit say?
  - **King of the Hill**
   - Fight to get more friendly players on top of the point.
+ - **Zombie Survival**
+  - Survive waves of zombies attacking you!
 
 
 ###Picking + Gameplay Gamemodes###
