@@ -3,16 +3,16 @@
 -- By Xavier@2014.02
 
 -- change this to multiple starting gold
-local testmodeGoldRate = 100
+local testmodeGoldRate = 1
 
 -- Preparation time (in seconds)
-local prepTime = 10
+local prepTime = 60
 
 -- Time between waves (in seconds)
-local timeBetweenWaves = 5
+local timeBetweenWaves =30
 
 -- How fast units spawn
-local spawnInterval = 0.5
+local spawnInterval = 1
 
 -- How many lives the players start with
 local startingLives = 20
