@@ -40,7 +40,13 @@ RegisterGamemode('fatometer', {
                 local playerID = hero:GetPlayerID()
 
                 -- Increase the scale of the killer
-                scale[playerID] = (scale[playerID] or frota:GetDefaultHeroScale(hero:GetClassname())) + 0.1
+                scale[playerID] = (scale[playerID] or frota:GetDefaultHeroScale(hero:GetClassname())) + 0.01
+
+                -- Limit scale to 3
+                local limit = frota:GetDefaultHeroScale(hero:GetClassname()) * 3
+                if scale[playerID] > limit then
+                    scale[playerID] = limit
+                end
 
                 -- Scale the hero
                 hero:SetModelScale(scale[playerID], 0)
