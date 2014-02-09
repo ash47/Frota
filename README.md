@@ -54,6 +54,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - ~~One player spawns with Sun Strike and has to kill all the other players with it.~~
  - **~~Plague~~**
   - ~~When you kill someone, they become the same hero as you, when everyone is the same hero, the game is over.~~
+ - **Defense of RuneHill**
+  - Defend 22 waves of enemies and protect your rune top
 
 ###Addons###
  - **~~WTF Mode~~**
