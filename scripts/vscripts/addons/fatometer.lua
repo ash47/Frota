@@ -13,6 +13,24 @@ RegisterGamemode('fatometer', {
 
     -- When something is killed, update the scale
     entity_killed = function(frota, keys)
+        -- Grab the unit that was killed
+        local killedUnit = EntIndexToHScript(keys.entindex_killed)
+
+        -- Grab the dude that died
+        if killedUnit then
+            -- Check if it was a hero
+            if IsValidEntity(killedUnit) and killedUnit:IsRealHero() then
+                -- Grab the playerID
+                local playerID = killedUnit:GetPlayerID()
+
+                -- Lose 1/3 of the size
+                scale[playerID] = (scale[playerID] or frota:GetDefaultHeroScale(killedUnit:GetClassname())) * 2/3
+
+                -- Scale the hero
+                killedUnit:SetModelScale(scale[playerID], 0)
+            end
+        end
+
         --- Check if there was a killer
         if keys.entindex_attacker ~= nil then
             -- Check if a hero did the killing
@@ -22,7 +40,7 @@ RegisterGamemode('fatometer', {
                 local playerID = hero:GetPlayerID()
 
                 -- Increase the scale of the killer
-                scale[playerID] = (scale[playerID] or 1) + 0.1
+                scale[playerID] = (scale[playerID] or frota:GetDefaultHeroScale(hero:GetClassname())) + 0.1
 
                 -- Scale the hero
                 hero:SetModelScale(scale[playerID], 0)
