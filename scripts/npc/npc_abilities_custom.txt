@@ -4513,6 +4513,59 @@
 			}
 		}
 	}
+	"dorh_wisp_evolution"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName" 			"terrorblade_metamorphosis"
+		"AbilityCastAnimation"			"ACT_DOTA_TELEPORT"
+		"MaxLevel"						"4"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"5.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenSpellStart"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelInterrupted"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"RunScript"
+			{
+				"Target"				"POINT"
+				"ScriptFile"			"scripts/vscripts/abilityHooks.lua"
+				"Function"				"onDataDrivenChannelSucceeded"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cost"			"5000 10000 15000 20000"
+			}
+		}
+	}
 
 	//DoRH Custom Tower Abilities Below
 

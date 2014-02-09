@@ -9,3 +9,8 @@ function onDataDrivenChannelSucceeded(keys)
     -- Fire frota event
     GetFrota():FireEvent('onDataDrivenChannelSucceeded', keys)
 end
+
+function onDataDrivenChannelInterrupted(keys)
+    -- Fire frota event
+    GetFrota():FireEvent('onDataDrivenChannelInterrupted', keys)
+end

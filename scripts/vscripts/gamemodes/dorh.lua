@@ -2,6 +2,9 @@
 -- Tower Denfese Addon for Frota
 -- By Xavier@2014.02
 
+-- change this to multiple starting gold
+local testmodeGoldRate = 1
+
 -- Preparation time (in seconds)
 local prepTime = 10
 
@@ -31,17 +34,52 @@ local wayPointPositions = {
 local wayPoints = {}
 
 -- These are the skills everyone in dorh will get
+-- TODO: Replace slow and stun skill with more powerful skills
 local dorhSkills = {
-    [1] = 'dorh_wisp_blink',
-    [2] = 'dorh_build_general',
-    [3] = 'dorh_wisp_slow',
-    [4] = 'dorh_wisp_passive',
-    [5] = 'dorh_wisp_destroy',
-    [6] = 'dorh_wisp_stun'
+	[1] = {
+		[1] = 'dorh_wisp_blink',
+		[2] = 'dorh_build_general',
+		[3] = 'dorh_wisp_slow',
+		[4] = 'dorh_wisp_evolution',
+		[5] = 'dorh_wisp_destroy',
+		[6] = 'dorh_wisp_stun'},
+	[2] = {
+		[1] = 'dorh_wisp_blink',
+		[2] = 'dorh_build_general',
+		[3] = 'dorh_wisp_slow',
+		[4] = 'dorh_wisp_evolution',
+		[5] = 'dorh_wisp_destroy',
+		[6] = 'dorh_wisp_stun'},
+	[3] = {
+		[1] = 'dorh_wisp_blink',
+		[2] = 'dorh_build_general',
+		[3] = 'dorh_wisp_slow',
+		[4] = 'dorh_wisp_evolution',
+		[5] = 'dorh_wisp_destroy',
+		[6] = 'dorh_wisp_stun'},
+	[4] = {
+		[1] = 'dorh_wisp_blink',
+		[2] = 'dorh_build_general',
+		[3] = 'sven_great_cleave',
+		[4] = 'dorh_wisp_evolution',
+		[5] = 'dorh_wisp_destroy',
+		[6] = 'dorh_wisp_stun'}	
+}
+local dorhHeroList = {
+	[1] = 'npc_dota_hero_wisp',
+	[2] = 'npc_dota_hero_keeper_of_the_light',
+	[3] = 'npc_dota_hero_invoker',
+	[4] = 'npc_dota_hero_doom_bringer'
 }
 
 -- Wave data is defined at the very bottom
 local waveData
+
+-- Tower data is defined at the very bottom
+local towerData
+
+-- Store current Hero state
+local evolution_state = {}
 
 -- The current wave we're in
 local currentWave = -1
@@ -51,6 +89,13 @@ local waveActive = false
 
 -- A list of all the units spawned during a wave
 local waveUnits = {}
+
+-- Function to send message to player via sonsole
+local function sendMsg(args)
+	if args then
+		say(Say(nil, args , false))
+	end
+end
 
 -- Spawns the waypoints
 local function spawnWaypointMarkers()
@@ -111,14 +156,17 @@ local function spawnUnit(unitName, points)
 end
 
 -- Sets the correct levels for all the skills
-local function setAbilityLevels(hero)
+local function setAbilityLevels(hero , _playerID)
     -- Loop over every skill they should have
-    for k,v in pairs(dorhSkills) do
+    for k,v in pairs(dorhSkills[evolution_state[_playerID]]) do
         -- Check if they have the skill
         local ab = hero:FindAbilityByName(v)
         if ab then
             -- Set it to level 1
             ab:SetLevel(1)
+			if v == "dorh_wisp_evolution" then
+				ab:SetLevel(evolution_state[_playerID])
+			end
         end
     end
 end
@@ -337,19 +385,23 @@ RegisterGamemode('dorh', {
 
     assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
-
+		
+		-- Restore evolution state of wisp
+		for i = 0 , 10 do
+			evolution_state[i] = 1
+		end
         -- Change heroes
-        local hero = PlayerResource:ReplaceHeroWith(playerID, 'npc_dota_hero_wisp', 1000, 0)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, dorhHeroList[evolution_state[playerID]], 1000*testmodeGoldRate, 0)
         frota:SetActiveHero(hero)
 
         -- Make invulnerable
         hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
 
         -- Give building skills
-        frota:ApplyBuild(hero, dorhSkills)
+        frota:ApplyBuild(hero, dorhSkills[evolution_state[playerID]])
 
         -- Level it's skills
-        setAbilityLevels(hero)
+        setAbilityLevels(hero , playerID)
     end,
 
     onGameStart = function(frota)
@@ -362,11 +414,21 @@ RegisterGamemode('dorh', {
 
         -- Cleanup any lose wave units
         clearWaveUnits()
-
+		
         -- Store the amount of lives and units
         frota.scoreRadiant = startingLives
         frota.scoreDire = 0
         frota:UpdateScoreData()
+		
+		--[[ Disabled while test
+		--PreCache tower data, this will take quite a long time, looking for better way to do this
+		for i = 1 , 16 do
+			PrecacheUnitByName( towerData[i] )
+			if towerData[i] then
+				print("SUCCESSFULL PRECACHE")
+			end
+		end
+		Say(nil,COLOR_LGREEN..'Done Loading', false)]]
 
         --tell how to play
         Say(nil,COLOR_LGREEN..'********************************************************', false)
@@ -461,13 +523,17 @@ RegisterGamemode('dorh', {
             -- Build a general building
 			local gold = PlayerResource:GetGold(playerID)
             if gold < cost then
-				Say(nil, COLOR_RED..'NOT ENOUGH GOLD!!!!', false)
+				Say(nil, COLOR_RED..'NOT ENOUGH GOLD!!!', false)
                 unit:Stop()
             end
 			-- Make sure they have enough to buy this building
 			if gold >= cost then
 			end
 			
+			if name == 'dorh_wisp_evolution' and evolution_state[playerID] >= 4 then
+				Say(nil, COLOR_RED..'ULTIMATE STATE!!!!', false)
+                unit:Stop()
+			end
 			--it's ok to take the gold even there's not enough gold, cost will take and set gold to a -value, then return to player when hero/unit stopped
 			PlayerResource:SpendGold(playerID, cost, 0)
 	
@@ -478,7 +544,7 @@ RegisterGamemode('dorh', {
         local ability = keys.ability
         local name = ability:GetAbilityName()
 
-        if name == 'dorh_build_general' or name:find('dorh_upgrade_') then
+        if name == 'dorh_build_general' or name:find('dorh_upgrade_') or name == 'dorh_wisp_evolution' then
             local cost = ability:GetSpecialValueFor('cost')
             local owner = hero:GetOwner()
             local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
@@ -495,25 +561,49 @@ RegisterGamemode('dorh', {
         local heroName = hero:GetClassname()
         local name = ability:GetAbilityName()
         local owner = hero:GetOwner()
+		local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
 		if name ~= 'dorh_build_general' then
 			point = hero:GetOrigin()
 		end
-
+		
 		local unitOnPoint = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, point , nil, 1 , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
-		print('Units Found'..tostring(#unitOnPoint))
 		if name == 'dorh_build_general' then
 			for _,unit in ipairs(unitOnPoint) do
 				unit:SetOwner( hero )
 			end
-		else
+		elseif name:find('dorh_upgrade_') then
 			for _,unit in ipairs(unitOnPoint) do
 				unit:SetOwner( owner )
 				if hero then
 				UTIL_RemoveImmediate( hero )
 				end
 			end
+		-- evolutionofwisp
+		elseif name == 'dorh_wisp_evolution' then
+			evolution_state[playerID] = evolution_state[playerID] + 1
+			local currentLevel = evolution_state[playerID]
+			-- Change heroes
+			local gold = PlayerResource:GetGold( playerID )
+			local XP = PlayerResource:GetTotalEarnedXP( playerID )
+			local hero = PlayerResource:ReplaceHeroWith(playerID, dorhHeroList[currentLevel], gold, XP)
+			frota:SetActiveHero(hero)
+
+			-- Make invulnerable
+			hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
+			
+			-- Make it stronger
+			hero:__KeyValueFromInt("AttackDamageMin" , currentLevel * 200 )
+			hero:__KeyValueFromInt("AttackDamageMax" , currentLevel * 200 +10 )
+			hero:__KeyValueFromFloat("AttackRate" , 1.7-0.5-currentLevel * 0.2)
+			hero:__KeyValueFromFloat("AttackAnimationPoint" , 0.3-currentLevel * 0.05)
+			
+			-- Give building skills
+			frota:ApplyBuild(hero, dorhSkills[currentLevel])
+
+			-- Level it's skills
+			setAbilityLevels(hero, playerID)
 		end
-    end
+    end,
 })
 
 -- This should be moved into a KV file
@@ -535,7 +625,7 @@ waveData = {
         units = {
             [1] = {
                 sort = 'npc_dorh_enemy_legion',
-                count = 500,
+                count = 20,
                 points = 1
             }
         }
@@ -578,7 +668,7 @@ waveData = {
     [6] = {
         units = {
             [1] = {
-                sort = 'npc_dorh_enemy_alchemist',
+                sort = 'npc_dorh_enemy_beast_master',
                 count = 20,
                 points = 1
             }
@@ -763,3 +853,22 @@ waveData = {
         }
     }
 }
+towerData = {
+	[1] = "npc_dorh_tower_base_lvl1",
+	[2] = "npc_dorh_tower_base_lvl2",
+	[3] = "npc_dorh_tower_base_lvl3",
+	[4] = "npc_dorh_tower_base_lvl4",
+	[5] = "npc_dorh_tower_aoe_lvl1",
+	[6] = "npc_dorh_tower_aoe_lvl2",
+	[7] = "npc_dorh_tower_aoe_lvl3",
+	[8] = "npc_dorh_tower_aoe_lvl4",
+	[9] = "npc_dorh_tower_slow_lvl1",
+	[10] = "npc_dorh_tower_slow_lvl2",
+	[11] = "npc_dorh_tower_slow_lvl3",
+	[12] = "npc_dorh_tower_slow_lvl4",
+	[13] = "npc_dorh_tower_dps_lvl1",
+	[14] = "npc_dorh_tower_dps_lvl2",
+	[15] = "npc_dorh_tower_dps_lvl3",
+	[16] = "npc_dorh_tower_dps_lvl4"
+}
+
