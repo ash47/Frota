@@ -9,6 +9,67 @@ local SPAWN_DISTANCE = 1800
 
 local zombieInfo = {}   -- Stores info on each user's zombies
 
+-- The time the match started (for scaling)
+local startTime = 0.0
+
+local function applyDefaultStats(unit, factor, sfactor)
+    unit:SetMaxHealth(30 * factor)
+    unit:SetHealth(unit:GetMaxHealth())
+    unit:__KeyValueFromFloat('StatusHealthRegen', sfactor/2)
+    unit:__KeyValueFromInt('BountyGoldMin', 30 * sfactor)
+    unit:__KeyValueFromInt('BountyGoldMax', 30 * sfactor)
+    unit:__KeyValueFromInt('BountyXP', 75 * sfactor)
+    unit:__KeyValueFromInt('MovementSpeed', 375)
+    unit:__KeyValueFromInt('AttackDamageMin', 37 * factor)
+    unit:__KeyValueFromInt('AttackDamageMax', 45 * factor)
+    unit:__KeyValueFromInt('AttackRange', 128)
+    unit:__KeyValueFromFloat('AttackRate', 1.6)
+    unit:__KeyValueFromInt('VisionDaytimeRange', 400)
+    unit:__KeyValueFromInt('VisionNighttimeRange', 400)
+    unit:__KeyValueFromInt('ArmorPhysical', factor-1)
+    unit:__KeyValueFromInt('MagicalResistance', 33)
+end
+
+-- List of zombies that can spawn
+local skins = {
+    [1] = {
+        -- How long before it can spawn?
+        minTime = 0,
+
+        -- What unit to base it off?
+        unit = 'npc_dota_unit_undying_zombie',
+
+        -- What stats should it get?
+        stats = applyDefaultStats
+    },
+
+    [2] = {
+        minTime = 60,
+        unit = 'npc_dota_dark_troll_warlord_skeleton_warrior',
+        stats = function(unit, factor, sfactor)
+            -- Apply default stuff
+            applyDefaultStats(unit, factor, sfactor)
+
+            -- Give magic resist
+            unit:__KeyValueFromInt('MagicalResistance', 90)
+        end
+    },
+
+    [3] = {
+        minTime = 120,
+        unit = 'npc_dota_visage_familiar1',
+        stats = function(unit, factor, sfactor)
+            -- Apply default stuff
+            applyDefaultStats(unit, factor, sfactor)
+
+            -- Apply new stuff
+            unit:__KeyValueFromFloat('AttackRate', 1.2)
+            unit:__KeyValueFromInt('AttackRange', 200)
+            unit:__KeyValueFromInt('MovementSpeed', 500)
+        end
+    }
+}
+
 local function resetPlayerID(playerID)
     -- Reset info on this player
     zombieInfo[playerID] = {
@@ -28,9 +89,9 @@ local function checkForVictory(frota)
         local hero = frota:GetActiveHero(playerID)
         if hero and hero:IsAlive() then
             -- Check if they were on either major team
-            if hero:Team() == DOTA_TEAM_GOODGUYS then
+            if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
                 allDeadRadiant = false
-            elseif hero:Team() == DOTA_TEAM_BADGUYS then
+            elseif hero:GetTeamNumber() == DOTA_TEAM_BADGUYS then
                 allDeadDire = false
             end
         end
@@ -51,6 +112,16 @@ local function checkForVictory(frota)
     end
 end
 
+local function reveal(hero)
+    hero:AddNewModifier(hero, nil, 'modifier_truesight', {})
+end
+
+local function unreveal(hero)
+    if hero:HasModifier('modifier_truesight') then
+        hero:RemoveModifierByName('modifier_truesight')
+    end
+end
+
 -- Surval, from D2Ware
 RegisterGamemode('survival', {
     -- Gamemode only has a gameplay component
@@ -66,30 +137,58 @@ RegisterGamemode('survival', {
         -- Reset zombie info
         zombieInfo = {}
 
+        -- Store when we started
+        startTime = Time()
+
         -- Create a clock to spawn zombies
         frota:CreateTimer('survival_clock', {
             endTime = Time()+spawnCheckTime,
             callback = function(frota, args)
+                local timePassed = (Time() - startTime)
+                local factor = 1 + timePassed/60
+                local sfactor = math.sqrt(factor)
+                local maxZombies = math.min(ZOMBIES_PER_HERO, 5*factor)
+
                 -- Loop over all the players
                 frota:LoopOverPlayers(function(ply, playerID)
                     -- Ensure this player has some info
                     local info = zombieInfo[playerID] or resetPlayerID(playerID)
 
-                    local totalZombies = 0
-                    -- Make sure each zombie is following their respective player
-                    for k,v in pairs(info.zombieList) do
-                        -- Increase total zombies
-                        totalZombies = totalZombies+1
+                    -- Grab their hero, make sure it exists, and is alive
+                    local hero = frota:GetActiveHero(playerID)
+                    if hero and hero:IsAlive() then
+                        local totalZombies = 0
+                        -- Make sure each zombie is following their respective player
+                        for k,v in pairs(info.zombieList) do
+                            if not IsValidEntity(v) or not v:IsAlive() or v:GetHealth() <= 0 then
+                                -- Remove it
+                                table.remove(info.zombieList, k)
+                                v:Remove()
+                            elseif Time() > v.expireTime then
+                                -- Remove it
+                                table.remove(info.zombieList, k)
+                                v:ForceKill(false)
+                                v:Remove()
+                            else
+                                -- Increase total zombies
+                                totalZombies = totalZombies+1
 
-                        -- Make it attack it's hero
-                        v:MoveToTargetToAttack(hero)
-                    end
+                                -- Make it attack it's hero
+                                v:MoveToTargetToAttack(hero)
+                            end
+                        end
 
-                    -- Check if they don't have enough zombies
-                    if totalZombies < ZOMBIES_PER_HERO then
-                        -- Grab their hero, make sure it exists, and is alive
-                        local hero = frota:GetActiveHero(playerID)
-                        if hero and hero:IsAlive() then
+                        -- Check if they don't have enough zombies
+                        while totalZombies < maxZombies do
+                            -- Pick a random, valid skin
+                            local skin = {}
+                            repeat
+                                skin = skins[math.random(1, #skins)]
+                            until timePassed > skin.minTime
+
+                            -- There is one mroe zombie
+                            totalZombies = totalZombies + 1
+
                             -- Workout where to spawn it
                             local pos = hero:GetOrigin()
                             local ang = math.random() * 2 * math.pi;
@@ -97,13 +196,19 @@ RegisterGamemode('survival', {
                             pos.y = pos.y + math.sin(ang) * SPAWN_DISTANCE
 
                             -- Put it on the opposite team
-                            local team = ((hero:GetTeam() == DOTA_TEAM_GOODGUYS) and DOTA_TEAM_BADGUYS) or DOTA_TEAM_GOODGUYS
+                            local team = ((hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS) and DOTA_TEAM_BADGUYS) or DOTA_TEAM_GOODGUYS
 
                             -- Spawn it
-                            local unit = CreateUnitByName('npc_dota_unit_undying_zombie', pos, true, nil, nil, team)
+                            local unit = CreateUnitByName(skin.unit, pos, true, nil, nil, team)
+
+                            -- Stat it up
+                            skin.stats(unit, factor, sfactor)
 
                             -- Make it attack
                             unit:MoveToTargetToAttack(hero)
+
+                            -- Make it expire after 30 seconds
+                            unit.expireTime = Time()+30
 
                             table.insert(info.zombieList, unit)
                         end
@@ -114,8 +219,6 @@ RegisterGamemode('survival', {
                 return Time()+spawnCheckTime
             end
         })
-
-
     end,
 
     -- Cleanup a player
@@ -142,9 +245,40 @@ RegisterGamemode('survival', {
         checkForVictory(frota)
     end,
 
+    -- When a player respawns
+    onHeroRespawn = function(frota, hero)
+        -- Make this hero revealed
+        reveal(hero)
+    end,
+
+    -- When they get a new hero
+    -- Function to give out heroes
+    assignHero = function(frota, ply)
+        -- Grab this player's Hero
+        local hero = frota:GetActiveHero(ply:GetPlayerID())
+
+        if hero then
+            -- Make this hero revealed
+            reveal(hero)
+        end
+    end,
+
     -- When someone dies, check for victory
     onHeroKilled = function(frota, killedUnit, killerEntity)
         -- Check for victory
         checkForVictory(frota)
+    end,
+
+    -- Remove truesight when the game ends
+    onGameEnd = function(frota)
+        -- Loop over all the players
+        frota:LoopOverPlayers(function(ply, playerID)
+            -- Grab a hero
+            local hero = frota:GetActiveHero(playerID)
+            if hero then
+                -- Remove it's truesight
+                unreveal(hero)
+            end
+        end)
     end
 })
