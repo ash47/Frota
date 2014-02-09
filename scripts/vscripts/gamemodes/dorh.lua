@@ -3,7 +3,7 @@
 -- By Xavier@2014.02
 
 -- change this to multiple starting gold
-local testmodeGoldRate = 1
+local testmodeGoldRate = 100
 
 -- Preparation time (in seconds)
 local prepTime = 10
@@ -33,43 +33,100 @@ local wayPointPositions = {
 -- The actual way points
 local wayPoints = {}
 
--- These are the skills everyone in dorh will get
--- TODO: Replace slow and stun skill with more powerful skills
-local dorhSkills = {
-	[1] = {
-		[1] = 'dorh_wisp_blink',
-		[2] = 'dorh_build_general',
-		[3] = 'dorh_wisp_slow',
-		[4] = 'dorh_wisp_evolution',
-		[5] = 'dorh_wisp_destroy',
-		[6] = 'dorh_wisp_stun'},
-	[2] = {
-		[1] = 'dorh_wisp_blink',
-		[2] = 'dorh_build_general',
-		[3] = 'dorh_wisp_slow',
-		[4] = 'dorh_wisp_evolution',
-		[5] = 'dorh_wisp_destroy',
-		[6] = 'dorh_wisp_stun'},
-	[3] = {
-		[1] = 'dorh_wisp_blink',
-		[2] = 'dorh_build_general',
-		[3] = 'dorh_wisp_slow',
-		[4] = 'dorh_wisp_evolution',
-		[5] = 'dorh_wisp_destroy',
-		[6] = 'dorh_wisp_stun'},
-	[4] = {
-		[1] = 'dorh_wisp_blink',
-		[2] = 'dorh_build_general',
-		[3] = 'sven_great_cleave',
-		[4] = 'dorh_wisp_evolution',
-		[5] = 'dorh_wisp_destroy',
-		[6] = 'dorh_wisp_stun'}	
-}
+-- This store every state of hero wisp will evolute to
 local dorhHeroList = {
-	[1] = 'npc_dota_hero_wisp',
-	[2] = 'npc_dota_hero_keeper_of_the_light',
-	[3] = 'npc_dota_hero_invoker',
-	[4] = 'npc_dota_hero_doom_bringer'
+	[1] = {
+		name = 'npc_dota_hero_wisp',
+		skills = {
+			[1] = {
+			name = 'dorh_wisp_blink',
+			maxlevel = 1 },
+			[2] = {
+			name = 'dorh_build_general',
+			maxlevel = 1 },
+			[3] = {
+			name = 'dorh_wisp_slow',
+			maxlevel = 4 },
+			[4] = {
+			name = 'dorh_wisp_evolution',
+			maxlevel = 4 },
+			[5] = {
+			name = 'dorh_wisp_destroy',
+			maxlevel = 1 },
+			[6] = {
+			name = 'dorh_wisp_stun',
+			maxlevel = 1 }
+		}
+	},
+	[2] = {
+		name = 'npc_dota_hero_keeper_of_the_light',
+		skills = {
+			[1] = {
+			name = 'dorh_wisp_blink',
+			maxlevel = 1 },
+			[2] = {
+			name = 'dorh_build_general',
+			maxlevel = 1 },
+			[3] = {
+			name = 'ogre_magi_bloodlust',
+			maxlevel = 4 },
+			[4] = {
+			name = 'dorh_wisp_evolution',
+			maxlevel = 4 },
+			[5] = {
+			name = 'dorh_wisp_destroy',
+			maxlevel = 1 },
+			[6] = {
+			name = 'beastmaster_inner_beast',
+			maxlevel = 4 }
+		}
+	},
+	[3] = {
+		name = 'npc_dota_hero_invoker',
+		skills = {
+			[1] = {
+			name = 'dorh_wisp_blink',
+			maxlevel = 1 },
+			[2] = {
+			name = 'dorh_build_general',
+			maxlevel = 1 },
+			[3] = {
+			name = 'ancient_apparition_ice_vortex',
+			maxlevel = 4 },
+			[4] = {
+			name = 'dorh_wisp_evolution',
+			maxlevel = 4 },
+			[5] = {
+			name = 'dorh_wisp_destroy',
+			maxlevel = 1 },
+			[6] = {
+			name = 'troll_warlord_battle_trance',
+			maxlevel = 4 }
+		}
+	},
+	[4] = {
+		name = 'npc_dota_hero_doom_bringer',
+		skills = {
+			[1] = {
+			name = 'dorh_wisp_blink',
+			maxlevel = 1 },
+			[2] = {
+			name = 'dorh_build_general',
+			maxlevel = 1 },
+			[3] = {
+			name = 'sven_great_cleave',
+			maxlevel = 4 },
+			[4] = {
+			name = 'dorh_wisp_evolution',
+			maxlevel = 4 },
+			[5] = {
+			name = 'dorh_wisp_destroy',
+			maxlevel = 1 },
+			[6] = {
+			name = 'faceless_void_chronosphere',
+			maxlevel = 3 }
+		}
+	}
 }
 
 -- Wave data is defined at the very bottom
@@ -158,14 +215,15 @@ end
 -- Sets the correct levels for all the skills
 local function setAbilityLevels(hero , _playerID)
     -- Loop over every skill they should have
-    for k,v in pairs(dorhSkills[evolution_state[_playerID]]) do
+	currentEvoLevel = evolution_state[_playerID]
+    for k,v in pairs(dorhHeroList[currentEvoLevel].skills) do
         -- Check if they have the skill
-        local ab = hero:FindAbilityByName(v)
+        local ab = hero:FindAbilityByName(v.name)
+		
         if ab then
-            -- Set it to level 1
-            ab:SetLevel(1)
-			if v == "dorh_wisp_evolution" then
-				ab:SetLevel(evolution_state[_playerID])
+			ab:SetLevel(v.maxlevel)
+			if v.name == "dorh_wisp_evolution" then
+				ab:SetLevel(currentEvoLevel)
 			end
         end
     end
@@ -391,14 +449,18 @@ RegisterGamemode('dorh', {
 			evolution_state[i] = 1
 		end
         -- Change heroes
-        local hero = PlayerResource:ReplaceHeroWith(playerID, dorhHeroList[evolution_state[playerID]], 1000*testmodeGoldRate, 0)
+        local hero = PlayerResource:ReplaceHeroWith(playerID, dorhHeroList[evolution_state[playerID]].name, 1000 * testmodeGoldRate, 0)
         frota:SetActiveHero(hero)
 
         -- Make invulnerable
         hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
 
         -- Give building skills
-        frota:ApplyBuild(hero, dorhSkills[evolution_state[playerID]])
+		local abTemp = {}
+			for k,v in pairs(dorhHeroList[evolution_state[playerID]].skills) do
+				abTemp[k]= v.name
+			end
+		frota:ApplyBuild(hero, abTemp )
 
         -- Level it's skills
         setAbilityLevels(hero , playerID)
@@ -585,7 +647,7 @@ RegisterGamemode('dorh', {
 			-- Change heroes
 			local gold = PlayerResource:GetGold( playerID )
 			local XP = PlayerResource:GetTotalEarnedXP( playerID )
-			local hero = PlayerResource:ReplaceHeroWith(playerID, dorhHeroList[currentLevel], gold, XP)
+			local hero = PlayerResource:ReplaceHeroWith(playerID, dorhHeroList[currentLevel].name, gold, XP)
 			frota:SetActiveHero(hero)
 
 			-- Make invulnerable
@@ -598,7 +660,11 @@ RegisterGamemode('dorh', {
 			hero:__KeyValueFromFloat("AttackAnimationPoint" , 0.3-currentLevel * 0.05)
 			
 			-- Give building skills
-			frota:ApplyBuild(hero, dorhSkills[currentLevel])
+			local abTemp = {}
+			for k,v in pairs(dorhHeroList[currentLevel].skills) do
+				abTemp[k]= v.name
+			end
+			frota:ApplyBuild(hero, abTemp )
 
 			-- Level it's skills
 			setAbilityLevels(hero, playerID)
