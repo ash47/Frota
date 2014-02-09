@@ -428,8 +428,10 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
     if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then
         ply:SetTeam(DOTA_TEAM_BADGUYS)
+        ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
     else
         ply:SetTeam(DOTA_TEAM_GOODGUYS)
+        ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_GOODGUYS)
     end
 
     --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)

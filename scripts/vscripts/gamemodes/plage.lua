@@ -12,16 +12,14 @@ RegisterGamemode('plage', {
     assignHero = function(frota, ply)
         local heroName = heroMap[teamID]
 
-        local oTeam = ply:GetTeam()
-        ply:__KeyValueFromInt('teamnumber', teamID)
-
         -- New Hero
         local playerID = ply:GetPlayerID()
         local hero = PlayerResource:ReplaceHeroWith(playerID, heroName, 2500, 2600)
         frota:SetActiveHero(hero)
+        hero:__KeyValueFromInt('teamnumber', teamID)
 
-        -- Reset player team
-        ply:__KeyValueFromInt('teamnumber', oTeam)
+        -- Give vision
+        hero:AddNewModifier(hero, nil, "modifier_bloodseeker_thirst_vision", {})
 
         -- Change team for the next dude
         teamID = teamID+1
@@ -66,16 +64,11 @@ RegisterGamemode('plage', {
             return
         end
 
-        -- Grab player's current team
-        local oTeam = ply:GetTeam()
-
-        -- Change player's team
-        ply:__KeyValueFromInt('teamnumber', newTeam)
-
         local hero = frota:ChangeHero(killedUnit, newHeroName)
+        hero:__KeyValueFromInt('teamnumber', newTeam)
 
-        -- Reset player's team
-        ply:__KeyValueFromInt('teamnumber', oTeam)
+        -- Give vision
+        hero:AddNewModifier(hero, nil, "modifier_bloodseeker_thirst_vision", {})
 
         -- Give gold to killer
         killerEntity:SetGold(killerEntity:GetGold()+250, true)
