@@ -37,6 +37,7 @@ require('gamemodes/tinywars')
 -- Include addons
 require('addons/fatometer')
 require('addons/goldpersecond')
+require('addons/luckyitems')
 require('addons/spawnprotection')
 
 print("\n\nDone Loading!\n\n")
