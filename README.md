@@ -52,8 +52,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - ~~Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell.~~
  - **~~Sun Strike Wars~~**
   - ~~One player spawns with Sun Strike and has to kill all the other players with it.~~
- - **~~Plague~~**
-  - ~~When you kill someone, they become the same hero as you, when everyone is the same hero, the game is over.~~
+ - **Plague**
+  - When you kill someone, they become the same hero as you, when everyone is the same hero, the game is over.
  - **Defense of RuneHill**
   - Defend 22 waves of enemies and protect your rune top
 
@@ -72,6 +72,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Players have max mana regen.
  - **Spawn Protection**
   - Heroes will be momentarily invulnerable when they spawn.
+ - **Lucky Items**
+  - Get random items as the game progresses.
 
 ###D2Ware Servers###
  - You can play this on D2Ware servers here: http://d2ware.net
