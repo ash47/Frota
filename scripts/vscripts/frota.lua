@@ -28,10 +28,6 @@ VOTE_SORT_RANGE = 12    -- A range option
 -- Amount of time to pick skills
 PICKING_TIME = 60 * 2   -- 2 minutes tops
 
--- Default settings for regular Dota
-local minimapHeroScale = 600
-local minimapCreepScale = 1
-
 -- Reload support apparently
 if FrotaGameMode == nil then
     FrotaGameMode = {}
@@ -66,9 +62,9 @@ function FrotaGameMode:InitGameMode()
     GameRules:SetPreGameTime( 60.0 )
     GameRules:SetPostGameTime( 60.0 )
     GameRules:SetTreeRegrowTime( 60.0 )
-    GameRules:SetHeroMinimapIconSize( 400 )
-    GameRules:SetCreepMinimapIconScale( 0.7 )
-    GameRules:SetRuneMinimapIconScale( 0.7 )
+    --GameRules:SetHeroMinimapIconSize( 400 )
+    --GameRules:SetCreepMinimapIconScale( 0.7 )
+    --GameRules:SetRuneMinimapIconScale( 0.7 )
 
     -- Hooks
     ListenToGameEvent('entity_killed', Dynamic_Wrap(FrotaGameMode, 'OnEntityKilled'), self)
@@ -1063,6 +1059,14 @@ function FrotaGameMode:ToggleReadyState(playerID)
         -- Update the state data
         self:ChangeStateData(self:BuildAbilityListData())
     end
+end
+
+function FrotaGameMode:GetDefaultHeroScale(heroName)
+    if self.heroListKV[heroName] then
+        return tonumber(self.heroListKV[heroName].ModelScale) or 1
+    end
+
+    return 1
 end
 
 function FrotaGameMode:BuildTimerData()
