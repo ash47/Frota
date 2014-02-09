@@ -2649,12 +2649,12 @@
 				"OnSpawn"
 				{
 					"ApplyModifier"
-					{		
+					{
 						"Target"		"TARGET"
 						"Duration"		"1.0"
 						"ModifierName"	"modifier_dorh_tower_preview"
 					}
-					"DelayedAction"		
+					"DelayedAction"
 					{
 						"Delay"			"0.95"
 						"Action"
@@ -2795,7 +2795,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"15"
-		
+
 		"OnChannelSucceeded"
 		{
 			"SpawnUnit"
@@ -2857,7 +2857,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -2942,7 +2942,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3027,7 +3027,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3112,7 +3112,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3197,7 +3197,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3282,7 +3282,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3367,7 +3367,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3452,7 +3452,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3537,7 +3537,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3622,7 +3622,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3707,7 +3707,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3792,7 +3792,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3877,7 +3877,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -3962,7 +3962,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -4047,7 +4047,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
@@ -4132,7 +4132,7 @@
 		}
 		"OnChannelSucceeded"
 		{
-			"DelayedAction"		
+			"DelayedAction"
 			{
 				"Delay"			"0.1"
 				"Action"
