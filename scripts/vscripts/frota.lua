@@ -143,6 +143,14 @@ end
 
 function FrotaGameMode:RegisterCommands()
     -- When a user tries to put a skill into a slot
+    Convars:RegisterCommand('reloadtest', function(name, skillName, slotNumber)
+        -- Check if the server ran it
+        if not Convars:GetCommandClient() then
+            GameRules:Playtesting_UpdateCustomKeyValues()
+        end
+    end, 'Reload shit test', 0)
+
+    -- When a user tries to put a skill into a slot
     Convars:RegisterCommand('afs_skill', function(name, skillName, slotNumber)
         -- Verify we are in picking mode
         if self.currentState ~= STATE_PICKING then return end

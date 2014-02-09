@@ -12,8 +12,8 @@ Convars:RegisterConvar('frota_mode_preset', nil, 'Set to the game mode you want 
 Convars:RegisterConvar('frota_ban_modes', nil, 'Set to modes banned on this server', FCVAR_PROTECTED)
 
 -- Load Frota
-require('json')         -- Json Library
 require('util')         -- Utilitiy functions
+require('json')         -- Json Library
 require('frota')        -- Main frota framework
 require('gamemodes')    -- Gamemode framework and small gamemodes/addons
 
