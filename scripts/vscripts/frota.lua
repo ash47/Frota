@@ -97,12 +97,14 @@ function FrotaGameMode:InitGameMode()
     -- Start thinkers
     self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.1)
 
-    -- Precache everything -- Why this takes different args on client/server, idk
+    -- Precache everything -- Having issues with the arguments changing
     print('\n\nprecaching:')
-    if IsDedicatedServer() then
+    if not pcall(function()
         PrecacheUnit('npc_precache_everything')
-    else
-        PrecacheUnit('npc_precache_everything', {})
+    end) then
+        pcall(function()
+            PrecacheUnit('npc_precache_everything', {})
+        end)
     end
     --PrecacheResource('test', 'test')
     print('done precaching!\n\n')
