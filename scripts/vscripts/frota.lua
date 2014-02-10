@@ -97,9 +97,16 @@ function FrotaGameMode:InitGameMode()
     -- Start thinkers
     self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.1)
 
-    -- Precache everything
+    -- Precache everything -- Having issues with the arguments changing
     print('\n\nprecaching:')
-    PrecacheUnit('npc_precache_everything')
+    if not pcall(function()
+        PrecacheUnit('npc_precache_everything')
+    end) then
+        pcall(function()
+            PrecacheUnit('npc_precache_everything', {})
+        end)
+    end
+    --PrecacheResource('test', 'test')
     print('done precaching!\n\n')
 end
 
@@ -137,6 +144,14 @@ function FrotaGameMode:_SetInitialValues()
 end
 
 function FrotaGameMode:RegisterCommands()
+    -- When a user tries to put a skill into a slot
+    Convars:RegisterCommand('reloadtest', function(name, skillName, slotNumber)
+        -- Check if the server ran it
+        if not Convars:GetCommandClient() then
+            GameRules:Playtesting_UpdateCustomKeyValues()
+        end
+    end, 'Reload shit test', 0)
+
     -- When a user tries to put a skill into a slot
     Convars:RegisterCommand('afs_skill', function(name, skillName, slotNumber)
         -- Verify we are in picking mode
@@ -428,8 +443,10 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
     if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then
         ply:SetTeam(DOTA_TEAM_BADGUYS)
+        ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
     else
         ply:SetTeam(DOTA_TEAM_GOODGUYS)
+        ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_GOODGUYS)
     end
 
     --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)

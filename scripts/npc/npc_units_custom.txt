@@ -409,7 +409,7 @@
 
 		//Inventory
 		"HasInventory"				"0"
-		
+
 		"ParticleFile"				"particles/units/heroes/hero_zuus.pcf"
 	}
 
@@ -4053,6 +4053,7 @@
 			"particlefile"				"particles/units/heroes/hero_antimage.pcf"
 			"particlefile"				"particles/units/heroes/hero_axe.pcf"
 			"particlefile"				"particles/units/heroes/hero_bane.pcf"
+			"particlefile"				"particles/units/heroes/hero_bloodseeker.pcf"
 			"particlefile"				"particles/units/heroes/hero_crystalmaiden.pcf"
 			"particlefile"				"particles/units/heroes/hero_drow.pcf"
 			"particlefile"				"particles/units/heroes/hero_earthshaker.pcf"

@@ -12,8 +12,8 @@ Convars:RegisterConvar('frota_mode_preset', nil, 'Set to the game mode you want 
 Convars:RegisterConvar('frota_ban_modes', nil, 'Set to modes banned on this server', FCVAR_PROTECTED)
 
 -- Load Frota
-require('json')         -- Json Library
 require('util')         -- Utilitiy functions
+require('json')         -- Json Library
 require('frota')        -- Main frota framework
 require('gamemodes')    -- Gamemode framework and small gamemodes/addons
 
@@ -25,7 +25,7 @@ require('gamemodes/kaolinwars')
 require('gamemodes/kotolofthehill')
 require('gamemodes/kunkkawars')
 require('gamemodes/oddball')
---require('gamemodes/plage')
+require('gamemodes/plage')
 require('gamemodes/puckwars')
 require('gamemodes/rvs')
 --require('gamemodes/sunstrikewars')
@@ -37,6 +37,7 @@ require('gamemodes/tinywars')
 -- Include addons
 require('addons/fatometer')
 require('addons/goldpersecond')
+require('addons/luckyitems')
 require('addons/spawnprotection')
 
 print("\n\nDone Loading!\n\n")

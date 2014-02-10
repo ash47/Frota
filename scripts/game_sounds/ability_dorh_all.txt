@@ -1,3 +1,11 @@
+"Enemy_Down"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1"
+	"soundlevel"	"SNDLVL_72dB"
+	"pitch"			"95, 105"
+	"wave"			"CS_Enemy_Down.wav"
+}
 "Catapult.Attack"
 {
 	"channel"		"CHAN_STATIC"
