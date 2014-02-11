@@ -153,7 +153,7 @@ RegisterGamemode('survival', {
                 local timePassed = (Time() - startTime)
                 local factor = 1 + timePassed/60
                 local sfactor = math.sqrt(factor)
-                local maxZombies = math.min(ZOMBIES_PER_HERO, 5*factor)
+                local maxZombies = math.min(ZOMBIES_PER_HERO, 3*factor)
 
                 -- Loop over all the players
                 frota:LoopOverPlayers(function(ply, playerID)
