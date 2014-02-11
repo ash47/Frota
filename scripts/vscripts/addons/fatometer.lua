@@ -26,6 +26,16 @@ RegisterGamemode('fatometer', {
                 -- Lose 1/3 of the size
                 scale[playerID] = (scale[playerID] or frota:GetDefaultHeroScale(killedUnit:GetClassname())) * 2/3
 
+					-- Limit scale to 3
+ +                	local limit = frota:GetDefaultHeroScale(hero:GetClassname()) * 3
+ +                	local downlimit = frota:GetDefaultHeroScale(hero:GetClassname()) * 0.5
+ +                	if scale[playerID] > limit then
+ +                    	scale[playerID] = limit
+ +                	end
+					if scale[playerID] < downlimit then
+ +                    	scale[playerID] = downlimit
+ +                	end
+
                 -- Scale the hero
                 killedUnit:SetModelScale(scale[playerID], 0)
             end
