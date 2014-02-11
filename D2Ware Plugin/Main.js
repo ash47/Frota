@@ -19,8 +19,86 @@ var maps = {
 // Have we changed the map?
 var changedMap = false;
 
+// Have we parsed settings?
+var parsedSettings = false;
+
+// Has map changing completed yet?
+var doneChanging = false;
+
 // The Map required for this gamemode
 var requiredMap = 'dota_winter';
+
+var settingsMap = {
+    "Picking": {
+        "Select options ingame (Ignore everything below)": "-",
+        "Legends of Dota": "lod",
+        "Random OMG": "romg",
+        "All Pick": "allpick",
+        "Pure Skill": "pureskill",
+        "Invoker Wars": "INVOKERWARZ",
+        "Puck Wars": "puckwars",
+        "Tiny Wars": "tinywars",
+        "Earth Spirit Wars": "kaolinwars",
+        "Riki Wars": "rikiwars",
+        "Kunkka Wars": "kunkkawars",
+        "Defense of RuneHill": "dorh",
+        "Plague": "plage"
+    },
+
+    "Gameplay": {
+        "Select gameplay ingame": "-",
+        "Dota": "dota",
+        "PvP Arena": "arena",
+        "King of the Hill": "kotolofthehill",
+        "Oddball": "oddball",
+        "Rabbits vs. Sheep": "rvs",
+        "Zombie Survival": "survival"
+    },
+
+    "Free Blink Dagger": {
+        "Disable Free Blink Dagger": "0",
+        "Enable Free Blink Dagger": "1"
+    },
+
+    "Bonus Gold Per Second": {
+        "Disable Bonus Gold Per Second": "0",
+        "+1 Bonus Gold Per Second": "1",
+        "+2 Bonus Gold Per Second": "2",
+        "+5 Bonus Gold Per Second": "5",
+        "+10 Bonus Gold Per Second": "10",
+        "+15 Bonus Gold Per Second": "15",
+        "+20 Bonus Gold Per Second": "20",
+        "+25 Bonus Gold Per Second": "25"
+    },
+
+    "No Buying": {
+        "Disable No Buying": "0",
+        "Enable No Buying": "1"
+    },
+
+    "Fat-o-Meter": {
+        "Disable Fat-o-Meter": "0",
+        "Enable Fat-o-Meter": "1"
+    },
+
+    "Unlimited Mana": {
+        "Disable Unlimited Mana": "0",
+        "Enable Unlimited Mana": "1"
+    },
+
+    "Spawn Protection": {
+        "Disable Spawn Protection": "0",
+        "Enable Spawn Protection": "1"
+    },
+
+    "Lucky Items": {
+        "Disable Lucky Items": "0",
+        "Enable Lucky Items": "1"
+    }
+}
+
+// This will contain the command to
+var settingsCommand = null;
 
 // Load in the lobby settings
 plugin.get('LobbyManager', function(obj){
@@ -37,21 +115,63 @@ plugin.get('LobbyManager', function(obj){
             // Change the name of the map we want to play
             requiredMap = newMapID + ".bsp";
         }
+
+        // Build settings list
+        settings = {}
+
+        for(var key in settingsMap) {
+            settings[key] = (options[key] && settingsMap[key][options[key]]) || "-";
+        }
+
+        // Are we using D2Ware lobby maker?
+        if(settings['Picking'] != '-') {
+            // Build the settings command
+            settingsCommand = 'd2wareSettings '
+                                +settings['Picking'] + ' '
+                                +settings['Gameplay'] + ' '
+                                +settings['Free Blink Dagger'] + ' '
+                                +settings['Bonus Gold Per Second'] + ' '
+                                +settings['No Buying'] + ' '
+                                +settings['Fat-o-Meter'] + ' '
+                                +settings['Unlimited Mana'] + ' '
+                                +settings['Spawn Protection'] + ' '
+                                +settings['Lucky Items'];
+        }
+
 });
 
 // Change the map if required
 game.hook('OnGameFrame',function() {
+    //server.print(game.rules.props.m_nGameState)
     // If we've already changed the map, don't change it again
-    if(changedMap) return;
+    if(changedMap) {
+        // Check if the map change has completed yet
+        if(!doneChanging) {
+            if(game.rules.props.m_nGameState < dota.STATE_HERO_SELECTION) doneChanging = true;
+            return;
+        }
 
-    // Change to the correct map
-    server.command("dota_force_gamemode 15")
-    server.command("dota_local_custom_enable 1")
-    server.command("dota_local_custom_game Frota")
-    server.command("dota_local_custom_map Frota")
-    server.command("update_addon_paths")
-    server.command("map " + requiredMap)
+        // Only pass settings ONCE
+        if(parsedSettings) return;
 
-    // We've changed the map
-    changedMap = true;
+        // Check if it's time to pass settings yet
+        if(game.rules.props.m_nGameState >= dota.STATE_HERO_SELECTION) {
+            // If there are settings, pass them
+            if(settingsCommand) server.command(settingsCommand)
+
+            // Store that we've passed the settings
+            parsedSettings = true;
+        }
+    } else {
+        // Change to the correct map
+        server.command("dota_force_gamemode 15")
+        server.command("dota_local_custom_enable 1")
+        server.command("dota_local_custom_game Frota")
+        server.command("dota_local_custom_map Frota")
+        server.command("update_addon_paths")
+        server.command("map " + requiredMap)
+
+        // We've changed the map
+        changedMap = true;
+    }
 });

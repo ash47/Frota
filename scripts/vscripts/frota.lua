@@ -48,11 +48,15 @@ function FrotaGameMode:new (o)
 end
 
 function FrotaGameMode:InitGameMode()
+    print('\n\nStarting to load Frota...')
     -- Load version
     self.frotaVersion = LoadKeyValues("scripts/version.txt").version
 
     -- Register console commands
     self:RegisterCommands()
+
+    -- Create map of buildings
+    self:CreateMapBuildingList()
 
     -- Setup rules
     GameRules:SetHeroRespawnEnabled( false )
@@ -98,7 +102,7 @@ function FrotaGameMode:InitGameMode()
     self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.1)
 
     -- Precache everything -- Having issues with the arguments changing
-    print('\n\nprecaching:')
+    print('Precaching stuff...')
     if not pcall(function()
         PrecacheUnit('npc_precache_everything')
     end) then
@@ -107,7 +111,8 @@ function FrotaGameMode:InitGameMode()
         end)
     end
     --PrecacheResource('test', 'test')
-    print('done precaching!\n\n')
+    print('Done precaching!')
+    print('Done loading Frota!\n\n')
 end
 
 function FrotaGameMode:_SetInitialValues()
@@ -206,7 +211,8 @@ function FrotaGameMode:RegisterCommands()
                             })
                         end
                     end
-                end
+                end,
+                persist = true
             })
         end
     end, 'Connects and assigns fake Players.', 0)
@@ -483,7 +489,8 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
             -- Fire new player event
             self:FireEvent('NewPlayer', ply)
-        end
+        end,
+        persist = true
     })
 end
 
@@ -613,7 +620,8 @@ function FrotaGameMode:CleanupPlayer(keys)
 
             -- Close server
             self:CloseServer()
-        end
+        end,
+        persist = true
     })
 end
 
@@ -1562,14 +1570,8 @@ function FrotaGameMode:_thinkState_Voting(dt)
         -- This only ever runs once
         self.startedInitialVote = true
 
-        -- Create a timer to start voting
-        self:CreateTimer('startVotingTimer', {
-            endTime = Time()+3,
-            callback = function(frota, args)
-                -- Begin gamemode voting
-                self:VoteForGamemode()
-            end
-        })
+        -- Begin gamemode voting
+        self:VoteForGamemode()
     end
 end
 
@@ -1839,11 +1841,14 @@ function FrotaGameMode:VoteForAddons()
         for k,v in pairs(modes) do
             -- Check if d2ware should take control of this plugin
             if d2wareSettings[v] ~= nil then
-                -- Remove the choice to vote for this plugin
-                options['#afs_name_'..v] = nil
+                -- Check if this is even allowed
+                if (not incom[v]) and ((not useWhiteList) or whiteList[v]) then
+                    -- Remove the choice to vote for this plugin
+                    options['#afs_name_'..v] = nil
 
-                -- Store if we should load this plugin
-                d2wareWinners['#afs_name_'..v] = d2wareSettings[v]
+                    -- Store if we should load this plugin
+                    d2wareWinners['#afs_name_'..v] = d2wareSettings[v]
+                end
             end
         end
     end
@@ -2063,15 +2068,13 @@ function FrotaGameMode:RemoveTimers(killAll)
 end
 
 function FrotaGameMode:RespawnBuildings()
-    for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
+    for k,v in pairs(self.MapBuildingList) do
         -- Validate entity
         if IsValidEntity(v) then
-            if v.IsTower then
-                if v:IsAlive() then
-                    v:Heal(v:GetMaxHealth(), v)
-                else
-                    v:RespawnUnit()
-                end
+            if v:IsAlive() then
+                v:Heal(v:GetMaxHealth(), v)
+            else
+                v:RespawnUnit()
             end
         end
     end
@@ -2158,6 +2161,21 @@ function FrotaGameMode:StartGame()
 
     -- Fire start event
     self:FireEvent('onGameStart')
+end
+
+function FrotaGameMode:CreateMapBuildingList()
+    -- Create new tower list
+    self.MapBuildingList = {}
+
+    for k,v in pairs(Entities:FindAllByClassname('npc_dota_*')) do
+        -- Validate entity
+        if IsValidEntity(v) then
+            if v.IsTower then
+                -- Store the building
+                table.insert(self.MapBuildingList, v)
+            end
+        end
+    end
 end
 
 function FrotaGameMode:BuildBuildsData()

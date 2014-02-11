@@ -13,6 +13,100 @@
 				"Keeper of the Kotol",
 				"Labyrinth"
 			]
+		},
+
+		"Picking": {
+			"type": "select",
+			"options":	[
+				"Select options ingame (Ignore everything below)",
+				"Legends of Dota",
+				"Random OMG",
+				"All Pick",
+				"Pure Skill",
+				"Invoker Wars",
+				"Puck Wars",
+				"Tiny Wars",
+				"Earth Spirit Wars",
+				"Riki Wars",
+				"Kunkka Wars",
+				"Defense of RuneHill",
+				"Plague"
+			]
+		},
+
+		"Gameplay": {
+			"type": "select",
+			"options":	[
+				"Select gameplay ingame",
+				"Dota",
+				"PvP Arena",
+				"King of the Hill",
+				"Oddball",
+				"Rabbits vs. Sheep",
+				"Zombie Survival"
+			]
+		},
+
+		"Free Blink Dagger": {
+			"type": "select",
+			"options":	[
+				"Disable Free Blink Dagger",
+				"Enable Free Blink Dagger"
+			]
+		},
+
+		"Bonus Gold Per Second": {
+			"type": "select",
+			"options":	[
+				"Disable Bonus Gold Per Second",
+				"+1 Bonus Gold Per Second",
+				"+2 Bonus Gold Per Second",
+				"+5 Bonus Gold Per Second",
+				"+10 Bonus Gold Per Second",
+				"+15 Bonus Gold Per Second",
+				"+20 Bonus Gold Per Second",
+				"+25 Bonus Gold Per Second"
+			]
+		},
+
+		"No Buying": {
+			"type": "select",
+			"options":	[
+				"Disable No Buying",
+				"Enable No Buying"
+			]
+		},
+
+		"Fat-o-Meter": {
+			"type": "select",
+			"options":	[
+				"Disable Fat-o-Meter",
+				"Enable Fat-o-Meter"
+			]
+		},
+
+		"Unlimited Mana": {
+			"type": "select",
+			"options":	[
+				"Disable Unlimited Mana",
+				"Enable Unlimited Mana"
+			]
+		},
+
+		"Spawn Protection": {
+			"type": "select",
+			"options":	[
+				"Disable Spawn Protection",
+				"Enable Spawn Protection"
+			]
+		},
+
+		"Lucky Items": {
+			"type": "select",
+			"options":	[
+				"Disable Lucky Items",
+				"Enable Lucky Items"
+			]
 		}
 	}
 }

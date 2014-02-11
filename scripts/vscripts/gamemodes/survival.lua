@@ -133,6 +133,11 @@ RegisterGamemode('survival', {
         respawnDelay = 10
     },
 
+    -- List of maps this plugin wont work with
+    blackList = {
+        dota = true
+    },
+
     onGameStart = function(frota)
         -- Reset zombie info
         zombieInfo = {}
