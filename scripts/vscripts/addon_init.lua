@@ -14,6 +14,7 @@ Convars:RegisterConvar('frota_ban_modes', nil, 'Set to modes banned on this serv
 -- Load Frota
 require('util')         -- Utilitiy functions
 require('json')         -- Json Library
+require('d2ware')       -- Interface to D2Ware / sm.js
 require('frota')        -- Main frota framework
 require('gamemodes')    -- Gamemode framework and small gamemodes/addons
 

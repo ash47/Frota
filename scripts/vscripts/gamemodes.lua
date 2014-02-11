@@ -289,15 +289,11 @@ RegisterGamemode('dota', {
     },
 
     onGameStart = function(frota)
-        print('Loading Dota')
-
         -- Apply Dota specific Options
         GameRules:SetHeroRespawnEnabled(true)
     end,
 
     onGameEnd = function(frota)
-        print('dota is done!')
-
         -- Reset to normal gamemode options
         GameRules:SetHeroRespawnEnabled(false)
     end

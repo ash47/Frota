@@ -144,7 +144,7 @@ function FrotaGameMode:_SetInitialValues()
 end
 
 function FrotaGameMode:RegisterCommands()
-    -- When a user tries to put a skill into a slot
+    -- A server command to attempt to reload stuff -- doesnt work 11/02/2014
     Convars:RegisterCommand('reloadtest', function(name, skillName, slotNumber)
         -- Check if the server ran it
         if not Convars:GetCommandClient() then
@@ -612,9 +612,14 @@ function FrotaGameMode:CleanupPlayer(keys)
             --self:_SetInitialValues()
 
             -- Close server
-            SendToServerConsole('exit')
+            self:CloseServer()
         end
     })
+end
+
+function FrotaGameMode:CloseServer()
+    -- Just exit
+    SendToServerConsole('exit')
 end
 
 function FrotaGameMode:ListenToEvent(eventName)
@@ -1557,8 +1562,14 @@ function FrotaGameMode:_thinkState_Voting(dt)
         -- This only ever runs once
         self.startedInitialVote = true
 
-        -- Begin gamemode voting
-        self:VoteForGamemode()
+        -- Create a timer to start voting
+        self:CreateTimer('startVotingTimer', {
+            endTime = Time()+3,
+            callback = function(frota, args)
+                -- Begin gamemode voting
+                self:VoteForGamemode()
+            end
+        })
     end
 end
 
@@ -1589,8 +1600,44 @@ function FrotaGameMode:EndGamemode()
     -- Cleanup
     self:CleanupEverything(true)
 
+    -- Vote to play again
+    self:VoteToPlayAgain()
+
     -- Start game mode vote
-    self:VoteForGamemode()
+    --self:VoteForGamemode()
+end
+
+function FrotaGameMode:VoteToPlayAgain()
+    -- Reset ready status
+    self:LoopOverPlayers(function(ply, playerID)
+        self.selectedBuilds[playerID].ready = false
+    end)
+
+    -- Create a vote for the game mode
+    self:CreateVote({
+        sort = VOTE_SORT_SINGLE,
+        options = {
+            ["#afs_play_again"] = "#afs_play_again_des",
+            ["#afs_play_something_else"] = "#afs_play_something_else_des",
+            ["#afs_close_server"] = "afs_close_server_des"
+        },
+        duration = 10,
+        onFinish = function(winners)
+            -- Grab the winning option, we need to remove the #afs_name_ from the start
+            local choice = winners[math.random(1, #winners)]
+
+            if choice == '#afs_play_again' then
+                -- Play again -- just load the gamemode
+                self:LoadGamemode()
+            elseif choice == '#afs_play_something_else' then
+                -- Create a vote to play something else
+                self:VoteForGamemode()
+            else
+                -- Close the server
+                self:CloseServer()
+            end
+        end
+    })
 end
 
 function FrotaGameMode:VoteForGamemode()
@@ -1636,6 +1683,24 @@ function FrotaGameMode:VoteForGamemode()
     self.playMode = {}
     self.loadedAddons = {}
 
+    -- Check if we have d2ware settings
+    if d2wareSettings then
+        -- Should we force a gamemode?
+        if d2wareSettings.picking and d2wareSettings.picking ~= '-' then
+            -- Check if the gamemode exists
+            for k, v in pairs(modes) do
+                -- Did we find it?
+                if v == d2wareSettings.picking then
+                    -- Create new set of choices
+                    options = {
+                        ['#afs_name_'..v] = '#afs_des_'..v
+                    }
+                    break
+                end
+            end
+        end
+    end
+
     -- Create a vote for the game mode
     self:CreateVote({
         sort = VOTE_SORT_SINGLE,
@@ -1661,6 +1726,24 @@ function FrotaGameMode:VoteForGamemode()
                 local options = {}
                 for k, v in pairs(modes) do
                     options['#afs_name_'..v] = '#afs_des_'..v
+                end
+
+                -- Check if we have d2ware settings
+                if d2wareSettings then
+                    -- Should we force a gamemode?
+                    if d2wareSettings.gameplay and d2wareSettings.gameplay ~= '-' then
+                        -- Check if the gamemode exists
+                        for k, v in pairs(modes) do
+                            -- Did we find it?
+                            if v == d2wareSettings.gameplay then
+                                -- Create new set of choices
+                                options = {
+                                    ['#afs_name_'..v] = '#afs_des_'..v
+                                }
+                                break
+                            end
+                        end
+                    end
                 end
 
                 -- Vote for the gameplay section
@@ -1751,6 +1834,20 @@ function FrotaGameMode:VoteForAddons()
         end
     end
 
+    local d2wareWinners = {}
+    if d2wareSettings then
+        for k,v in pairs(modes) do
+            -- Check if d2ware should take control of this plugin
+            if d2wareSettings[v] ~= nil then
+                -- Remove the choice to vote for this plugin
+                options['#afs_name_'..v] = nil
+
+                -- Store if we should load this plugin
+                d2wareWinners['#afs_name_'..v] = d2wareSettings[v]
+            end
+        end
+    end
+
     -- Vote for the gameplay section
     self:CreateVote({
         sort = VOTE_SORT_OPTIONS,
@@ -1759,10 +1856,18 @@ function FrotaGameMode:VoteForAddons()
         onFinish = function(winners)
             self.loadedAddons = {}
 
+            -- Merge d2ware stuff
+            for k,v in pairs(d2wareWinners) do
+                winners[k] = v
+            end
+
+            -- Check which plugins to load
             for k,v in pairs(winners) do
                 -- Check if a plugin was meant to be loaded
                 if v then
+                    -- Grab the mode
                     local mode = string.sub(k, 11)
+
                     -- Tell everyone
                     Say(nil, COLOR_LGREEN..tostring(mode)..COLOR_NONE..' was loaded!', false)
 
@@ -1780,15 +1885,23 @@ end
 function FrotaGameMode:VoteForOptions()
     local options = {}
 
+    local d2wareWinners = {}
+
     local function buildOptions(t)
         -- Check if the table exists, and if it has vote options
         if t and t.voteOptions then
             for k, v in pairs(t.voteOptions) do
-                -- Store the option
-                options['#afs_o_'..k] = v
+                -- Check if this setting is controlled by d2ware
+                if d2wareSettings and d2wareSettings[k] then
+                    -- Store the d2ware winner
+                    d2wareWinners['#afs_o_'..k] = d2wareSettings[k]
+                else
+                    -- Store the option
+                    options['#afs_o_'..k] = v
 
-                -- Add a description if there is none
-                options['#afs_o_'..k].d = options['#afs_o_'..k].d or '#afs_od_'..k
+                    -- Add a description if there is none
+                    options['#afs_o_'..k].d = options['#afs_o_'..k].d or '#afs_od_'..k
+                end
             end
         end
     end
@@ -1808,6 +1921,11 @@ function FrotaGameMode:VoteForOptions()
         options = options,
         duration = 10,
         onFinish = function(winners)
+            -- Add d2ware results
+            for k,v in pairs(d2wareWinners) do
+                winners[k] = v
+            end
+
             local realWinners = {}
             for k, v in pairs(winners) do
                 local txt = string.sub(k, 8)
@@ -1902,6 +2020,9 @@ function FrotaGameMode:FireEvent(name, ...)
 end
 
 function FrotaGameMode:LoadGamemode()
+    -- Remove D2Ware settings container
+    d2wareSettings = nil
+
     -- Store the modes
     self.pickMode = self.toLoadPickMode
     self.playMode = self.toLoadPlayMode

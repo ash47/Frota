@@ -41,8 +41,6 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Steal and return the enemies' flag while protecting your own.
  - **Rabbits vs. Sheep**
   - What does the Rabbit say?
- - **King of the Hill**
-  - Fight to get more friendly players on top of the point.
  - **Zombie Survival**
   - Survive waves of zombies attacking you!
 
@@ -74,6 +72,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Heroes will be momentarily invulnerable when they spawn.
  - **Lucky Items**
   - Get random items as the game progresses.
+ - **Bonus Gold Per Second**
+  - Gives players gold every second.
 
 ###D2Ware Servers###
  - You can play this on D2Ware servers here: http://d2ware.net
