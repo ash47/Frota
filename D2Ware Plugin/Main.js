@@ -94,8 +94,13 @@ var settingsMap = {
     "Lucky Items": {
         "Disable Lucky Items": "0",
         "Enable Lucky Items": "1"
+    },
+
+    "WTF Mode": {
+        "Disable WTF Mode": "0",
+        "Enable WTF Mode": "1"
     }
-}
+};
 
 // This will contain the command to
 var settingsCommand = null;
@@ -117,7 +122,7 @@ plugin.get('LobbyManager', function(obj){
         }
 
         // Build settings list
-        settings = {}
+        settings = {};
 
         for(var key in settingsMap) {
             settings[key] = (options[key] && settingsMap[key][options[key]]) || "-";
@@ -135,7 +140,8 @@ plugin.get('LobbyManager', function(obj){
                                 +settings['Fat-o-Meter'] + ' '
                                 +settings['Unlimited Mana'] + ' '
                                 +settings['Spawn Protection'] + ' '
-                                +settings['Lucky Items'];
+                                +settings['Lucky Items'] + ' '
+                                +settings['WTF Mode'];
         }
 
 });
@@ -157,7 +163,10 @@ game.hook('OnGameFrame',function() {
         // Check if it's time to pass settings yet
         if(game.rules.props.m_nGameState >= dota.STATE_HERO_SELECTION) {
             // If there are settings, pass them
-            if(settingsCommand) server.command(settingsCommand)
+            if(settingsCommand) server.command(settingsCommand);
+
+            // Register that sm.js can be used
+            server.command('registersmjs');
 
             // Store that we've passed the settings
             parsedSettings = true;
@@ -175,3 +184,37 @@ game.hook('OnGameFrame',function() {
         changedMap = true;
     }
 });
+
+// Add smjs convar hook
+console.addServerCommand('smjsconvarbool', function(client, args) {
+    // Grab the convar
+    var convar = console.findConVar(args[0]);
+
+    // Make sure it exists
+    if(convar) {
+        // Set it
+        convar:SetBool(args[1] == 'true');
+    }
+})
+
+console.addServerCommand('smjsconvarint', function(client, args) {
+    // Grab the convar
+    var convar = console.findConVar(args[0]);
+
+    // Make sure it exists
+    if(convar) {
+        // Set it
+        convar.setInt(parseInt(args[1]));
+    }
+})
+
+console.addServerCommand('smjsconvarstring', function(client, args) {
+    // Grab the convar
+    var convar = console.findConVar(args[0]);
+
+    // Make sure it exists
+    if(convar) {
+        // Set it
+        convar:setString(args[1]);
+    }
+})

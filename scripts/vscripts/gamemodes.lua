@@ -74,7 +74,7 @@ local function checkWhiteList(mode)
     -- Grab current map
     local currentMap = GetMapName():lower()
 
-    if (not mode.whiteList or mode.whiteList[currentMap]) and (not mode.blackList or not mode.blackList[currentMap]) then
+    if (not mode.whiteList or mode.whiteList[currentMap]) and (not mode.blackList or not mode.blackList[currentMap]) and (not mode.smjsNeeded or SMJS_LOADED) then
         return true
     end
 
@@ -372,22 +372,25 @@ RegisterGamemode('rikiwars', {
 --[[ Addon plugins ]]--
 
 -- WTF Mode
---[[RegisterGamemode('wtf', {
+RegisterGamemode('wtf', {
     -- This gamemode is only for picking
     sort = GAMEMODE_ADDON,
+
+    -- We need sm.js to use this plugin
+    smjsNeeded = true,
 
     -- When the game starts
     onGameStart = function(frota)
         -- Enable WTF
-        Convars:SetBool('dota_ability_debug', true)
+        smjsSetInt('dota_ability_debug', 1)
     end,
 
     -- When the game ends
     onGameEnd = function(frota)
         -- Disable WTF
-        Convars:SetBool('dota_ability_debug', false)
+        smjsSetInt('dota_ability_debug', 0)
     end
-})]]
+})
 
 -- Free Blink Dagger
 RegisterGamemode('freeBlinkDagger', {

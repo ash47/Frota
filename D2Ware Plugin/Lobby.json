@@ -107,6 +107,14 @@
 				"Disable Lucky Items",
 				"Enable Lucky Items"
 			]
+		},
+
+		"WTF Mode": {
+			"type": "select",
+			"options":	[
+				"Disable WTF Mode",
+				"Enable WTF Mode"
+			]
 		}
 	}
 }
