@@ -107,6 +107,9 @@ local function checkForVictory(frota)
 
     -- If either team has everyone dead
     if allDeadRadiant or allDeadDire then
+        -- Print total survival time
+        Say(nil, "Total Survival Time: "..math.floor(Time()-startTime).." seconds!", false)
+
         -- End the gamemode
         frota:EndGamemode()
     end
