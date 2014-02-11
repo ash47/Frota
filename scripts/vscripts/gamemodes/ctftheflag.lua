@@ -37,9 +37,7 @@ RegisterGamemode('ctftheflag', {
     },
 
     -- List of maps this plugin wont work with
-    blackList = {
-        dota = true
-    },
+    blackList = dotaMapList,
 
     onGameStart = function(frota)
         print('running onGameStart')

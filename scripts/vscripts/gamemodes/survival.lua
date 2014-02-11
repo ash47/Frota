@@ -134,9 +134,7 @@ RegisterGamemode('survival', {
     },
 
     -- List of maps this plugin wont work with
-    blackList = {
-        dota = true
-    },
+    blackList = dotaMapList,
 
     onGameStart = function(frota)
         -- Reset zombie info

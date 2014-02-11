@@ -133,6 +133,14 @@ function GetGamemode(name)
     return gamemodes.g[name]
 end
 
+-- List of dota type maps
+dotaMapList = {
+    dota = true,
+    dota_autumn = true,
+    dota_newyear = true,
+    dota_winter = true
+}
+
 -- All Pick
 RegisterGamemode('allpick', {
     -- This gamemode is only for picking
@@ -233,9 +241,7 @@ RegisterGamemode('arena', {
     },
 
     -- List of maps this plugin wont work with
-    blackList = {
-        dota = true
-    },
+    blackList = dotaMapList,
 
     voteOptions = {
         -- Score limit vote
@@ -284,9 +290,7 @@ RegisterGamemode('dota', {
     },
 
     -- This is ONLY for the dota map
-    whiteList = {
-        dota = true
-    },
+    whiteList = dotaMapList,
 
     onGameStart = function(frota)
         -- Apply Dota specific Options
@@ -339,9 +343,7 @@ RegisterGamemode('rikiwars', {
     sort = GAMEMODE_PICK,
 
     -- List of maps this plugin wont work with
-    blackList = {
-        dota = true
-    },
+    blackList = dotaMapList,
 
     -- Function to give out heroes
     assignHero = function(frota, ply)
@@ -416,9 +418,7 @@ RegisterGamemode('noBuying', {
     sort = GAMEMODE_ADDON,
 
     -- List of maps this plugin wont work with
-    blackList = {
-        dota = true
-    },
+    blackList = dotaMapList,
 
     -- When players are given a new hero
     dota_item_purchased = function(frota, keys)

@@ -27,9 +27,7 @@ RegisterGamemode('oddball', {
     },
 
     -- List of maps this plugin wont work with
-    blackList = {
-        dota = true
-    },
+    blackList = dotaMapList,
 
     voteOptions = {
         -- Score limit vote
