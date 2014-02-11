@@ -6,7 +6,7 @@
 local testmodeGoldRate = 1
 
 -- Preparation time (in seconds)
-local prepTime = 60
+local prepTime = 5
 
 -- Time between waves (in seconds)
 local timeBetweenWaves =30
@@ -16,6 +16,13 @@ local spawnInterval = 1
 
 -- How many lives the players start with
 local startingLives = 20
+
+-- To store the unit's lastest position and current position
+local timePassed = 0
+local unitCurrentPosition = {}
+local unitLatestPosition = {}
+local angryState = {}
+local unitCurrentMileStone = {}
 
 -- These are the waypoints units will follow
 local wayPointPositions = {
@@ -188,10 +195,6 @@ local function spawnUnit(unitName, points)
 
     -- Phase the unit -- it shouldn't collide with anything
     --unit:AddNewModifier(unit, nil, "modifier_phased", {})
-
-    unit:SetMustReachEachGoalEntity(true)
-    unit:SetInitialGoalEntity(wayPoints[2])
-
     -- Make it march towards the checkpoints
     --[[for i = 2, #wayPointPositions do
         -- Grab this waypoint
@@ -520,30 +523,94 @@ RegisterGamemode('dorh', {
 
     -- Checking for units 'escaping'
     onThink = function(frota, dt)
-        -- Allow units to 'escape'
-        local endPoint = wayPointPositions[#wayPointPositions]
+      -- seconds that unit will begin to be angry when blocked
+      local angryTreshold = 3
+      timePassed = timePassed + dt
+      if timePassed >= 1 then
         for k,v in pairs(waveUnits) do
-            -- Validate the unit
-            if IsValidEntity(v) then
-                -- Check how close this unit is to the end
-                if distance(v:GetOrigin(), endPoint) < 200 then
-                    -- Close enough, kill it
-                    local points = v.points or 1
+          -- Validate the unit
+          if IsValidEntity(v) then
+            
+            -- catch the unit index
+            local uIndex = v:entindex()
+            unitCurrentPosition[uIndex] = v:GetOrigin()
 
-                    -- Update the scores
-                    frota.scoreDire = frota.scoreDire - 1
-                    frota.scoreRadiant = frota.scoreRadiant - points
-                    frota:UpdateScoreData()
+            -- if angrystate and latest position nil then init it
+            if angryState[uIndex] == nil then angryState[uIndex] = 0 end
+            if unitLatestPosition[uIndex] == nil then unitLatestPosition[uIndex] = unitCurrentPosition[uIndex] end
+            
+            -- if it didnt move
+            -- print('distance '..tostring(distance( unitCurrentPosition[uIndex] , unitLatestPosition[uIndex] )))
+            if distance( unitCurrentPosition[uIndex] , unitLatestPosition[uIndex] ) <= 1 then
+                    -- then becoming angry
+                      angryState[uIndex] = angryState[uIndex] + 1
 
-                    -- Remove this unit
-                    table.remove(waveUnits, k)
-                    v:ForceKill(false)
-
-                    -- Check if we've won the round
-                    checkWaveStatus()
-                end
-            end
+                    if angryState[uIndex] >= angryTreshold then
+                      -- when didnt move for 3 secs, then begin to attack
+                      ExecuteOrderFromTable({
+                        UnitIndex = uIndex,
+                        OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+                        -- order to move to next way point
+                        Position = wayPointPositions[ unitCurrentMileStone[uIndex]+1 ],
+                        Queue = false
+                      })
+                    end
+                  else
+                    -- if it begin to move, then its angry begin to vanish, but that will take angryTreshold time
+                    angryState[uIndex] = angryState[uIndex] - 1
+                  end
+            
+            
+            -- Store Position 1 sec ago
+            unitLatestPosition[uIndex] = unitCurrentPosition[uIndex]
+          end
         end
+        
+        -- Reset timer
+        timePassed =0
+        
+      end
+
+      -- order to move through every way points
+      for k,v in pairs(waveUnits) do
+        -- Validate the unit
+        if IsValidEntity(v) then
+          for i = 1,#wayPointPositions - 1 do
+            -- check every waypoint
+            local uIndex = v:entindex()
+            unitCurrentPosition[uIndex] = v:GetOrigin()
+            if distance(unitCurrentPosition[uIndex], wayPointPositions[i]) < 200 then
+              -- close enough to the waypoint,order to move to next way point
+              unitCurrentMileStone[uIndex] = i
+              ExecuteOrderFromTable({
+                UnitIndex = uIndex,
+                OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION,
+                -- order to move to next way point
+                Position = wayPointPositions[ unitCurrentMileStone[uIndex]+1 ],
+                Queue = false
+              })
+            end
+          end
+          
+          -- allow unit to 'escape'
+          local endPoint = wayPointPositions[#wayPointPositions]
+          -- Check how close this unit is to the end
+          if distance(v:GetOrigin(), endPoint) < 200 then
+              -- Close enough, kill it
+              local points = v.points or 1
+              -- Update the scores
+              frota.scoreDire = frota.scoreDire - 1
+              frota.scoreRadiant = frota.scoreRadiant - points
+              frota:UpdateScoreData()
+              -- Remove this unit
+              table.remove(waveUnits, k)
+              v:ForceKill(false)
+              -- Check if we've won the round
+              checkWaveStatus()
+          end
+        end
+      end
+
     end,
 
     -- Check if the round should end
@@ -679,7 +746,7 @@ waveData = {
         units = {
             [1] = {
                 sort = 'npc_dorh_enemy_gycrophter',
-                count = 20,
+                count = 500,
                 points = 1
             }
         }

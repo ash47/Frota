@@ -4918,7 +4918,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"knockback_distance"			"100"
+				"knockback_distance"			"20"
 			}
 			"03"
 			{
