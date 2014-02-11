@@ -48,7 +48,7 @@ function FrotaGameMode:new (o)
 end
 
 function FrotaGameMode:InitGameMode()
-    print('\n\nStarting to load Frota...')
+    print('\n\nStarting to load Frota gamemode...')
     -- Load version
     self.frotaVersion = LoadKeyValues("scripts/version.txt").version
 
@@ -86,6 +86,7 @@ function FrotaGameMode:InitGameMode()
     self:ListenToEvent('dota_glyph_used')
     self:ListenToEvent('dota_courier_respawned')
     self:ListenToEvent('dota_courier_lost')
+    self:ListenToEvent('entity_hurt')
 
     -- userID map
     self.vUserIDMap = {}
@@ -112,7 +113,7 @@ function FrotaGameMode:InitGameMode()
     end
     --PrecacheResource('test', 'test')
     print('Done precaching!')
-    print('Done loading Frota!\n\n')
+    print('Done loading Frota gamemode!\n\n')
 end
 
 function FrotaGameMode:_SetInitialValues()
@@ -646,6 +647,7 @@ function FrotaGameMode:RespawnHero(hero, buyback, unknown1, unknown2)
     hero:RespawnHero(buyback, unknown1, unknown2)
 
     -- Fire the respawn event
+    self:FireEvent('onHeroSpawned', hero)
     self:FireEvent('onHeroRespawn', hero)
 end
 

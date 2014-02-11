@@ -12,6 +12,8 @@ local zombieInfo = {}   -- Stores info on each user's zombies
 -- The time the match started (for scaling)
 local startTime = 0.0
 
+local teamBased = false
+
 local function applyDefaultStats(unit, factor, sfactor)
     unit:SetMaxHealth(30 * factor)
     unit:SetHealth(unit:GetMaxHealth())
@@ -97,21 +99,33 @@ local function checkForVictory(frota)
         end
     end)
 
-    if allDeadDire then
-        Say(nil, "Dire Loses!", false)
-    end
+    -- Game ends differently, depending on wether it is team based or not
+    if teamBased then
+        -- Team based, everyone needs to die
+        if allDeadDire and allDeadRadiant then
+            -- Print total survival time
+            Say(nil, "Total Survival Time: "..math.floor(Time()-startTime).." seconds!", false)
 
-    if allDeadRadiant then
-        Say(nil, "Radiant Loses!", false)
-    end
+            -- End the gamemode
+            frota:EndGamemode()
+        end
+    else
+        if allDeadDire then
+            Say(nil, "Dire Loses!", false)
+        end
 
-    -- If either team has everyone dead
-    if allDeadRadiant or allDeadDire then
-        -- Print total survival time
-        Say(nil, "Total Survival Time: "..math.floor(Time()-startTime).." seconds!", false)
+        if allDeadRadiant then
+            Say(nil, "Radiant Loses!", false)
+        end
 
-        -- End the gamemode
-        frota:EndGamemode()
+        -- If either team has everyone dead
+        if allDeadRadiant or allDeadDire then
+            -- Print total survival time
+            Say(nil, "Total Survival Time: "..math.floor(Time()-startTime).." seconds!", false)
+
+            -- End the gamemode
+            frota:EndGamemode()
+        end
     end
 end
 
@@ -136,10 +150,25 @@ RegisterGamemode('survival', {
         respawnDelay = 10
     },
 
+    -- A team based game -- doesn't work
+    --[[voteOptions = {
+        -- Score limit vote
+        survivalTeamMode = {
+            -- Range based
+            s = VOTE_SORT_YESNO,
+
+            -- Default vaule (if no one votes)
+            def = false
+        }
+    },]]
+
     -- List of maps this plugin wont work with
     blackList = dotaMapList,
 
     onGameStart = function(frota)
+        local options = frota:GetOptions()
+        teamBased = options.survivalTeamMode
+
         -- Reset zombie info
         zombieInfo = {}
 
@@ -230,6 +259,20 @@ RegisterGamemode('survival', {
             end
         })
     end,
+
+    -- Team based stuff
+    --[[onHeroSpawned = function(frota, hero)
+        -- Note: At this stage, `teamBased` isn't always set!
+
+        -- Grab options
+        local options = frota:GetOptions()
+
+        -- Check if it is a team based game
+        if options.survivalTeamMode then
+            -- Prevent it from attacking enemy heroes
+            hero:AddNewModifier(hero, nil, 'modifier_halloween_truce', {})
+        end
+    end,]]
 
     -- Cleanup a player
     CleanupPlayer = function(frota, leavingPly)

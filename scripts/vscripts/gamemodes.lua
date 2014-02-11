@@ -9,6 +9,7 @@
     - onGameEnd(frota): Runs when the game mode finishes, you can do cleanup here
     - CleanupPlayer(frota, leavingPly): A player is about to leave and be cleaned up
     - NewPlayer(frota, ply): A new player has connected, and been assigned their hero
+    - onHeroSpawned(frota, hero): When a player spawns (This fires on respawn as well as initial spawn)
     - onHeroRespawn(frota, hero): When a hero is respawned (doesnt include initial spawn!)
 
     MOD EVENTS -- Mod events are all in the form of (frota, keys), you can find the arguments below via keys: keys.PlayerID
@@ -51,6 +52,11 @@
         - "entindex_attacker"       "long"
         - "entindex_inflictor"      "long"
         - "damagebits"              "long"
+    - entity_hurt
+        - "entindex_killed"   "long"
+        - "entindex_attacker" "long"
+        - "entindex_inflictor"    "long"
+        - "damagebits"        "long"
 
     GAMEMODE FIRED EVENT - Events that are fired from certain gamemodes
      - dmNewHero(frota, hero): DM Mode has allocated a new hero (hero being the new hero)
