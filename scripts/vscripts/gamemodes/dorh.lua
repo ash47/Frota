@@ -6,10 +6,10 @@
 local testmodeGoldRate = 1
 
 -- Preparation time (in seconds)
-local prepTime = 5
+local prepTime = 30
 
 -- Time between waves (in seconds)
-local timeBetweenWaves =30
+local timeBetweenWaves = 20
 
 -- How fast units spawn
 local spawnInterval = 1
@@ -186,12 +186,17 @@ local function spawnWaypointMarkers()
 end
 
 -- Spawns a unit, and makes it march towards the end
-local function spawnUnit(unitName, points)
+local function spawnUnit(unitName, points, playerCount)
     -- Spawn the unit at the first waypoint
     local unit = CreateUnitByName(unitName, wayPointPositions[1]+RandomVector(150), true, nil, nil, 1)
 
     -- Store how many points this unit is worth
     unit.points = points
+    
+    --multiple the health
+    local multiRate = (( playerCount - 1 ) * 0.8 + 1 )
+    unit:SetMaxHealth( multiRate * unit:GetHealth())
+    unit:SetHealth( unit:GetMaxHealth() )
 
     -- Phase the unit -- it shouldn't collide with anything
     --unit:AddNewModifier(unit, nil, "modifier_phased", {})
@@ -208,6 +213,8 @@ local function spawnUnit(unitName, points)
             Queue = true
         })
     end]]
+    
+    
 
 
 
@@ -292,9 +299,10 @@ local function startWave(waveNumber)
             if #toSpawn > 0 then
                 -- Grab the next unit to spawn
                 local unitData = table.remove(toSpawn, 1)
+                local cply = frota:GetPlayerList()
 
                 -- Spawn it
-                spawnUnit(unitData.sort, unitData.points)
+                spawnUnit(unitData.sort, unitData.points, #cply)
 
                 -- Check if there is still something left to spawn
                 if #toSpawn > 0 then
@@ -457,9 +465,6 @@ RegisterGamemode('dorh', {
 
         -- Make invulnerable
         hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
-        
-        -- Dont attack each other
-        hero:AddNewModifier(hero, nil, "modifier_halloween_truce", {})
 
         -- Give building skills
 		local abTemp = {}
@@ -526,8 +531,9 @@ RegisterGamemode('dorh', {
 
     -- Checking for units 'escaping'
     onThink = function(frota, dt)
+      
       -- seconds that unit will begin to be angry when blocked
-      local angryTreshold = 3
+      local angryTreshold = 1
       timePassed = timePassed + dt
       if timePassed >= 1 then
         for k,v in pairs(waveUnits) do
@@ -541,12 +547,13 @@ RegisterGamemode('dorh', {
             -- if angrystate and latest position nil then init it
             if angryState[uIndex] == nil then angryState[uIndex] = 0 end
             if unitLatestPosition[uIndex] == nil then unitLatestPosition[uIndex] = unitCurrentPosition[uIndex] end
+            if unitCurrentMileStone[uIndex] ==nil then unitCurrentMileStone[uIndex] = 1 end
             
             -- if it didnt move
             -- print('distance '..tostring(distance( unitCurrentPosition[uIndex] , unitLatestPosition[uIndex] )))
             if distance( unitCurrentPosition[uIndex] , unitLatestPosition[uIndex] ) <= 1 then
                     -- then becoming angry
-                      angryState[uIndex] = angryState[uIndex] + 1
+                    angryState[uIndex] = angryState[uIndex] + 1
 
                     if angryState[uIndex] >= angryTreshold then
                       -- when didnt move for 3 secs, then begin to attack
@@ -561,6 +568,7 @@ RegisterGamemode('dorh', {
                   else
                     -- if it begin to move, then its angry begin to vanish, but that will take angryTreshold time
                     angryState[uIndex] = angryState[uIndex] - 1
+                    if angryState[uIndex] < 0 then angryState[uIndex] = 0 end
                   end
             
             
@@ -652,7 +660,7 @@ RegisterGamemode('dorh', {
 		local owner = unit:GetOwner()
 		local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
 		
-            -- Build a general building
+      -- Build a general building
 			local gold = PlayerResource:GetGold(playerID)
             if gold < cost then
 				Say(nil, COLOR_RED..'NOT ENOUGH GOLD!!!', false)
@@ -698,19 +706,19 @@ RegisterGamemode('dorh', {
           point = hero:GetOrigin()
         end
         
-		local unitOnPoint = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, point , nil, 1 , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
+		local unitOnPoint = FindUnitsInRadius( hero:GetTeam(), point , nil, 1 , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
 		if name == 'dorh_build_general' then
 			for _,unit in ipairs(unitOnPoint) do
 				unit:SetOwner( hero )
-        -- Dont attack each other
+        print('Applying modifier')
         unit:AddNewModifier(unit, nil, "modifier_halloween_truce", {})
 			end
 		elseif name:find('dorh_upgrade_') then
 			for _,unit in ipairs(unitOnPoint) do
 				unit:SetOwner( owner )
-        -- Dont attack each other
         unit:AddNewModifier(unit, nil, "modifier_halloween_truce", {})
 				if hero then
+        -- lol we should spawn the unit , then run script, and remove unit in ability_custom them we should not need this
 				UTIL_RemoveImmediate( hero )
 				end
 			end
@@ -726,8 +734,6 @@ RegisterGamemode('dorh', {
 
 			-- Make invulnerable
 			hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
-      -- Dont attack each other
-      hero:AddNewModifier(hero, nil, "modifier_halloween_truce", {})
 			
 			-- Make it stronger
 			hero:__KeyValueFromInt("AttackDamageMin" , currentLevel * 200 )
@@ -755,7 +761,7 @@ waveData = {
         units = {
             [1] = {
                 sort = 'npc_dorh_enemy_gycrophter',
-                count = 500,
+                count = 20,
                 points = 1
             }
         }
