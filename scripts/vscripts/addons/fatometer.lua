@@ -27,8 +27,8 @@ RegisterGamemode('fatometer', {
                 scale[playerID] = (scale[playerID] or frota:GetDefaultHeroScale(killedUnit:GetClassname())) * 2/3
 
 				-- Limit scale
-             	local upperLimit = frota:GetDefaultHeroScale(hero:GetClassname()) * 3
-             	local lowerLimit = frota:GetDefaultHeroScale(hero:GetClassname()) * 0.1
+             	local upperLimit = frota:GetDefaultHeroScale(killedUnit:GetClassname()) * 3
+             	local lowerLimit = frota:GetDefaultHeroScale(killedUnit:GetClassname()) / 3
 
              	if scale[playerID] > upperLimit then
                  	scale[playerID] = upperLimit
