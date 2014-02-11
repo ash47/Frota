@@ -457,6 +457,9 @@ RegisterGamemode('dorh', {
 
         -- Make invulnerable
         hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
+        
+        -- Dont attack each other
+        hero:AddNewModifier(hero, nil, "modifier_halloween_truce", {})
 
         -- Give building skills
 		local abTemp = {}
@@ -690,19 +693,23 @@ RegisterGamemode('dorh', {
         local heroName = hero:GetClassname()
         local name = ability:GetAbilityName()
         local owner = hero:GetOwner()
-		local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
-		if name ~= 'dorh_build_general' then
-			point = hero:GetOrigin()
-		end
-		
+        local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
+        if name ~= 'dorh_build_general' then
+          point = hero:GetOrigin()
+        end
+        
 		local unitOnPoint = FindUnitsInRadius( DOTA_TEAM_GOODGUYS, point , nil, 1 , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
 		if name == 'dorh_build_general' then
 			for _,unit in ipairs(unitOnPoint) do
 				unit:SetOwner( hero )
+        -- Dont attack each other
+        unit:AddNewModifier(unit, nil, "modifier_halloween_truce", {})
 			end
 		elseif name:find('dorh_upgrade_') then
 			for _,unit in ipairs(unitOnPoint) do
 				unit:SetOwner( owner )
+        -- Dont attack each other
+        unit:AddNewModifier(unit, nil, "modifier_halloween_truce", {})
 				if hero then
 				UTIL_RemoveImmediate( hero )
 				end
@@ -719,6 +726,8 @@ RegisterGamemode('dorh', {
 
 			-- Make invulnerable
 			hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
+      -- Dont attack each other
+      hero:AddNewModifier(hero, nil, "modifier_halloween_truce", {})
 			
 			-- Make it stronger
 			hero:__KeyValueFromInt("AttackDamageMin" , currentLevel * 200 )
