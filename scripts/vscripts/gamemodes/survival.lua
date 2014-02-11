@@ -192,11 +192,15 @@ RegisterGamemode('survival', {
                             -- There is one mroe zombie
                             totalZombies = totalZombies + 1
 
-                            -- Workout where to spawn it
-                            local pos = hero:GetOrigin()
-                            local ang = math.random() * 2 * math.pi;
-                            pos.x = pos.x + math.cos(ang) * SPAWN_DISTANCE
-                            pos.y = pos.y + math.sin(ang) * SPAWN_DISTANCE
+                            -- Workout where to spawn it (ensure it is within the map bounds)
+                            local pos
+
+                            repeat
+                                pos = hero:GetOrigin()
+                                local ang = math.random() * 2 * math.pi;
+                                pos.x = pos.x + math.cos(ang) * SPAWN_DISTANCE
+                                pos.y = pos.y + math.sin(ang) * SPAWN_DISTANCE
+                            until frota:IsValidPosition(pos)
 
                             -- Put it on the opposite team
                             local team = ((hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS) and DOTA_TEAM_BADGUYS) or DOTA_TEAM_GOODGUYS

@@ -2080,6 +2080,17 @@ function FrotaGameMode:RespawnBuildings()
     end
 end
 
+function FrotaGameMode:IsValidPosition(pos)
+    -- Check if the position is outside the valid playing area
+    if pos.x < GetWorldMinX() or pos.x > GetWorldMaxX() or pos.y < GetWorldMinY() or pos.y > GetWorldMaxY() then
+        -- Outside
+        return false
+    end
+
+    -- Must be inside
+    return true
+end
+
 function FrotaGameMode:CleanupEverything(leaveHeroes)
     -- Remove all timers
     self:RemoveTimers()
