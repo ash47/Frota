@@ -1,5 +1,5 @@
 {
-	"mainFields": ["Map"],
+	"mainFields": ["Map", "Picking"],
 	"fields": {
 		"Map": {
 			"type": "select",
