@@ -18,8 +18,6 @@ RegisterGamemode('tinywars', {
             [3] = 'tiny_craggy_exterior',
             [4] = 'tiny_grow'
         })
-
-        PrintTable(getmetatable(hero:FindAbilityByName('tiny_grow')))
     end,
 
     -- DM Mode changed our hero

@@ -155,7 +155,6 @@ function FrotaGameMode:RegisterCommands()
         -- Check if the server ran it
         if not Convars:GetCommandClient() then
             GameRules:Playtesting_UpdateCustomKeyValues()
-            GameRules:ResetToHeroSelection()
         end
     end, 'Reload shit test', 0)
 
