@@ -87,8 +87,8 @@ RegisterGamemode('rvs', {
         end
 
 		-- Set the scores to 3 -- there are three creeps on each side
-		frota.scoreDire = 3
-		frota.scoreRadiant = 3
+		frota.scoreDire = NUM_STARTING_CREEPS
+		frota.scoreRadiant = NUM_STARTING_CREEPS
 
 		--Update score
 		frota:UpdateScoreData()
@@ -108,12 +108,6 @@ RegisterGamemode('rvs', {
             if isRVSCreep(killedUnit) then
                 -- Grab the team the killed unit was on
                 local team = killedUnit:GetTeam()
-
-                -- Spawn the extra creeps
-                for i=1,CREEPS_PER_KILL do
-                    spawnCreepForEnemyTeam(team)
-                    spawnCreepForEnemyTeam(team)
-                end
 
                 -- Check which team they were on
                 if team == DOTA_TEAM_GOODGUYS then
@@ -144,6 +138,15 @@ RegisterGamemode('rvs', {
                         -- Radiant Victory
                         winner = DOTA_TEAM_GOODGUYS
                     end
+                else
+                    -- WTF did we kill?!?
+                    return
+                end
+
+                -- Spawn the extra creeps
+                for i=1,CREEPS_PER_KILL do
+                    spawnCreepForEnemyTeam(team)
+                    spawnCreepForEnemyTeam(team)
                 end
 
                 -- Update the scores
