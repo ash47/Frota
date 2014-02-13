@@ -202,14 +202,18 @@ function FrotaGameMode:RegisterCommands()
                 endTime = Time(),
                 callback = function(frota, args)
                     for i=0, 9 do
-                        local ply = PlayerResource:GetPlayer(i)
+                        -- Check if this player is a fake one
                         if PlayerResource:IsFakeClient(i) then
+                            -- Grab player instance
                             local ply = PlayerResource:GetPlayer(i)
 
-                            self:AutoAssignPlayer({
-                                userid = -(i+1),
-                                index = ply:entindex()-1
-                            })
+                            -- Make sure we actually found a player instance
+                            if ply then
+                                self:AutoAssignPlayer({
+                                    userid = -(i+1),
+                                    index = ply:entindex()-1
+                                })
+                            end
                         end
                     end
                 end,
