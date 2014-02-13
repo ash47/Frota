@@ -195,11 +195,10 @@ RegisterGamemode('survival', {
                         local totalZombies = 0
                         -- Make sure each zombie is following their respective player
                         for k,v in pairs(info.zombieList) do
-                            if (not IsValidEntity(v)) or (not v:IsAlive()) or (v:GetHealth() <= 0) then
+                            if not IsValidEntity(v) then
                                 -- Remove it
                                 table.remove(info.zombieList, k)
-                                v:Remove()
-                            elseif Time() > v.expireTime then
+                            elseif Time() > v.expireTime or not v:IsAlive() or v:GetHealth() <= 0 then
                                 -- Remove it
                                 table.remove(info.zombieList, k)
                                 v:ForceKill(false)
