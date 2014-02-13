@@ -85,3 +85,26 @@ function smjsSetString(name, str)
     -- Failure
     return false
 end
+
+function smjsSetNetprop(ent, prop, index, value)
+    -- Validate entity
+    if not IsValidEntity(ent) then
+        return false
+    end
+
+    if SMJS_LOADED then
+        if value then
+            -- Send to SMJS
+            SendToServerConsole('smjsnetprop '..ent:entindex()..' '..prop..' '..index..' '..value)
+        else
+            -- Send to SMJS
+            SendToServerConsole('smjsnetprop '..ent:entindex()..' '..prop..' '..index)
+        end
+
+        -- It worked
+        return true
+    end
+
+    -- Failure
+    return false
+end

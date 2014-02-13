@@ -173,12 +173,12 @@ game.hook('OnGameFrame',function() {
         }
     } else {
         // Change to the correct map
-        server.command("dota_force_gamemode 15")
-        server.command("dota_local_custom_enable 1")
-        server.command("dota_local_custom_game Frota")
-        server.command("dota_local_custom_map Frota")
-        server.command("update_addon_paths")
-        server.command("map " + requiredMap)
+        server.command("dota_force_gamemode 15");
+        server.command("dota_local_custom_enable 1");
+        server.command("dota_local_custom_game Frota");
+        server.command("dota_local_custom_map Frota");
+        server.command("update_addon_paths");
+        server.command("map " + requiredMap);
 
         // We've changed the map
         changedMap = true;
@@ -197,6 +197,7 @@ console.addServerCommand('smjsconvarbool', function(client, args) {
     }
 })
 
+// Setting convar int
 console.addServerCommand('smjsconvarint', function(client, args) {
     // Grab the convar
     var convar = console.findConVar(args[0]);
@@ -208,6 +209,7 @@ console.addServerCommand('smjsconvarint', function(client, args) {
     }
 })
 
+// Setting convar string
 console.addServerCommand('smjsconvarstring', function(client, args) {
     // Grab the convar
     var convar = console.findConVar(args[0]);
@@ -216,5 +218,22 @@ console.addServerCommand('smjsconvarstring', function(client, args) {
     if(convar) {
         // Set it
         convar:setString(args[1]);
+    }
+})
+
+// Setting netprops
+console.addServerCommand('smjsnetprop', function(client, args) {
+    // Grab the entity
+    var ent = game.getEntityByIndex(parseInt(args[0]));
+
+    if(ent) {
+        if(args.length == 3) {
+            // Top level access
+            ent.netprops[args[1]] = parseFloat(args[2])
+        } else {
+            // Array type access
+            ent.netprops[args[1]][parseInt(args[2])] = parseFloat(args[3])
+        }
+
     }
 })
