@@ -260,10 +260,25 @@ console.addServerCommand('smjsprintnetprop', function(client, args) {
     if(ent) {
         if(args.length == 2) {
             // Top level access
-            server.print(ent.netprops[args[1]])
+            server.print(ent.netprops[args[1]]);
         } else {
             // Array type access
-            server.print(ent.netprops[args[1]][parseInt(args[2])])
+            server.print(ent.netprops[args[1]][parseInt(args[2])]);
+        }
+    }
+})
+
+console.addServerCommand('smjsgetnetprop', function(client, args) {
+    // Grab the entity
+    var ent = game.getEntityByIndex(parseInt(args[1]));
+
+    if(ent) {
+        if(args.length == 3) {
+            // Top level access
+            server.command('frota_pass_netprop '+args[0]+' '+ent.netprops[args[2]]);
+        } else {
+            // Array type access
+            server.command('frota_pass_netprop '+args[0]+' '+ent.netprops[args[2]][parseInt(args[3])]);
         }
     }
 })

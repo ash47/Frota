@@ -139,3 +139,73 @@ function smjsPrintNetprop(ent, prop, index)
     -- Failure
     return false
 end
+
+--[[ Function to get netprops
+ent - the entity you want to get a netprop from
+prop - the name of the prop
+index - OPTIONAL: the array index to reference (don't parse nil, just use 3 args if you don't need this!)
+callback - function(value) to call once the netprop is found
+
+NOTE: This function is asynchronous -- it wont run your code as soon as it is called!
+]]
+local netpropCallBacks = {}
+local netpropCallBackID = 1
+function smjsGetNetprop(ent, prop, index, callback)
+    if SMJS_LOADED then
+        -- Validate entity
+        if not IsValidEntity(ent) then
+            print('CAN NOT SET NETPROP: INVALID ENTITY!')
+            return false
+        end
+
+        -- Grab callback ID
+        local callbackID = netpropCallBackID
+        netpropCallBackID = netpropCallBackID + 1
+
+        -- Grab callback
+        if not callback then
+            callback = index
+            index = nil
+        end
+
+        -- Store callback
+        netpropCallBacks[callbackID] = callback
+
+        if index then
+            -- Send to SMJS
+            SendToServerConsole('smjsgetnetprop '..callbackID..' '..ent:entindex()..' '..prop..' '..index)
+        else
+            -- Send to SMJS
+            SendToServerConsole('smjsgetnetprop '..callbackID..' '..ent:entindex()..' '..prop)
+        end
+
+        -- It worked
+        return true
+    end
+
+    -- Failure
+    return false
+end
+
+-- sm.js sent us a netprop
+Convars:RegisterCommand('frota_pass_netprop', function(command, callbackID, netprop)
+    -- Check if the server ran it
+    if not Convars:GetCommandClient() then
+        -- We use numbers for callbackIDs
+        callbackID = tonumber(callbackID)
+
+        -- See if we can find the callback
+        local callback = netpropCallBacks[callbackID]
+        if callback then
+            -- Run callback
+            callback(netprop)
+
+            -- Remove reference
+            netpropCallBacks[callbackID] = nil
+        else
+            print('Failed to find callback for ID '..callbackID)
+            PrintTable(netpropCallBacks)
+            print('\n\n\n')
+        end
+    end
+end, 'sm.js sent us a netprop', 0)
