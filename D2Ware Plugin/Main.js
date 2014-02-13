@@ -234,6 +234,5 @@ console.addServerCommand('smjsnetprop', function(client, args) {
             // Array type access
             ent.netprops[args[1]][parseInt(args[3])] = parseFloat(args[2])
         }
-
     }
 })

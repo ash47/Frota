@@ -99,6 +99,9 @@ function FrotaGameMode:InitGameMode()
 
     --Convars:SetFloat('dota_suppress_invalid_orders', 1)
 
+    -- Stores the playerIDs that are taken
+    --self.takenPlayerIDs = {}
+
     -- Start thinkers
     self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.1)
 
@@ -452,6 +455,32 @@ function FrotaGameMode:AutoAssignPlayer(keys)
         teamSize[team] = (teamSize[team] or 0) + 1
     end)
 
+    --[[if SMJS_LOADED then
+        local newPlayerID = -1
+
+        -- SM.JS playerID override
+        for i=0,9 do
+            if not self.takenPlayerIDs[i] then
+                self.takenPlayerIDs[i] = true
+                newPlayerID = i
+                break;
+            end
+        end
+
+        newPlayerID = 5
+
+        if newPlayerID == -1 then
+            print('FAILED TO FIND SPARE PLAYERID!')
+        else
+            -- Allocate playerID
+            smjsSetNetprop(ply, 'm_iPlayerID', newPlayerID)
+        end
+
+        --local playerManager = Entities:FindAllByClassname('dota_player_manager')[1]
+        --smjsSetNetprop(ply, 'm_iTeamNum', 2)
+        --smjsSetNetprop(playerManager, 'm_iPlayerTeams', 2, ply:GetPlayerID())
+    end]]
+
     if teamSize[DOTA_TEAM_GOODGUYS] > teamSize[DOTA_TEAM_BADGUYS] then
         ply:SetTeam(DOTA_TEAM_BADGUYS)
         ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
@@ -460,10 +489,6 @@ function FrotaGameMode:AutoAssignPlayer(keys)
         ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_GOODGUYS)
     end
 
-    --local playerManager = Entities:FindAllByClassname('dota_player_manager')[1]
-    --smjsSetNetprop(ply, 'm_iTeamNum', 2)
-    --smjsSetNetprop(playerManager, 'm_iPlayerTeams', 2, ply:GetPlayerID())
-
     --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
 
     --for i=0,4 do
@@ -471,6 +496,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     --end
 
     local playerID = ply:GetPlayerID()
+    --print(playerID)
     local hero = self:GetActiveHero(playerID)
     if IsValidEntity(hero) then
         hero:Remove()

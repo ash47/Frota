@@ -99,7 +99,7 @@ function smjsSetNetprop(ent, prop, value, index)
     end
 
     if SMJS_LOADED then
-        if value then
+        if index then
             -- Send to SMJS
             SendToServerConsole('smjsnetprop '..ent:entindex()..' '..prop..' '..value..' '..index)
         else
