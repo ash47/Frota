@@ -86,7 +86,13 @@ function smjsSetString(name, str)
     return false
 end
 
-function smjsSetNetprop(ent, prop, index, value)
+--[[
+ent - an entity to set a netprop of
+prop - the string name of the prop to set
+value - the value (only accepts int/float) you want to set
+index - OPTIONAL: This is the array index of the netprop you want to access
+]]
+function smjsSetNetprop(ent, prop, value, index)
     -- Validate entity
     if not IsValidEntity(ent) then
         return false
@@ -95,10 +101,10 @@ function smjsSetNetprop(ent, prop, index, value)
     if SMJS_LOADED then
         if value then
             -- Send to SMJS
-            SendToServerConsole('smjsnetprop '..ent:entindex()..' '..prop..' '..index..' '..value)
+            SendToServerConsole('smjsnetprop '..ent:entindex()..' '..prop..' '..value..' '..index)
         else
             -- Send to SMJS
-            SendToServerConsole('smjsnetprop '..ent:entindex()..' '..prop..' '..index)
+            SendToServerConsole('smjsnetprop '..ent:entindex()..' '..prop..' '..value)
         end
 
         -- It worked

@@ -462,7 +462,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
     --local playerManager = Entities:FindAllByClassname('dota_player_manager')[1]
     --smjsSetNetprop(ply, 'm_iTeamNum', 2)
-    --smjsSetNetprop(playerManager, 'm_iPlayerTeams', ply:GetPlayerID(), 2)
+    --smjsSetNetprop(playerManager, 'm_iPlayerTeams', 2, ply:GetPlayerID())
 
     --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
 
