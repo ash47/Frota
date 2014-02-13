@@ -148,7 +148,6 @@ plugin.get('LobbyManager', function(obj){
 
 // Change the map if required
 game.hook('OnGameFrame',function() {
-    //server.print(game.rules.props.m_nGameState)
     // If we've already changed the map, don't change it again
     if(changedMap) {
         // Check if the map change has completed yet
@@ -227,12 +226,44 @@ console.addServerCommand('smjsnetprop', function(client, args) {
     var ent = game.getEntityByIndex(parseInt(args[0]));
 
     if(ent) {
+        // Parse the value
+        var value = args[2];
+
+        if(value.charAt(0) == '[') {
+            // Array
+            value = value.substring(1, value.length-1).split(',');
+            for(i=0; value.length; i++) {
+                value[i] = parseInt(value[i]);
+            }
+
+            value = [17825793,28090256];
+        } else {
+            // Float / Int
+            value = parseFloat(value);
+        }
+
         if(args.length == 3) {
             // Top level access
-            ent.netprops[args[1]] = parseFloat(args[2])
+            ent.netprops[args[1]] = value;
         } else {
             // Array type access
-            ent.netprops[args[1]][parseInt(args[3])] = parseFloat(args[2])
+            ent.netprops[args[1]][parseInt(args[3])] = value;
+        }
+    }
+})
+
+// Printing netprops
+console.addServerCommand('smjsprintnetprop', function(client, args) {
+    // Grab the entity
+    var ent = game.getEntityByIndex(parseInt(args[0]));
+
+    if(ent) {
+        if(args.length == 2) {
+            // Top level access
+            server.print(ent.netprops[args[1]])
+        } else {
+            // Array type access
+            server.print(ent.netprops[args[1]][parseInt(args[2])])
         }
     }
 })

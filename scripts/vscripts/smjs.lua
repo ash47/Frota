@@ -93,18 +93,43 @@ value - the value (only accepts int/float) you want to set
 index - OPTIONAL: This is the array index of the netprop you want to access
 ]]
 function smjsSetNetprop(ent, prop, value, index)
-    -- Validate entity
-    if not IsValidEntity(ent) then
-        return false
-    end
-
     if SMJS_LOADED then
+        -- Validate entity
+        if not IsValidEntity(ent) then
+            print('CAN NOT SET NETPROP: INVALID ENTITY!')
+            return false
+        end
+
         if index then
             -- Send to SMJS
             SendToServerConsole('smjsnetprop '..ent:entindex()..' '..prop..' '..value..' '..index)
         else
             -- Send to SMJS
             SendToServerConsole('smjsnetprop '..ent:entindex()..' '..prop..' '..value)
+        end
+
+        -- It worked
+        return true
+    end
+
+    -- Failure
+    return false
+end
+
+function smjsPrintNetprop(ent, prop, index)
+    if SMJS_LOADED then
+        -- Validate entity
+        if not IsValidEntity(ent) then
+            print('CAN NOT SET NETPROP: INVALID ENTITY!')
+            return false
+        end
+
+        if index then
+            -- Send to SMJS
+            SendToServerConsole('smjsprintnetprop '..ent:entindex()..' '..prop..' '..index)
+        else
+            -- Send to SMJS
+            SendToServerConsole('smjsprintnetprop '..ent:entindex()..' '..prop)
         end
 
         -- It worked
