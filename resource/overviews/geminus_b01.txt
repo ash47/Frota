@@ -1,0 +1,11 @@
+geminus_b01
+{
+	material "overviews/geminus_b01" 
+
+        pos_y 4097
+	pos_x -4097
+ 
+	scale 8.200
+	rotate 0
+	zoom 1.0770  
+}
