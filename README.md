@@ -144,11 +144,10 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 
 ###Issues that need help###
  - When a player leaves the game, their slot isn't removed, and hence, someone else can't connect and take their place, this is caused by the limit of 5 players per team, someone solve this :P
+  - Player slot being removed has a hacky fix via Sourcemod, I can also hackily set > 5 people on a team via SMJS / Sourcemod
 
 ###Up next###
- - The hud is still being rewritten, it is slowly progressing
- - Hoping to write a Tower Defence Framework
- - Better D2Ware support
+ - Getting inspiration to work on this again
 
 [1]: https://github.com/ash47
 [2]: https://github.com/lokkdokk
