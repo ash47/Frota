@@ -90,6 +90,7 @@ function FrotaGameMode:InitGameMode()
 
     -- userID map
     self.vUserIDMap = {}
+    self.nLowestUserID = 2
 
     -- Active Hero Map
     self.vActiveHeroMap = {}
@@ -213,7 +214,7 @@ function FrotaGameMode:RegisterCommands()
                             -- Make sure we actually found a player instance
                             if ply then
                                 self:AutoAssignPlayer({
-                                    userid = -(i+1),
+                                    userid = self.nLowestUserID,
                                     index = ply:entindex()-1
                                 })
                             end
@@ -496,7 +497,6 @@ function FrotaGameMode:AutoAssignPlayer(keys)
     --end
 
     local playerID = ply:GetPlayerID()
-    --print(playerID)
     local hero = self:GetActiveHero(playerID)
     if IsValidEntity(hero) then
         hero:Remove()
@@ -504,6 +504,7 @@ function FrotaGameMode:AutoAssignPlayer(keys)
 
     -- Store into our map
     self.vUserIDMap[keys.userid] = ply
+    self.nLowestUserID = self.nLowestUserID + 1
 
     self.selectedBuilds[playerID] = self:GetDefaultBuild()
 
@@ -616,8 +617,17 @@ end
 -- Cleanup a player when they leave
 function FrotaGameMode:CleanupPlayer(keys)
     -- Grab and validate the leaver
-    local leavingPly = self.vUserIDMap[keys.userid];
-    if not leavingPly then return end
+    local leavingPly = self.vUserIDMap[keys.userid]
+    self.vUserIDMap[keys.userid] = nil
+
+    if not leavingPly then
+        print('Failed to cleanup player #'..keys.userid)
+        return
+    end
+
+    -- Attempt to remove them
+    local playerID = leavingPly:GetPlayerID()
+    SendToServerConsole('clear_playerid '..playerID)
 
     -- Fire event
     self:FireEvent('CleanupPlayer', leavingPly)
@@ -637,7 +647,7 @@ function FrotaGameMode:CleanupPlayer(keys)
     end
 
     self:CreateTimer('cleanup_player_'..keys.userid, {
-        endTime = Time() + 1,
+        endTime = Time()+3,
         callback = function(frota, args)
             local foundSomeone = false
 
@@ -2158,7 +2168,7 @@ function FrotaGameMode:CleanupEverything(leaveHeroes)
             if v.IsHero and not(v:IsHero() or v:IsTower()) then
                 local name = v:GetClassname():lower()
                 if not (name:find('tower') or name:find('rax') or name:find('barracks') or name:find('filler') or name:find('fort') or name:find('announcer') or name:find('building') or name:find('roshan')) then
-                    print(name)
+                    --print(name)
                     v:Remove()
                 end
             end
