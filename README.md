@@ -135,7 +135,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - German by [DarkMio_mainframe][5]
  - Greek by [SeCTeen][18]
  - Hungarian by [Easimer][4]
- - Nyx by penguinwizzard
+ - Nyx by [penguinwizzard][6]
  - Polish by [Kobb][8]
  - Russian by [lokkdokk][2], [Shuker][3]
  - Chinese by [cs-italy][10]
@@ -154,6 +154,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 [3]: https://github.com/theShuker
 [4]: https://github.com/Easimer
 [5]: https://github.com/DarkMio
+[6]: https://github.com/penguinwizzard
 [8]: https://github.com/KobbDota
 [9]: https://github.com/justSQL
 [10]: https://github.com/cs-italy
