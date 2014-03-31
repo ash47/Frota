@@ -4,7 +4,7 @@
 {
      addonSteamAppID         816                                 // 816 is the app ID for Dota2 Staging
      addontitle              "Dota 2 Frota"                      // Add-on title that shows up in Add-ons list. ~20 chars max
-     addonversion            14.2.22                            // Version number of add-on version of the form <major>.<minor>
+     addonversion            14.2.23                            // Version number of add-on version of the form <major>.<minor>
      addontagline            "Lots of Gamemodes"                 // Add-on tagline or wrap-up- a short description. ~100 chars max
      addonauthor             "Ash47"                             // Name/alias of the author
      addonSteamGroupName     ""                                  // (Optional) Steam group related to the add-on. We use this to construct a URL to the group page.
