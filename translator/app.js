@@ -188,14 +188,14 @@ var langs = [
     'turkish'
 ]
 
-fs.readFile(resDir+'Frota_english.txt', 'utf16le', function(err, data) {
+fs.readFile(resDir+'addon_english.txt', 'utf16le', function(err, data) {
     if (err) throw err;
 
     console.log('Parsing english');
     var kv = parseKV(data);
 
     function fixKV(lang) {
-        fs.readFile(resDir+'Frota_'+lang+'.txt', 'utf16le', function(err, data2) {
+        fs.readFile(resDir+'addon_'+lang+'.txt', 'utf16le', function(err, data2) {
             if (err) throw err;
 
             // Grab data for this language

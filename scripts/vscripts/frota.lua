@@ -104,7 +104,22 @@ function FrotaGameMode:InitGameMode()
     --self.takenPlayerIDs = {}
 
     -- Start thinkers
-    self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.1)
+    --self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.1)
+
+    -- This is a hack, fix this
+    local thinker = Entities:FindAllByClassname('dota_base_game_mode')[1]
+    local fr = self
+    local n = 1
+    local function thinkFix()
+        -- Requeue this think
+        thinker:SetContextThink("Think"..n, thinkFix, 0.1)
+        n = n+1
+
+        -- Run normal think
+        fr:Think()
+    end
+
+    thinker:SetContextThink("Think", thinkFix, 0.1)
 
     -- Precache everything -- Having issues with the arguments changing
     print('Precaching stuff...')
@@ -2397,4 +2412,4 @@ function FrotaGameMode:RemoveHeroItemByName(hero,itemName,stash,dropped)
     return true
 end
 
-EntityFramework:RegisterScriptClass( FrotaGameMode )
+--EntityFramework:RegisterScriptClass( FrotaGameMode )

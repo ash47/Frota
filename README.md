@@ -87,7 +87,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - If done correctly, the following folder should exist "Steam\steamapps\common\dota 2 beta\dota\addons\Frota\HudSRC"
  - Reopen dota after each install / update (hud might not update)
  - Run the following command
-  - dota_local_custom_enable 1;dota_local_custom_game Frota;dota_local_custom_map Frota;dota_force_gamemode 15;update_addon_paths;dota_wait_for_players_to_load 0;dota_wait_for_players_to_load_timeout 10;map riverofsouls;
+  - dota_local_addon_enable 1;dota_local_addon_game Frota;dota_local_addon_map Frota;dota_force_gamemode 15;update_addon_paths;dota_wait_for_players_to_load 0;dota_wait_for_players_to_load_timeout 10;map riverofsouls;
  - **NOTE** If you reach the hero selection screen, it means Frota didn't load correctly! Frota should override / skip the hero selection screen, and  take you directly to a vote screen! Please ensure you removed Frostivus (and any other addons) and then restart your client.
 
 ###How do I play with friend?###
@@ -101,7 +101,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - Here's a set of working launch parameters
   - srcds.exe -console -game dota +maxplayers 10 +hostport 27015 -condebug -dev +exec someconfig +map riverofsouls.bsp
   - **NOTE:** You need to create **server/dota/cfg/someconfig.cfg** and add the following to it to make it work:
-   - dota_local_custom_enable 1;dota_local_custom_game Frota;dota_local_custom_map Frota;dota_force_gamemode 15;update_addon_paths
+   - dota_local_addon_enable 1;dota_local_addon_game Frota;dota_local_addon_map Frota;dota_force_gamemode 15;update_addon_paths
  - NOTE: It is Frota, not frota -- It needs to be uppercase!
  - If your steam.inf doesn't match up to the <active_version> of [THIS DOCUMENT] (http://api.steampowered.com/IGCVersion_570/GetServerVersion/v1?format=xml) then the server may just exit
  - Verify you have installed metamod and d2fixups correctly, you can do this by adding **+meta list** to your launch parameters, starting the server, then checking your dota/console.log. You should see these two lines:

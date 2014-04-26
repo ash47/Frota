@@ -1,0 +1,390 @@
+"lang"
+{
+	"Language"      "tchinese"
+	"Tokens"
+	{
+		/////////////////
+		// BASE STRINGS
+		////////////////
+		// Name of the game
+		"game_mode_15"                  "FROTA"
+		// Toggle ready state
+		"afs_toggle_ready"				"選擇完畢"
+		// Vote related
+		"afs_seconds_remaining"         "秒後結束"
+		"afs_second_remaining"          "秒後結束"
+		"afs_vote_ends_in"              "投票將在"
+		"afs_cast_vote"                 "投票"          // The text on the vote button
+		"afs_vote_yes"                  "是"           // Vote yes button
+		"afs_vote_no"                   "否"            // Vote no button
+		// Picking related
+		"afs_picking_timer"             "挑選將在"
+		"afs_tab_pick_skills"           "挑選技能"
+		"afs_tab_pick_hero"             "挑選英雄"
+		// End game stuff
+		"afs_play_again"				"再次遊戲"
+		"afs_play_something_else"		"選擇新模式"
+		"afs_close_server"				"結束遊戲"
+		/////////////////
+		// NEW FROTA MENU STUFF
+		////////////////
+		// Menu Title
+		"Frota"							"Frota"
+		// Huge text on the welcome screen
+		"frota_welcome"					"歡迎來到Frota"
+		// General info in how to use Frota
+		"frota_info"					"按左上方的Fr按鈕來打開菜單"
+		// Close Menu
+		"frota_close"					"關閉菜單"
+		// Call GG
+		"frota_call_gg"					"呼出GG"
+		// Show Info Button
+		"frota_btn_info"				"Frota信息"
+		// Toggle Extend
+		"frota_toggle_extend"			"Toggle Extend"
+		/////////////////
+		// GAME MODES
+		////////////////
+		// Dota
+		"afs_name_dota"					"Dota"
+		"afs_des_dota"					"普通Dota模式。"
+		// Oddball
+		"afs_name_oddball"				"怪球"
+		"afs_des_oddball"				"得到並守護寶石"
+		// All Pick
+		"afs_name_allpick"				"全陣營選擇"
+		"afs_des_allpick"				"從大部分英雄中選取。"
+		// Legends of Dota
+		"afs_name_lod"                  "Legends of dota"
+		"afs_des_lod"                   "選擇妳的技能和英雄。"
+		// Random OMG
+		"afs_name_romg"                 "隨機OMG"
+		"afs_des_romg"                  "獲得壹個隨機英雄，三個隨機技能以及壹個隨機大招。"
+		// PvP Arena
+		"afs_name_arena"                "PvP競技場"
+		"afs_des_arena"                 "簡易的PvP競技場模式。"
+		// Score Limit
+		"afs_o_scoreLimit"              "限制分數"
+		"afs_od_scoreLimit"             "團隊獲得勝利所需要的人頭數。"
+		// Pudge Wars
+		"afs_name_pudgewars"            "鉤肥大戰"
+		"afs_des_pudgewars"             "扮演帕吉，搶先殺死10人的隊伍獲勝。"
+		// Tiny Wars
+		"afs_name_tinywars"				"小小大戰"
+		"afs_des_tinywars"				"扮演小小，搶先殺死10人的隊伍獲勝。"
+		// Sunstrike Wars
+		"afs_name_sunstrikewars"		"天火大戰"
+		"afs_des_sunstrikewars"			"壹玩家出生時帶有陽炎沖擊技能，用該技能殺死其他所有玩家來取得勝利。"
+		// Pure Skill
+		"afs_name_pureskill"            "純技巧模式"
+		"afs_des_pureskill"             "扮演米拉娜，擁有裂地尖刺、月神之箭、肉鉤 以及 寒冰碎片 技能。"
+		// Invoker Wars
+		"afs_name_INVOKERWARZ"          "祈求者大戰"
+		"afs_des_INVOKERWARZ"           "妳是該死的巫師'Arry。"
+		// Puck Wars
+		"afs_name_puckwars"             "帕克大戰"
+		"afs_des_puckwars"              "扮演帕克 >_>"
+		// Warlocks
+		"afs_name_warlocks"            "術士大戰"
+		"afs_des_warlocks"             "扮演壹個菜鳥術士, 滿地圖隨意閃爍並像玩燙手山芋壹樣施放不穩定技能。"
+		// RvS
+		"afs_name_rvs"            "兔子vs小羊"
+		"afs_des_rvs"             "兔子怎麽叫？"
+		// Plage
+		"afs_name_plage"				"黨同伐異"
+		"afs_des_plage"					"殺死別人時，別人會變為和妳同樣的英雄，當所有人都為同壹英雄時，遊戲結束。"
+		// Kaolin Wars
+		"afs_name_kaolinwars"			"土貓大戰"
+		"afs_des_kaolinwars"			"Dota是壹種不平衡的平衡，對嗎？"
+		// Riki Wars
+		"afs_name_rikiwars"				"隱刺大戰"
+		"afs_des_rikiwars"				"扮演力丸，帶有免費的顯隱之塵。"
+		// Kunkka Wars
+		"afs_name_kunkkawars"			"昆卡大戰"
+		"afs_des_akunkkawars"			"昆卡是個海盜。"
+		// KOTH
+		"afs_name_kotolofthehill"		"山丘之王"
+		"afs_des_kotolofthehill"		"Fight to get more friendly players on top of the point."
+		// CTF the Flag
+		"afs_name_ctftheflag"			"奪旗之戰"
+		"afs_des_ctftheflag"			"盜取對方的旗幟，同時守護己方的旗幟。"
+		// Zombie Survival
+		"afs_name_survival"				"僵屍生存"
+		"afs_des_survival"				"在數波僵屍的進攻下生存下來！"
+		"afs_o_survivalTeamMode"        "全體團結"
+		"afs_od_survivalTeamMode"       "想試試大家都在同壹個隊伍裏嗎？"
+		// Defense of RuneHill
+		"afs_name_dorh"					"符文之峰防禦戰"
+		"afs_des_dorh"					"防禦22波敵人並保護妳的符文之峰"
+		"dorh_prep_time"				"遊戲將在"
+		"dorh_next_wave_timer"			"下壹波將在"
+		/////////////////
+		// GAME ADDONS
+		////////////////
+		// WTF
+		"afs_name_wtf"                  "WTF模式"
+		"afs_des_wtf"                   "技能與物品的使用沒有冷卻時間和魔法消耗。"
+		// Free Blink Dagger
+		"afs_name_freeBlinkDagger"      "免費跳刀"
+		"afs_des_freeBlinkDagger"       "每個人出生時帶有壹把免費的跳刀。"
+		// No Buying
+		"afs_name_noBuying"				"無購買模式"
+		"afs_des_noBuying"				"無法購買物品。"
+		// DM Mode
+		"afs_name_dmmode"				"死亡競賽模式"
+		"afs_des_dmmode"				"壹旦死亡就重生為新英雄！"
+		// Fat-o-Meter
+		"afs_name_fatometer"			"肥豬模式"
+		"afs_des_fatometer"				"英雄殺死小兵或其他英雄時會長大壹點點。"
+		// Unlimited Mana
+		"afs_name_unlimitedMana"		"無限魔法"
+		"afs_des_unlimiredMana"			"每人得到壹個賦予最大魔法恢復速率的光環。"
+		// Spawn Protection
+		"afs_name_spawnprotection"		"出生保護"
+		"afs_des_spawnprotection"		"英雄出生時立刻無敵。"
+		// Bonus Gold Per Second
+		"afs_name_goldpersecond"		"每秒獲得額外金幣"
+		"afs_des_goldpersecond"			"每秒給予玩家金幣。"
+		"afs_o_goldPerSecond"           "每秒獲得的金幣"
+		"afs_od_goldPerSecond"          "每秒獲得金幣的數目。"
+		// Lucky Items
+		"afs_name_luckyitems"			"幸運物品"
+		"afs_des_luckyitems"			"遊戲進行時會得到隨機物品。"
+		/////////////////
+		// UNITS
+		////////////////
+		// Defense of RuneHill
+		"npc_dorh_minion_zuus"															"仆從宙斯"
+		"npc_dorh_tower_base_lvl1"														"老者"
+		"npc_dorh_tower_base_lvl2"														"女巫"
+		"npc_dorh_tower_base_lvl3"														"死靈法師"
+		"npc_dorh_tower_base_lvl4"														"巨鳥"
+		"npc_dorh_enemy_gycrophter"														"大彩筆Xavier"
+		"npc_dorh_enemy_legion"															"金人"
+		"npc_dorh_enemy_tinker"															"黃金修補匠"
+		"npc_dorh_enemy_bounty_hunter"													"黃金追蹤者"
+		"npc_dorh_enemy_alchemist"														"黃金領主"
+		"npc_dorh_enemy_beast_master"													"木之召喚師"
+		"npc_dorh_enemy_furion"															"木之援助"
+		"npc_dorh_enemy_enchant"														"木之精靈"
+		"npc_dorh_enemy_brood_mother"													"木之領主"
+		"npc_dorh_enemy_slardar"														"水之戰士"
+		"npc_dorh_enemy_tide_hunter"													"水之猛獸"
+		"npc_dorh_enemy_nage_siren"														"水之歌者"
+		"npc_dorh_enemy_slark"															"水之領主"
+		"npc_dorh_enemy_ember_spirit"													"火之精靈"
+		"npc_dorh_enemy_lina"															"火之靈魂"
+		"npc_dorh_enemy_batridder"														"火之騎士"
+		"npc_dorh_enemy_doom"															"火之領主"
+		"npc_dorh_enemy_tiny"															"撼地者"
+		"npc_dorh_enemy_sandking"														"掘地者"
+		"npc_dorh_enemy_eldertitan"														"土之樂者"
+		"npc_dorh_enemy_earth_spirit"													"圖之領主"
+		"npc_dorh_enemy_roshan"															"王中王"
+		/////////////////
+		// ABILITIES
+		////////////////
+		// Invoker Wars
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike"                                  "陽炎沖擊"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"                      "向目標區域釋放毀滅性的陽炎之光能量，壹旦能量著陸，將對區域內的敵人進行灼燒。區域內敵人將平攤所有傷害。"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Lore"                             "哈雷克之火葬魔咒。"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"                                "施放後立即獲得目標區域的視野。"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note1"                                "使用陽炎沖擊擊殺英雄後，即使相距超過1200碼的經驗範圍也能獲得經驗。"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_area_of_effect"                   "作用範圍："
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_delay"                                "延遲："
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"                           "傷害："
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast"                             "超震聲波"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"                 "祈求者在自己前方釋放出超強的聲波，對所有敵方單位造成傷害。"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"                        "布魯馮特之無力聲波。"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Note0"                       "此技能可以打斷持續施法。"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"                      "傷害："
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"          "擊退持續時間："
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"             "禁止攻擊時間："
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor"                                    "肉丸子"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "祈求者從太空中召喚壹坨燃燒的肉丸子打擊指定位置。肉丸子著陸後會向前滾動壹段距離，根據等級繼續造成傷害，滾動距離取決於等級。受到效果影響的單位會被點燃並受到持續傷害，持續傷害取決於等級。"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "塔拉克的天墜之火。"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "每個敵方單位受到傷害的間隔為0.5秒，後續較小的灼燒傷害持續3秒。"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note1"                          "肉丸子移動的速度為300。"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_land_time"                      "生效延遲："
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_travel_distance"                    "滾動距離："
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_area_of_effect"                 "作用範圍："
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"                    "傷害間隔："
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"                        "傷害："
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_duration"                  "燃燒時間："
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_dps"                       "每秒燃燒傷害："
+		"DOTA_Tooltip_ability_invoker_wars_leap"                                                "糟糕巫師之躍"
+		"DOTA_Tooltip_ability_invoker_wars_leap_Description"                                    "祈求者向前跳躍加入戰鬥，著地時發出壹聲兇狠的咆哮鼓舞友方單位，提升攻擊和移動速度。速度加成持續10秒。"
+		"DOTA_Tooltip_ability_invoker_wars_leap_Lore"                                           "在戰鬥最激烈的時候，敵我雙方都會註意到祈求者標誌性的糟糕巫師。"
+		"DOTA_Tooltip_ability_invoker_wars_leap_Note0"                                      "可以使用跳躍躲避攻擊和技能彈道。"
+		"DOTA_Tooltip_ability_invoker_wars_leap_leap_distance"                              "距離："
+		"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus"                                "%移動速度增加："
+		"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus_as"                         "攻擊速度提升："
+		// Warlocks
+		"DOTA_Tooltip_Ability_warlocks_unstable_spell"      "不穩定法術"
+		"DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "妳懂的，這看起來不太安全？不太穩定？我不知道……也許可以扔向某個倒黴的傻屌？妳最好別傻楞著看結局。"
+		"DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "菜鳥之翼"
+		"DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "妳可以盡力飛壹會兒，但飛不遠。"
+		"DOTA_Tooltip_Ability_warlocks_novice_hex"      "菜鳥妖術"
+		"DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "有壹半的幾率會施放在自己身上。"
+		"DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "菜鳥虛無"
+		"DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "虛化妳自身，妳的朋友，妳的教授；無論如何，中招的人可得小心法術。"
+		// Gambler
+		"DOTA_Tooltip_Ability_gambler_ante_up"      "博彩"
+		"DOTA_Tooltip_Ability_gambler_ante_up_Description"      "Maverick在某壹個英雄（敵軍或友軍）身上賭註。"
+		"DOTA_Tooltip_Ability_gambler_ante_up_damage_and_heal"      "傷害/治療："
+		"DOTA_Tooltip_Ability_gambler_ante_up_gold_gained"      "獲得金錢："
+		"DOTA_Tooltip_Ability_gambler_ante_up_buff_duration"	"效果持續時間："
+		"DOTA_Tooltip_Ability_gambler_chip_stack"				"籌碼堆"
+		"DOTA_Tooltip_Ability_gambler_chip_stack_Description" "Maverick希望幹掉他富有的對手。造成他們金錢百分百的傷害。"
+		"DOTA_Tooltip_Ability_gambler_chip_stack_gold_amount"				"%金錢數量："
+		"DOTA_Tooltip_Ability_gambler_lucky_stars"				"幸運之星"
+		"DOTA_Tooltip_Ability_gambler_lucky_stars_lucky_chance"				"%幸運幾率："
+		"DOTA_Tooltip_Ability_gambler_lucky_stars_Description" "Maverick感謝他的幸運星。"
+		"DOTA_Tooltip_Ability_gambler_all_in"					"乾坤壹擲"
+		"DOTA_Tooltip_Ability_gambler_all_in_Description" "Maverick goes all in."
+		"DOTA_Tooltip_Ability_gambler_all_in_fail_chance"					"%失敗幾率："
+		"DOTA_Tooltip_Ability_gambler_all_in_damage_cap"					"DAMAGE CAP:"
+		/////////////////
+		// ITEMS
+		////////////////
+		"DOTA_Tooltip_Ability_item_oddball"					"怪球"
+		"DOTA_Tooltip_Ability_item_oddball_description"		"保持住怪球來提升妳們的團隊分數。"
+		// CTF
+		"DOTA_Tooltip_Ability_item_capture_flag"					"天輝旗幟"
+		"DOTA_Tooltip_Ability_item_capture_flag_description"		"拿住旗幟時會被沈默和減速。"
+		"DOTA_Tooltip_Ability_item_capture_flag_dire"				"夜魘旗幟"
+		"DOTA_Tooltip_Ability_item_capture_flag_dire_description"	"拿住旗幟時會被沈默和減速。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_mana_bonus"			"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_mana_regen"			"%+$魔法回復速率"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_2"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_2_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_2_mana_bonus"		"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_2_mana_regen"		"%+$魔法回復速率"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_3"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_3_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_3_mana_bonus"		"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_3_mana_regen"		"%+$魔法回復速率"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_4"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_4_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_4_mana_bonus"		"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_4_mana_regen"		"%+$魔法回復速率"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_5"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_5_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_5_mana_bonus"		"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_5_mana_regen"		"%+$魔法回復速率"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_6"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_6_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_6_mana_bonus"		"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_6_mana_regen"		"%+$魔法回復速率"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_7"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_7_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_7_mana_bonus"		"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_7_mana_regen"		"%+$魔法回復速率"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_8"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_8_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_8_mana_bonus"		"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_8_mana_regen"		"%+$魔法回復速率"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_9"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_9_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_9_mana_bonus"		"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_9_mana_regen"		"%+$魔法回復速率"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_10"					"第壹魔戒"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_10_description"		"不如第二魔戒。"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_10_mana_bonus"		"+$魔法"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_10_mana_regen"		"%+$魔法回復速率"
+		// Lycan Paw
+		"DOTA_Tooltip_Ability_item_lycan_paw"					"狼人之爪"
+		"DOTA_Tooltip_Ability_item_lycan_paw_description"		"貝恩霍勒健步如飛的靈魂提高了帕吉那異常笨重的步伐。"
+		"DOTA_Tooltip_ability_item_lycan_paw_movespeed_bonus"	"移動速度提升："
+		"DOTA_Tooltip_ability_item_lycan_paw_item_level"		"等級："
+		"DOTA_Tooltip_Ability_item_lycan_paw_2"					"狼人之爪"
+		"DOTA_Tooltip_Ability_item_lycan_paw_2_description"		"貝恩霍勒健步如飛的靈魂提高了帕吉那異常笨重的步伐。"
+		"DOTA_Tooltip_ability_item_lycan_paw_2_movespeed_bonus"	"移動速度提升："
+		"DOTA_Tooltip_ability_item_lycan_paw_2_item_level"		"等級："
+		"DOTA_Tooltip_Ability_item_lycan_paw_3"					"狼人之爪"
+		"DOTA_Tooltip_Ability_item_lycan_paw_3_description"		"貝恩霍勒健步如飛的靈魂提高了帕吉那異常笨重的步伐。"
+		"DOTA_Tooltip_ability_item_lycan_paw_3_movespeed_bonus"	"移動速度提升："
+		"DOTA_Tooltip_ability_item_lycan_paw_3_item_level"		"等級："
+		"DOTA_Tooltip_Ability_item_lycan_paw_4"					"狼人之爪"
+		"DOTA_Tooltip_Ability_item_lycan_paw_4_description"		"貝恩霍勒健步如飛的靈魂提高了帕吉那異常笨重的步伐。"
+		"DOTA_Tooltip_ability_item_lycan_paw_4_movespeed_bonus"	"移動速度提升："
+		"DOTA_Tooltip_ability_item_lycan_paw_4_item_level"		"等級："
+		"DOTA_Tooltip_Ability_item_lycan_paw_5"					"狼人之爪"
+		"DOTA_Tooltip_Ability_item_lycan_paw_5_description"		"貝恩霍勒健步如飛的靈魂提高了帕吉那異常笨重的步伐。"
+		"DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_bonus"	"移動速度提升："
+		"DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_percentage_bonus"	"移動速度百分比提升："
+		"DOTA_Tooltip_ability_item_lycan_paw_5_attackspeed_bonus"			"攻擊速度提升："
+		"DOTA_Tooltip_ability_item_lycan_paw_5_item_level"		"等級："
+		// Puck Wars
+		"DOTA_Tooltip_ability_puckwars_waning_rift"                                                                                        "新月之痕"
+		"DOTA_Tooltip_ability_puckwars_waning_rift_Description"                                                                "帕克灑出它神秘的仙女粉塵，對周圍的敵人造成傷害並使其沈默。"
+		"DOTA_Tooltip_ability_puckwars_waning_rift_Lore"                                                                        "帕克淘氣地壹笑，同時將她能中斷魔法流動的附魔粉塵灑出。"
+		"DOTA_Tooltip_ability_puckwars_waning_rift_radius"                                                                        "作用範圍："
+		"DOTA_Tooltip_ability_puckwars_waning_rift_silence_duration"                                                "持續時間："
+		"DOTA_Tooltip_ability_puckwars_phase_shift"                                                                                        "相位轉移"
+		"DOTA_Tooltip_ability_puckwars_phase_shift_Description"                                                                "帕克暫時將自己轉移到另壹個位面，從而免疫傷害。"
+		"DOTA_Tooltip_ability_puckwars_phase_shift_Lore"                                                                        "帶著嘲笑，帕克瞬間轉移到了她的異維度。"
+		"DOTA_Tooltip_ability_puckwars_phase_shift_Note0"                                                                        "帕克在相位轉移狀態下依然具有碰撞體積。"
+		"DOTA_Tooltip_ability_puckwars_phase_shift_Note1"                                                                        "進行任何動作都會中止相位轉移。"
+		"DOTA_Tooltip_ability_puckwars_phase_shift_Note2"                                                                        "帕克在相位轉移狀態下無敵。"
+		"DOTA_Tooltip_ability_puckwars_phase_shift_duration"                                                                "持續時間："
+		"DOTA_Tooltip_ability_puckwars_dream_coil"                                                                                        "夢境纏繞"
+		"DOTA_Tooltip_ability_puckwars_dream_coil_Description"                                                                "創造壹個變化無常的的魔法夢境來困住敵方英雄，對他們造成0.5秒的眩暈和傷害。如果被困住的敵方英雄試圖走出夢境掙脫纏繞，將因為夢境破碎而再次受到傷害和眩暈。\n\n神杖升級：提升夢境破碎的傷害，增加夢境持續時間。"
+		"DOTA_Tooltip_ability_puckwars_dream_coil_Lore"                                                                                "仙女龍散播混亂，讓敵人陷入鮮活的夢境，見證自己死亡的命運。"
+		"DOTA_Tooltip_ability_puckwars_dream_coil_Note0"                                                                        "初始眩暈和傷害可以被林肯法球抵擋，但是目標依然會受到夢境纏繞的作用。"
+		"DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_radius"                                                "破碎範圍："
+		"DOTA_Tooltip_ability_puckwars_dream_coil_coil_stun_duration"                                                "破碎眩暈："
+		"DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage"                                                "破碎傷害："
+		"DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration"                                                        "纏繞持續時間："
+		"DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration_scepter"                                        "神杖升級夢境纏繞持續時間："
+		"DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage_scepter"                                "神杖升級破碎傷害："
+		"DOTA_Tooltip_ability_puckwars_dream_coil_aghanim_description"                                                "提高夢境破碎傷害並增加夢境持續時間。"
+		// Kunkka Wars
+		"DOTA_Tooltip_ability_kunkka_wars_torrent"                                                                                        "洪流"
+		"DOTA_Tooltip_ability_kunkka_wars_torrent_Description"                                                                         "昆卡召喚噴湧的洪流，短暫延遲後，將敵人沖上天，造成傷害、眩暈和減速。"
+		"DOTA_Tooltip_ability_kunkka_wars_torrent_Lore"                                                                                "只有喝得最醉的海盜才能將地面變為水流。"
+		"DOTA_Tooltip_ability_kunkka_wars_kunkka_rum"                                                                                     "昆卡的朗姆酒"
+		"DOTA_Tooltip_ability_kunkka_wars_kunkka_rum_Description"                                                                       "昆卡給自身或壹個友軍灌下他的海盜朗姆酒，顯著提高他們的生命回復。"
+		"DOTA_Tooltip_ability_kunkka_wars_kunkka_rum_Lore"                                                                                    "真正的海盜身邊沒有壹桶朗姆酒絕不下船。"
+		"DOTA_Tooltip_ability_kunkka_wars_kunkka_rum_hp_regen"                                                                                    "生命回復："
+		"DOTA_Tooltip_ability_kunkka_wars_x_marks_the_spot"                                                                               "X標記"
+		"DOTA_Tooltip_ability_kunkka_wars_x_marks_the_spot_Description"                                                                   "對友方或敵方英雄使用，用 X 標記他們當前位置，數秒後將他們送回 X 標記處。"
+		"DOTA_Tooltip_ability_kunkka_wars_x_marks_the_spot_Lore"                                                                          "所有海盜皆為戰術大師。"
+		"DOTA_Tooltip_ability_kunkka_wars_x_marks_the_spot_duration"                                                                          "持續時間："
+		"DOTA_Tooltip_ability_kunkka_wars_ghost_ship"                                                                                        "船毀人亡"
+		"DOTA_Tooltip_ability_kunkka_wars_ghost_ship_Description"                                                                         "昆卡召喚壹艘船來撞毀他的敵人。"
+		"DOTA_Tooltip_ability_kunkka_wars_ghost_ship_Lore"                                                                                 "只有最好的船長才能陸地行舟。這也是這艘船沒有船長的原因。"
+		"DOTA_Tooltip_ability_kunkka_wars_ghost_ship_ghostship_speed"                                                                      "速度："
+		// dorh
+		// dorh Blink
+		"DOTA_Tooltip_ability_dorh_wisp_blink"											"閃爍"
+		"DOTA_Tooltip_ability_dorh_wisp_blink_Description"								"讓小精靈自由出入戰場的短距離傳送。"
+		"DOTA_Tooltip_ability_dorh_wisp_blink_blink_range"								"距離："
+		// dorh frost nova
+		"DOTA_Tooltip_ability_dorh_wisp_slow"											"寒霜爆發"
+		"DOTA_Tooltip_ability_dorh_wisp_slow_Description"								"破壞性的寒霜在目標敵方單位身上爆發，造成範圍傷害並降低範圍內敵人的移動和攻擊速度4秒。主要目標所受傷害最高。"
+		"DOTA_Tooltip_ability_dorh_wisp_slow_aoe_damage"								"範圍傷害："
+		"DOTA_Tooltip_ability_dorh_wisp_slow_radius"									"作用範圍："
+		"DOTA_Tooltip_ability_dorh_wisp_slow_slow_movement_speed"						"%移動速度減緩："
+		"DOTA_Tooltip_ability_dorh_wisp_slow_slow_attack_speed"							"%攻擊速度降低："
+		// dorh Destroy
+		"DOTA_Tooltip_ability_dorh_wisp_destroy"							"移除建築"
+		"DOTA_Tooltip_ability_dorh_wisp_destroy_Description"				"移除目標建築。"
+		// dorh Stun
+		"DOTA_Tooltip_ability_dorh_wisp_stun"								"暈眩"
+		"DOTA_Tooltip_ability_dorh_wisp_stun_Description"					"投擲壹瓶爆炸性的混合物，爆炸並擊暈單位。"
+		// dorh Summon Unit
+		"DOTA_Tooltip_ability_dorh_summon_minion_zuus"						"召喚宙斯"
+		"DOTA_Tooltip_ability_dorh_summon_minion_zuus_Description"			"召喚宙斯"
+		// dorh Build
+		"DOTA_Tooltip_ability_dorh_build_general"							"建造"
+		"DOTA_Tooltip_ability_dorh_build_general_Description"				"建造壹座基礎塔"
+		"DOTA_Tooltip_ability_dorh_build_general_cost"						"花費："
+		// dorh Upgrade
+		"DOTA_Tooltip_ability_dorh_upgrade_tower_base"						"基礎升級"
+		"DOTA_Tooltip_ability_dorh_upgrade_tower_base_Description"			"將這座塔升級為基礎攻擊塔。"
+		"DOTA_Tooltip_ability_dorh_upgrade_tower_base_Cost"					"花費："
+		}
+}

@@ -1,0 +1,470 @@
+"lang"
+{
+	"Language"      "russian"
+	"Tokens"
+	{
+		/////////////////
+		// BASE STRINGS
+		////////////////
+
+		// Name of the game
+		"game_mode_15"                  "FROTA"
+
+		// Toggle ready state
+		"afs_toggle_ready"				"Готов"
+
+		// Vote related
+		"afs_seconds_remaining"         "секунд"
+		"afs_second_remaining"          "секунда"
+		"afs_vote_ends_in"              "Голосование закончится через"
+		"afs_cast_vote"                 "Проголосовать"          // The text on the vote button
+		"afs_vote_yes"                  "Да"           // Vote yes button
+		"afs_vote_no"                   "Нет"            // Vote no button
+
+		// Picking related
+		"afs_picking_timer"             "Пик закончится через"
+		"afs_tab_pick_skills"           "Выбор умений"
+		"afs_tab_pick_hero"             "Выбор героя"
+
+		// End game stuff
+		"afs_play_again"				"Сыграть еще раз"
+		"afs_play_something_else"		"Выбрать другой режим"
+		"afs_close_server"				"Закончить игру"
+
+		/////////////////
+		// NEW FROTA MENU STUFF
+		////////////////
+
+		// Menu Title
+		"Frota"							"Frota"
+
+		// Huge text on the welcome screen
+		"frota_welcome"					"Welcome to Frota"
+
+		// General info in how to use Frota
+		"frota_info"					"Нажмите кнопку Fr в левом верхнем углу, чтобы открыть это меню"
+
+		// Close Menu
+		"frota_close"					"Закрыть"
+
+		// Call GG
+		"frota_call_gg"					"Сдаться"
+
+		// Show Info Button
+		"frota_btn_info"				"Информация о Frota"
+
+		// Toggle Extend
+		"frota_toggle_extend"			"Показать меню"
+
+		/////////////////
+		// GAME MODES
+		////////////////
+
+		// Dota
+		"afs_name_dota"					"Dota"
+		"afs_des_dota"					"Обычная Dota."
+
+		// Oddball
+		"afs_name_oddball"				"Oddball"
+		"afs_des_oddball"				"Заберите гем, удержите гем."
+
+		// All Pick
+		"afs_name_allpick"				"All Pick"
+		"afs_des_allpick"				"Выбирайте из набора героев."
+
+		// Legends of Dota
+		"afs_name_lod"                  "Legends of dota"
+		"afs_des_lod"                   "Выбирайте умения и героя."
+
+		// Random OMG
+		"afs_name_romg"                 "Random OMG"
+		"afs_des_romg"                  "Вам дается случайный герой и способности."
+
+		// PvP Arena
+		"afs_name_arena"                "PvP Arena"
+		"afs_des_arena"                 "Простой режим PvP арены."
+
+		// Score Limit
+		"afs_o_scoreLimit"              "Лимит очков"
+		"afs_od_scoreLimit"             "Количество очков, нужных для победы."
+
+		// Pudge Wars
+		"afs_name_pudgewars"            "Pudge Wars"
+		"afs_des_pudgewars"             "Играйте за Pudge, команда набравшая 10 убийств побеждает."
+
+		// Tiny Wars
+		"afs_name_tinywars"				"Tiny Wars"
+		"afs_des_tinywars"				"Играйте за Tiny, команда набравшая 10 убийств побеждает."
+
+		// Sunstrike Wars
+		"afs_name_sunstrikewars"		"Sun Strike Wars"
+		"afs_des_sunstrikewars"			"Один игрок появляется со способностью Sun Strike, его задача - убить остальных."
+
+		// Pure Skill
+		"afs_name_pureskill"            "Pure Skill"
+		"afs_des_pureskill"             "Играйте за Mirana со способностями Skewer, Arrow, Meat hook и Ice shards."
+
+		// Invoker Wars
+		"afs_name_INVOKERWARZ"          "Invoker Wars"
+		"afs_des_INVOKERWARZ"           "Играйте за зловещего мага Карла."
+
+		// Puck Wars
+		"afs_name_puckwars"             "Puck Wars"
+		"afs_des_puckwars"              "Вы - Puck >_>"
+
+		// Warlocks
+		"afs_name_warlocks"            	"Warlocks"
+		"afs_des_warlocks"             	"Вы начинающий волшебник, хаотично прыгающий по карте и играющий в горячую картошку нестабильным заклинанием."
+
+		// RvS
+		"afs_name_rvs"            		"Rabbits vs. Sheep"
+		"afs_des_rvs"             		"What does the Rabbit say?"
+
+		// Plage
+		"afs_name_plage"				"Plague"
+		"afs_des_plage"					"Когда вы кого-нибудь убьете, жертва станет тем же героем что и вы. Когда все станут одинаковыми героями, игра закончится."
+
+		// Kaolin Wars
+		"afs_name_kaolinwars"			"Earth Spirit Wars"
+		"afs_des_kaolinwars"			"Dota - это баланс среди дисбаланса, ведь так?"
+
+		// Riki Wars
+		"afs_name_rikiwars"				"Riki Wars"
+		"afs_des_rikiwars"				"Играйте за Riki, получайте бесплатный dust, ???, Profit!"
+
+		// Kunkka Wars
+		"afs_name_kunkkawars"			"Kunkka Wars"
+		"afs_des_akunkkawars"			"Ведь мы пираты!"
+
+		// KOTH
+		"afs_name_kotolofthehill"		"King of the Hill"
+		"afs_des_kotolofthehill"		"Царь горы!"
+
+		// CTF the Flag
+		"afs_name_ctftheflag"			"Захват флага"
+		"afs_des_ctftheflag"			"Заберите и принесите вражеский флаг, не давая врагам ваш."
+
+		// Zombie Survival
+		"afs_name_survival"				"Zombie Survival"
+		"afs_des_survival"				"Обороняйтесь от волн зомби"
+		"afs_o_survivalTeamMode"        "Все в одной команде"
+		"afs_od_survivalTeamMode"       "Вы хотите чтобы все были в одной команде?"
+
+		// Defense of RuneHill
+		"afs_name_dorh"					"Оборона рунной горы"
+		"afs_des_dorh"					"Выдержите 22 волны врагов и защитите рунную гору."
+		"dorh_prep_time"				"Игра начнется через"
+		"dorh_next_wave_timer"			"Следующая волна через"
+
+		/////////////////
+		// GAME ADDONS
+		////////////////
+
+		// WTF
+		"afs_name_wtf"                  "WTF Mode"
+		"afs_des_wtf"                   "Способности и артефакты без КД и манакоста."
+
+		// Free Blink Dagger
+		"afs_name_freeBlinkDagger"      "Free Blink Dagger"
+		"afs_des_freeBlinkDagger"       "Все появляются с бесплатным Blink Dagger."
+
+		// No Buying
+		"afs_name_noBuying"				"No Buying"
+		"afs_des_noBuying"				"Покупка вещей отключена."
+
+		// DM Mode
+		"afs_name_dmmode"				"DM Mode"
+		"afs_des_dmmode"				"С каждой смертью меняется герой!"
+
+		// Fat-o-Meter
+		"afs_name_fatometer"			"Fat-o-Meter"
+		"afs_des_fatometer"				"С каждым убийством вы становитесь жирнее."
+
+		// Unlimited Mana
+		"afs_name_unlimitedMana"		"Unlimited Mana"
+		"afs_des_unlimiredMana"			"Все получают ауру максимальной регенерации маны."
+
+		// Spawn Protection
+		"afs_name_spawnprotection"		"Spawn Protection"
+		"afs_des_spawnprotection"		"Герои будут временно бессмертными после возрождения."
+
+		// Bonus Gold Per Second
+		"afs_name_goldpersecond"		"Увеличенный прирост золота"
+		"afs_des_goldpersecond"			"Дает игрокам дополнительное золото каждую секунду."
+		"afs_o_goldPerSecond"           "Количество дополнительного золота"
+		"afs_od_goldPerSecond"          "Сколько золота давать игрокам каждую секунду."
+
+		// Lucky Items
+		"afs_name_luckyitems"			"Lucky Items"
+		"afs_des_luckyitems"			"Получайте случайные предметы с ходом игры."
+
+		/////////////////
+		// UNITS
+		////////////////
+
+		// Defense of RuneHill
+		"npc_dorh_minion_zuus"															"Minion Zuus"
+		"npc_dorh_tower_base_lvl1"														"Old Man"
+		"npc_dorh_tower_base_lvl2"														"Witch"
+		"npc_dorh_tower_base_lvl3"														"necrolyte"
+		"npc_dorh_tower_base_lvl4"														"Big Bird"
+
+		"npc_dorh_enemy_gycrophter"														"Xavierthenoob"
+		"npc_dorh_enemy_legion"															"Golden Man"
+		"npc_dorh_enemy_tinker"															"Golden Tinker"
+		"npc_dorh_enemy_bounty_hunter"													"Golden Tracker"
+		"npc_dorh_enemy_alchemist"														"Golden Lord"
+		"npc_dorh_enemy_beast_master"													"Wood Caller"
+		"npc_dorh_enemy_furion"															"Wood Sponsor"
+		"npc_dorh_enemy_enchant"														"Wood Spirit"
+		"npc_dorh_enemy_brood_mother"													"Wood Lord"
+		"npc_dorh_enemy_slardar"														"Water Fighter"
+		"npc_dorh_enemy_tide_hunter"													"Water Beast"
+		"npc_dorh_enemy_nage_siren"														"Water Singer"
+		"npc_dorh_enemy_slark"															"Water Lord"
+		"npc_dorh_enemy_ember_spirit"													"Fire Spirit"
+		"npc_dorh_enemy_lina"															"Fire Soul"
+		"npc_dorh_enemy_batridder"														"Fire Ridder"
+		"npc_dorh_enemy_doom"															"Fire Lord"
+		"npc_dorh_enemy_tiny"															"Earth Roller"
+		"npc_dorh_enemy_sandking"														"Earth Digger"
+		"npc_dorh_enemy_eldertitan"														"Earth Musician"
+		"npc_dorh_enemy_earth_spirit"													"Earth Lord"
+		"npc_dorh_enemy_roshan"															"Lord Lord"
+
+		/////////////////
+		// ABILITIES
+		////////////////
+
+		// Invoker Wars
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike"                                  "Sun Strike"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Description"                      "Посылает наиужаснейший луч свирепой энергии на любую указанную локацию, испепеляя всех врагов стоящих под ним при достижении им земли. Урон распределяется между всеми врагами."
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Lore"                             "Наиболее изощренные творения Калвина."
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note0"                                "Дает видимость в указанной области на время применения."
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_Note1"                                "Вы получите опыт от убийств Sun Strike, даже если вы на большей дистанции чем 1200."
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_area_of_effect"                   "РАДИУС:"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_delay"                                "ЗАДЕРЖКА:"
+		"DOTA_Tooltip_ability_invoker_wars_sun_strike_damage"                           "УРОН:"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast"                             "Deafening Blast"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Description"                 "Invoker выпускает могучую сверхзвуковую волну перед ним, которая нанесет урон любому врагу столкнувшимся с ней."
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Lore"                        "Ослепительная вспышка Балафонта."
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_Note0"                       "Это заклинание прерывает применяемые способности."
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_damage"                      "УРОН:"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_knockback_duration"          "ПРОДОЛЖИТЕЛЬНОСТЬ ТОЛЧКА:"
+		"DOTA_Tooltip_ability_invoker_wars_deafening_blast_disarm_duration"             "ПРОДОЛЖИТЕЛЬНОСТЬ ОБЕЗОРУЖИВАНИЯ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor"                                    "Meat Ball"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Description"                        "Invoker призывает огромную пылающую фрикадельку из космоса на указанную позицию. После приземления фрикаделька катится вперед, нанося урон всем на ее пути. Юниты, задетые фрикаделькой, загораются на короткое время, получая дополнительный урон."
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Lore"                           "Особая уличная магия."
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note0"                          "Наносит основной урон каждые 0.5 секунд и поджигает врагов на 3 секунды."
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_Note1"                          "Фрикаделька движется со скоростью 300."
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_land_time"                      "ВРЕМЯ ПРИЗЕМЛЕНИЯ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_travel_distance"                    "ДИСТАНЦИЯ ПЕРЕДВИЖЕНИЯ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_area_of_effect"                 "РАДИУС:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_damage_interval"                    "ВРЕМЯ МЕЖДУ НАНЕСЕНИЕМ УРОНА:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_main_damage"                        "УРОН:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_duration"                  "ВРЕМЯ ДЕЙСТВИЯ УРОНА ОТ ОГНЯ:"
+		"DOTA_Tooltip_ability_invoker_wars_chaos_meteor_burn_dps"                       "ПЕРИОДИЧЕСКИЙ УРОН ОТ ОГНЯ:"
+		"DOTA_Tooltip_ability_invoker_wars_leap"                                                "Shitty Wizard's Leap"
+		"DOTA_Tooltip_ability_invoker_wars_leap_Description"                                    "Invoker врывается в бой, вызываю прилив сил у союзников, повышая скорость передвижения и атаки. Бонус длится 10 секунд."
+		"DOTA_Tooltip_ability_invoker_wars_leap_Lore"                                           "И друзья и враги Invoker чуют хреновую магию в пылу сражения."
+		"DOTA_Tooltip_ability_invoker_wars_leap_Note0"                                      "Вы можете использовать способность для уклонения от снарядов."
+		"DOTA_Tooltip_ability_invoker_wars_leap_leap_distance"                              "ДИСТАНЦИЯ:"
+		"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus"                                "%БОНУС СКОРОСТИ ПЕРЕДВИЖЕНИЯ:"
+		"DOTA_Tooltip_ability_invoker_wars_leap_leap_speedbonus_as"                         "БОНУС СКОРОСТИ АТАКИ:"
+
+		// Warlocks
+		"DOTA_Tooltip_Ability_warlocks_unstable_spell"      "Unstable Spell"
+		"DOTA_Tooltip_Ability_warlocks_unstable_spell_Description"      "You know, this does not look very safe? Stable? I dunno.. maybe throw it at some unlucky bastard? It's best you don't stick around to see  the results."
+		"DOTA_Tooltip_Ability_warlocks_novice_jaunt"        "Novice Jaunt"
+		"DOTA_Tooltip_Ability_warlocks_novice_jaunt_Description"        "You can manage to jaunt, but not far."
+		"DOTA_Tooltip_Ability_warlocks_novice_hex"      "Novice Hex"
+		"DOTA_Tooltip_Ability_warlocks_novice_hex_Description"      "You got about a 50/50 shot as hexing yourself."
+		"DOTA_Tooltip_Ability_warlocks_novice_ethereal"     "Novice Ethereal"
+		"DOTA_Tooltip_Ability_warlocks_novice_ethereal_Description"     "Ethereal yourself, your friend, your instructor; It don't matter but whomever gets it better watch out for spells."
+
+		// Gambler
+		"DOTA_Tooltip_Ability_gambler_ante_up"      "Ante Up"
+        "DOTA_Tooltip_Ability_gambler_ante_up_Description"      "Maverick идет один на один с дружеским или вражеским юнитом."
+		"DOTA_Tooltip_Ability_gambler_ante_up_damage_and_heal"      "УРОН/ЛЕЧЕНИЕ:"
+		"DOTA_Tooltip_Ability_gambler_ante_up_gold_gained"      "ЗОЛОТА ПОЛУЧЕНО:"
+		"DOTA_Tooltip_Ability_gambler_ante_up_buff_duration"	"ПРОДОЛЖИТЕЛЬНОСТЬ:"
+		"DOTA_Tooltip_Ability_gambler_chip_stack"				"Chip Stack"
+		"DOTA_Tooltip_Ability_gambler_chip_stack_Description" "Maverick мечтает расправиться с богатыми противниками. Наносит процентный урон от их количества золота."
+		"DOTA_Tooltip_Ability_gambler_chip_stack_gold_amount"				"%ОТ ЗОЛОТА:"
+		"DOTA_Tooltip_Ability_gambler_lucky_stars"				"Lucky Stars"
+		"DOTA_Tooltip_Ability_gambler_lucky_stars_lucky_chance"				"%ШАНС ВЕЗЕНИЯ:"
+		"DOTA_Tooltip_Ability_gambler_lucky_stars_Description" "Maverick благодарит свои звезды счастья."
+		"DOTA_Tooltip_Ability_gambler_all_in"					"All In"
+		"DOTA_Tooltip_Ability_gambler_all_in_Description" "Maverick ставит все."
+		"DOTA_Tooltip_Ability_gambler_all_in_fail_chance"					"%ШАНС НЕУДАЧИ:"
+		"DOTA_Tooltip_Ability_gambler_all_in_damage_cap"					"МАКСИМАЛЬНЫЙ УРОН:"
+
+		/////////////////
+    	// ITEMS
+    	////////////////
+
+		"DOTA_Tooltip_Ability_item_oddball"					"Oddball"
+		"DOTA_Tooltip_Ability_item_oddball_description"		"Удерживание ЧУДАКА увеличивает счет вашей команды."
+		// CTF
+		"DOTA_Tooltip_Ability_item_capture_flag"					"Radiant Flag"
+		"DOTA_Tooltip_Ability_item_capture_flag_description"		"На вас наложено молчание и ваша скорость снижена."
+		"DOTA_Tooltip_Ability_item_capture_flag_dire"				"Dire Flag"
+		"DOTA_Tooltip_Ability_item_capture_flag_dire_description"	"На вас наложено молчание и ваша скорость снижена."
+
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_mana_bonus"			"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_mana_regen"			"%+$mana_regen"
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_2"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_2_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_2_mana_bonus"		"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_2_mana_regen"		"%+$mana_regen"
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_3"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_3_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_3_mana_bonus"		"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_3_mana_regen"		"%+$mana_regen"
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_4"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_4_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_4_mana_bonus"		"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_4_mana_regen"		"%+$mana_regen"
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_5"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_5_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_5_mana_bonus"		"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_5_mana_regen"		"%+$mana_regen"
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_6"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_6_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_6_mana_bonus"		"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_6_mana_regen"		"%+$mana_regen"
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_7"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_7_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_7_mana_bonus"		"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_7_mana_regen"		"%+$mana_regen"
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_8"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_8_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_8_mana_bonus"		"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_8_mana_regen"		"%+$mana_regen"
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_9"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_9_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_9_mana_bonus"		"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_9_mana_regen"		"%+$mana_regen"
+
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_10"					"The One Ring"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_10_description"		"Не так хорошо, как The Two Ring."
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_10_mana_bonus"		"+$mana"
+		"DOTA_Tooltip_Ability_item_rvs_one_ring_10_mana_regen"		"%+$mana_regen"
+
+		// Lycan Paw
+		"DOTA_Tooltip_Ability_item_lycan_paw"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_description"		"Проворный дух Banehallow ускоряет ход медлительного Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_movespeed_bonus"	"БОНУС СКОРОСТИ ПЕРЕДВИЖЕНИЯ:"
+		"DOTA_Tooltip_ability_item_lycan_paw_item_level"		"УРОВЕНЬ:"
+		"DOTA_Tooltip_Ability_item_lycan_paw_2"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_2_description"		"Проворный дух Banehallow ускоряет ход медлительного Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_2_movespeed_bonus"	"БОНУС СКОРОСТИ ПЕРЕДВИЖЕНИЯ:"
+		"DOTA_Tooltip_ability_item_lycan_paw_2_item_level"		"УРОВЕНЬ:"
+		"DOTA_Tooltip_Ability_item_lycan_paw_3"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_3_description"		"Проворный дух Banehallow ускоряет ход медлительного Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_3_movespeed_bonus"	"БОНУС СКОРОСТИ ПЕРЕДВИЖЕНИЯ:"
+		"DOTA_Tooltip_ability_item_lycan_paw_3_item_level"		"УРОВЕНЬ:"
+		"DOTA_Tooltip_Ability_item_lycan_paw_4"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_4_description"		"Проворный дух Banehallow ускоряет ход медлительного Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_4_movespeed_bonus"	"БОНУС СКОРОСТИ ПЕРЕДВИЖЕНИЯ:"
+		"DOTA_Tooltip_ability_item_lycan_paw_4_item_level"		"УРОВЕНЬ:"
+		"DOTA_Tooltip_Ability_item_lycan_paw_5"					"Lycan's Paws"
+		"DOTA_Tooltip_Ability_item_lycan_paw_5_description"		"Проворный дух Banehallow ускоряет ход медлительного Pudge."
+		"DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_bonus"	"БОНУС СКОРОСТИ ПЕРЕДВИЖЕНИЯ:"
+		"DOTA_Tooltip_ability_item_lycan_paw_5_movespeed_percentage_bonus"	"ПРОЦЕНТНАЯ ПРИБАВКА К СКОРОСТИ:"
+		"DOTA_Tooltip_ability_item_lycan_paw_5_attackspeed_bonus"			"БОНУС СКОРОСТИ АТАКИ:"
+		"DOTA_Tooltip_ability_item_lycan_paw_5_item_level"		"УРОВЕНЬ:"
+
+        // Puck Wars
+        "DOTA_Tooltip_ability_puckwars_waning_rift"                                                                                        "Waning Rift"
+        "DOTA_Tooltip_ability_puckwars_waning_rift_Description"                                                                "Puck выпускает волшебную пыль, которая наносит урон врагам и запрещает им колдовать."
+        "DOTA_Tooltip_ability_puckwars_waning_rift_Lore"                                                                        "С озорной улыбкой, Puck распыляет зачарованную пыль которая прерывает потоки магии."
+        "DOTA_Tooltip_ability_puckwars_waning_rift_radius"                                                                        "РАДИУС:"
+        "DOTA_Tooltip_ability_puckwars_waning_rift_silence_duration"                                                "ПРОДОЛЖИТЕЛЬНОСТЬ:"
+        "DOTA_Tooltip_ability_puckwars_phase_shift"                                                                                        "Phase Shift"
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Description"                                                                "Puck переносится в другое измерение где ему ничего не грозит."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Lore"                                                                        "С насмешкой и вспышкой, Puck возвращается в измерение из которого он прибыл."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Note0"                                                                        "Через героя нельзя пройти даже под действием этой способности."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Note1"                                                                        "Любое действие прервет Phase Shift."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_Note2"                                                                        "Puck неуязвим во время действия этой способности."
+        "DOTA_Tooltip_ability_puckwars_phase_shift_duration"                                                                "Продолжительность:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil"                                                                                        "Dream Coil"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_Description"                                                                "Создает магическую спираль, цепляющуюся за врагов, оглушающую врагов на 0.5 секунды и нанося урон.  Если противник натянет спираль, она порвется, нанося урон и оглушая его.\n\nУлучшается с Aghanim's Scepter."
+        "DOTA_Tooltip_ability_puckwars_dream_coil_Note0"                                                                        "Первичное оглушение и урон может отразить Linken's Sphere, но связка всё равно будет действовать."
+        "DOTA_Tooltip_ability_puckwars_dream_coil_Lore"                                                                                "Волшебный дракончик ставит врагов в неловкое положение."
+
+
+
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_radius"                                                "РАДИУС РАЗРЫВА:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_stun_duration"                                                "ОГЛУШЕНИЕ РАЗРЫВОМ:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage"                                                "УРОН ОТ РАЗРЫВА:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration"                                                        "ДЛИТЕЛЬНОСТЬ СВЯЗКИ:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_duration_scepter"                                        "ДЛИТЕЛЬНОСТЬ СВЯЗКИ С Aghanim's:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_coil_break_damage_scepter"                                "УРОН ОТ РАЗРЫВА С Aghanim's:"
+        "DOTA_Tooltip_ability_puckwars_dream_coil_aghanim_description"                                                "Увеличивает урон от разрыва и продолжительность связки."
+
+		// Kunkka Wars
+		"DOTA_Tooltip_ability_kunkka_wars_torrent"                                                                                        "Torrent"
+		"DOTA_Tooltip_ability_kunkka_wars_torrent_Description"                                                                         "После небольшой задержки создает мощный поток воды, который подбрасывает врагов в небо, оглушает их, а затем наносит урон и снижает скорость их передвижения."
+		"DOTA_Tooltip_ability_kunkka_wars_torrent_Lore"                                                                                "Только самый пьяный пират может превратить землю в воду."
+		"DOTA_Tooltip_ability_kunkka_wars_kunkka_rum"                                                                                     "Kunkka's Rum"
+		"DOTA_Tooltip_ability_kunkka_wars_kunkka_rum_Description"                                                                       "Kunkka наполняет себя или союзника пиратским ромом, существенно увеличивающим восстановление здоровья."
+		"DOTA_Tooltip_ability_kunkka_wars_kunkka_rum_Lore"                                                                                    "Настоящий пират никогда не покидает свой корабль без бочонка рома."
+		"DOTA_Tooltip_ability_kunkka_wars_kunkka_rum_hp_regen"                                                                                    "ВОССТАНОВЛЕНИЕ HP:"
+		"DOTA_Tooltip_ability_kunkka_wars_x_marks_the_spot"                                                                               "X Marks The Spot"
+		"DOTA_Tooltip_ability_kunkka_wars_x_marks_the_spot_Description"                                                                   "Помечает место расположения дружественного или вражеского героя крестом и через несколько секунд или по нажатию кнопки возвращает его на это самое место."
+		"DOTA_Tooltip_ability_kunkka_wars_x_marks_the_spot_Lore"                                                                          "Все пираты мастерские тактики."
+		"DOTA_Tooltip_ability_kunkka_wars_x_marks_the_spot_duration"                                                                          "ПРОДОЛЖИТЕЛЬНОСТЬ:"
+		"DOTA_Tooltip_ability_kunkka_wars_ghost_ship"                                                                                        "Ship Wreck"
+		"DOTA_Tooltip_ability_kunkka_wars_ghost_ship_Description"                                                                         "Kunkka вызывает призрачный корабль, чтобы направить его на своих врагов."
+		"DOTA_Tooltip_ability_kunkka_wars_ghost_ship_Lore"                                                                                 "Только лучший капитан может плыть на корабле по земле. Вот почему этот не имеет капитана."
+		"DOTA_Tooltip_ability_kunkka_wars_ghost_ship_ghostship_speed"  
+		// dorh
+
+		// dorh Blink
+		"DOTA_Tooltip_ability_dorh_wisp_blink"											"Blink"
+		"DOTA_Tooltip_ability_dorh_wisp_blink_Description"								"Телепортация на небольшое расстояние, позволяющая Wisp врываться в битву."
+		"DOTA_Tooltip_ability_dorh_wisp_blink_blink_range"								"ДИСТАНЦИЯ:"
+
+		// dorh frost nova
+		"DOTA_Tooltip_ability_dorh_wisp_slow"											"Frost Blast"
+		"DOTA_Tooltip_ability_dorh_wisp_slow_Description"								"Вокруг указанного врага создается ледяной взрыв, который наносит урон и замедляет всех врагов в области действия на 4 секунды. Первичная цель получает наибольший урон."
+		"DOTA_Tooltip_ability_dorh_wisp_slow_aoe_damage"								"ОБЛАСТЬ ВТОРИЧНОГО УРОНА:"
+		"DOTA_Tooltip_ability_dorh_wisp_slow_radius"									"РАДИУС:"
+		"DOTA_Tooltip_ability_dorh_wisp_slow_slow_movement_speed"						"%ЗАМЕДЛЕНИЕ ПЕРЕДВИЖЕНИЯ:"
+		"DOTA_Tooltip_ability_dorh_wisp_slow_slow_attack_speed"							"%ЗАМЕДЛЕНИЕ АТАКИ:"
+
+		// dorh Destroy
+		"DOTA_Tooltip_ability_dorh_wisp_destroy"							"Убрать постройку"
+		"DOTA_Tooltip_ability_dorh_wisp_destroy_Description"				"Убирает выбранную постройку"
+
+		// dorh Stun
+		"DOTA_Tooltip_ability_dorh_wisp_stun"								"Stun"
+		"DOTA_Tooltip_ability_dorh_wisp_stun_Description"					"Бросает взрывчатую смесь, оглушающую врагов"
+
+		// dorh Summon Unit
+		"DOTA_Tooltip_ability_dorh_summon_minion_zuus"						"Summon Zuus"
+		"DOTA_Tooltip_ability_dorh_summon_minion_zuus_Description"			"Призывает Zuus"
+
+		// dorh Build
+		"DOTA_Tooltip_ability_dorh_build_general"							"Построить"
+		"DOTA_Tooltip_ability_dorh_build_general_Description"				"Строит обыкновенную башню"
+		"DOTA_Tooltip_ability_dorh_build_general_cost"						"СТОИМОСТЬ:"
+
+		// dorh Upgrade
+		"DOTA_Tooltip_ability_dorh_upgrade_tower_base"						"Улучшение"
+		"DOTA_Tooltip_ability_dorh_upgrade_tower_base_Description"			"Улучшает эту башню до простой."
+		"DOTA_Tooltip_ability_dorh_upgrade_tower_base_Cost"					"СТОИМОСТЬ:"
+	}
+}
