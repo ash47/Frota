@@ -140,7 +140,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - Russian by [lokkdokk][2], [Shuker][3]
  - Chinese by [cs-italy][10]
  - Spanish by JosDW
- - Turkish by ozen
+ - Turkish by [ozen][7]
 
 ###Issues that need help###
  - When a player leaves the game, their slot isn't removed, and hence, someone else can't connect and take their place, this is caused by the limit of 5 players per team, someone solve this :P
@@ -155,6 +155,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 [4]: https://github.com/Easimer
 [5]: https://github.com/DarkMio
 [6]: https://github.com/penguinwizzard
+[7]: https://github.com/ozen
 [8]: https://github.com/KobbDota
 [9]: https://github.com/justSQL
 [10]: https://github.com/cs-italy
