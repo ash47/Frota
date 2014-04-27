@@ -56,8 +56,8 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Defend 22 waves of enemies and protect your rune top
 
 ###Addons###
- - **WTF Mode** [Needs sm.js]
-  - Players have the option to turn WTF Mode on, making all spells and items have no mana cost and no cooldown.
+ - **WTF Mode**
+  - Players have the option to turn WTF Mode on, making all spells have no cooldown.
  - **Free Blink Dagger**
   - Everyone will spawn with a free blink dagger.
  - **No Buying**

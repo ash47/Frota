@@ -869,6 +869,26 @@ function FrotaGameMode:RemoveAllSkills(hero)
     end
 end
 
+function FrotaGameMode:RefreshAllSkills(hero)
+    -- Check if we've touched this hero before
+    if not self.currentSkillList[hero] then
+        -- Grab the name of this hero
+        local heroClass = hero:GetUnitName()
+
+        local skills = self:GetHeroSkills(heroClass)
+
+        -- Store it
+        self.currentSkillList[hero] = skills
+    end
+
+    -- Refresh all skills
+    for k,v in pairs(self.currentSkillList[hero]) do
+        if hero:HasAbility(v) then
+            hero:FindAbilityByName(v):EndCooldown()
+        end
+    end
+end
+
 function FrotaGameMode:ApplyBuild(hero, build)
     -- Grab playerID
     local playerID = hero:GetPlayerID()
