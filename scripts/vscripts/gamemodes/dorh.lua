@@ -26,15 +26,15 @@ local unitCurrentMileStone = {}
 
 -- These are the waypoints units will follow
 local wayPointPositions = {
-    [1] = Vec3(-1120,-1120,0),
-    [2] = Vec3(490,-1360,0),
-    [3] = Vec3(2450,-1400,0),
-    [4] = Vec3(2400,630,0),
-    [5] = Vec3(2190,2030,0),
-    [6] = Vec3(40,940,0),
-    [7] = Vec3(690,260,0),
-    [8] = Vec3(1450,500,0),
-    [9] = Vec3(1550,-500,0)
+    [1] = Vector(-1120,-1120,0),
+    [2] = Vector(490,-1360,0),
+    [3] = Vector(2450,-1400,0),
+    [4] = Vector(2400,630,0),
+    [5] = Vector(2190,2030,0),
+    [6] = Vector(40,940,0),
+    [7] = Vector(690,260,0),
+    [8] = Vector(1450,500,0),
+    [9] = Vector(1550,-500,0)
 }
 
 -- The actual way points
@@ -192,7 +192,7 @@ local function spawnUnit(unitName, points, playerCount)
 
     -- Store how many points this unit is worth
     unit.points = points
-    
+
     --multiple the health
     local multiRate = (( playerCount - 1 ) * 0.8 + 1 )
     unit:SetMaxHealth( multiRate * unit:GetHealth())
@@ -213,8 +213,8 @@ local function spawnUnit(unitName, points, playerCount)
             Queue = true
         })
     end]]
-    
-    
+
+
 
 
 
@@ -229,7 +229,7 @@ local function setAbilityLevels(hero , _playerID)
     for k,v in pairs(dorhHeroList[currentEvoLevel].skills) do
         -- Check if they have the skill
         local ab = hero:FindAbilityByName(v.name)
-		
+
         if ab then
 			ab:SetLevel(v.maxlevel)
 			if v.name == "dorh_wisp_evolution" then
@@ -454,7 +454,7 @@ RegisterGamemode('dorh', {
 
     assignHero = function(frota, ply)
         local playerID = ply:GetPlayerID()
-		
+
 		-- Restore evolution state of wisp
 		for i = 0 , 10 do
 			evolution_state[i] = 1
@@ -487,12 +487,12 @@ RegisterGamemode('dorh', {
 
         -- Cleanup any lose wave units
         clearWaveUnits()
-		
+
         -- Store the amount of lives and units
         frota.scoreRadiant = startingLives
         frota.scoreDire = 0
         frota:UpdateScoreData()
-		
+
 		--[[ Disabled while test
 		--PreCache tower data, this will take quite a long time, looking for better way to do this
 		for i = 1 , 16 do
@@ -531,7 +531,7 @@ RegisterGamemode('dorh', {
 
     -- Checking for units 'escaping'
     onThink = function(frota, dt)
-      
+
       -- seconds that unit will begin to be angry when blocked
       local angryTreshold = 1
       timePassed = timePassed + dt
@@ -539,7 +539,7 @@ RegisterGamemode('dorh', {
         for k,v in pairs(waveUnits) do
           -- Validate the unit
           if IsValidEntity(v) then
-            
+
             -- catch the unit index
             local uIndex = v:entindex()
             unitCurrentPosition[uIndex] = v:GetOrigin()
@@ -548,7 +548,7 @@ RegisterGamemode('dorh', {
             if angryState[uIndex] == nil then angryState[uIndex] = 0 end
             if unitLatestPosition[uIndex] == nil then unitLatestPosition[uIndex] = unitCurrentPosition[uIndex] end
             if unitCurrentMileStone[uIndex] ==nil then unitCurrentMileStone[uIndex] = 1 end
-            
+
             -- if it didnt move
             -- print('distance '..tostring(distance( unitCurrentPosition[uIndex] , unitLatestPosition[uIndex] )))
             if distance( unitCurrentPosition[uIndex] , unitLatestPosition[uIndex] ) <= 1 then
@@ -570,16 +570,16 @@ RegisterGamemode('dorh', {
                     angryState[uIndex] = angryState[uIndex] - 1
                     if angryState[uIndex] < 0 then angryState[uIndex] = 0 end
                   end
-            
-            
+
+
             -- Store Position 1 sec ago
             unitLatestPosition[uIndex] = unitCurrentPosition[uIndex]
           end
         end
-        
+
         -- Reset timer
         timePassed =0
-        
+
       end
 
       -- order to move through every way points
@@ -602,7 +602,7 @@ RegisterGamemode('dorh', {
               })
             end
           end
-          
+
           -- allow unit to 'escape'
           local endPoint = wayPointPositions[#wayPointPositions]
           -- Check how close this unit is to the end
@@ -659,7 +659,7 @@ RegisterGamemode('dorh', {
 		local cost = ability:GetSpecialValueFor('cost')
 		local owner = unit:GetOwner()
 		local playerID = (owner.GetPlayerID and owner:GetPlayerID()) or -1
-		
+
       -- Build a general building
 			local gold = PlayerResource:GetGold(playerID)
             if gold < cost then
@@ -669,16 +669,16 @@ RegisterGamemode('dorh', {
 			-- Make sure they have enough to buy this building
 			if gold >= cost then
 			end
-			
+
 			if name == 'dorh_wisp_evolution' and evolution_state[playerID] >= 4 then
 				Say(nil, COLOR_RED..'ULTIMATE STATE!!!!', false)
                 unit:Stop()
 			end
 			--it's ok to take the gold even there's not enough gold, cost will take and set gold to a -value, then return to player when hero/unit stopped
 			PlayerResource:SpendGold(playerID, cost, 0)
-	
+
     end,
-	
+
 	onDataDrivenChannelInterrupted = function(frota, keys)
         local hero = keys.caster
         local ability = keys.ability
@@ -705,7 +705,7 @@ RegisterGamemode('dorh', {
         if name ~= 'dorh_build_general' then
           point = hero:GetOrigin()
         end
-        
+
 		local unitOnPoint = FindUnitsInRadius( hero:GetTeam(), point , nil, 1 , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_OTHER, 0, FIND_ANY_ORDER, false )
 		if name == 'dorh_build_general' then
 			for _,unit in ipairs(unitOnPoint) do
@@ -734,13 +734,13 @@ RegisterGamemode('dorh', {
 
 			-- Make invulnerable
 			hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
-			
+
 			-- Make it stronger
 			hero:__KeyValueFromInt("AttackDamageMin" , currentLevel * 200 )
 			hero:__KeyValueFromInt("AttackDamageMax" , currentLevel * 200 +10 )
 			hero:__KeyValueFromFloat("AttackRate" , 1.7-0.5-currentLevel * 0.2)
 			hero:__KeyValueFromFloat("AttackAnimationPoint" , 0.3-currentLevel * 0.05)
-			
+
 			-- Give building skills
 			local abTemp = {}
 			for k,v in pairs(dorhHeroList[currentLevel].skills) do
