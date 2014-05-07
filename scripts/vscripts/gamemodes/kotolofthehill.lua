@@ -47,7 +47,7 @@ RegisterGamemode('kotolofthehill', {
 
     onThink = function(frota, dt)
         -- The position where the hill is
-        local controlPointVec = Vec3(0,0,0)
+        local controlPointVec = Vector(0,0,0)
 
         -- The number of good/bad guys on the point
         local goodGuysCount = #FindUnitsInRadius(DOTA_TEAM_GOODGUYS, controlPointVec, null, 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
