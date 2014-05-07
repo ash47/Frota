@@ -8,10 +8,10 @@ local function spawnCreepForEnemyTeam(team)
     -- Check which team they were on
     if team == DOTA_TEAM_GOODGUYS then
         -- Spawn a creep for the bad guys
-        CreateUnitByName('npc_dota_creep_badguys_melee',Vec3(math.random(-1665,-705),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_BADGUYS)
+        CreateUnitByName('npc_dota_creep_badguys_melee',Vector(math.random(-1665,-705),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_BADGUYS)
     elseif team == DOTA_TEAM_BADGUYS then
         -- Spawn a creep for the good guys
-        CreateUnitByName('npc_dota_creep_goodguys_melee', Vec3(math.random(575,1600),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
+        CreateUnitByName('npc_dota_creep_goodguys_melee', Vector(math.random(575,1600),math.random(-1215,1345),0) , true, nil, nil, DOTA_TEAM_GOODGUYS)
     end
 end
 
