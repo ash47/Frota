@@ -126,9 +126,11 @@ function FrotaGameMode:InitGameMode()
     if not pcall(function()
         PrecacheUnitByName('npc_precache_everything')
     end) then
-        pcall(function()
+        if not pcall(function()
             PrecacheUnitByName('npc_precache_everything', {})
-        end)
+        end) then
+            print('PRE CACHING HAS FAILED! I AM A SAD PANDA!')
+        end
     end
     --PrecacheResource('test', 'test')
     print('Done precaching!')
