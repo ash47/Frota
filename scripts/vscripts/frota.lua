@@ -124,10 +124,10 @@ function FrotaGameMode:InitGameMode()
     -- Precache everything -- Having issues with the arguments changing
     print('Precaching stuff...')
     if not pcall(function()
-        PrecacheUnit('npc_precache_everything')
+        PrecacheUnitByName('npc_precache_everything')
     end) then
         pcall(function()
-            PrecacheUnit('npc_precache_everything', {})
+            PrecacheUnitByName('npc_precache_everything', {})
         end)
     end
     --PrecacheResource('test', 'test')
