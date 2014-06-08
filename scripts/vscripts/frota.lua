@@ -907,6 +907,11 @@ function FrotaGameMode:RefreshAllSkills(hero)
 end
 
 function FrotaGameMode:ApplyBuild(hero, build)
+    if hero == nil then
+        Say(nil, COLOR_RED..'WARNING: Failed to apply a build!', false)
+        return
+    end
+
     -- Grab playerID
     local playerID = hero:GetPlayerID()
     if not self:IsValidPlayerID(playerID) then
