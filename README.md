@@ -113,7 +113,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
 ###CreateEvent: event 'afs_timer_update' not registered.###
  - You get this because you set the server up wrong.
  - There is now a warning inside of Frota which will tell you this
- - To fix, ENSURE you have set the convars `dota_local_addon_game` to `Frota` and `dota_local_addon_enable` to 1
+ - To fix, ENSURE you have set the convars `dota_local_addon_game` to `Frota` and `dota_local_addon_enable` to `1`
 
 ###Is there a way I can spawn test heroes?###
  - Try the console command 'fake', it will fill the server with fake clients, and give each a hero, this command can only be run from the server console
