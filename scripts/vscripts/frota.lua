@@ -637,7 +637,7 @@ function FrotaGameMode:CleanupPlayer(keys)
     local leavingPly = self.vUserIDMap[keys.userid]
     self.vUserIDMap[keys.userid] = nil
 
-    if not leavingPly then
+    if not leavingPly or not IsValidEntity(leavingPly) then
         print('Failed to cleanup player #'..keys.userid)
         return
     end
