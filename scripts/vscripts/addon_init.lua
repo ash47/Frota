@@ -71,8 +71,3 @@ else
     -- More than one loading error
     print(totalErrors..' Frota modules failed to load!\n')
 end
-
-
---[[local file = io.open ('dota/addons/Frota/maps/'..GetMapName()..'.gnv', 'r')
-local a = file:read('*all')
-io.close (file)]]
