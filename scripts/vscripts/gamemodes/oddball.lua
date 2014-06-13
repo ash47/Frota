@@ -3,7 +3,7 @@ local heroWithGem
 
 local function spawnOddBall(frota)
     -- Spawn the creep in the middle of no where
-    local vector = Vec3( 0, 0, 0 )
+    local vector = Vector( 0, 0, 0 )
     local unit = CreateUnitByName("npc_dota_neutral_satyr_trickster2", vector, false, nil, nil, DOTA_TEAM_NEUTRALS)
 
     -- Give the creep the oddball
