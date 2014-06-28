@@ -70,6 +70,8 @@ function FrotaGameMode:InitGameMode()
     --GameRules:SetCreepMinimapIconScale( 0.7 )
     --GameRules:SetRuneMinimapIconScale( 0.7 )
 
+    Entities:FindAllByClassname('dota_base_game_mode')[1]:SetRecommendedItemsDisabled(true)
+
     -- Hooks
     ListenToGameEvent('entity_killed', Dynamic_Wrap(FrotaGameMode, 'OnEntityKilled'), self)
     ListenToGameEvent('player_connect_full', Dynamic_Wrap(FrotaGameMode, 'AutoAssignPlayer'), self)
@@ -104,22 +106,7 @@ function FrotaGameMode:InitGameMode()
     --self.takenPlayerIDs = {}
 
     -- Start thinkers
-    --self._scriptBind:BeginThink('FrotaThink', Dynamic_Wrap(FrotaGameMode, 'Think'), 0.1)
-
-    -- This is a hack, fix this
-    local thinker = Entities:FindAllByClassname('dota_base_game_mode')[1]
-    local fr = self
-    local n = 1
-    local function thinkFix()
-        -- Requeue this think
-        thinker:SetContextThink("Think"..n, thinkFix, 0.1)
-        n = n+1
-
-        -- Run normal think
-        fr:Think()
-    end
-
-    thinker:SetContextThink("Think", thinkFix, 0.1)
+    Entities:FindAllByClassname('dota_base_game_mode')[1]:SetThink('Think', 'FrotaThink', 0.1, self)
 
     -- Precache everything -- Having issues with the arguments changing
     print('Precaching stuff...')
@@ -1375,7 +1362,7 @@ function FrotaGameMode:Think()
             else
                 -- Nope, handle the error
                 self:HandleEventError('Timer', k, nextCall)
-                return
+                return 0.1
             end
         end
     end
@@ -1385,6 +1372,8 @@ function FrotaGameMode:Think()
         -- Fire gamemode thinks
         self:FireEvent('onThink', dt)
     end
+
+    return 0.1
 end
 
 function FrotaGameMode:SetBuildSkills(playerID, skills)
