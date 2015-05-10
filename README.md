@@ -1,6 +1,12 @@
 Frota
 =====
 
+##Dead##
+ - This addon is now dead and is no longer being maintained
+ - Most of the core features have been migrated over to [Legends of Dota](https://github.com/ash47/LegendsOfDota)
+ - There is a good chance that eventually the more fun gamemodes will be taken from Frota and put into Legends of Dota
+
+###About###
 An addon for Dota 2, It is a framework for sub game modes. Players connect to a server, then vote on what they would like to play, the most popular choice is loaded, people play it, then voting happens again.
 
 ###Picking Gamemodes###
