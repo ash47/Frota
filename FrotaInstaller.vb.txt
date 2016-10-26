@@ -1,0 +1,98 @@
+Imports System.IO
+
+Public Class FrotaInstall
+    Private Sub Frota_Click(sender As Object, e As EventArgs) Handles Frota.Click
+        FrotaInstallation()
+    End Sub
+
+    Private Sub FrotaInstall_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim _lineString As String
+
+        Dim _fileName = CurDir() & "\addoninfo.txt"
+        If My.Computer.FileSystem.FileExists(_fileName) Then
+            FileOpen(1, _fileName, OpenMode.Input)
+            Do While Not EOF(1)
+                _lineString = LineInput(1)
+                'MsgBox(_lineString)
+                If InStr(_lineString, "addontitle") > 0 _
+                    Or InStr(_lineString, "addonversion") > 0 _
+                    Or InStr(_lineString, "addontagline") > 0 _
+                    Or InStr(_lineString, "addonauthor") > 0 _
+                    Or InStr(_lineString, "addonauthorSteamID") > 0 _
+                    Or InStr(_lineString, "addonURL0") > 0 _
+                    Or InStr(_lineString, "_addonDescription") > 0 _
+                   Then
+                    addonInfo.Text = addonInfo.Text & Chr(13) & Trim(Mid(_lineString, 1, 60))
+                End If
+            Loop
+            addonInfo.Text = addonInfo.Text & Chr(13) & Chr(13) & "Start Your Dota2 Client" & Chr(13) & "Click the Image Below to Install Frota"
+        Else
+            Dim _runAnyway As MsgBoxResult
+            _runAnyway = MsgBox("ADDONINFO.TXT NOT FOUND!" & Chr(13) & "FrotaInstaller maybe put in wrong dictionary, run anyway?", MsgBoxStyle.YesNo, "WARNING")
+            If _runAnyway = MsgBoxResult.No Then
+                Me.Close()
+            End If
+        End If
+        Label1.Text = CurDir()
+    End Sub
+
+    Private Sub FrotaInstallation()
+        Dim runningProcess() As Process                             'store all running process
+        Dim dotaFound As Boolean                                    'dota is running?
+        runningProcess = System.Diagnostics.Process.GetProcesses    'Get All Running Process
+        'Search for dota
+        For Each mProcess As Process In runningProcess
+            If mProcess.ProcessName = "dota" Then
+                dotaFound = True
+                Dim targetPath As String
+                targetPath = mProcess.MainModule.FileName              'catch running dota2-thread
+                targetPath = Mid(targetPath, 1, Len(targetPath) - 8) 'delete "dota.exe"
+                targetPath = targetPath & "dota\addons\Frota"         'add "dota\addons\frota"
+                'Dim _inst = MsgBox("DOTA2 RUNNING! Click YES to install Frota,Click NO to quit", MsgBoxStyle.YesNo)
+                'If _inst = MsgBoxResult.Yes Then
+                InstallFrota(targetPath)
+                'End If
+            End If
+        Next
+        If dotaFound = False Then
+            Dim _rundota2 As MsgBoxResult
+            _rundota2 = MsgBox("DOTA2 Not Running£¬Click YES to run DOTA2", MsgBoxStyle.YesNo, "DOTA2 NOT RUNNING")
+            If _rundota2 = MsgBoxResult.Yes Then
+                Shell("cmd /c start steam://run/570")
+            End If
+        End If
+    End Sub
+
+    Private Sub InstallFrota(Path As String)
+        If My.Computer.FileSystem.FileExists((CurDir() & "\scripts\vscripts\frota.lua")) Then
+            MsgBox(Path, , "Frota will be install into")
+            Try
+                My.Computer.FileSystem.CopyDirectory(CurDir, Path, True)
+            Catch ex As IOException
+            End Try
+            Shell(("explorer " & Path), AppWinStyle.NormalFocus)
+        Else
+            MsgBox("Please Put Frota Installer Under Frota - master before running")
+        End If
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles exitbutton.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Frota_MouseMove(sender As Object, e As EventArgs) Handles Frota.MouseMove
+        Frota.Image = WindowsApplication1.My.Resources.install
+        Frota.Cursor = Cursors.Hand
+    End Sub
+
+    Private Sub Frota_MouseLeave(sender As Object, e As EventArgs) Handles Frota.MouseLeave
+        Frota.Image = WindowsApplication1.My.Resources.addonimage
+        Frota.Cursor = Cursors.Arrow
+    End Sub
+    Private Sub exitbutton_MouseLeave(sender As Object, e As EventArgs) Handles exitbutton.MouseLeave
+        Frota.Cursor = Cursors.Arrow
+    End Sub
+    Private Sub exitbutton_MouseMove(sender As Object, e As MouseEventArgs) Handles exitbutton.MouseMove
+        Frota.Cursor = Cursors.Hand
+    End Sub
+End Class
