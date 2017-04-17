@@ -1,15 +1,15 @@
 Frota
 =====
 
-##Dead##
+## Dead ##
  - This addon is now dead and is no longer being maintained
  - Most of the core features have been migrated over to [Legends of Dota](https://github.com/ash47/LegendsOfDota)
  - There is a good chance that eventually the more fun gamemodes will be taken from Frota and put into Legends of Dota
 
-###About###
+### About ###
 An addon for Dota 2, It is a framework for sub game modes. Players connect to a server, then vote on what they would like to play, the most popular choice is loaded, people play it, then voting happens again.
 
-###Picking Gamemodes###
+### Picking Gamemodes ###
  - **All Pick**
   - You can select your hero from the picking screen
  - **Legends of Dota**
@@ -36,7 +36,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Kunkka is a pirate.
 
 
-###Gameplay Gamemodes###
+### Gameplay Gamemodes ###
  - **PvP Arena**
   - A PvP arena game mode
  - **King of the Hill**
@@ -51,7 +51,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - Survive waves of zombies attacking you!
 
 
-###Picking + Gameplay Gamemodes###
+### Picking + Gameplay Gamemodes ###
  - **~~Warlocks~~**
   - ~~Play as a novice warlock, haphazardly blinking around the map and play hot potato with an unstable spell.~~
  - **~~Sun Strike Wars~~**
@@ -61,7 +61,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - **Defense of RuneHill**
   - Defend 22 waves of enemies and protect your rune top
 
-###Addons###
+### Addons ###
  - **WTF Mode**
   - Players have the option to turn WTF Mode on, making all spells have no cooldown.
  - **Free Blink Dagger**
@@ -81,10 +81,10 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - **Bonus Gold Per Second**
   - Gives players gold every second.
 
-###D2Ware Servers###
+### D2Ware Servers ###
  - You can play this on D2Ware servers here: http://d2ware.net
 
-###How do I use this?###
+### How do I use this? ###
  - Keep in mind it is still in development, and may be buggy
  - **IMPORTANT** Dota will only load the first plugin in your addons folder, to prevent this, move all other addons out of your addons folder. (I moved mine into an addons_disabled folder) - ONLY the host has to do this. This is not required if you use d2fixups
  - There is another guide here: http://www.reddit.com/r/Dota2Modding/comments/1v3ywq/custom_gamemodes_how_to_play_frota_and_set_up/
@@ -96,13 +96,13 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
   - dota_local_addon_enable 1;dota_local_addon_game Frota;dota_local_addon_map Frota;dota_force_gamemode 15;update_addon_paths;dota_wait_for_players_to_load 0;dota_wait_for_players_to_load_timeout 10;map riverofsouls;
  - **NOTE** If you reach the hero selection screen, it means Frota didn't load correctly! Frota should override / skip the hero selection screen, and  take you directly to a vote screen! Please ensure you removed Frostivus (and any other addons) and then restart your client.
 
-###How do I play with friend?###
+### How do I play with friend? ###
  - You need to setup a dedicated server, and port forward (or, you can use hamachi, but port forward is easier)
  - Follow the guide here: https://forums.alliedmods.net/showpost.php?p=1911667&postcount=64
  - Your addons folder should look like this (note: No DLL files are pictured) http://i.imgur.com/sUtBFki.jpg
  - Google how to port forward, it is different for every router!
 
-###More SRCDS Setup Help###
+### More SRCDS Setup Help ###
  - To debug, try adding **-condebug** to the SRCDS launch parameters, this will log all the server output to server/dota/console.log, you can check for errors in there
  - Here's a set of working launch parameters
   - srcds.exe -console -game dota +maxplayers 10 +hostport 27015 -condebug -dev +exec someconfig +map riverofsouls.bsp
@@ -116,19 +116,19 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - If you don't see these two, then you have installed either metamod, or d2fixups incorrectly
  - If you see >> Unknown command "meta" << it means metamod is installed incorrectly, verify you added it to [gameinfo.txt](http://wiki.alliedmods.net/Installing_Metamod:Source#GameInfo)
 
-###CreateEvent: event 'afs_timer_update' not registered.###
+### CreateEvent: event 'afs_timer_update' not registered. ###
  - You get this because you set the server up wrong.
  - There is now a warning inside of Frota which will tell you this
  - To fix, ENSURE you have set the convars `dota_local_addon_game` to `Frota` and `dota_local_addon_enable` to `1`
 
-###Is there a way I can spawn test heroes?###
+### Is there a way I can spawn test heroes? ###
  - Try the console command 'fake', it will fill the server with fake clients, and give each a hero, this command can only be run from the server console
 
-###Hooks & Mod Events###
+### Hooks & Mod Events ###
  - There are many hooks and mod events to make making gamemodes easier.
  - See the top of gamemodes.lua for the latest list of hooks and mod events.
 
-###Maps###
+### Maps ###
  - arenaotdr by [DarkMio][12]
  - deadlock by [Z-Machine][11]
  - evergreen_crossing by [hanni7345][13]
@@ -137,7 +137,7 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - riverofsouls by [Z-Machine][11]
  - runehill by [Azarak][15]
 
-###Translations###
+### Translations ###
  - Please make a pull request if you want to update translations
  - English by [Ash47][1]
  - Brazilian by [otaviomad][16], [away000][17]
@@ -153,11 +153,11 @@ An addon for Dota 2, It is a framework for sub game modes. Players connect to a 
  - Spanish by JosDW
  - Turkish by [ozen][7]
 
-###Issues that need help###
+### Issues that need help ###
  - When a player leaves the game, their slot isn't removed, and hence, someone else can't connect and take their place, this is caused by the limit of 5 players per team, someone solve this :P
   - Player slot being removed has a hacky fix via Sourcemod, I can also hackily set > 5 people on a team via SMJS / Sourcemod
 
-###Up next###
+### Up next ###
  - Getting inspiration to work on this again
 
 [1]: https://github.com/ash47
